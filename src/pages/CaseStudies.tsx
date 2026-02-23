@@ -99,7 +99,7 @@ function generatePDF(study: (typeof caseStudies)[0]) {
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(22);
   doc.setFont("helvetica", "bold");
-  doc.text("KHANDELWAL DISTRIBUTORS", margin, 20);
+  doc.text("LIMRA SALES AND SERVICES", margin, 20);
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
   doc.text("Case Study Report", margin, 30);
@@ -176,7 +176,7 @@ function generatePDF(study: (typeof caseStudies)[0]) {
   doc.line(margin, footerY - 5, pageWidth - margin, footerY - 5);
   doc.setFontSize(8);
   doc.setTextColor(150, 150, 150);
-  doc.text("Khandelwal Distributors | Bareilly & Shahjahanpur, UP | www.khandelwaldistributors.com", margin, footerY);
+  doc.text("LIMRA Sales And Services | Bareilly & Shahjahanpur, UP | www.limrasales.com", margin, footerY);
 
   doc.save(`${study.name.replace(/\s+/g, "-").toLowerCase()}-case-study.pdf`);
 }
