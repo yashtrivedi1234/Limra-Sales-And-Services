@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import amstrad from "@/assets/amstrad.png";
 import blueStar from "@/assets/blue-star.png";
 import carrier from "@/assets/carrier.png";
-import daikin from "@/assets/dalkin.png";   // ⚠️ your file name is dalkin.png
+import daikin from "@/assets/dalkin.png";   
 import hitachi from "@/assets/hitachi.png";
 import midea from "@/assets/Midea.png";
 import mitsubishi from "@/assets/mitsubishi.png";
@@ -76,20 +76,11 @@ const BrandMarquee = () => {
               <div className="h-14 flex items-center justify-center mb-3 relative z-10">
                 <img
                   src={brand.image}
-                  alt={brand.name}
+                 
                   className="max-h-11 object-contain transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
 
-              {/* Brand Name */}
-              <p className="font-bold text-gray-800 text-sm relative z-10 group-hover:text-blue-600 transition-colors duration-300">
-                {brand.name}
-              </p>
-
-              {/* Subtitle */}
-              <p className="text-[11px] text-gray-400 mt-1 leading-tight relative z-10">
-                {brand.subtitle}
-              </p>
 
               {/* Bottom accent line */}
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 w-0 group-hover:w-3/4 bg-blue-400 rounded-full transition-all duration-300" />

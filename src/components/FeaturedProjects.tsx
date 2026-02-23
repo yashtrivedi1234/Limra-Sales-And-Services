@@ -8,25 +8,29 @@ const projects = [
     name: "Invertis University",
     location: "Bareilly, UP",
     units: "200+ Units",
-    image: "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    image:
+      "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
   },
   {
     name: "Jim Corbett Marriott Resort",
     location: "Jim Corbett, Uttarakhand",
     units: "150+ Units",
-    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80",
+    image:
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80",
   },
-{
-  name: "Bareilly Airport",
-  location: "Bareilly, UP",
-  units: "80+ Units",
-  image: "https://images.unsplash.com/photo-1474302770737-173ee21bab63?w=800&q=80",
-},
+  {
+    name: "Bareilly Airport",
+    location: "Bareilly, UP",
+    units: "80+ Units",
+    image:
+      "https://images.unsplash.com/photo-1474302770737-173ee21bab63?w=800&q=80",
+  },
   {
     name: "Bareilly Haat",
     location: "Bareilly, UP",
     units: "120+ Units",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
+    image:
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
   },
 ];
 
@@ -43,7 +47,9 @@ const FeaturedProjects = () => {
           className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12"
         >
           <div>
-            <span className="text-sm font-semibold uppercase tracking-widest text-accent">Portfolio</span>
+            <span className="text-sm font-semibold uppercase tracking-widest text-accent">
+              Portfolio
+            </span>
             <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mt-3">
               Featured Projects
             </h2>
@@ -78,7 +84,11 @@ const FeaturedProjects = () => {
                 initial={{ x: 0 }}
                 whileInView={{ x: "100%" }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.15 + 0.3, duration: 0.6, ease: "easeInOut" }}
+                transition={{
+                  delay: i * 0.15 + 0.3,
+                  duration: 0.6,
+                  ease: "easeInOut",
+                }}
               />
               <img
                 src={project.image}
@@ -90,8 +100,12 @@ const FeaturedProjects = () => {
                 <span className="text-xs font-semibold uppercase tracking-wider text-accent">
                   {project.units}
                 </span>
-                <h3 className="font-display text-xl font-bold text-primary-foreground mt-1">{project.name}</h3>
-                <p className="text-primary-foreground/60 text-sm">{project.location}</p>
+                <h3 className="font-display text-xl font-bold text-primary-foreground mt-1">
+                  {project.name}
+                </h3>
+                <p className="text-primary-foreground/60 text-sm">
+                  {project.location}
+                </p>
               </div>
             </div>
           </motion.div>

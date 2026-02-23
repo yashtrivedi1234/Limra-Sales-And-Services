@@ -13,7 +13,7 @@ const Index = () => (
     <ProductCategories />
     <Services />
     <FeaturedProjects />
-    <MegaSale />
+    {/* <MegaSale /> */}
     <SiteFooter />
   </main>
 );

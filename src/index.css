@@ -81,15 +81,7 @@
     @apply bg-background text-foreground font-sans antialiased;
   }
 }
-/* Hide scrollbar for Chrome, Safari, Edge */
-::-webkit-scrollbar {
-  display: none;
-}
 
-/* Hide scrollbar for Firefox */
-* {
-  scrollbar-width: none;
-}
 @layer utilities {
   .text-gradient-accent {
     @apply bg-clip-text text-transparent;
