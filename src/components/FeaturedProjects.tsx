@@ -16,12 +16,12 @@ const projects = [
     units: "150+ Units",
     image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80",
   },
-  {
-    name: "Bareilly Airport",
-    location: "Bareilly, UP",
-    units: "80+ Units",
-    image: "https://images.unsplash.com/photo-1436491865332-7a61a109db05?w=800&q=80",
-  },
+{
+  name: "Bareilly Airport",
+  location: "Bareilly, UP",
+  units: "80+ Units",
+  image: "https://images.unsplash.com/photo-1474302770737-173ee21bab63?w=800&q=80",
+},
   {
     name: "Bareilly Haat",
     location: "Bareilly, UP",

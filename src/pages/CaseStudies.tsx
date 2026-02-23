@@ -50,7 +50,7 @@ const caseStudies = [
     location: "Bareilly, UP",
     units: "80+ Units",
     category: "Infrastructure",
-    image: "https://images.unsplash.com/photo-1436491865332-7a61a109db05?w=800&q=80",
+  image: "https://images.unsplash.com/photo-1474302770737-173ee21bab63?w=800&q=80",
     challenge:
       "The newly expanded terminal building required high-capacity cooling for large open areas with high foot traffic, strict ventilation standards, and redundancy for critical zones.",
     solution:
