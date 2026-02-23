@@ -7,7 +7,7 @@ import MegaSale from "@/components/MegaSale";
 import SiteFooter from "@/components/SiteFooter";
 
 const Index = () => (
-  <main className="overflow-x-hidden">
+  <main className="">
     <Hero />
     <BrandMarquee />
     <ProductCategories />
