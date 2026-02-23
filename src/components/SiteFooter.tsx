@@ -20,7 +20,7 @@ const SiteFooter = () => (
         {/* Brand */}
         <div>
           <h3 className="font-display text-2xl font-bold text-primary-foreground mb-4">
-            Khandelwal<br />Distributors
+            LIMRA<br />Sales & Services
           </h3>
           <p className="text-primary-foreground/50 text-sm leading-relaxed">
             Your trusted HVAC partner since 1998. Authorized dealers for India's top cooling brands.
@@ -50,7 +50,7 @@ const SiteFooter = () => (
           <ul className="space-y-3 text-sm text-primary-foreground/50">
             <li className="flex items-start gap-2"><MapPin size={16} className="mt-0.5 text-accent flex-shrink-0" /> Civil Lines, Bareilly, UP 243001</li>
             <li className="flex items-center gap-2"><Phone size={16} className="text-accent flex-shrink-0" /> +91 98370 XXXXX</li>
-            <li className="flex items-center gap-2"><Mail size={16} className="text-accent flex-shrink-0" /> info@khandelwaldist.com</li>
+            <li className="flex items-center gap-2"><Mail size={16} className="text-accent flex-shrink-0" /> info@limrasales.com</li>
           </ul>
         </div>
 
@@ -78,7 +78,7 @@ const SiteFooter = () => (
 
       <div className="border-t border-primary-foreground/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p className="text-xs text-primary-foreground/30">
-          © {new Date().getFullYear()} Khandelwal Distributors. All rights reserved.
+          © {new Date().getFullYear()} LIMRA Sales And Services. All rights reserved.
         </p>
         <p className="text-xs text-primary-foreground/30">
           Authorized Dealers — Daikin · Mitsubishi · Carrier · Voltas · Midea · Godrej
