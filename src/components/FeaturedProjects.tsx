@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const projects = [
   {
@@ -47,12 +48,12 @@ const FeaturedProjects = () => {
               Featured Projects
             </h2>
           </div>
-          <button
-            onClick={() => scrollRef.current?.scrollBy({ left: 400, behavior: "smooth" })}
+          <Link
+            to="/case-studies"
             className="mt-4 sm:mt-0 inline-flex items-center gap-2 text-accent font-semibold hover:gap-3 transition-all"
           >
-            View All <ArrowRight size={18} />
-          </button>
+            View All Case Studies <ArrowRight size={18} />
+          </Link>
         </motion.div>
       </div>
 
