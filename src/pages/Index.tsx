@@ -5,19 +5,27 @@ import ProductCategories from "@/components/ProductCategories";
 import Services from "@/components/Services";
 import FeaturedProjects from "@/components/FeaturedProjects";
 import BlogPreview from "@/components/BlogPreview";
-import MegaSale from "@/components/MegaSale";
+
 import SiteFooter from "@/components/SiteFooter";
+import AboutPreview from "@/components/AboutPreview";
+
+import WhyChooseUs from "@/components/WhyChooseUs";
+import CTASection from "@/components/CTASection";
 
 const Index = () => (
   <main className="">
     <SiteHeader />
     <Hero />
+    <AboutPreview />
     <BrandMarquee />
     <ProductCategories />
     <Services />
     <FeaturedProjects />
     <BlogPreview />
-    {/* <MegaSale /> */}
+
+    
+    <WhyChooseUs />
+    <CTASection />  
     <SiteFooter />
   </main>
 );
