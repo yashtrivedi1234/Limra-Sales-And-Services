@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
+import logo1 from "../assets/logo1.png";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -39,10 +40,18 @@ const SiteHeader = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b shadow-sm">
       <div className="container mx-auto px-4 flex items-center justify-between h-16">
         
-        {/* Logo */}
-        <Link to="/" className="text-lg font-bold">
-          LIMRA <span className="text-blue-600">Sales & Services</span>
-        </Link>
+        
+        {/* Logo + Company Name */}
+<Link to="/" className="flex items-center gap-2">
+  <img 
+    src={logo1} 
+    alt="LIMRA Sales & Services" 
+    className="h-12 w-auto object-contain" 
+  />
+  <span className="text-lg font-bold text-gray-800 whitespace-nowrap">
+    LIMRA Sales & Services
+  </span>
+</Link>
 
         {/* Desktop Menu */}
         <nav className="hidden lg:flex items-center gap-6">
