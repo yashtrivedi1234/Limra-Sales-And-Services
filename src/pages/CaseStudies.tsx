@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Download, MapPin, Building2, Thermometer, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import SiteHeader from "@/components/SiteHeader";
 import jsPDF from "jspdf";
 
 const caseStudies = [
@@ -183,7 +184,9 @@ function generatePDF(study: (typeof caseStudies)[0]) {
 
 const CaseStudies = () => {
   return (
-    <main className="min-h-screen bg-background">
+    <>
+    <SiteHeader />
+    <main className="min-h-screen bg-background pt-16">
       {/* Header */}
       <section className="bg-primary py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -296,6 +299,7 @@ const CaseStudies = () => {
         </div>
       </section>
     </main>
+    </>
   );
 };
 
