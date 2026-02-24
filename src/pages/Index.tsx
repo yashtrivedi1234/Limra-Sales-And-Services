@@ -1,32 +1,37 @@
-import SiteHeader from "@/components/SiteHeader";
 import Hero from "@/components/Hero";
 import BrandMarquee from "@/components/BrandMarquee";
-import ProductCategories from "@/components/ProductCategories";
 import Services from "@/components/Services";
+import ProductCategories from "@/components/ProductCategories";
+import AboutPreview from "@/components/AboutPreview";
+import WhyChooseUs from "@/components/WhyChooseUs";
 import FeaturedProjects from "@/components/FeaturedProjects";
 import BlogPreview from "@/components/BlogPreview";
-
-import SiteFooter from "@/components/SiteFooter";
-import AboutPreview from "@/components/AboutPreview";
-
-import WhyChooseUs from "@/components/WhyChooseUs";
 import CTASection from "@/components/CTASection";
 
 const Index = () => (
   <main className="">
-    <SiteHeader />
+    {/* 1. First Impression */}
     <Hero />
-    <AboutPreview />
-    <BrandMarquee />
-    <ProductCategories />
-    <Services />
-    <FeaturedProjects />
-    <BlogPreview />
-
     
+    {/* 2. Immediate Social Proof/Trust */}
+    <BrandMarquee />
+    
+    {/* 3. Core Offering (What do you do?) */}
+    <Services />
+    <ProductCategories />
+    
+    {/* 4. Why You? (Building the Brand Story) */}
+    <AboutPreview />
     <WhyChooseUs />
-    <CTASection />  
-    <SiteFooter />
+    
+    {/* 5. Proof of Quality (Show, don't just tell) */}
+    <FeaturedProjects />
+    
+    {/* 6. Authority & Engagement */}
+    <BlogPreview />
+    
+    {/* 7. Final Push */}
+    <CTASection />
   </main>
 );
 

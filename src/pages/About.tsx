@@ -4,7 +4,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
 const stats = [
-  { value: "25+", label: "Years Experience" },
+  { value: "9+", label: "Years Experience" },
   { value: "5000+", label: "Projects Completed" },
   { value: "50+", label: "Expert Technicians" },
   { value: "8+", label: "Premium Brands" },
@@ -18,11 +18,11 @@ const values = [
 ];
 
 const milestones = [
-  { year: "1998", text: "Founded in Bareilly as a small AC service workshop" },
-  { year: "2005", text: "Became authorized Daikin dealer for the region" },
-  { year: "2012", text: "Expanded to commercial VRV and chiller systems" },
-  { year: "2018", text: "Completed landmark projects across UP including airports and hotels" },
-  { year: "2024", text: "Serving 5000+ satisfied clients with 50+ expert technicians" },
+  { year: "2017", text: "Founded in Bareilly as a small AC service workshop" },
+  { year: "2020", text: "Became authorized Daikin dealer for the region" },
+  { year: "2023", text: "Expanded to commercial VRV and chiller systems" },
+  { year: "2026", text: "Completed landmark projects across UP including airports and hotels" },
+  
 ];
 
 const fadeUp = {
@@ -45,7 +45,7 @@ const About = () => (
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-6xl font-black tracking-tight mb-6"
           >
-            Building Comfort <br className="hidden sm:block" />Since 1998
+            Building Comfort <br className="hidden sm:block" />Since 2017
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -86,7 +86,7 @@ const About = () => (
             <h2 className="text-3xl md:text-4xl font-black text-foreground mb-6">Our Story</h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
-                What started as a humble air conditioning service workshop in Bareilly in 1998 has grown into one of the region's leading HVAC solutions providers. LIMRA Sales And Services was founded with a simple belief: everyone deserves reliable, energy-efficient comfort.
+                What started as a humble air conditioning service workshop in Bareilly in 2017 has grown into one of the region's leading HVAC solutions providers. LIMRA Sales And Services was founded with a simple belief: everyone deserves reliable, energy-efficient comfort.
               </p>
               <p>
                 Over 25 years, we've built deep partnerships with the world's finest brands — Daikin, Mitsubishi Heavy, Carrier, Midea, and more — becoming their authorized dealer and installation partner for residential and large-scale commercial projects.

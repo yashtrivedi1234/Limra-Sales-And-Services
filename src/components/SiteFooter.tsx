@@ -83,7 +83,7 @@ const SiteFooter = () => (
           </p>
           <div className="flex items-center gap-1.5 mb-5">
             <Star size={16} className="text-orange-400 fill-orange-400" />
-            <span className="text-sm font-semibold text-white">25+ Years of Excellence</span>
+            <span className="text-sm font-semibold text-white">9+ Years of Excellence</span>
           </div>
           <div className="flex items-center gap-3">
             {socialLinks.map((s) => (

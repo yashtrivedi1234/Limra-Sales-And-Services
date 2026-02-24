@@ -150,7 +150,7 @@ export default function Shop() {
     <div className="min-h-screen bg-[#f8fafc] font-sans text-slate-800 pb-12">
       {/* Header Section */}
       <div className="bg-[#f0f4f8] pt-12 pb-8 px-4 flex flex-col items-center text-center">
-        <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+        <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 mt-14">
           Shop Premium Air Conditioners & HVAC products
         </h1>
         <p className="text-slate-500 max-w-2xl mb-8">

@@ -3,7 +3,7 @@ import { Shield, Award, Users, Target, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const stats = [
-  { value: "25+", label: "Years Experience" },
+  { value: "9+", label: "Years Experience" },
   { value: "5000+", label: "Projects Completed" },
   { value: "50+", label: "Expert Technicians" },
   { value: "8+", label: "Premium Brands" },
@@ -47,7 +47,7 @@ const AboutPreview = () => (
           className="text-4xl md:text-5xl font-black text-foreground tracking-tight leading-tight mb-6"
         >
           Building Comfort <br className="hidden sm:block" />
-          Since 1998
+          Since 2017
         </motion.h2>
         <motion.p
           initial={{ opacity: 0 }}

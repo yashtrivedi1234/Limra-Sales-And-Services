@@ -29,16 +29,7 @@ const Hero = () => {
     <section className="relative h-screen w-full max-w-full bg-[#f5f4f0] overflow-hidden flex items-center justify-center">
       {/* MAIN CONTENT */}
       <div className="container mx-auto px-6 relative z-20 text-center overflow-hidden">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-sky-300/60 bg-sky-50/80 shadow-sm"
-        >
-          <Wind size={14} className="text-sky-500" />
-          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-sky-600">
-            Limra Sales & Services
-          </span>
-        </motion.div>
+       
 
         <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-black text-slate-900 leading-[0.85] tracking-tighter mb-10 select-none w-full overflow-hidden">
           ENGINEERED <br />
