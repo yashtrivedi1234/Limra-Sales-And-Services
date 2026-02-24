@@ -22,22 +22,7 @@ const SiteHeader = () => {
           LIMRA <span className="text-accent">Sales & Services</span>
         </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                pathname === link.to
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+        {/* Desktop Nav - hidden, toggled by hamburger */}
 
         {/* CTA + Mobile Toggle */}
         <div className="flex items-center gap-3">
@@ -50,7 +35,7 @@ const SiteHeader = () => {
           </a>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-2 text-foreground"
+            className="p-2 text-foreground"
             aria-label="Toggle menu"
           >
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -65,7 +50,7 @@ const SiteHeader = () => {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="md:hidden overflow-hidden bg-background border-b border-border"
+            className="overflow-hidden bg-background border-b border-border"
           >
             <nav className="flex flex-col px-4 py-4 gap-1">
               {navLinks.map((link) => (
