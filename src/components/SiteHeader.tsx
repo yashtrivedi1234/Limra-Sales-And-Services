@@ -13,23 +13,22 @@ const navLinks = [
       { name: "Commercial", path: "/categories/commercial" },
     ],
   },
-{
-  name: "Brands",
-  path: "/brands",
-  submenu: [
-    { name: "Daikin", path: "/brand/daikin-vrv-systems" },
-    { name: "Mitsubishi Heavy", path: "/brand/mitsubishi-heavy" },
-    { name: "Carrier", path: "/brand/carrier" },
-    { name: "Amstrad", path: "/brand/amstrad" },
-    { name: "Midea", path: "/brand/midea" },
-    { name: "Godrej", path: "/brand/godrej" },
-    { name: "Cruise", path: "/brand/cruise" },
-    { name: "Voltas", path: "/brand/voltas" },
-  ],
-},
+  {
+    name: "Brands",
+    path: "/brands",
+    submenu: [
+      { name: "Daikin", path: "/brand/daikin-vrv-systems" },
+      { name: "Mitsubishi Heavy", path: "/brand/mitsubishi-heavy" },
+      { name: "Carrier", path: "/brand/carrier" },
+      { name: "Amstrad", path: "/brand/amstrad" },
+      { name: "Midea", path: "/brand/midea" },
+      { name: "Godrej", path: "/brand/godrej" },
+      { name: "Cruise", path: "/brand/cruise" },
+      { name: "Voltas", path: "/brand/voltas" },
+    ],
+  },
   { name: "Projects", path: "/case-studies" },
   { name: "Blogs", path: "/blog" },
-
   { name: "Contact Us", path: "/contact" },
 ];
 
@@ -49,18 +48,19 @@ const SiteHeader = () => {
         <nav className="hidden lg:flex items-center gap-6">
           {navLinks.map((link) =>
             link.submenu ? (
-              <div key={link.name} className="relative group">
-                <span className="cursor-pointer font-medium">
+              <div key={link.name} className="relative group inline-block">
+                {/* Parent */}
+                <span className="cursor-pointer font-medium py-2 block">
                   {link.name}
                 </span>
 
                 {/* Dropdown */}
-                <div className="absolute left-0 mt-2 hidden group-hover:block bg-white border shadow-md rounded-md">
+                <div className="absolute left-0 top-full hidden group-hover:block bg-white border shadow-md rounded-md min-w-[200px]">
                   {link.submenu.map((sub) => (
                     <Link
                       key={sub.name}
                       to={sub.path}
-                      className="block px-4 py-2 hover:bg-gray-100"
+                      className="block px-4 py-2 hover:bg-gray-100 whitespace-nowrap"
                     >
                       {sub.name}
                     </Link>
@@ -68,7 +68,7 @@ const SiteHeader = () => {
                 </div>
               </div>
             ) : (
-              <Link key={link.name} to={link.path} className="font-medium">
+              <Link key={link.name} to={link.path} className="font-medium py-2">
                 {link.name}
               </Link>
             )
