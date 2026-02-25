@@ -4,6 +4,19 @@ import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import jsPDF from "jspdf";
 
+const COLORS = {
+  navy: "#0B1F4B",
+  blue: "#1D4ED8",
+  blueLight: "#3B82F6",
+  blueSky: "#DBEAFE",
+  bluePale: "#EFF6FF",
+  white: "#FFFFFF",
+  slate50: "#F8FAFF",
+  slate100: "#E8EFFF",
+  slate200: "#C7D8F8",
+  slate400: "#6B8AC7",
+};
+
 const caseStudies = [
   {
     id: 1,
@@ -12,16 +25,9 @@ const caseStudies = [
     units: "200+ Units",
     category: "Education",
     image: "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
-    challenge:
-      "Invertis University needed a centralized cooling solution for 15+ buildings across a sprawling campus, with varying load requirements for classrooms, labs, and auditoriums.",
-    solution:
-      "We deployed a hybrid VRV and ductable AC system with smart zoning controls, allowing independent climate management for each building while reducing energy consumption by 35%.",
-    results: [
-      "200+ units installed across 15 buildings",
-      "35% reduction in energy consumption",
-      "Centralized monitoring dashboard",
-      "3-year AMC with 24/7 support",
-    ],
+    challenge: "Invertis University needed a centralized cooling solution for 15+ buildings across a sprawling campus, with varying load requirements for classrooms, labs, and auditoriums.",
+    solution: "We deployed a hybrid VRV and ductable AC system with smart zoning controls, allowing independent climate management for each building while reducing energy consumption by 35%.",
+    results: ["200+ units installed across 15 buildings", "35% reduction in energy consumption", "Centralized monitoring dashboard", "3-year AMC with 24/7 support"],
     systemType: "VRV + Ductable Hybrid",
     completionYear: "2022",
   },
@@ -32,16 +38,9 @@ const caseStudies = [
     units: "150+ Units",
     category: "Hospitality",
     image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80",
-    challenge:
-      "A luxury resort in a wildlife sanctuary zone required whisper-quiet, eco-friendly cooling that blended with the natural surroundings and met strict environmental regulations.",
-    solution:
-      "We installed Daikin inverter VRV systems with low-noise outdoor units concealed in landscaped enclosures, paired with smart room-level thermostats for guest comfort control.",
-    results: [
-      "150+ units across 80 suites and common areas",
-      "Noise levels under 25 dB in guest rooms",
-      "Eco-compliant refrigerant systems",
-      "Guest satisfaction score improved by 28%",
-    ],
+    challenge: "A luxury resort in a wildlife sanctuary zone required whisper-quiet, eco-friendly cooling that blended with the natural surroundings and met strict environmental regulations.",
+    solution: "We installed Daikin inverter VRV systems with low-noise outdoor units concealed in landscaped enclosures, paired with smart room-level thermostats for guest comfort control.",
+    results: ["150+ units across 80 suites and common areas", "Noise levels under 25 dB in guest rooms", "Eco-compliant refrigerant systems", "Guest satisfaction score improved by 28%"],
     systemType: "Daikin VRV IV",
     completionYear: "2023",
   },
@@ -51,17 +50,10 @@ const caseStudies = [
     location: "Bareilly, UP",
     units: "80+ Units",
     category: "Infrastructure",
-  image: "https://images.unsplash.com/photo-1474302770737-173ee21bab63?w=800&q=80",
-    challenge:
-      "The newly expanded terminal building required high-capacity cooling for large open areas with high foot traffic, strict ventilation standards, and redundancy for critical zones.",
-    solution:
-      "We implemented a combination of high-capacity cassette ACs for the terminal and precision cooling for server and control rooms, all integrated with the building management system.",
-    results: [
-      "80+ units covering 50,000 sq ft",
-      "99.9% uptime for critical zone cooling",
-      "BMS integration for automated control",
-      "Compliant with DGCA ventilation norms",
-    ],
+    image: "https://images.unsplash.com/photo-1474302770737-173ee21bab63?w=800&q=80",
+    challenge: "The newly expanded terminal building required high-capacity cooling for large open areas with high foot traffic, strict ventilation standards, and redundancy for critical zones.",
+    solution: "We implemented a combination of high-capacity cassette ACs for the terminal and precision cooling for server and control rooms, all integrated with the building management system.",
+    results: ["80+ units covering 50,000 sq ft", "99.9% uptime for critical zone cooling", "BMS integration for automated control", "Compliant with DGCA ventilation norms"],
     systemType: "Cassette + Precision Cooling",
     completionYear: "2023",
   },
@@ -72,16 +64,9 @@ const caseStudies = [
     units: "120+ Units",
     category: "Commercial",
     image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
-    challenge:
-      "A large commercial complex with mixed-use retail spaces, food courts, and office areas needed a flexible cooling system that could handle diverse loads and operating hours.",
-    solution:
-      "We designed a modular VRV system allowing individual shop owners to control their zones independently, with shared outdoor units to maximize space and reduce installation costs.",
-    results: [
-      "120+ units across 200+ retail spaces",
-      "40% lower installation cost vs individual systems",
-      "Independent zone billing for tenants",
-      "Modular expansion capability",
-    ],
+    challenge: "A large commercial complex with mixed-use retail spaces, food courts, and office areas needed a flexible cooling system that could handle diverse loads and operating hours.",
+    solution: "We designed a modular VRV system allowing individual shop owners to control their zones independently, with shared outdoor units to maximize space and reduce installation costs.",
+    results: ["120+ units across 200+ retail spaces", "40% lower installation cost vs individual systems", "Independent zone billing for tenants", "Modular expansion capability"],
     systemType: "Modular VRV System",
     completionYear: "2021",
   },
@@ -94,8 +79,7 @@ function generatePDF(study: (typeof caseStudies)[0]) {
   const contentWidth = pageWidth - margin * 2;
   let y = 20;
 
-  // Header
-  doc.setFillColor(23, 37, 63); // primary navy
+  doc.setFillColor(11, 31, 75);
   doc.rect(0, 0, pageWidth, 45, "F");
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(22);
@@ -107,29 +91,22 @@ function generatePDF(study: (typeof caseStudies)[0]) {
   doc.text(`${study.category} | ${study.completionYear}`, margin, 37);
 
   y = 60;
-
-  // Project title
-  doc.setTextColor(23, 37, 63);
+  doc.setTextColor(11, 31, 75);
   doc.setFontSize(20);
   doc.setFont("helvetica", "bold");
   doc.text(study.name, margin, y);
   y += 10;
-
-  // Location & system info
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(100, 100, 100);
   doc.text(`Location: ${study.location}  |  System: ${study.systemType}  |  Scale: ${study.units}`, margin, y);
   y += 15;
-
-  // Divider
-  doc.setDrawColor(225, 150, 40);
+  doc.setDrawColor(29, 78, 216);
   doc.setLineWidth(1.5);
   doc.line(margin, y, pageWidth - margin, y);
   y += 15;
 
-  // Challenge
-  doc.setTextColor(23, 37, 63);
+  doc.setTextColor(11, 31, 75);
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text("The Challenge", margin, y);
@@ -141,8 +118,7 @@ function generatePDF(study: (typeof caseStudies)[0]) {
   doc.text(challengeLines, margin, y);
   y += challengeLines.length * 5 + 12;
 
-  // Solution
-  doc.setTextColor(23, 37, 63);
+  doc.setTextColor(11, 31, 75);
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text("Our Solution", margin, y);
@@ -154,8 +130,7 @@ function generatePDF(study: (typeof caseStudies)[0]) {
   doc.text(solutionLines, margin, y);
   y += solutionLines.length * 5 + 12;
 
-  // Results
-  doc.setTextColor(23, 37, 63);
+  doc.setTextColor(11, 31, 75);
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text("Key Results", margin, y);
@@ -164,13 +139,12 @@ function generatePDF(study: (typeof caseStudies)[0]) {
   doc.setFont("helvetica", "normal");
   doc.setTextColor(60, 60, 60);
   study.results.forEach((r) => {
-    doc.setFillColor(225, 150, 40);
+    doc.setFillColor(29, 78, 216);
     doc.circle(margin + 2, y - 1.5, 1.5, "F");
     doc.text(r, margin + 8, y);
     y += 7;
   });
 
-  // Footer
   const footerY = doc.internal.pageSize.getHeight() - 15;
   doc.setDrawColor(200, 200, 200);
   doc.setLineWidth(0.3);
@@ -185,97 +159,150 @@ function generatePDF(study: (typeof caseStudies)[0]) {
 const CaseStudies = () => {
   return (
     <>
-    <SiteHeader />
-    <main className="min-h-screen bg-background pt-16">
-      {/* Header */}
-      <section className="bg-primary py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-primary-foreground/70 hover:text-primary-foreground transition-colors mb-8 text-sm"
-          >
-            <ArrowLeft size={16} /> Back to Home
-          </Link>
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
-            <span className="text-sm font-semibold uppercase tracking-widest text-accent">
-              Portfolio
-            </span>
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-primary-foreground mt-3">
-              Case Studies
-            </h1>
-            <p className="text-primary-foreground/60 mt-4 max-w-2xl text-lg">
-              Explore our featured HVAC projects — from universities to luxury resorts. Download detailed case study reports as PDFs.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&display=swap');
+        .cs-page { font-family: 'DM Sans', sans-serif; background: ${COLORS.slate50}; min-height: 100vh; }
+      `}</style>
 
-      {/* Gallery */}
-      <section className="py-16 sm:py-24">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-12 lg:gap-16">
+      <SiteHeader />
+
+      <main className="cs-page" style={{ paddingTop: "68px" }}>
+
+        {/* ── Header ── */}
+        <section style={{
+          background: "linear-gradient(135deg, #0B1F4B 0%, #1A3580 50%, #1D4ED8 100%)",
+          padding: "80px 32px",
+          position: "relative", overflow: "hidden"
+        }}>
+          <div style={{
+            position: "absolute", inset: 0, opacity: 0.08,
+            backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.7) 1px, transparent 1px)",
+            backgroundSize: "32px 32px", pointerEvents: "none"
+          }} />
+
+          <div style={{ maxWidth: "1100px", margin: "0 auto", position: "relative", zIndex: 2 }}>
+            <Link to="/" style={{
+              display: "inline-flex", alignItems: "center", gap: "7px",
+              color: "rgba(219,234,254,0.7)", fontSize: "0.875rem",
+              textDecoration: "none", marginBottom: "32px",
+              transition: "color 0.2s"
+            }}
+              onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "#ffffff"}
+              onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "rgba(219,234,254,0.7)"}
+            >
+              <ArrowLeft size={15} /> Back to Home
+            </Link>
+
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
+              <div style={{
+                display: "inline-block",
+                background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)",
+                color: "#93C5FD", fontWeight: 700, fontSize: "0.72rem",
+                letterSpacing: "0.18em", textTransform: "uppercase",
+                padding: "5px 16px", borderRadius: "100px", marginBottom: "18px"
+              }}>Portfolio</div>
+              <h1 style={{
+                fontFamily: "'DM Serif Display', serif",
+                fontSize: "clamp(2.4rem, 5vw, 4rem)",
+                color: "#ffffff", lineHeight: 1.1, marginBottom: "16px"
+              }}>
+                Case Studies
+              </h1>
+              <p style={{ color: "rgba(219,234,254,0.7)", maxWidth: "540px", fontSize: "1.05rem", fontWeight: 300, lineHeight: 1.7 }}>
+                Explore our featured HVAC projects — from universities to luxury resorts. Download detailed case study reports as PDFs.
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Diagonal slice */}
+          <div style={{
+            position: "absolute", bottom: -2, left: 0, right: 0, height: "70px",
+            background: COLORS.slate50, clipPath: "polygon(0 60%, 100% 0, 100% 100%, 0% 100%)"
+          }} />
+        </section>
+
+        {/* ── Case Study Cards ── */}
+        <section style={{ padding: "80px 32px" }}>
+          <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "32px" }}>
             {caseStudies.map((study, i) => (
-              <motion.article
-                key={study.id}
+              <motion.article key={study.id}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ delay: i * 0.1, type: "spring", stiffness: 60 }}
-                className="grid lg:grid-cols-2 gap-8 bg-card rounded-2xl border border-border overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-500"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                  background: COLORS.white,
+                  borderRadius: "20px",
+                  border: `1px solid ${COLORS.slate100}`,
+                  overflow: "hidden",
+                  boxShadow: "0 4px 24px rgba(29,78,216,0.08)",
+                  transition: "box-shadow 0.4s"
+                }}
+                onMouseEnter={e => (e.currentTarget as HTMLElement).style.boxShadow = "0 12px 40px rgba(29,78,216,0.14)"}
+                onMouseLeave={e => (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 24px rgba(29,78,216,0.08)"}
               >
                 {/* Image */}
-                <div className="relative aspect-[4/3] lg:aspect-auto overflow-hidden">
-                  <img
-                    src={study.image}
-                    alt={study.name}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                <div style={{ position: "relative", overflow: "hidden", minHeight: "280px" }}>
+                  <img src={study.image} alt={study.name}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.6s", display: "block" }}
+                    onMouseEnter={e => (e.currentTarget as HTMLImageElement).style.transform = "scale(1.05)"}
+                    onMouseLeave={e => (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"}
                   />
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-accent text-accent-foreground text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">
+                  {/* Blue tint overlay */}
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(11,31,75,0.5) 0%, rgba(11,31,75,0.05) 60%)" }} />
+                  {/* Top accent bar */}
+                  <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: `linear-gradient(90deg, ${COLORS.navy}, ${COLORS.blueLight})` }} />
+                  {/* Category badge */}
+                  <div style={{ position: "absolute", top: "16px", left: "16px" }}>
+                    <span style={{
+                      background: COLORS.navy, color: "#ffffff",
+                      fontSize: "0.7rem", fontWeight: 700,
+                      padding: "5px 14px", borderRadius: "100px",
+                      letterSpacing: "0.08em"
+                    }}>
                       {study.category}
                     </span>
                   </div>
                 </div>
 
                 {/* Content */}
-                <div className="p-6 sm:p-8 flex flex-col justify-between">
+                <div style={{ padding: "32px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                   <div>
-                    <div className="flex items-center gap-4 text-muted-foreground text-sm mb-3">
-                      <span className="inline-flex items-center gap-1">
-                        <MapPin size={14} /> {study.location}
-                      </span>
-                      <span className="inline-flex items-center gap-1">
-                        <Building2 size={14} /> {study.units}
-                      </span>
-                      <span className="inline-flex items-center gap-1">
-                        <Thermometer size={14} /> {study.systemType}
-                      </span>
+                    {/* Meta */}
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "14px", marginBottom: "16px" }}>
+                      {[
+                        { icon: <MapPin size={13} />, text: study.location },
+                        { icon: <Building2 size={13} />, text: study.units },
+                        { icon: <Thermometer size={13} />, text: study.systemType },
+                      ].map((m, idx) => (
+                        <span key={idx} style={{ display: "inline-flex", alignItems: "center", gap: "5px", fontSize: "0.8rem", color: COLORS.slate400 }}>
+                          <span style={{ color: COLORS.blue }}>{m.icon}</span> {m.text}
+                        </span>
+                      ))}
                     </div>
 
-                    <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-4">
+                    <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "clamp(1.4rem, 2.5vw, 1.9rem)", color: COLORS.navy, marginBottom: "20px" }}>
                       {study.name}
                     </h2>
 
-                    <div className="space-y-4 text-sm text-muted-foreground">
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-1">Challenge</h3>
-                        <p>{study.challenge}</p>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-1">Solution</h3>
-                        <p>{study.solution}</p>
-                      </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginBottom: "20px" }}>
+                      {[{ label: "Challenge", text: study.challenge }, { label: "Solution", text: study.solution }].map(item => (
+                        <div key={item.label}>
+                          <h3 style={{ fontWeight: 700, color: COLORS.navy, fontSize: "0.875rem", marginBottom: "5px" }}>{item.label}</h3>
+                          <p style={{ fontSize: "0.875rem", color: COLORS.slate400, lineHeight: 1.65 }}>{item.text}</p>
+                        </div>
+                      ))}
                     </div>
 
-                    <div className="mt-4">
-                      <h3 className="font-semibold text-foreground text-sm mb-2">Key Results</h3>
-                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {/* Results */}
+                    <div>
+                      <h3 style={{ fontWeight: 700, color: COLORS.navy, fontSize: "0.875rem", marginBottom: "10px" }}>Key Results</h3>
+                      <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
                         {study.results.map((r, idx) => (
-                          <li
-                            key={idx}
-                            className="flex items-start gap-2 text-sm text-muted-foreground"
-                          >
-                            <span className="mt-1.5 h-2 w-2 rounded-full bg-accent flex-shrink-0" />
+                          <li key={idx} style={{ display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "0.82rem", color: COLORS.slate400 }}>
+                            <span style={{ marginTop: "5px", width: "7px", height: "7px", borderRadius: "50%", background: COLORS.blue, flexShrink: 0, display: "block" }} />
                             {r}
                           </li>
                         ))}
@@ -283,12 +310,22 @@ const CaseStudies = () => {
                     </div>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-border">
-                    <button
-                      onClick={() => generatePDF(study)}
-                      className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-5 py-2.5 rounded-lg font-semibold text-sm hover:bg-accent/90 transition-colors shadow-glow-accent hover:shadow-glow-accent-strong"
+                  {/* Download button */}
+                  <div style={{ marginTop: "24px", paddingTop: "20px", borderTop: `1px solid ${COLORS.slate100}` }}>
+                    <button onClick={() => generatePDF(study)}
+                      style={{
+                        display: "inline-flex", alignItems: "center", gap: "8px",
+                        background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.blue})`,
+                        color: COLORS.white, padding: "11px 22px",
+                        borderRadius: "10px", border: "none", cursor: "pointer",
+                        fontWeight: 600, fontSize: "0.875rem",
+                        boxShadow: "0 4px 14px rgba(29,78,216,0.28)",
+                        transition: "all 0.2s", fontFamily: "'DM Sans', sans-serif"
+                      }}
+                      onMouseEnter={e => (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)"}
+                      onMouseLeave={e => (e.currentTarget as HTMLElement).style.transform = "translateY(0)"}
                     >
-                      <Download size={16} />
+                      <Download size={15} />
                       Download Case Study PDF
                     </button>
                   </div>
@@ -296,9 +333,8 @@ const CaseStudies = () => {
               </motion.article>
             ))}
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
     </>
   );
 };

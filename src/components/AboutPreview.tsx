@@ -1,6 +1,17 @@
 import { motion } from "framer-motion";
 import { Shield, Award, Users, Target, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+
+const COLORS = {
+  navy: "#0B1F4B",
+  blue: "#1D4ED8",
+  blueLight: "#3B82F6",
+  blueSky: "#DBEAFE",
+  bluePale: "#EFF6FF",
+  white: "#FFFFFF",
+  slate100: "#E8EFFF",
+  slate200: "#C7D8F8",
+  slate400: "#6B8AC7",
+};
 
 const stats = [
   { value: "9+", label: "Years Experience" },
@@ -16,108 +27,107 @@ const values = [
   { icon: Target, title: "Innovation", desc: "Latest energy-efficient and smart HVAC technologies, always ahead of the curve." },
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, delay: i * 0.1 },
-  }),
-};
+export default function AboutPreview() {
+  return (
+    <section style={{ padding: "100px 0", background: COLORS.white, fontFamily: "'DM Sans', sans-serif" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 48px" }}>
 
-const AboutPreview = () => (
-  <section className="py-24 bg-background overflow-hidden">
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-
-      {/* Section Label + Heading */}
-      <div className="max-w-3xl mb-16">
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-accent font-bold text-sm tracking-widest uppercase mb-3"
-        >
-          Who We Are
-        </motion.p>
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-4xl md:text-5xl font-black text-foreground tracking-tight leading-tight mb-6"
-        >
-          Building Comfort <br className="hidden sm:block" />
-          Since 2017
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-          className="text-muted-foreground text-lg leading-relaxed"
-        >
-          LIMRA Sales And Services is Bareilly's most trusted HVAC partner — delivering premium air conditioning solutions for homes, offices, hospitals, hotels, and industrial facilities across Uttar Pradesh.
-        </motion.p>
-      </div>
-
-      {/* Stats Row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
-        {stats.map((s, i) => (
+        {/* Header */}
+        <div style={{ textAlign: "center", marginBottom: "64px" }}>
           <motion.div
-            key={s.label}
-            custom={i}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            className="bg-muted rounded-2xl px-6 py-8 text-center border border-border"
+            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+            style={{
+              display: "inline-block",
+              background: "rgba(29,78,216,0.1)", border: "1px solid rgba(29,78,216,0.25)",
+              color: "#1D4ED8", fontWeight: 700, fontSize: "0.72rem",
+              letterSpacing: "0.18em", textTransform: "uppercase",
+              padding: "5px 14px", borderRadius: "100px", marginBottom: "18px"
+            }}
           >
-            <p className="text-4xl md:text-5xl font-black text-accent leading-none mb-2">{s.value}</p>
-            <p className="text-sm text-muted-foreground font-medium">{s.label}</p>
+            Who We Are
           </motion.div>
-        ))}
-      </div>
-
-      {/* Values Grid */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        {values.map((v, i) => (
-          <motion.div
-            key={v.title}
-            custom={i}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            className="bg-card border border-border rounded-2xl p-6 hover:shadow-lg transition-shadow group"
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            style={{
+              fontFamily: "'DM Serif Display', serif",
+              fontSize: "clamp(2rem, 4vw, 3.2rem)", color: COLORS.navy,
+              lineHeight: 1.15, marginBottom: "16px"
+            }}
           >
-            <div className="h-12 w-12 rounded-xl bg-accent/10 flex items-center justify-center mb-4 group-hover:bg-accent/20 transition-colors">
-              <v.icon size={22} className="text-accent" />
-            </div>
-            <h3 className="font-bold text-foreground mb-2 text-base">{v.title}</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">{v.desc}</p>
-          </motion.div>
-        ))}
-      </div>
+            Building Comfort Since 2017
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
+            style={{ color: COLORS.slate400, fontSize: "1.05rem", lineHeight: 1.75, maxWidth: "580px", margin: "0 auto" }}
+          >
+            LIMRA Sales And Services is Bareilly's most trusted HVAC partner — delivering premium air conditioning
+            solutions for homes, offices, hospitals, hotels, and industrial facilities across Uttar Pradesh.
+          </motion.p>
+        </div>
 
-      {/* CTA Link */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.3 }}
-        className="text-center"
-      >
-        <Link
-          to="/about"
-          className="inline-flex items-center gap-2 text-accent font-bold hover:gap-3 transition-all duration-200 text-sm group"
+        {/* Stats */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "20px", marginBottom: "64px" }}>
+          {stats.map((s, i) => (
+            <motion.div
+              key={s.label}
+              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+              style={{
+                background: COLORS.bluePale, borderRadius: "16px",
+                padding: "32px 24px", textAlign: "center",
+                border: `1px solid ${COLORS.slate100}`
+              }}
+            >
+              <div style={{ fontFamily: "'DM Serif Display', serif", fontSize: "2.8rem", color: COLORS.blue, lineHeight: 1, marginBottom: "8px" }}>{s.value}</div>
+              <div style={{ fontSize: "0.85rem", color: COLORS.slate400, fontWeight: 500 }}>{s.label}</div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Values */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "20px", marginBottom: "48px" }}>
+          {values.map((v, i) => (
+            <motion.div
+              key={v.title}
+              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+              style={{
+                background: COLORS.white,
+                border: `1px solid ${COLORS.slate100}`,
+                borderRadius: "16px", padding: "28px",
+                boxShadow: "0 2px 16px rgba(29,78,216,0.08)",
+                transition: "all 0.3s"
+              }}
+            >
+              <div style={{
+                width: "48px", height: "48px", borderRadius: "12px",
+                background: COLORS.blueSky, display: "flex", alignItems: "center",
+                justifyContent: "center", marginBottom: "16px"
+              }}>
+                <v.icon size={22} style={{ color: COLORS.blue }} />
+              </div>
+              <h3 style={{ fontWeight: 700, color: COLORS.navy, marginBottom: "8px", fontSize: "1rem" }}>{v.title}</h3>
+              <p style={{ fontSize: "0.87rem", color: COLORS.slate400, lineHeight: 1.65 }}>{v.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.3 }}
+          style={{ textAlign: "center" }}
         >
-          Learn More About Us
-          <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-        </Link>
-      </motion.div>
-
-    </div>
-  </section>
-);
-
-export default AboutPreview;
+          <a
+            href="/about"
+            style={{
+              display: "inline-flex", alignItems: "center", gap: "8px",
+              color: COLORS.blue, fontWeight: 700, fontSize: "0.9rem", textDecoration: "none"
+            }}
+          >
+            Learn More About Us <ArrowRight size={16} />
+          </a>
+        </motion.div>
+      </div>
+    </section>
+  );
+}

@@ -1,5 +1,17 @@
 import { motion } from "framer-motion";
-import { Wind, Building2, Snowflake, Fan, ThermometerSun, AirVent } from "lucide-react";
+import { Wind, Building2, Snowflake, Fan, ThermometerSun, AirVent, ArrowRight } from "lucide-react";
+
+const COLORS = {
+  navy: "#0B1F4B",
+  blue: "#1D4ED8",
+  blueLight: "#3B82F6",
+  blueSky: "#DBEAFE",
+  bluePale: "#EFF6FF",
+  white: "#FFFFFF",
+  slate50: "#F8FAFF",
+  slate100: "#E8EFFF",
+  slate400: "#6B8AC7",
+};
 
 const categories = [
   { icon: Snowflake, title: "Inverter Split AC", type: "Residential", desc: "Energy-efficient cooling for homes" },
@@ -10,54 +22,86 @@ const categories = [
   { icon: ThermometerSun, title: "Tower AC", type: "Residential", desc: "Powerful floor-standing cooling" },
 ];
 
-const ProductCategories = () => (
-  <section className="py-24 bg-background">
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-center mb-16"
-      >
-        <span className="text-sm font-semibold uppercase tracking-widest text-accent">Our Products</span>
-        <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mt-3">
-          Cooling Solutions for Every Need
-        </h2>
-      </motion.div>
+export default function ProductCategories() {
+  return (
+    <section
+      style={{
+        padding: "100px 0",
+        background: COLORS.slate50,
+        fontFamily: "'DM Sans', sans-serif",
+        backgroundImage: "linear-gradient(rgba(29,78,216,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(29,78,216,0.06) 1px, transparent 1px)",
+        backgroundSize: "48px 48px",
+      }}
+    >
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 48px" }}>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+          style={{ textAlign: "center", marginBottom: "64px" }}
+        >
+          <div style={{
+            display: "inline-block",
+            background: "rgba(29,78,216,0.1)", border: "1px solid rgba(29,78,216,0.25)",
+            color: "#1D4ED8", fontWeight: 700, fontSize: "0.72rem",
+            letterSpacing: "0.18em", textTransform: "uppercase",
+            padding: "5px 14px", borderRadius: "100px", marginBottom: "18px"
+          }}>
+            Our Products
+          </div>
+          <h2 style={{
+            fontFamily: "'DM Serif Display', serif",
+            fontSize: "clamp(2rem, 4vw, 3.2rem)", color: COLORS.navy, lineHeight: 1.15
+          }}>
+            Cooling Solutions for Every Need
+          </h2>
+        </motion.div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {categories.map((cat, i) => (
-          <motion.div
-            key={cat.title}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.1, type: "spring", stiffness: 100 }}
-            whileHover={{ rotateX: 3, rotateY: -3, scale: 1.02 }}
-            className="group relative p-8 rounded-2xl bg-card border border-border hover:border-accent/40 hover:shadow-glow-accent transition-all duration-300 overflow-hidden cursor-pointer"
-            style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
-          >
-            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-accent mb-4 bg-accent/10 px-3 py-1 rounded-full">
-              {cat.type}
-            </span>
-            <cat.icon className="text-foreground mb-4" size={36} strokeWidth={1.5} />
-            <h3 className="font-display text-xl font-bold text-foreground mb-2">{cat.title}</h3>
-            <p className="text-muted-foreground text-sm mb-6">{cat.desc}</p>
-
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "20px" }}>
+          {categories.map((cat, i) => (
             <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              whileHover={{ y: 0, opacity: 1 }}
-              className="absolute bottom-0 left-0 right-0 p-4"
+              key={cat.title}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08, type: "spring", stiffness: 100 }}
+              whileHover={{ y: -4 }}
+              style={{
+                background: COLORS.white,
+                border: `1px solid ${COLORS.slate100}`,
+                borderRadius: "20px", padding: "32px",
+                cursor: "pointer", transition: "all 0.3s",
+                position: "relative", overflow: "hidden",
+                boxShadow: "0 2px 16px rgba(29,78,216,0.08)"
+              }}
             >
-              <span className="block text-center text-sm font-semibold text-accent group-hover:opacity-100 opacity-0 transition-opacity duration-300">
-                Explore Category →
+              {/* Top accent bar */}
+              <div style={{
+                position: "absolute", top: 0, left: 0, right: 0, height: "3px",
+                background: `linear-gradient(90deg, ${COLORS.blue}, ${COLORS.blueLight})`
+              }} />
+
+              <span style={{
+                display: "inline-flex", alignItems: "center",
+                fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase",
+                letterSpacing: "0.12em", color: COLORS.blue,
+                background: COLORS.blueSky, padding: "4px 12px", borderRadius: "100px", marginBottom: "20px"
+              }}>
+                {cat.type}
+              </span>
+
+              <cat.icon size={36} style={{ color: COLORS.navy, marginBottom: "16px", display: "block" }} strokeWidth={1.5} />
+              <h3 style={{ fontWeight: 700, color: COLORS.navy, marginBottom: "8px", fontSize: "1.1rem" }}>{cat.title}</h3>
+              <p style={{ color: COLORS.slate400, fontSize: "0.88rem", marginBottom: "20px" }}>{cat.desc}</p>
+
+              <span style={{
+                display: "inline-flex", alignItems: "center", gap: "6px",
+                fontSize: "0.85rem", fontWeight: 600, color: COLORS.blue
+              }}>
+                Explore Category <ArrowRight size={14} />
               </span>
             </motion.div>
-          </motion.div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-);
-
-export default ProductCategories;
+    </section>
+  );
+}

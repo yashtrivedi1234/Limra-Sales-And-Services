@@ -8,11 +8,15 @@ import FeaturedProjects from "@/components/FeaturedProjects";
 import BlogPreview from "@/components/BlogPreview";
 import CTASection from "@/components/CTASection";
 import Newsletter from "@/components/Newsletter";
+import Product from "@/components/Product";
+import HVACSolutions from "@/components/HVACSolutions";
 
 const Index = () => (
-  <main className="">
+  <main>
     <Hero />
     <AboutPreview />
+    <HVACSolutions  />
+    <Product />
     <ProductCategories />
     <Services />
     <FeaturedProjects />

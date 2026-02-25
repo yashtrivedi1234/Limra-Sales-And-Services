@@ -5,13 +5,28 @@ import { brandsData } from '../data/brandsdata';
 import { motion } from 'framer-motion';
 import PageTransition from '../components/PageTransition';
 
-const renderIcon = (iconName: string, className: string): React.ReactNode => {
+const COLORS = {
+  navy: "#0B1F4B",
+  blue: "#1D4ED8",
+  blueLight: "#3B82F6",
+  blueSky: "#DBEAFE",
+  bluePale: "#EFF6FF",
+  white: "#FFFFFF",
+  slate50: "#F8FAFF",
+  slate100: "#E8EFFF",
+  slate200: "#C7D8F8",
+  slate400: "#6B8AC7",
+  slate600: "#3A5A9C",
+};
+
+const renderIcon = (iconName: string): React.ReactNode => {
+  const style = { color: COLORS.blue };
   switch (iconName) {
-    case 'trophy': return <Trophy size={24} className={className} />;
-    case 'heart': return <Heart size={24} className={className} />;
-    case 'rupee': return <IndianRupee size={24} className={className} />;
-    case 'star': return <Star size={24} className={className} />;
-    default: return <Star size={24} className={className} />;
+    case 'trophy': return <Trophy size={24} style={style} />;
+    case 'heart': return <Heart size={24} style={style} />;
+    case 'rupee': return <IndianRupee size={24} style={style} />;
+    case 'star': return <Star size={24} style={style} />;
+    default: return <Star size={24} style={style} />;
   }
 };
 
@@ -30,10 +45,14 @@ export default function BrandDetail() {
   if (!brand) {
     return (
       <PageTransition>
-        <div className="min-h-screen flex flex-col items-center justify-center bg-background">
-          <h2 className="text-3xl font-bold text-foreground mb-4">Brand not found</h2>
-          <p className="text-muted-foreground mb-6">We couldn't find details for "{slug}".</p>
-          <Link to="/" className="bg-accent text-accent-foreground px-6 py-2 rounded-md hover:opacity-90 transition">
+        <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: COLORS.white, fontFamily: "'DM Sans', sans-serif" }}>
+          <h2 style={{ fontSize: "1.8rem", fontWeight: 700, color: COLORS.navy, marginBottom: "12px" }}>Brand not found</h2>
+          <p style={{ color: COLORS.slate400, marginBottom: "24px" }}>We couldn't find details for "{slug}".</p>
+          <Link to="/" style={{
+            background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.blue})`,
+            color: COLORS.white, padding: "10px 24px", borderRadius: "8px",
+            textDecoration: "none", fontWeight: 600
+          }}>
             Go Back Home
           </Link>
         </div>
@@ -43,175 +62,215 @@ export default function BrandDetail() {
 
   return (
     <PageTransition>
-      <div className="w-full bg-background">
-        {/* Breadcrumb */}
-        <div className="bg-muted/50 border-b border-border">
-          <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-2 text-sm text-muted-foreground">
-            <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
-            <ChevronRight size={14} />
-            <Link to="/" className="hover:text-foreground transition-colors">Brands</Link>
-            <ChevronRight size={14} />
-            <span className="text-foreground font-medium">{brand.brandName}</span>
-          </div>
-        </div>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&display=swap');
+        .brand-page { font-family: 'DM Sans', sans-serif; background: ${COLORS.white}; }
+      `}</style>
 
-        {/* Hero Section */}
-        <section className="bg-hero-gradient relative overflow-hidden py-20 px-4 md:px-8">
-          {/* Decorative elements */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-10 right-10 w-72 h-72 rounded-full bg-accent blur-[100px]" />
-            <div className="absolute bottom-10 left-10 w-96 h-96 rounded-full bg-primary-foreground blur-[120px]" />
-          </div>
-          
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12 relative z-10">
-            <motion.div 
-              className="flex-1 space-y-6"
-              initial={{ opacity: 0, x: -40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <div className="inline-flex items-center gap-2 bg-accent/20 text-accent-foreground px-4 py-1.5 rounded-full text-sm font-medium backdrop-blur-sm border border-accent/30">
-                <Shield size={14} />
-                Authorized Dealer in Bareilly
+      <div className="brand-page" style={{ width: "100%" }}>
+
+     
+
+        {/* ── Hero ── */}
+        <section style={{
+          background: "linear-gradient(135deg, #0B1F4B 0%, #1A3580 50%, #1D4ED8 100%)",
+          padding: "80px 24px",
+          position: "relative", overflow: "hidden"
+        }}>
+          <div style={{
+            position: "absolute", inset: 0, opacity: 0.07,
+            backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.7) 1px, transparent 1px)",
+            backgroundSize: "32px 32px", pointerEvents: "none"
+          }} />
+
+          <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "48px", position: "relative", zIndex: 2 }}>
+            <motion.div style={{ flex: "1 1 320px" }}
+              initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
+
+              <div style={{
+                display: "inline-flex", alignItems: "center", gap: "7px",
+                background: "rgba(255,255,255,0.12)",
+                border: "1px solid rgba(255,255,255,0.25)",
+                color: "#93C5FD", padding: "6px 16px", borderRadius: "100px",
+                fontSize: "0.8rem", fontWeight: 600, marginBottom: "24px"
+              }}>
+                <Shield size={13} /> Authorized Dealer in Bareilly
               </div>
-              <h1 className="text-4xl md:text-5xl font-extrabold text-primary-foreground leading-tight">
-                <span className="text-gradient-accent">{brand.brandName}</span>
-                <br />
-                {brand.title}
+
+              <h1 style={{
+                fontFamily: "'DM Serif Display', serif",
+                fontSize: "clamp(2rem, 4.5vw, 3.5rem)",
+                color: "#ffffff", lineHeight: 1.1, marginBottom: "12px"
+              }}>
+                <span style={{ color: "#93C5FD" }}>{brand.brandName}</span>
+                <br />{brand.title}
               </h1>
-              <p className="text-primary-foreground/70 font-medium text-sm tracking-wide uppercase">
+
+              <p style={{ color: "rgba(219,234,254,0.65)", fontWeight: 700, fontSize: "0.8rem", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "16px" }}>
                 {brand.subtitle}
               </p>
-              <p className="text-primary-foreground/60 leading-relaxed max-w-lg text-base">
+              <p style={{ color: "rgba(219,234,254,0.75)", lineHeight: 1.75, maxWidth: "500px", fontWeight: 300, marginBottom: "28px" }}>
                 {brand.description}
               </p>
-              <div className="flex flex-wrap gap-3 pt-2">
-                <a 
-                  href="tel:+919839171701"
-                  className="bg-accent hover:bg-accent/90 text-accent-foreground px-6 py-3 rounded-lg font-semibold flex items-center gap-2 transition-all shadow-glow-accent hover:shadow-glow-accent-strong"
-                >
-                  <Phone size={18} />
-                  Get {brand.brandName} Quote
+
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
+                <a href="tel:+919839171701" style={{
+                  background: COLORS.white, color: COLORS.navy,
+                  padding: "12px 24px", borderRadius: "10px", fontWeight: 700,
+                  display: "inline-flex", alignItems: "center", gap: "8px",
+                  textDecoration: "none", fontSize: "0.9rem",
+                  boxShadow: "0 6px 20px rgba(0,0,0,0.2)"
+                }}>
+                  <Phone size={16} /> Get {brand.brandName} Quote
                 </a>
-                <a
-                  href={`https://wa.me/919839171701?text=Hi, I'm interested in ${brand.brandName} products`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-primary-foreground/10 hover:bg-primary-foreground/20 text-primary-foreground border border-primary-foreground/20 px-6 py-3 rounded-lg font-semibold flex items-center gap-2 transition-all backdrop-blur-sm"
-                >
-                  WhatsApp Us
-                  <ArrowRight size={16} />
+                <a href={`https://wa.me/919839171701?text=Hi, I'm interested in ${brand.brandName} products`}
+                  target="_blank" rel="noopener noreferrer"
+                  style={{
+                    background: "rgba(255,255,255,0.1)", color: "#ffffff",
+                    border: "1px solid rgba(255,255,255,0.25)",
+                    padding: "12px 24px", borderRadius: "10px", fontWeight: 600,
+                    display: "inline-flex", alignItems: "center", gap: "8px",
+                    textDecoration: "none", fontSize: "0.9rem"
+                  }}>
+                  WhatsApp Us <ArrowRight size={15} />
                 </a>
               </div>
             </motion.div>
-            <motion.div 
-              className="flex-1"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <div className="relative">
-                <div className="absolute -inset-4 bg-accent/20 rounded-2xl blur-2xl" />
-                <img 
-                  src={brand.heroImage} 
-                  alt={brand.title} 
-                  className="w-full rounded-2xl shadow-2xl object-cover relative z-10 border border-primary-foreground/10"
+
+            <motion.div style={{ flex: "1 1 280px" }}
+              initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}>
+              <div style={{ position: "relative" }}>
+                <div style={{
+                  position: "absolute", inset: "-12px",
+                  background: "rgba(59,130,246,0.2)",
+                  borderRadius: "20px", filter: "blur(24px)"
+                }} />
+                <img src={brand.heroImage} alt={brand.title}
+                  style={{ width: "100%", borderRadius: "16px", boxShadow: "0 24px 60px rgba(0,0,0,0.3)", position: "relative", zIndex: 1, display: "block" }}
                 />
               </div>
             </motion.div>
           </div>
         </section>
 
-        {/* Features Section */}
-        <section className="py-20 px-4 max-w-6xl mx-auto">
-          <motion.div 
-            className="text-center mb-14"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <span className="text-accent font-semibold text-sm uppercase tracking-widest">Why Choose</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-2">
-              {brand.brandName} in Bareilly
-            </h2>
-            <div className="w-16 h-1 bg-accent mx-auto mt-4 rounded-full" />
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {brand.features.map((feature, idx) => (
-              <motion.div
-                key={idx}
-                custom={idx}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="group flex items-start gap-5 p-6 bg-card border border-border rounded-xl hover:shadow-lg hover:border-accent/30 transition-all duration-300"
-              >
-                <div className="p-3 rounded-xl bg-accent/10 text-accent group-hover:bg-accent group-hover:text-accent-foreground transition-colors duration-300 shrink-0">
-                  {renderIcon(feature.icon, "")}
-                </div>
-                <div>
-                  <h3 className="font-bold text-foreground text-lg">{feature.title}</h3>
-                  <p className="text-muted-foreground text-sm mt-1">{feature.desc}</p>
-                </div>
-              </motion.div>
-            ))}
+        {/* ── Features ── */}
+        <section style={{ padding: "80px 24px", background: COLORS.white }}>
+          <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+            <motion.div style={{ textAlign: "center", marginBottom: "56px" }}
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+              <div style={{
+                display: "inline-block",
+                background: "rgba(29,78,216,0.1)", border: "1px solid rgba(29,78,216,0.25)",
+                color: COLORS.blue, fontWeight: 700, fontSize: "0.72rem",
+                letterSpacing: "0.18em", textTransform: "uppercase",
+                padding: "5px 14px", borderRadius: "100px", marginBottom: "16px"
+              }}>Why Choose</div>
+              <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "clamp(1.8rem, 3vw, 2.8rem)", color: COLORS.navy }}>
+                {brand.brandName} in Bareilly
+              </h2>
+              <div style={{ width: "48px", height: "3px", background: `linear-gradient(90deg, ${COLORS.navy}, ${COLORS.blueLight})`, borderRadius: "2px", margin: "16px auto 0" }} />
+            </motion.div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "16px" }}>
+              {brand.features.map((feature, idx) => (
+                <motion.div key={idx} custom={idx} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
+                  style={{
+                    display: "flex", alignItems: "flex-start", gap: "18px",
+                    padding: "24px", background: COLORS.white,
+                    border: `1px solid ${COLORS.slate100}`, borderRadius: "16px",
+                    boxShadow: "0 2px 12px rgba(29,78,216,0.07)",
+                    transition: "all 0.3s"
+                  }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLElement).style.borderColor = COLORS.slate200;
+                    (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 28px rgba(29,78,216,0.12)";
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLElement).style.borderColor = COLORS.slate100;
+                    (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 12px rgba(29,78,216,0.07)";
+                  }}>
+                  <div style={{
+                    padding: "12px", borderRadius: "12px",
+                    background: COLORS.blueSky, flexShrink: 0
+                  }}>
+                    {renderIcon(feature.icon)}
+                  </div>
+                  <div>
+                    <h3 style={{ fontWeight: 700, color: COLORS.navy, fontSize: "1rem", marginBottom: "6px" }}>{feature.title}</h3>
+                    <p style={{ color: COLORS.slate400, fontSize: "0.875rem", lineHeight: 1.6 }}>{feature.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </section>
 
-        {/* Product Range Section */}
-        <section className="bg-muted/40 py-20 px-4">
-          <div className="max-w-6xl mx-auto">
-            <motion.div 
-              className="text-center mb-14"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <span className="text-accent font-semibold text-sm uppercase tracking-widest">Our Collection</span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-2">
+        {/* ── Product Range ── */}
+        <section style={{ padding: "80px 24px", background: COLORS.slate50 }}>
+          <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+            <motion.div style={{ textAlign: "center", marginBottom: "56px" }}
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+              <div style={{
+                display: "inline-block",
+                background: "rgba(29,78,216,0.1)", border: "1px solid rgba(29,78,216,0.25)",
+                color: COLORS.blue, fontWeight: 700, fontSize: "0.72rem",
+                letterSpacing: "0.18em", textTransform: "uppercase",
+                padding: "5px 14px", borderRadius: "100px", marginBottom: "16px"
+              }}>Our Collection</div>
+              <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "clamp(1.8rem, 3vw, 2.8rem)", color: COLORS.navy }}>
                 {brand.brandName} Product Range
               </h2>
-              <div className="w-16 h-1 bg-accent mx-auto mt-4 rounded-full" />
+              <div style={{ width: "48px", height: "3px", background: `linear-gradient(90deg, ${COLORS.navy}, ${COLORS.blueLight})`, borderRadius: "2px", margin: "16px auto 0" }} />
             </motion.div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "20px" }}>
               {brand.products.map((product, idx) => (
-                <motion.div
-                  key={idx}
-                  custom={idx}
-                  variants={fadeUp}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  className="group bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-                >
-                  <div className="h-52 bg-muted/60 flex items-center justify-center p-6 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-accent/5 group-hover:bg-accent/10 transition-colors duration-300" />
-                    <img 
-                      src={product.image} 
-                      alt={product.title} 
-                      className="max-h-full object-contain relative z-10 group-hover:scale-105 transition-transform duration-500" 
+                <motion.div key={idx} custom={idx} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
+                  style={{
+                    background: COLORS.white, border: `1px solid ${COLORS.slate100}`,
+                    borderRadius: "20px", overflow: "hidden",
+                    boxShadow: "0 2px 16px rgba(29,78,216,0.07)",
+                    transition: "all 0.3s"
+                  }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)";
+                    (e.currentTarget as HTMLElement).style.boxShadow = "0 12px 36px rgba(29,78,216,0.13)";
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+                    (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 16px rgba(29,78,216,0.07)";
+                  }}>
+                  <div style={{
+                    height: "200px", background: COLORS.bluePale,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    padding: "24px", position: "relative", overflow: "hidden"
+                  }}>
+                    <div style={{ height: "3px", position: "absolute", top: 0, left: 0, right: 0, background: `linear-gradient(90deg, ${COLORS.navy}, ${COLORS.blueLight})` }} />
+                    <img src={product.image} alt={product.title}
+                      style={{ maxHeight: "100%", objectFit: "contain" }}
                     />
                   </div>
-                  <div className="p-6 border-t border-border">
-                    <h3 className="font-bold text-xl text-foreground mb-1">{product.title}</h3>
-                    <p className="text-muted-foreground text-sm mb-4">{product.desc}</p>
-                    <ul className="space-y-2.5">
+                  <div style={{ padding: "24px", borderTop: `1px solid ${COLORS.slate100}` }}>
+                    <h3 style={{ fontWeight: 700, fontSize: "1.1rem", color: COLORS.navy, marginBottom: "6px" }}>{product.title}</h3>
+                    <p style={{ color: COLORS.slate400, fontSize: "0.875rem", marginBottom: "18px" }}>{product.desc}</p>
+                    <ul style={{ listStyle: "none", padding: 0, margin: "0 0 20px", display: "flex", flexDirection: "column", gap: "8px" }}>
                       {product.featuresList.map((item, fIdx) => (
-                        <li key={fIdx} className="flex items-center gap-2.5 text-sm text-foreground/80">
-                          <CheckCircle2 size={16} className="text-accent shrink-0" />
+                        <li key={fIdx} style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.875rem", color: COLORS.slate600 }}>
+                          <CheckCircle2 size={15} style={{ color: COLORS.blue, flexShrink: 0 }} />
                           {item}
                         </li>
                       ))}
                     </ul>
-                    <a
-                      href="tel:+919839171701"
-                      className="mt-5 w-full inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground py-2.5 rounded-lg text-sm font-semibold transition-colors"
-                    >
-                      <Phone size={15} />
-                      Enquire Now
+                    <a href="tel:+919839171701" style={{
+                      width: "100%", display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "8px",
+                      background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.blue})`,
+                      color: COLORS.white, padding: "11px", borderRadius: "10px",
+                      textDecoration: "none", fontWeight: 600, fontSize: "0.875rem",
+                      boxShadow: "0 4px 14px rgba(29,78,216,0.25)"
+                    }}>
+                      <Phone size={14} /> Enquire Now
                     </a>
                   </div>
                 </motion.div>
@@ -220,35 +279,42 @@ export default function BrandDetail() {
           </div>
         </section>
 
-        {/* Footer CTA Section */}
-        <section className="bg-hero-gradient relative overflow-hidden py-20 px-4 text-center">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-accent blur-[150px]" />
-          </div>
-          <motion.div
-            className="relative z-10 max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-              Ready to Experience <span className="text-gradient-accent">{brand.brandName}</span>?
+        {/* ── Footer CTA ── */}
+        <section style={{
+          background: "linear-gradient(135deg, #0B1F4B 0%, #1A3580 50%, #1D4ED8 100%)",
+          padding: "80px 24px", textAlign: "center",
+          position: "relative", overflow: "hidden"
+        }}>
+          <div style={{
+            position: "absolute", inset: 0, opacity: 0.08,
+            backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.7) 1px, transparent 1px)",
+            backgroundSize: "28px 28px", pointerEvents: "none"
+          }} />
+          <motion.div style={{ maxWidth: "580px", margin: "0 auto", position: "relative", zIndex: 2 }}
+            initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", color: "#ffffff", marginBottom: "16px" }}>
+              Ready to Experience <span style={{ color: "#93C5FD" }}>{brand.brandName}</span>?
             </h2>
-            <p className="text-primary-foreground/60 mb-8 text-lg">
-              Get the best deals on {brand.brandName} air conditioners in Bareilly with expert installation & service.
+            <p style={{ color: "rgba(219,234,254,0.7)", marginBottom: "36px", fontSize: "1.05rem", fontWeight: 300 }}>
+              Get the best deals on {brand.brandName} air conditioners in Bareilly with expert installation &amp; service.
             </p>
-            <div className="flex justify-center gap-4 flex-wrap">
-              <a
-                href="tel:+919839171701"
-                className="bg-accent hover:bg-accent/90 text-accent-foreground px-8 py-3.5 rounded-lg font-semibold flex items-center gap-2 transition-all shadow-glow-accent hover:shadow-glow-accent-strong"
-              >
-                <Phone size={18} /> Call for Best Price
+            <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "14px" }}>
+              <a href="tel:+919839171701" style={{
+                background: COLORS.white, color: COLORS.navy,
+                padding: "13px 28px", borderRadius: "10px", fontWeight: 700,
+                display: "inline-flex", alignItems: "center", gap: "8px",
+                textDecoration: "none", fontSize: "0.95rem",
+                boxShadow: "0 8px 24px rgba(0,0,0,0.2)"
+              }}>
+                <Phone size={16} /> Call for Best Price
               </a>
-              <Link
-                to="/contact"
-                className="bg-primary-foreground/10 hover:bg-primary-foreground/20 text-primary-foreground border border-primary-foreground/20 px-8 py-3.5 rounded-lg font-semibold transition-all backdrop-blur-sm"
-              >
+              <Link to="/contact" style={{
+                background: "rgba(255,255,255,0.1)", color: "#ffffff",
+                border: "1px solid rgba(255,255,255,0.25)",
+                padding: "13px 28px", borderRadius: "10px", fontWeight: 600,
+                display: "inline-flex", alignItems: "center", gap: "8px",
+                textDecoration: "none", fontSize: "0.95rem"
+              }}>
                 Visit Showroom
               </Link>
             </div>

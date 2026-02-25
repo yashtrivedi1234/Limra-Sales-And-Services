@@ -1,222 +1,331 @@
-import React from 'react';
-import { Phone, ArrowLeft, Thermometer, Wind, PhoneCall } from 'lucide-react';
+import { useState } from "react";
+import {
+  Thermometer,
+  Wind,
+  Zap,
+  Phone,
+  Star,
+  ChevronRight,
+  ArrowLeft,
+  AirVent,
+  Columns,
+  Move,
+  SquareStack,
+  MonitorSpeaker,
+} from "lucide-react";
 
-// --- Types ---
-interface ResidentialProduct {
+interface Product {
+  name: string;
+  ton: string;
+  price: string;
+  stars: number;
+}
+
+interface Category {
   id: string;
+  icon: JSX.Element;
   title: string;
   description: string;
+  image: string;
   brands: string[];
-  imageUrl: string;
-  icon: React.ReactNode;
+  products: Product[];
 }
 
-interface CommercialProduct {
-  id: string;
-  title: string;
-  tag: string;
-  description: string;
-  features: string[];
-  imageUrl: string;
-  icon: React.ReactNode;
-}
-
-// --- Mock Data ---
-const residentialProducts: ResidentialProduct[] = [
+const categories: Category[] = [
   {
-    id: '1',
-    title: 'Inverter Split Air Conditioners',
-    description: 'Energy-efficient inverter technology split ACs with variable speed',
-    brands: ['Daikin', 'Mitsubishi Heavy', 'Carrier', 'Amstrad', 'Midea', 'Godrej'],
-    imageUrl: 'https://images.unsplash.com/photo-1620021382417-66c3c7370a59?auto=format&fit=crop&q=80&w=800',
-    icon: <Thermometer className="w-5 h-5 text-white" />
+    id: "inverter-split",
+    icon: <Thermometer size={22} />,
+    title: "Inverter Split Air Conditioners",
+    description: "Energy-efficient inverter technology split ACs with variable speed",
+    image: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&q=80",
+    brands: ["Daikin", "Mitsubishi Heavy", "Carrier", "Amstrad", "Midea", "Godrej"],
+    products: [
+      { name: "Daikin FTXS35K Inverter", ton: "1.5 Ton", price: "₹38,000", stars: 5 },
+      { name: "Carrier Inverter Neo", ton: "1 Ton", price: "₹32,000", stars: 5 },
+    ],
   },
   {
-    id: '2',
-    title: 'Non-Inverter Split Air Conditioners',
-    description: 'Fixed speed split ACs for consistent cooling performance',
-    brands: ['Daikin', 'Mitsubishi Heavy', 'Carrier', 'Amstrad', 'Midea', 'Godrej'],
-    imageUrl: 'https://images.unsplash.com/photo-1618220179428-22790b46a0eb?auto=format&fit=crop&q=80&w=800',
-    icon: <Thermometer className="w-5 h-5 text-white" />
+    id: "non-inverter-split",
+    icon: <Thermometer size={22} />,
+    title: "Non-Inverter Split Air Conditioners",
+    description: "Fixed speed split ACs for consistent cooling performance",
+    image: "https://images.unsplash.com/photo-1631545806609-aa1f62a2f5a1?w=600&q=80",
+    brands: ["Daikin", "Mitsubishi Heavy", "Carrier", "Amstrad", "Midea", "Godrej"],
+    products: [
+      { name: "Carrier Estrella", ton: "1.5 Ton", price: "₹25,000", stars: 3 },
+      { name: "Godrej Fixed Speed", ton: "1 Ton", price: "₹22,000", stars: 3 },
+    ],
   },
   {
-    id: '3',
-    title: 'Cassette Air Conditioners',
-    description: 'Ceiling-mounted cassette ACs for uniform cooling',
-    brands: ['Daikin', 'Carrier', 'Mitsubishi Heavy', 'Cruise'],
-    imageUrl: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800',
-    icon: <Wind className="w-5 h-5 text-white" />
-  }
+    id: "cassette",
+    icon: <Wind size={22} />,
+    title: "Cassette Air Conditioners",
+    description: "Ceiling-mounted cassette ACs for uniform cooling",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
+    brands: ["Daikin", "Carrier", "Mitsubishi Heavy", "Cruise"],
+    products: [
+      { name: "Daikin FCVF50ARV16", ton: "2 Ton", price: "₹85,000", stars: 5 },
+      { name: "Carrier Cassette 42KCC036", ton: "3 Ton", price: "₹95,000", stars: 3 },
+    ],
+  },
+  {
+    id: "floor-standing",
+    icon: <AirVent size={22} />,
+    title: "Floor Standing Air Conditioners",
+    description: "Powerful floor-mounted ACs for large spaces",
+    image: "https://images.unsplash.com/photo-1504274066651-8d31a536b11a?w=600&q=80",
+    brands: ["Daikin", "Mitsubishi Heavy", "Carrier"],
+    products: [
+      { name: "Daikin FVA100A", ton: "3 Ton", price: "₹1,25,000", stars: 5 },
+      { name: "Carrier Floor Mount 48", ton: "4 Ton", price: "₹1,40,000", stars: 4 },
+    ],
+  },
+  {
+    id: "window",
+    icon: <Zap size={22} />,
+    title: "Window Air Conditioners",
+    description: "Compact window ACs perfect for smaller spaces",
+    image: "https://images.unsplash.com/photo-1613690399151-65ea69478674?w=600&q=80",
+    brands: ["Carrier", "Godrej", "Amstrad", "Cruise"],
+    products: [
+      { name: "Carrier Estrella Window", ton: "1.5 Ton", price: "₹18,000", stars: 4 },
+      { name: "Godrej GWC 18", ton: "1.5 Ton", price: "₹16,000", stars: 3 },
+    ],
+  },
+  {
+    id: "portable",
+    icon: <Move size={22} />,
+    title: "Portable Air Conditioners",
+    description: "Mobile ACs that can be moved anywhere",
+    image: "https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600&q=80",
+    brands: ["Cruise"],
+    products: [
+      { name: "Cruise Portable 1.5T", ton: "1.5 Ton", price: "₹28,000", stars: 3 },
+    ],
+  },
 ];
 
-const commercialProducts: CommercialProduct[] = [
-  {
-    id: '1',
-    title: 'VRV Systems',
-    tag: 'Daikin Exclusive',
-    description: 'Variable Refrigerant Volume systems for maximum efficiency',
-    features: ['Multi-zone control', 'Energy recovery', 'Heat pump technology'],
-    imageUrl: 'https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&q=80&w=800',
-    icon: <Wind className="w-5 h-5 text-white" />
-  },
-  {
-    id: '2',
-    title: 'Chillers',
-    tag: 'Multi-Brand',
-    description: 'Industrial cooling solutions for large facilities',
-    features: ['Water-cooled chillers', 'Air-cooled systems', 'Modular designs'],
-    imageUrl: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800',
-    icon: <Wind className="w-5 h-5 text-white" />
-  },
-  {
-    id: '3',
-    title: 'Heat Pumps',
-    tag: 'Daikin & Carrier',
-    description: 'Energy-efficient heating and cooling systems',
-    features: ['Inverter technology', 'All-season comfort', 'Eco-friendly refrigerant'],
-    imageUrl: 'https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=800',
-    icon: <Wind className="w-5 h-5 text-white" />
-  }
-];
-
-// --- Components ---
-
-const HeroSection = () => (
-  <div className="relative bg-gradient-to-r from-[#1e4b7a] to-[#7fa1c3] py-20 px-6 sm:px-12 lg:px-24">
-    {/* Optional background image overlay would go here */}
-    <div className="relative z-10 max-w-4xl">
-      <div className="flex items-center gap-3 text-white mb-4">
-        <ArrowLeft className="w-6 h-6 cursor-pointer hover:text-gray-200" />
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Our Products</h1>
-      </div>
-      <p className="text-white/90 text-lg max-w-2xl mb-8 leading-relaxed">
-        Explore our comprehensive range of HVAC solutions, air conditioners, water systems, and air purification products from leading brands.
-      </p>
-      <button className="bg-[#f97316] hover:bg-[#ea580c] text-white font-medium py-3 px-6 rounded-md flex items-center gap-2 transition-colors">
-        <PhoneCall className="w-5 h-5" />
-        Get Free Consultation
-      </button>
+function StarRating({ count }: { count: number }) {
+  return (
+    <div className="flex gap-0.5">
+      {[1, 2, 3, 4, 5].map((i) => (
+        <Star
+          key={i}
+          size={13}
+          className={i <= count ? "text-orange-400 fill-orange-400" : "text-gray-300 fill-gray-200"}
+        />
+      ))}
+      <span className="text-xs text-gray-500 ml-1">{count} Star</span>
     </div>
-  </div>
-);
+  );
+}
 
-const ResidentialProducts = () => (
-  <div className="max-w-7xl mx-auto py-16 px-6">
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {residentialProducts.map((product) => (
-        <div key={product.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
-          <div className="relative h-56 bg-gray-200">
-            <img 
-              src={product.imageUrl} 
-              alt={product.title} 
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute top-4 left-4 bg-[#1e4b7a] p-2 rounded-lg">
-              {product.icon}
-            </div>
-          </div>
-          <div className="p-6 flex flex-col flex-grow">
-            <h3 className="text-xl font-bold text-[#1e4b7a] mb-2">{product.title}</h3>
-            <p className="text-gray-600 text-sm mb-6 flex-grow">{product.description}</p>
-            
-            <div>
-              <p className="text-sm font-semibold text-gray-800 mb-3">Available Brands:</p>
-              <div className="flex flex-wrap gap-2">
-                {product.brands.map((brand, idx) => (
-                  <span key={idx} className="bg-gray-100 text-gray-600 text-xs font-medium px-3 py-1.5 rounded-full">
-                    {brand}
-                  </span>
-                ))}
-              </div>
-            </div>
+function ProductCard({ cat }: { cat: Category }) {
+  return (
+    <div
+      className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col border border-slate-100"
+      style={{ fontFamily: "'DM Sans', sans-serif" }}
+    >
+      {/* Image */}
+      <div className="relative h-52 overflow-hidden">
+        <div className="absolute top-4 left-4 z-10 bg-[#1a3a5c] text-white rounded-xl p-2.5 shadow-lg">
+          {cat.icon}
+        </div>
+        <img
+          src={cat.image}
+          alt={cat.title}
+          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+      </div>
+
+      {/* Content */}
+      <div className="p-5 flex flex-col flex-1">
+        <h3
+          className="text-[#1a3a5c] font-bold text-lg mb-1.5 leading-snug"
+          style={{ fontFamily: "'Fraunces', serif" }}
+        >
+          {cat.title}
+        </h3>
+        <p className="text-slate-500 text-sm mb-4">{cat.description}</p>
+
+        {/* Brands */}
+        <div className="mb-4">
+          <p className="text-xs text-slate-400 font-semibold uppercase tracking-wide mb-2">Available Brands</p>
+          <div className="flex flex-wrap gap-1.5">
+            {cat.brands.map((b) => (
+              <span
+                key={b}
+                className="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full border border-slate-200"
+              >
+                {b}
+              </span>
+            ))}
           </div>
         </div>
-      ))}
-    </div>
-  </div>
-);
 
-const CommercialProducts = () => (
-  <div className="bg-gray-50/50 py-16 px-6">
-    <div className="max-w-7xl mx-auto">
-      <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold text-[#1e4b7a] mb-4">Commercial HVAC Solutions</h2>
-        <p className="text-gray-500 max-w-2xl mx-auto">
-          Specialized HVAC systems for commercial spaces including gyms, salons, hospitals, schools, hotels, and more.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {commercialProducts.map((product) => (
-          <div key={product.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
-            <div className="relative h-56 bg-gray-200">
-              <img 
-                src={product.imageUrl} 
-                alt={product.title} 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute top-4 left-4 bg-[#1e4b7a] p-2 rounded-lg">
-                {product.icon}
-              </div>
-            </div>
-            
-            <div className="p-6 flex flex-col flex-grow">
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="text-xl font-bold text-[#1e4b7a]">{product.title}</h3>
-                <span className="bg-white border border-gray-200 text-gray-600 text-xs px-3 py-1 rounded-full">
-                  {product.tag}
-                </span>
-              </div>
-              <p className="text-gray-500 text-sm mb-6">{product.description}</p>
-              
-              <ul className="space-y-2 mb-8 flex-grow">
-                {product.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-center text-sm text-gray-600">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#f97316] mr-2 flex-shrink-0"></span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-              
-              <button className="w-full py-2.5 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 flex items-center justify-center gap-2 transition-colors">
-                <Phone className="w-4 h-4" />
-                Get Quote
-              </button>
+        {/* Featured Products */}
+        {cat.products.length > 0 && (
+          <div className="mb-4 flex-1">
+            <p className="text-xs text-slate-400 font-semibold uppercase tracking-wide mb-2">Featured Products</p>
+            <div className="space-y-2">
+              {cat.products.map((p) => (
+                <div
+                  key={p.name}
+                  className="bg-slate-50 rounded-xl px-3 py-2.5 flex items-center justify-between border border-slate-100 hover:border-[#e07830]/40 hover:bg-orange-50/30 transition-colors cursor-pointer"
+                >
+                  <div>
+                    <p className="text-sm font-semibold text-[#1a3a5c]">{p.name}</p>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <span className="text-xs text-slate-400">{p.ton}</span>
+                      <StarRating count={p.stars} />
+                    </div>
+                  </div>
+                  <span className="text-sm font-bold text-[#e07830] whitespace-nowrap ml-2">{p.price}</span>
+                </div>
+              ))}
             </div>
           </div>
-        ))}
-      </div>
-    </div>
-  </div>
-);
+        )}
 
-const CTASection = () => (
-  <div className="bg-[#0f447a] py-16 px-6 text-center">
-    <div className="max-w-3xl mx-auto">
-      <h2 className="text-3xl font-bold text-white mb-4">Ready to Find Your Perfect HVAC Solution?</h2>
-      <p className="text-white/80 mb-8">Get expert consultation and competitive pricing on all products</p>
-      
-      <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-        <button className="w-full sm:w-auto bg-[#f97316] hover:bg-[#ea580c] text-white font-medium py-3 px-8 rounded-md flex items-center justify-center gap-2 transition-colors">
-          <Phone className="w-5 h-5" />
-          Call for Free Site Visit
-        </button>
-        <button className="w-full sm:w-auto bg-transparent hover:bg-white/10 text-white font-medium py-3 px-8 rounded-md border border-white transition-colors">
-          Request Quote
+        {/* CTA */}
+        <button className="mt-auto w-full flex items-center justify-center gap-2 border-2 border-[#1a3a5c] text-[#1a3a5c] rounded-xl py-2.5 text-sm font-semibold hover:bg-[#1a3a5c] hover:text-white transition-all duration-200 group">
+          <Phone size={15} />
+          Get Quote
+          <ChevronRight size={14} className="opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all" />
         </button>
       </div>
     </div>
-  </div>
-);
+  );
+}
 
-// --- Main App ---
-export default function App() {
+export default function ProductsPage() {
+  const [activeFilter, setActiveFilter] = useState("all");
+
+  const filters = [
+    { id: "all", label: "All Products" },
+    { id: "split", label: "Split ACs" },
+    { id: "cassette", label: "Cassette" },
+    { id: "floor-standing", label: "Floor Standing" },
+    { id: "window", label: "Window" },
+    { id: "portable", label: "Portable" },
+  ];
+
+  const filterMap: Record<string, string[]> = {
+    all: categories.map((c) => c.id),
+    split: ["inverter-split", "non-inverter-split"],
+    cassette: ["cassette"],
+    "floor-standing": ["floor-standing"],
+    window: ["window"],
+    portable: ["portable"],
+  };
+
+  const visible = categories.filter((c) => filterMap[activeFilter]?.includes(c.id));
+
   return (
-    <div className="min-h-screen bg-white font-sans">
-      <HeroSection />
-      <ResidentialProducts />
-      <CommercialProducts />
-      <CTASection />
+    <div style={{ fontFamily: "'DM Sans', sans-serif", background: "#f5f7fa", minHeight: "100vh" }}>
+      <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,400&display=swap"
+        rel="stylesheet"
+      />
+
+      {/* Hero Banner */}
+      <div
+        className="relative overflow-hidden"
+        style={{
+          background: "linear-gradient(135deg, #0d2744 0%, #1a3a5c 50%, #1e4976 100%)",
+          minHeight: 280,
+        }}
+      >
+        {/* Decorative circles */}
+        <div
+          className="absolute -right-20 -top-20 rounded-full opacity-10"
+          style={{ width: 400, height: 400, background: "radial-gradient(circle, #4a9fd4, transparent)" }}
+        />
+        <div
+          className="absolute right-40 bottom-0 rounded-full opacity-5"
+          style={{ width: 300, height: 300, background: "radial-gradient(circle, #fff, transparent)" }}
+        />
+
+        {/* Ghost AC icons */}
+        <div className="absolute right-8 bottom-0 flex gap-4 items-end opacity-10">
+          {[100, 80, 120, 90, 110].map((h, i) => (
+            <div key={i} className="bg-white rounded-lg" style={{ width: 60, height: h }} />
+          ))}
+        </div>
+
+        <div className="relative z-10 max-w-6xl mx-auto px-6 py-14">
+          <button className="flex items-center gap-1 text-white/60 text-sm mb-4 hover:text-white transition-colors">
+            <ArrowLeft size={14} />
+            Back
+          </button>
+          <h1
+            className="text-5xl font-black text-white mb-3 leading-tight"
+            style={{ fontFamily: "'Fraunces', serif" }}
+          >
+            Our Products
+          </h1>
+          <p className="text-white/70 max-w-md mb-7 text-base leading-relaxed">
+            Explore our comprehensive range of HVAC solutions, air conditioners, water systems, and air purification
+            products from leading brands.
+          </p>
+          <button
+            className="flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white transition-all duration-200 hover:brightness-110 active:scale-95"
+            style={{ background: "#e07830" }}
+          >
+            <Phone size={15} />
+            Get Free Consultation
+          </button>
+        </div>
+      </div>
+
+      {/* Filter Pills */}
+      <div className="sticky top-0 z-20 bg-white/90 backdrop-blur border-b border-slate-100 shadow-sm">
+        <div className="max-w-6xl mx-auto px-6 py-3 flex gap-2 overflow-x-auto scrollbar-hide">
+          {filters.map((f) => (
+            <button
+              key={f.id}
+              onClick={() => setActiveFilter(f.id)}
+              className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border ${
+                activeFilter === f.id
+                  ? "bg-[#1a3a5c] text-white border-[#1a3a5c] shadow-md"
+                  : "bg-white text-slate-600 border-slate-200 hover:border-[#1a3a5c] hover:text-[#1a3a5c]"
+              }`}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Product Grid */}
+      <div className="max-w-6xl mx-auto px-6 py-10">
+        <p className="text-slate-400 text-sm mb-6">
+          Showing <span className="font-semibold text-slate-700">{visible.length}</span> product categories
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {visible.map((cat) => (
+            <ProductCard key={cat.id} cat={cat} />
+          ))}
+        </div>
+      </div>
+
+      {/* Bottom CTA */}
+      <div className="bg-[#1a3a5c] mt-10 py-12 text-center">
+        <h2 className="text-white text-2xl font-black mb-2" style={{ fontFamily: "'Fraunces', serif" }}>
+          Need Help Choosing?
+        </h2>
+        <p className="text-white/60 text-sm mb-6">
+          Our experts will help you find the perfect AC for your space and budget.
+        </p>
+        <button
+          className="inline-flex items-center gap-2 px-7 py-3 rounded-xl font-semibold text-white text-sm transition-all duration-200 hover:brightness-110"
+          style={{ background: "#e07830" }}
+        >
+          <Phone size={15} />
+          Call Us Now
+        </button>
+      </div>
     </div>
   );
 }

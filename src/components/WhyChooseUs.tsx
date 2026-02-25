@@ -1,78 +1,85 @@
-import React from 'react';
-import { Award, Users, ShieldCheck, Zap } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Award, Users, ShieldCheck, Zap } from "lucide-react";
 
-const WhyChooseUs = () => {
-  const features = [
-    {
-      id: 1,
-      title: "Industry Leader",
-      description: "Recognized as the leading digital signage provider in UP",
-      icon: <Award className="w-8 h-8 text-white" />
-    },
-    {
-      id: 2,
-      title: "200+ Happy Clients",
-      description: "Serving businesses across multiple industries",
-      icon: <Users className="w-8 h-8 text-white" />
-    },
-    {
-      id: 3,
-      title: "Quality Assured",
-      description: "ISO certified with 24/7 support and warranty",
-      icon: <ShieldCheck className="w-8 h-8 text-white" />
-    },
-    {
-      id: 4,
-      title: "Latest Technology",
-      description: "Cutting-edge LED displays and smart solutions",
-      icon: <Zap className="w-8 h-8 text-white" />
-    }
-  ];
+const COLORS = {
+  navy: "#0B1F4B",
+  blue: "#1D4ED8",
+  blueLight: "#3B82F6",
+  bluePale: "#EFF6FF",
+  white: "#FFFFFF",
+  slate50: "#F8FAFF",
+  slate100: "#E8EFFF",
+  slate400: "#6B8AC7",
+};
 
+const features = [
+  { icon: Award, title: "Industry Leader", description: "Recognized as the leading HVAC provider in Uttar Pradesh." },
+  { icon: Users, title: "50,000+ Happy Clients", description: "Serving homes, offices, hospitals, and industrial facilities." },
+  { icon: ShieldCheck, title: "Quality Assured", description: "Certified team with comprehensive warranty and 24/7 support." },
+  { icon: Zap, title: "Latest Technology", description: "Cutting-edge energy-efficient and smart HVAC systems." },
+];
+
+export default function WhyChooseUs() {
   return (
-    <section className="py-16 bg-white font-sans">
-      <div className="container mx-auto px-4 max-w-6xl">
-        
-        {/* Header Section */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4 flex flex-col items-center">
-            <span>
-              Why <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-blue-600">Choose Us</span>
-            </span>
-            {/* Gradient Underline */}
-            <div className="h-1 w-32 bg-gradient-to-r from-emerald-500 to-blue-600 mt-2 rounded-full"></div>
+    <section style={{ padding: "100px 0", background: COLORS.slate50, fontFamily: "'DM Sans', sans-serif" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 48px" }}>
+
+        {/* Header */}
+        <div style={{ textAlign: "center", marginBottom: "64px" }}>
+          <div style={{
+            display: "inline-block",
+            background: "rgba(29,78,216,0.1)", border: "1px solid rgba(29,78,216,0.25)",
+            color: "#1D4ED8", fontWeight: 700, fontSize: "0.72rem",
+            letterSpacing: "0.18em", textTransform: "uppercase",
+            padding: "5px 14px", borderRadius: "100px", marginBottom: "18px"
+          }}>
+            Why Choose Us
+          </div>
+          <h2 style={{
+            fontFamily: "'DM Serif Display', serif",
+            fontSize: "clamp(2rem, 4vw, 3.2rem)", color: COLORS.navy, lineHeight: 1.15, marginBottom: "16px"
+          }}>
+            The LIMRA Difference
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-            Discover what sets Digital Signage Solutions UP apart — innovation, reliability, and a commitment to excellence in every display.
+          <p style={{ color: COLORS.slate400, fontSize: "1.05rem", maxWidth: "520px", margin: "0 auto", lineHeight: 1.7 }}>
+            Discover what sets LIMRA Sales And Services apart — innovation, reliability, and commitment to
+            excellence in every installation.
           </p>
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((feature) => (
-            <div 
-              key={feature.id} 
-              className="bg-gray-50 border border-gray-100 rounded-xl p-8 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
+        {/* Cards */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))", gap: "24px" }}>
+          {features.map((f, i) => (
+            <motion.div
+              key={f.title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              whileHover={{ y: -4 }}
+              style={{
+                background: COLORS.white, borderRadius: "20px",
+                padding: "36px 28px", textAlign: "center",
+                border: `1px solid ${COLORS.slate100}`,
+                boxShadow: "0 2px 16px rgba(29,78,216,0.08)",
+                transition: "all 0.3s"
+              }}
             >
-              {/* Icon Container with Gradient */}
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-emerald-400 to-blue-500 flex items-center justify-center mb-6 shadow-md group-hover:scale-110 transition-transform duration-300">
-                {feature.icon}
+              <div style={{
+                width: "72px", height: "72px", borderRadius: "50%",
+                background: `linear-gradient(135deg, ${COLORS.navy} 0%, ${COLORS.blueLight} 100%)`,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                margin: "0 auto 24px",
+                boxShadow: "0 8px 24px rgba(29,78,216,0.25)"
+              }}>
+                <f.icon size={28} style={{ color: COLORS.white }} />
               </div>
-              
-              {/* Text Content */}
-              <h3 className="text-xl font-bold text-gray-900 mb-3">
-                {feature.title}
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                {feature.description}
-              </p>
-            </div>
+              <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: COLORS.navy, marginBottom: "10px" }}>{f.title}</h3>
+              <p style={{ fontSize: "0.88rem", color: COLORS.slate400, lineHeight: 1.65 }}>{f.description}</p>
+            </motion.div>
           ))}
         </div>
-
       </div>
     </section>
   );
-};
-
-export default WhyChooseUs;
+}

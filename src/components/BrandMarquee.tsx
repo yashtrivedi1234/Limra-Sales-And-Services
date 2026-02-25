@@ -2,11 +2,22 @@ import { motion } from "framer-motion";
 import amstrad from "@/assets/amstrad.png";
 import blueStar from "@/assets/blue-star.png";
 import carrier from "@/assets/carrier.png";
-import daikin from "@/assets/dalkin.png";   
+import daikin from "@/assets/dalkin.png";
 import hitachi from "@/assets/hitachi.png";
 import midea from "@/assets/Midea.png";
 import mitsubishi from "@/assets/mitsubishi.png";
 import voltas from "@/assets/voltas.png";
+
+const COLORS = {
+  navy: "#0B1F4B",
+  blue: "#1D4ED8",
+  blueLight: "#3B82F6",
+  blueSky: "#DBEAFE",
+  bluePale: "#EFF6FF",
+  white: "#FFFFFF",
+  slate50: "#F8FAFF",
+  slate100: "#E8EFFF",
+};
 
 const brands = [
   { name: "Daikin", subtitle: "Premium VRV Systems", image: daikin },
@@ -23,73 +34,148 @@ const BrandMarquee = () => {
   const doubled = [...brands, ...brands];
 
   return (
-    <section className="py-16 bg-gradient-to-b from-slate-50 to-white overflow-hidden relative">
+    <section
+      style={{
+        padding: "72px 0",
+        background: COLORS.white,
+        overflow: "hidden",
+        position: "relative",
+        fontFamily: "'DM Sans', sans-serif",
+      }}
+    >
       {/* Heading */}
-      <div className="text-center mb-10 px-4">
-        <p className="text-xs font-semibold tracking-[0.2em] text-blue-500 uppercase mb-2">
+      <div style={{ textAlign: "center", marginBottom: "48px", padding: "0 24px" }}>
+        <div
+          style={{
+            display: "inline-block",
+            background: "rgba(29,78,216,0.1)",
+            border: "1px solid rgba(29,78,216,0.25)",
+            color: COLORS.blue,
+            fontWeight: 700,
+            fontSize: "0.72rem",
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            padding: "5px 14px",
+            borderRadius: "100px",
+            marginBottom: "14px",
+          }}
+        >
           Trusted Brands
-        </p>
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+        </div>
+
+        <h2
+          style={{
+            fontFamily: "'DM Serif Display', serif",
+            fontSize: "clamp(1.6rem, 3vw, 2.4rem)",
+            color: COLORS.navy,
+            lineHeight: 1.2,
+          }}
+        >
           We Work With The Best
         </h2>
       </div>
 
       {/* Fade edges */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-24 z-10 bg-gradient-to-r from-slate-50 to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-24 z-10 bg-gradient-to-l from-white to-transparent" />
+      <div
+        style={{
+          pointerEvents: "none",
+          position: "absolute",
+          inset: "0",
+          zIndex: 10,
+          left: 0,
+          right: "auto",
+          width: "96px",
+          background: "linear-gradient(to right, #ffffff, transparent)",
+        }}
+      />
+      <div
+        style={{
+          pointerEvents: "none",
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          right: 0,
+          width: "96px",
+          zIndex: 10,
+          background: "linear-gradient(to left, #ffffff, transparent)",
+        }}
+      />
 
-      {/* Marquee wrapper */}
-      <div className="overflow-hidden">
+      {/* Marquee */}
+      <div style={{ overflow: "hidden" }}>
         <div
-          className="flex gap-5 w-max"
           style={{
+            display: "flex",
+            gap: "16px",
+            width: "max-content",
             animation: "marquee 28s linear infinite",
           }}
           onMouseEnter={(e) =>
-            ((e.currentTarget as HTMLElement).style.animationPlayState =
-              "paused")
+            ((e.currentTarget as HTMLElement).style.animationPlayState = "paused")
           }
           onMouseLeave={(e) =>
-            ((e.currentTarget as HTMLElement).style.animationPlayState =
-              "running")
+            ((e.currentTarget as HTMLElement).style.animationPlayState = "running")
           }
         >
           {doubled.map((brand, i) => (
             <motion.div
               key={i}
-              whileHover={{
-                y: -10,
-                scale: 1.07,
-                boxShadow:
-                  "0 20px 40px -10px rgba(59,130,246,0.2), 0 8px 16px -6px rgba(0,0,0,0.1)",
-              }}
+              whileHover={{ y: -8, scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="flex-shrink-0 w-[170px] bg-white border border-gray-100 rounded-2xl cursor-pointer text-center p-5 group relative"
               style={{
-                boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+                flexShrink: 0,
+                width: "170px",
+                background: COLORS.bluePale,
+                border: `1px solid ${COLORS.slate100}`,
+                borderRadius: "16px",
+                cursor: "pointer",
+                textAlign: "center",
+                padding: "12px 10px", // 🔽 reduced padding
+                position: "relative",
+                overflow: "hidden",
+                boxShadow: "0 2px 12px rgba(29,78,216,0.06)",
               }}
             >
-              {/* Glow on hover */}
-              <div className="absolute inset-0 rounded-2xl bg-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
               {/* Logo */}
-              <div className="h-14 flex items-center justify-center mb-3 relative z-10">
+              <div
+                style={{
+                  height: "72px", // 🔼 increased height
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginBottom: "4px", // 🔽 reduced gap
+                }}
+              >
                 <img
                   src={brand.image}
-                 
-                  className="max-h-11 object-contain transition-transform duration-300 group-hover:scale-105"
+                  alt={brand.name}
+                  style={{
+                    maxHeight: "60px", // 🔼 larger logo
+                    maxWidth: "100%",
+                    objectFit: "contain",
+                  }}
                 />
               </div>
 
-
               {/* Bottom accent line */}
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 w-0 group-hover:w-3/4 bg-blue-400 rounded-full transition-all duration-300" />
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  height: "3px",
+                  width: "0",
+                  background: `linear-gradient(90deg, ${COLORS.navy}, ${COLORS.blueLight})`,
+                  borderRadius: "2px",
+                  transition: "width 0.3s",
+                }}
+              />
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Keyframes */}
       <style>{`
         @keyframes marquee {
           0%   { transform: translateX(0); }
