@@ -14,6 +14,9 @@ import {
   Zap,
   ArrowRight,
 } from "lucide-react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import * as Yup from "yup";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type ServiceOption = { id: string; label: string; icon: React.ReactNode };
@@ -24,6 +27,33 @@ type FormState = {
   service: string;
   message: string;
 };
+type FormErrors = Partial<Record<keyof FormState, string>>;
+
+// ─── Yup Validation Schema ────────────────────────────────────────────────────
+const contactSchema = Yup.object().shape({
+  name: Yup.string()
+    .required("Full name is required")
+    .matches(/^[A-Za-z\s]+$/, "Name can only contain letters and spaces")
+    .min(2, "Name must be at least 2 characters")
+    .max(50, "Name must be at most 50 characters")
+    .trim(),
+
+  email: Yup.string()
+    .required("Email address is required")
+    .email("Please enter a valid email address")
+    .max(100, "Email is too long"),
+
+  phone: Yup.string()
+    .nullable()
+    .transform((v) => (v === "" ? null : v))
+    .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
+
+  service: Yup.string().optional(),
+
+  message: Yup.string()
+    .optional()
+    .max(500, "Message cannot exceed 500 characters"),
+});
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const services: ServiceOption[] = [
@@ -70,7 +100,11 @@ const Field = ({
   icon,
   value,
   onChange,
+  onBlur,
   required = false,
+  disabled = false,
+  error,
+  maxLength,
 }: {
   id: string;
   label: string;
@@ -78,47 +112,78 @@ const Field = ({
   icon: React.ReactNode;
   value: string;
   onChange: (v: string) => void;
+  onBlur?: () => void;
   required?: boolean;
+  disabled?: boolean;
+  error?: string;
+  maxLength?: number;
 }) => {
   const [focused, setFocused] = useState(false);
   const active = focused || value.length > 0;
+  const hasError = !!error;
 
   return (
-    <div className="relative">
+    <div className="relative flex flex-col gap-1">
       <div
-        className="absolute inset-0 rounded-xl pointer-events-none transition-all duration-300"
-        style={{
-          boxShadow: focused
-            ? "0 0 0 2px #3b82f6, 0 0 20px 2px rgba(59,130,246,0.15)"
-            : "0 0 0 1.5px rgba(203,213,225,1)",
-        }}
-      />
-      <span
-        className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200 z-10 ${focused ? "text-blue-600" : "text-slate-400"}`}
+        className="relative"
       >
-        {icon}
-      </span>
-      <label
-        htmlFor={id}
-        className={`absolute left-12 z-10 pointer-events-none font-semibold transition-all duration-200 ${
-          active
-            ? "top-2.5 text-[10px] tracking-[0.12em] uppercase text-blue-600"
-            : "top-1/2 -translate-y-1/2 text-sm text-slate-500"
-        }`}
-      >
-        {label}
-      </label>
-      <input
-        id={id}
-        type={type}
-        required={required}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-        className="w-full rounded-xl pl-12 pr-4 pt-7 pb-3 text-sm text-slate-900 outline-none caret-blue-600"
-        style={{ background: "#ffffff" }}
-      />
+        <div
+          className="absolute inset-0 rounded-xl pointer-events-none transition-all duration-300"
+          style={{
+            boxShadow: hasError
+              ? "0 0 0 2px #ef4444, 0 0 16px 2px rgba(239,68,68,0.1)"
+              : focused
+              ? "0 0 0 2px #3b82f6, 0 0 20px 2px rgba(59,130,246,0.15)"
+              : "0 0 0 1.5px rgba(203,213,225,1)",
+          }}
+        />
+        <span
+          className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200 z-10 ${
+            hasError ? "text-red-400" : focused ? "text-blue-600" : "text-slate-400"
+          }`}
+        >
+          {icon}
+        </span>
+        <label
+          htmlFor={id}
+          className={`absolute left-12 z-10 pointer-events-none font-semibold transition-all duration-200 ${
+            active
+              ? `top-2 text-[10px] tracking-[0.12em] uppercase ${hasError ? "text-red-500" : "text-blue-600"}`
+              : "top-1/2 -translate-y-1/2 text-sm text-slate-500"
+          }`}
+        >
+          {label}
+        </label>
+        <input
+          id={id}
+          type={type}
+          required={required}
+          disabled={disabled}
+          value={value}
+          maxLength={maxLength}
+          onChange={(e) => onChange(e.target.value)}
+          onFocus={() => setFocused(true)}
+          onBlur={() => {
+            setFocused(false);
+            onBlur?.();
+          }}
+          className="w-full rounded-xl pl-12 pr-4 pt-6 pb-2 h-14 text-sm text-slate-900 outline-none caret-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+          style={{ background: "#ffffff" }}
+        />
+      </div>
+      <AnimatePresence>
+        {error && (
+          <motion.p
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.18 }}
+            className="text-[11px] text-red-500 font-medium pl-1"
+          >
+            {error}
+          </motion.p>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
@@ -130,51 +195,87 @@ const TextareaField = ({
   icon,
   value,
   onChange,
+  onBlur,
+  disabled = false,
+  error,
 }: {
   id: string;
   label: string;
   icon: React.ReactNode;
   value: string;
   onChange: (v: string) => void;
+  onBlur?: () => void;
+  disabled?: boolean;
+  error?: string;
 }) => {
   const [focused, setFocused] = useState(false);
   const active = focused || value.length > 0;
+  const hasError = !!error;
 
   return (
-    <div className="relative">
-      <div
-        className="absolute inset-0 rounded-xl pointer-events-none transition-all duration-300"
-        style={{
-          boxShadow: focused
-            ? "0 0 0 2px #3b82f6, 0 0 20px 2px rgba(59,130,246,0.15)"
-            : "0 0 0 1.5px rgba(203,213,225,1)",
-        }}
-      />
-      <span
-        className={`absolute left-4 top-5 transition-colors duration-200 z-10 ${focused ? "text-blue-600" : "text-slate-400"}`}
-      >
-        {icon}
-      </span>
-      <label
-        htmlFor={id}
-        className={`absolute left-12 z-10 pointer-events-none font-semibold transition-all duration-200 ${
-          active
-            ? "top-3 text-[10px] tracking-[0.12em] uppercase text-blue-600"
-            : "top-5 text-sm text-slate-500"
-        }`}
-      >
-        {label}
-      </label>
-      <textarea
-        id={id}
-        rows={4}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-        className="w-full rounded-xl pl-12 pr-4 pt-8 pb-4 text-sm text-slate-900 outline-none caret-blue-600 resize-none"
-        style={{ background: "#ffffff" }}
-      />
+    <div className="flex flex-col gap-1">
+      <div className="relative">
+        <div
+          className="absolute inset-0 rounded-xl pointer-events-none transition-all duration-300"
+          style={{
+            boxShadow: hasError
+              ? "0 0 0 2px #ef4444, 0 0 16px 2px rgba(239,68,68,0.1)"
+              : focused
+              ? "0 0 0 2px #3b82f6, 0 0 20px 2px rgba(59,130,246,0.15)"
+              : "0 0 0 1.5px rgba(203,213,225,1)",
+          }}
+        />
+        <span
+          className={`absolute left-4 top-5 transition-colors duration-200 z-10 ${
+            hasError ? "text-red-400" : focused ? "text-blue-600" : "text-slate-400"
+          }`}
+        >
+          {icon}
+        </span>
+        <label
+          htmlFor={id}
+          className={`absolute left-12 z-10 pointer-events-none font-semibold transition-all duration-200 ${
+            active
+              ? `top-3 text-[10px] tracking-[0.12em] uppercase ${hasError ? "text-red-500" : "text-blue-600"}`
+              : "top-5 text-sm text-slate-500"
+          }`}
+        >
+          {label}
+        </label>
+        <textarea
+          id={id}
+          rows={4}
+          maxLength={500}
+          disabled={disabled}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onFocus={() => setFocused(true)}
+          onBlur={() => {
+            setFocused(false);
+            onBlur?.();
+          }}
+          className="w-full rounded-xl pl-12 pr-4 pt-8 pb-4 text-sm text-slate-900 outline-none caret-blue-600 resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+          style={{ background: "#ffffff" }}
+        />
+      </div>
+      <div className="flex justify-between items-center pl-1">
+        <AnimatePresence>
+          {error && (
+            <motion.p
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.18 }}
+              className="text-[11px] text-red-500 font-medium"
+            >
+              {error}
+            </motion.p>
+          )}
+        </AnimatePresence>
+        <span className="text-[10px] text-slate-400 ml-auto">
+          {value.length}/500
+        </span>
+      </div>
     </div>
   );
 };
@@ -201,9 +302,7 @@ const ServicePicker = ({
             onClick={() => onChange(sel ? "" : s.id)}
             className="relative flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200"
             style={{
-              background: sel
-                ? "rgba(59,130,246,0.1)"
-                : "rgba(255,255,255,1)",
+              background: sel ? "rgba(59,130,246,0.1)" : "rgba(255,255,255,1)",
               border: sel
                 ? "1.5px solid #3b82f6"
                 : "1.5px solid rgba(203,213,225,1)",
@@ -288,27 +387,124 @@ export default function ContactUs() {
     service: "",
     message: "",
   });
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<Partial<Record<keyof FormState, boolean>>>({});
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const set = (k: keyof FormState) => (v: string) =>
-    setForm((p) => ({ ...p, [k]: v }));
+  // ── Validate a single field on blur ────────────────────────────────────────
+  const validateField = async (field: keyof FormState, value: string) => {
+    try {
+      await contactSchema.validateAt(field, { ...form, [field]: value });
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        setErrors((prev) => ({ ...prev, [field]: err.message }));
+      }
+    }
+  };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setSubmitted(true);
-    }, 1800);
+  // ── Validate entire form ────────────────────────────────────────────────────
+  const validateAll = async (): Promise<boolean> => {
+    try {
+      await contactSchema.validate(form, { abortEarly: false });
+      setErrors({});
+      return true;
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const newErrors: FormErrors = {};
+        err.inner.forEach((e) => {
+          if (e.path) newErrors[e.path as keyof FormState] = e.message;
+        });
+        setErrors(newErrors);
+        // Mark all as touched so errors show
+        setTouched({ name: true, email: true, phone: true, message: true });
+      }
+      return false;
+    }
+  };
+
+  // ── Controlled setters with input restriction ──────────────────────────────
+  const set = (k: keyof FormState) => (v: string) => {
+    let sanitized = v;
+
+    if (k === "name") {
+      // Only allow letters and spaces — strip everything else as user types
+      sanitized = v.replace(/[^A-Za-z\s]/g, "");
+    }
+
+    if (k === "phone") {
+      // Only allow digits, max 10
+      sanitized = v.replace(/\D/g, "").slice(0, 10);
+    }
+
+    setForm((p) => ({ ...p, [k]: sanitized }));
+
+    // Re-validate live if field was already touched
+    if (touched[k]) {
+      validateField(k, sanitized);
+    }
+  };
+
+  const handleBlur = (field: keyof FormState) => () => {
+    setTouched((p) => ({ ...p, [field]: true }));
+    validateField(field, form[field]);
   };
 
   const reset = () => {
     setSubmitted(false);
+    setErrors({});
+    setTouched({});
     setForm({ name: "", email: "", phone: "", service: "", message: "" });
   };
 
-  const canSubmit = !loading && form.name.trim() && form.email.trim();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (loading) return;
+
+    const isValid = await validateAll();
+    if (!isValid) return;
+
+    setLoading(true);
+    const toastId = toast.loading("Sending your message...");
+
+    try {
+      const res = await fetch("http://localhost:5000/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Something went wrong");
+
+      toast.update(toastId, {
+        render: "✅ Message sent successfully!",
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+      });
+
+      reset();
+      setSubmitted(true);
+    } catch (err: any) {
+      console.error(err);
+      toast.update(toastId, {
+        render: err.message || "❌ Failed to send message",
+        type: "error",
+        isLoading: false,
+        autoClose: 4000,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const canSubmit =
+    !loading &&
+    form.name.trim() &&
+    form.email.trim() &&
+    Object.values(errors).every((e) => !e);
 
   return (
     <div className="min-h-screen font-sans" style={{ background: "#f8fafc" }}>
@@ -430,7 +626,12 @@ export default function ContactUs() {
               </p>
               <div className="flex flex-wrap gap-2 mb-4">
                 {[
-                  "Daikin", "Mitsubishi", "Carrier", "Midea", "Hitachi", "Blue Star"
+                  "Daikin",
+                  "Mitsubishi",
+                  "Carrier",
+                  "Midea",
+                  "Hitachi",
+                  "Blue Star",
                 ].map((b) => (
                   <span
                     key={b}
@@ -441,8 +642,8 @@ export default function ContactUs() {
                 ))}
               </div>
               <p className="text-slate-500 text-xs leading-relaxed">
-                Authorized partner for sales & service — your factory warranty is
-                always guaranteed.
+                Authorized partner for sales & service — your factory warranty
+                is always guaranteed.
               </p>
             </div>
 
@@ -460,7 +661,9 @@ export default function ContactUs() {
               ].map((t) => (
                 <div key={t} className="flex items-center gap-2.5">
                   <CheckCircle size={14} className="text-blue-500 shrink-0" />
-                  <span className="text-slate-600 text-xs font-medium">{t}</span>
+                  <span className="text-slate-600 text-xs font-medium">
+                    {t}
+                  </span>
                 </div>
               ))}
             </div>
@@ -503,29 +706,41 @@ export default function ContactUs() {
                       <Field
                         id="name"
                         label="Full Name"
+                        disabled={loading}
                         icon={<User size={16} />}
                         value={form.name}
                         onChange={set("name")}
+                        onBlur={handleBlur("name")}
+                        error={touched.name ? errors.name : undefined}
                         required
+                        maxLength={50}
                       />
                       <Field
                         id="phone"
+                        disabled={loading}
                         label="Phone Number"
                         type="tel"
                         icon={<Phone size={16} />}
                         value={form.phone}
                         onChange={set("phone")}
+                        onBlur={handleBlur("phone")}
+                        error={touched.phone ? errors.phone : undefined}
+                        maxLength={10}
                       />
                     </div>
 
                     <Field
                       id="email"
                       label="Email Address"
+                      disabled={loading}
                       type="email"
                       icon={<Mail size={16} />}
                       value={form.email}
                       onChange={set("email")}
+                      onBlur={handleBlur("email")}
+                      error={touched.email ? errors.email : undefined}
                       required
+                      maxLength={100}
                     />
 
                     <ServicePicker
@@ -536,9 +751,12 @@ export default function ContactUs() {
                     <TextareaField
                       id="message"
                       label="Describe your project…"
+                      disabled={loading}
                       icon={<MessageSquare size={16} />}
                       value={form.message}
                       onChange={set("message")}
+                      onBlur={handleBlur("message")}
+                      error={touched.message ? errors.message : undefined}
                     />
 
                     {/* Submit btn */}
@@ -559,20 +777,31 @@ export default function ContactUs() {
                       {loading ? (
                         <motion.div
                           animate={{ rotate: 360 }}
-                          transition={{ duration: 0.9, repeat: Infinity, ease: "linear" }}
+                          transition={{
+                            duration: 0.9,
+                            repeat: Infinity,
+                            ease: "linear",
+                          }}
                           className="w-5 h-5 rounded-full border-2 border-white/30 border-t-white"
                         />
                       ) : (
                         <>
-                          <Send size={16} className="group-hover:translate-x-0.5 transition-transform" />
+                          <Send
+                            size={16}
+                            className="group-hover:translate-x-0.5 transition-transform"
+                          />
                           <span>Send Message — Free Consultation</span>
-                          <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                          <ArrowRight
+                            size={16}
+                            className="group-hover:translate-x-1 transition-transform"
+                          />
                         </>
                       )}
                     </button>
 
                     <p className="text-center text-[11px] text-slate-400 pt-2">
-                      Privacy First: We never share your contact details with 3rd parties.
+                      Privacy First: We never share your contact details with
+                      3rd parties.
                     </p>
                   </div>
                 </motion.form>

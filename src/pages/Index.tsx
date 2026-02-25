@@ -7,31 +7,20 @@ import WhyChooseUs from "@/components/WhyChooseUs";
 import FeaturedProjects from "@/components/FeaturedProjects";
 import BlogPreview from "@/components/BlogPreview";
 import CTASection from "@/components/CTASection";
+import Newsletter from "@/components/Newsletter";
 
 const Index = () => (
   <main className="">
-    {/* 1. First Impression */}
     <Hero />
-    
-    {/* 2. Immediate Social Proof/Trust */}
-    <BrandMarquee />
-    
-    {/* 3. Core Offering (What do you do?) */}
-    <Services />
-    <ProductCategories />
-    
-    {/* 4. Why You? (Building the Brand Story) */}
     <AboutPreview />
-    <WhyChooseUs />
-    
-    {/* 5. Proof of Quality (Show, don't just tell) */}
+    <ProductCategories />
+    <Services />
     <FeaturedProjects />
-    
-    {/* 6. Authority & Engagement */}
-    <BlogPreview />
-    
-    {/* 7. Final Push */}
+    <WhyChooseUs />
     <CTASection />
+    <BrandMarquee />
+    <BlogPreview />
+    <Newsletter />
   </main>
 );
 
