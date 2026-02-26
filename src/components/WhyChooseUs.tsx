@@ -16,13 +16,13 @@ const staggerReveal = {
 
 export default function WhyChooseUs() {
   return (
-    <section style={{ padding: "100px 0", background: BRAND.bgSoft, fontFamily: "'Inter', sans-serif" }}>
+    <section style={{ padding: "100px 0", background: BRAND.bgSoft, fontFamily: "'DM Sans', sans-serif" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 48px" }}>
         <div style={{ textAlign: "center", marginBottom: "64px" }}>
           <div style={{ display: "inline-block", background: `${BRAND.primary}1A`, border: `1px solid ${BRAND.primary}40`, color: BRAND.primary, fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 14px", borderRadius: "100px", marginBottom: "18px" }}>
             Why Choose Us
           </div>
-          <h2 style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.dark, lineHeight: 1.15, marginBottom: "16px", fontWeight: 800 }}>
+          <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.dark, lineHeight: 1.15, marginBottom: "16px" }}>
             The LIMRA Difference
           </h2>
           <p style={{ color: BRAND.slate400, fontSize: "1.05rem", maxWidth: "520px", margin: "0 auto", lineHeight: 1.7 }}>
@@ -54,7 +54,7 @@ export default function WhyChooseUs() {
               }}>
                 <f.icon size={28} style={{ color: BRAND.white }} />
               </div>
-              <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: BRAND.dark, marginBottom: "10px" }}>{f.title}</h3>
+              <h3 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, fontSize: "1.15rem", color: BRAND.dark, marginBottom: "10px" }}>{f.title}</h3>
               <p style={{ fontSize: "0.88rem", color: BRAND.slate400, lineHeight: 1.65 }}>{f.description}</p>
             </motion.div>
           ))}

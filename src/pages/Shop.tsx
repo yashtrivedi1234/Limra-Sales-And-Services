@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { 
   Search, SlidersHorizontal, Grid, List, ExternalLink, 
   Truck, Award, ShieldCheck, CheckCircle, Star, 
@@ -142,184 +142,192 @@ export default function Shop() {
 
   // --- NAVIGATION ---
   const handleBuyNow = (product: Product) => {
-    // Navigate to the checkout page and pass the selected product in the state
     navigate('/checkout', { state: { product } });
   };
 
+  const displayFont = { fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400 };
+
   return (
-    <div className="min-h-screen bg-[#f8fafc] font-sans text-slate-800 pb-12">
-      {/* Header Section */}
-      <div className="bg-[#f0f4f8] pt-12 pb-8 px-4 flex flex-col items-center text-center">
-        <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 mt-14">
-          Shop Premium Air Conditioners & HVAC products
-        </h1>
-        <p className="text-slate-500 max-w-2xl mb-8">
-          Find the perfect solution for your home with our wide selection of energy-efficient 
-          HVAC products from top brands.
-        </p>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display:ital,wght@0,400;1,400&display=swap');
+      `}</style>
+      <div className="min-h-screen bg-[#f8fafc] font-sans text-slate-800 pb-12">
+        {/* Header Section */}
+        <div className="bg-[#f0f4f8] pt-12 pb-8 px-4 flex flex-col items-center text-center">
+          <h1
+            style={displayFont}
+            className="text-3xl md:text-4xl text-slate-900 mb-4 mt-14"
+          >
+            Shop Premium Air Conditioners & HVAC Products
+          </h1>
+          <p className="text-slate-500 max-w-2xl mb-8">
+            Find the perfect solution for your home with our wide selection of energy-efficient 
+            HVAC products from top brands.
+          </p>
 
-        {/* Trust Badges */}
-        <div className="flex flex-wrap justify-center gap-4 mb-8">
-          <div className="bg-white rounded-xl shadow-sm px-6 py-4 flex items-center gap-4 min-w-[200px] relative">
-            <ExternalLink className="absolute top-2 right-2 w-4 h-4 text-slate-300" />
-            <div className="font-bold text-3xl text-orange-500">Jd</div>
-            <div className="text-left">
-              <div className="font-semibold text-sm">JustDial</div>
-              <div className="text-xs text-slate-400">400+ ratings</div>
+          {/* Trust Badges */}
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
+            <div className="bg-white rounded-xl shadow-sm px-6 py-4 flex items-center gap-4 min-w-[200px] relative">
+              <ExternalLink className="absolute top-2 right-2 w-4 h-4 text-slate-300" />
+              <div className="font-bold text-3xl text-orange-500">Jd</div>
+              <div className="text-left">
+                <div className="font-semibold text-sm">JustDial</div>
+                <div className="text-xs text-slate-400">400+ ratings</div>
+              </div>
+            </div>
+            <div className="bg-white rounded-xl shadow-sm px-6 py-4 flex items-center gap-4 min-w-[200px] relative">
+               <ExternalLink className="absolute top-2 right-2 w-4 h-4 text-slate-300" />
+              <div className="font-bold text-2xl text-red-600">IndiaMART</div>
+              <div className="text-left">
+                <div className="font-semibold text-sm">IndiaMART</div>
+                <div className="text-xs text-slate-400">Trusted Seller</div>
+              </div>
+            </div>
+            <div className="bg-white rounded-xl shadow-sm px-6 py-4 flex items-center gap-4 min-w-[200px] relative">
+               <ExternalLink className="absolute top-2 right-2 w-4 h-4 text-slate-300" />
+              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                <span className="text-blue-500 font-bold">G</span>
+              </div>
+              <div className="text-left">
+                <div className="font-semibold text-sm">Google Maps</div>
+                <div className="text-xs text-slate-400">Most Searched</div>
+              </div>
             </div>
           </div>
-          <div className="bg-white rounded-xl shadow-sm px-6 py-4 flex items-center gap-4 min-w-[200px] relative">
-             <ExternalLink className="absolute top-2 right-2 w-4 h-4 text-slate-300" />
-            <div className="font-bold text-2xl text-red-600">IndiaMART</div>
-            <div className="text-left">
-              <div className="font-semibold text-sm">IndiaMART</div>
-              <div className="text-xs text-slate-400">Trusted Seller</div>
-            </div>
-          </div>
-          <div className="bg-white rounded-xl shadow-sm px-6 py-4 flex items-center gap-4 min-w-[200px] relative">
-             <ExternalLink className="absolute top-2 right-2 w-4 h-4 text-slate-300" />
-            <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-              <span className="text-blue-500 font-bold">G</span>
-            </div>
-            <div className="text-left">
-              <div className="font-semibold text-sm">Google Maps</div>
-              <div className="text-xs text-slate-400">Most Searched</div>
-            </div>
+
+          {/* Feature Pills */}
+          <div className="flex flex-wrap justify-center gap-3">
+            <span className="bg-[#e2e8f0] text-slate-700 text-xs font-medium px-4 py-2 rounded-full flex items-center gap-2">
+              <Truck className="w-4 h-4" /> Free Shipping All Over UP
+            </span>
+            <span className="bg-[#e2e8f0] text-slate-700 text-xs font-medium px-4 py-2 rounded-full flex items-center gap-2">
+              <Award className="w-4 h-4" /> Best Price Guaranteed
+            </span>
+            <span className="bg-[#e2e8f0] text-slate-700 text-xs font-medium px-4 py-2 rounded-full flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4" /> Warranty On All Products
+            </span>
           </div>
         </div>
 
-        {/* Feature Pills */}
-        <div className="flex flex-wrap justify-center gap-3">
-          <span className="bg-[#e2e8f0] text-slate-700 text-xs font-medium px-4 py-2 rounded-full flex items-center gap-2">
-            <Truck className="w-4 h-4" /> Free Shipping All Over UP
-          </span>
-          <span className="bg-[#e2e8f0] text-slate-700 text-xs font-medium px-4 py-2 rounded-full flex items-center gap-2">
-            <Award className="w-4 h-4" /> Best Price Guaranteed
-          </span>
-          <span className="bg-[#e2e8f0] text-slate-700 text-xs font-medium px-4 py-2 rounded-full flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4" /> Warranty On All Products
-          </span>
-        </div>
-      </div>
-
-      {/* Search and Filters */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-        <div className="bg-white rounded-xl shadow-sm p-4 mb-6 border border-slate-100">
-          <div className="flex flex-col md:flex-row gap-4 mb-4">
-            <div className="relative flex-grow">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-              <input 
-                type="text" 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search for ACs by brand, model, or features..." 
-                className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <button className="bg-[#0f2c59] text-white px-8 py-2 rounded-lg font-medium hover:bg-[#0a1e3f] transition-colors">
-              Search
-            </button>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-100 pt-4">
-            <div className="flex flex-wrap gap-3">
-              <button className="flex items-center gap-2 border border-slate-200 px-4 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">
-                <SlidersHorizontal className="w-4 h-4" /> Filters 
+        {/* Search and Filters */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+          <div className="bg-white rounded-xl shadow-sm p-4 mb-6 border border-slate-100">
+            <div className="flex flex-col md:flex-row gap-4 mb-4">
+              <div className="relative flex-grow">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                <input 
+                  type="text" 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search for ACs by brand, model, or features..." 
+                  className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <button className="bg-[#0f2c59] text-white px-8 py-2 rounded-lg font-medium hover:bg-[#0a1e3f] transition-colors">
+                Search
               </button>
-              
-              <div className="relative">
-                <select 
-                  value={selectedBrand}
-                  onChange={(e) => setSelectedBrand(e.target.value)}
-                  className="appearance-none flex items-center gap-2 border border-slate-200 pl-4 pr-10 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 bg-white outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
-                >
-                  {brands.map(brand => (
-                    <option key={brand} value={brand}>{brand}</option>
-                  ))}
-                </select>
-                <ChevronDown className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
-              </div>
-
-              <div className="relative">
-                <select 
-                  value={selectedRating}
-                  onChange={(e) => setSelectedRating(e.target.value)}
-                  className="appearance-none flex items-center gap-2 border border-slate-200 pl-4 pr-10 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 bg-white outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
-                >
-                  {ratings.map(rating => (
-                    <option key={rating} value={rating}>{rating}</option>
-                  ))}
-                </select>
-                <ChevronDown className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
-              </div>
             </div>
-          </div>
-        </div>
 
-        {/* Product Grid */}
-        {filteredProducts.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-xl border border-slate-200">
-            <Search className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-            <h3 className="text-lg font-semibold text-slate-700">No products found</h3>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredProducts.map((product) => (
-              <div key={product.id} className="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
-                <div className="relative p-4 pt-6 h-56 flex items-center justify-center bg-white">
-                  <div className="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded-full z-10">
-                    -{product.discountPercentage}% OFF
-                  </div>
-                  <img 
-                    src={product.imageUrl} 
-                    alt={product.title} 
-                    className="max-h-full object-contain mix-blend-multiply opacity-90 transition-transform hover:scale-105 duration-300"
-                  />
+            <div className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-100 pt-4">
+              <div className="flex flex-wrap gap-3">
+                <button className="flex items-center gap-2 border border-slate-200 px-4 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">
+                  <SlidersHorizontal className="w-4 h-4" /> Filters 
+                </button>
+                
+                <div className="relative">
+                  <select 
+                    value={selectedBrand}
+                    onChange={(e) => setSelectedBrand(e.target.value)}
+                    className="appearance-none flex items-center gap-2 border border-slate-200 pl-4 pr-10 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 bg-white outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                  >
+                    {brands.map(brand => (
+                      <option key={brand} value={brand}>{brand}</option>
+                    ))}
+                  </select>
+                  <ChevronDown className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
                 </div>
 
-                <div className="p-5 flex-grow flex flex-col border-t border-slate-100">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-xs border border-slate-200 text-slate-500 px-2 py-1 rounded-full">
-                      {product.brand}
-                    </span>
-                    <div className="flex items-center gap-1">
-                      <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className={`w-3 h-3 ${i < parseInt(product.rating) ? 'fill-yellow-400 text-yellow-400' : 'fill-slate-200 text-slate-200'}`} />
-                        ))}
+                <div className="relative">
+                  <select 
+                    value={selectedRating}
+                    onChange={(e) => setSelectedRating(e.target.value)}
+                    className="appearance-none flex items-center gap-2 border border-slate-200 pl-4 pr-10 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 bg-white outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                  >
+                    {ratings.map(rating => (
+                      <option key={rating} value={rating}>{rating}</option>
+                    ))}
+                  </select>
+                  <ChevronDown className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Product Grid */}
+          {filteredProducts.length === 0 ? (
+            <div className="text-center py-12 bg-white rounded-xl border border-slate-200">
+              <Search className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+              <h3 style={displayFont} className="text-xl text-slate-700">No products found</h3>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filteredProducts.map((product) => (
+                <div key={product.id} className="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
+                  <div className="relative p-4 pt-6 h-56 flex items-center justify-center bg-white">
+                    <div className="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded-full z-10">
+                      -{product.discountPercentage}% OFF
+                    </div>
+                    <img 
+                      src={product.imageUrl} 
+                      alt={product.title} 
+                      className="max-h-full object-contain mix-blend-multiply opacity-90 transition-transform hover:scale-105 duration-300"
+                    />
+                  </div>
+
+                  <div className="p-5 flex-grow flex flex-col border-t border-slate-100">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-xs border border-slate-200 text-slate-500 px-2 py-1 rounded-full">
+                        {product.brand}
+                      </span>
+                      <div className="flex items-center gap-1">
+                        <div className="flex">
+                          {[...Array(5)].map((_, i) => (
+                            <Star key={i} className={`w-3 h-3 ${i < parseInt(product.rating) ? 'fill-yellow-400 text-yellow-400' : 'fill-slate-200 text-slate-200'}`} />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <h3 className="font-bold text-slate-800 text-[15px] leading-tight mb-2 line-clamp-2">
+                      {product.title}
+                    </h3>
+
+                    <div className="mt-auto">
+                      <div className="flex items-baseline gap-2">
+                        <span style={displayFont} className="text-[#0f2c59] text-xl">{formatCurrency(product.currentPrice)}</span>
+                        <span className="text-slate-400 text-sm line-through">{formatCurrency(product.originalPrice)}</span>
                       </div>
                     </div>
                   </div>
 
-                  <h3 className="font-bold text-slate-800 text-[15px] leading-tight mb-2 line-clamp-2">
-                    {product.title}
-                  </h3>
-
-                  <div className="mt-auto">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-[#0f2c59] text-xl font-bold">{formatCurrency(product.currentPrice)}</span>
-                      <span className="text-slate-400 text-sm line-through">{formatCurrency(product.originalPrice)}</span>
-                    </div>
+                  <div className="p-4 grid grid-cols-2 gap-3 border-t border-slate-100">
+                    <button className="flex items-center justify-center gap-2 border border-slate-300 text-slate-700 py-2 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-colors">
+                      <Phone className="w-4 h-4" /> Call Now
+                    </button>
+                    <button 
+                      onClick={() => handleBuyNow(product)}
+                      className="flex items-center justify-center gap-2 bg-[#f97316] text-white py-2 rounded-lg text-sm font-semibold hover:bg-[#ea580c] transition-colors shadow-sm shadow-orange-200"
+                    >
+                      <ShoppingCart className="w-4 h-4" /> Buy Now
+                    </button>
                   </div>
                 </div>
-
-                <div className="p-4 grid grid-cols-2 gap-3 border-t border-slate-100">
-                  <button className="flex items-center justify-center gap-2 border border-slate-300 text-slate-700 py-2 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-colors">
-                    <Phone className="w-4 h-4" /> Call Now
-                  </button>
-                  {/* BUY NOW TRIGGER */}
-                  <button 
-                    onClick={() => handleBuyNow(product)}
-                    className="flex items-center justify-center gap-2 bg-[#f97316] text-white py-2 rounded-lg text-sm font-semibold hover:bg-[#ea580c] transition-colors shadow-sm shadow-orange-200"
-                  >
-                    <ShoppingCart className="w-4 h-4" /> Buy Now
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

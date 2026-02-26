@@ -64,7 +64,7 @@ export default function OrderSuccess() {
   if (!order) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#f8fafc]">
-        <h2 className="text-2xl font-bold text-slate-800 mb-4">No Order Found</h2>
+        <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400 }} className="text-2xl text-slate-800 mb-4">No Order Found</h2>
         <button
           onClick={() => navigate('/')}
           className="bg-[#0f2c59] text-white px-6 py-2 rounded-lg"
@@ -81,8 +81,14 @@ export default function OrderSuccess() {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
   });
 
+  const displayFont = { fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400 };
+
   return (
     <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display:ital,wght@0,400;1,400&display=swap');
+      `}</style>
+
       {showConfetti && <Confetti />}
 
       <div className="min-h-screen bg-[#f8fafc] font-sans text-slate-800 pb-16 pt-8">
@@ -102,9 +108,7 @@ export default function OrderSuccess() {
               <div className="w-28 h-28 rounded-full bg-green-50 flex items-center justify-center">
                 <div
                   className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center"
-                  style={{
-                    animation: 'pulse 2s infinite',
-                  }}
+                  style={{ animation: 'pulse 2s infinite' }}
                 >
                   <CheckCircle
                     className="w-12 h-12 text-green-500"
@@ -118,7 +122,10 @@ export default function OrderSuccess() {
               </div>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-3">
+            <h1
+              style={{ ...displayFont, fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}
+              className="text-slate-900 mb-3"
+            >
               Order Placed Successfully! 🎉
             </h1>
             <p className="text-slate-500 text-base max-w-md mx-auto">
@@ -138,7 +145,7 @@ export default function OrderSuccess() {
           >
             <div>
               <p className="text-blue-200 text-xs uppercase tracking-wider mb-1">Order Reference</p>
-              <p className="font-mono font-bold text-xl text-white">{order._id || order.orderId || 'ORD-' + Date.now()}</p>
+              <p style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400 }} className="text-xl text-white">{order._id || order.orderId || 'ORD-' + Date.now()}</p>
             </div>
             <div className="text-right">
               <p className="text-blue-200 text-xs uppercase tracking-wider mb-1">Order Date</p>
@@ -179,7 +186,7 @@ export default function OrderSuccess() {
               </div>
               <div className="text-right flex-shrink-0 ml-2">
                 <p className="text-xs text-slate-400 mb-1">Qty: {order.quantity}</p>
-                <p className="font-bold text-slate-900 text-base">{formatCurrency(order.amount)}</p>
+                <p style={displayFont} className="text-slate-900 text-base">{formatCurrency(order.amount)}</p>
                 <p className="text-[10px] text-green-600 font-medium mt-1">FREE Delivery</p>
               </div>
             </div>
@@ -202,7 +209,7 @@ export default function OrderSuccess() {
               </h2>
               <div className="bg-green-50 border border-green-100 rounded-lg p-4 text-center">
                 <p className="text-green-600 text-xs font-medium uppercase tracking-wider mb-1">Expected By</p>
-                <p className="font-bold text-slate-800 text-sm leading-snug">{formattedDate}</p>
+                <p style={displayFont} className="text-slate-800 text-sm leading-snug">{formattedDate}</p>
               </div>
               <div className="mt-4 space-y-2">
                 <div className="flex items-center gap-2 text-xs text-slate-500">
@@ -229,7 +236,7 @@ export default function OrderSuccess() {
                 <MapPin className="w-5 h-5 text-slate-500" /> Delivery Address
               </h2>
               <div className="space-y-1.5 text-sm text-slate-600">
-                <p className="font-semibold text-slate-800">{order.fullName}</p>
+                <p style={displayFont} className="text-slate-800 text-base">{order.fullName}</p>
                 <p>{order.address}</p>
                 <p>{order.city}, {order.state} – {order.pinCode}</p>
                 <div className="pt-2 border-t border-slate-100 space-y-1">
@@ -253,7 +260,7 @@ export default function OrderSuccess() {
               transition: 'all 0.6s ease 0.6s',
             }}
           >
-            <h2 className="text-base font-semibold text-slate-800 mb-5">What Happens Next?</h2>
+            <h2 style={displayFont} className="text-xl text-slate-800 mb-5">What Happens Next?</h2>
             <div className="relative">
               {/* Timeline line */}
               <div className="absolute left-4 top-6 bottom-6 w-0.5 bg-slate-100" />

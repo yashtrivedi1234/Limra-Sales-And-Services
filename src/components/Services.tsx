@@ -14,7 +14,7 @@ export default function Services() {
     <section style={{
       padding: "100px 0", position: "relative", overflow: "hidden",
       background: `linear-gradient(135deg, ${BRAND.dark} 0%, ${BRAND.darkMid} 50%, ${BRAND.primary} 100%)`,
-      fontFamily: "'Inter', sans-serif"
+      fontFamily: "'DM Sans', sans-serif"
     }}>
       <div style={{ position: "absolute", inset: 0, opacity: 0.4, backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
 
@@ -23,7 +23,7 @@ export default function Services() {
           <div style={{ display: "inline-block", background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)", color: BRAND.accentOnDark, fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 16px", borderRadius: "100px", marginBottom: "18px" }}>
             What We Do
           </div>
-          <h2 style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.white, lineHeight: 1.15, fontWeight: 800 }}>
+          <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.white, lineHeight: 1.15 }}>
             Professional Services
           </h2>
         </motion.div>
@@ -55,7 +55,7 @@ export default function Services() {
               >
                 <s.icon size={26} style={{ color: BRAND.accentOnDark }} />
               </motion.div>
-              <h3 style={{ fontWeight: 700, color: BRAND.white, marginBottom: "10px", fontSize: "1.05rem" }}>{s.title}</h3>
+              <h3 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, color: BRAND.white, marginBottom: "10px", fontSize: "1.15rem" }}>{s.title}</h3>
               <p style={{ color: BRAND.textOnDarkMuted, fontSize: "0.87rem", lineHeight: 1.7 }}>{s.desc}</p>
             </motion.div>
           ))}

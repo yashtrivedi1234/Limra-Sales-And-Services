@@ -75,7 +75,7 @@ const BlogPost = () => {
     <>
       {/* ─── GLOBAL STYLES ─── */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display:ital,wght@0,400;1,400&display=swap');
 
         :root {
           --ink: #0b0a09;
@@ -88,7 +88,7 @@ const BlogPost = () => {
         }
 
         .blog-root { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
-        .display-font { font-family: 'Playfair Display', serif; }
+        .display-font { font-family: 'DM Serif Display', Georgia, serif; }
 
         /* Progress bar */
         .progress-bar {
@@ -104,9 +104,9 @@ const BlogPost = () => {
         .hero-content { position: absolute; bottom: 0; left: 0; right: 0; padding: clamp(2rem,6vw,5rem); max-width: 900px; }
 
         .split-heading {
-          font-family: 'Playfair Display', serif;
+          font-family: 'DM Serif Display', Georgia, serif;
           font-size: clamp(1.4rem, 2.8vw, 2.4rem);
-          font-weight: 900;
+          font-weight: 400;
           line-height: 1.25;
           color: #fff;
           perspective: 600px;
@@ -139,8 +139,8 @@ const BlogPost = () => {
 
         /* Drop cap */
         .article-body > p:first-child::first-letter {
-          font-family: 'Playfair Display', serif;
-          font-size: 5.5rem; font-weight: 900;
+          font-family: 'DM Serif Display', Georgia, serif;
+          font-size: 5.5rem; font-weight: 400;
           float: left; line-height: 0.8;
           margin: 0.12em 0.1em 0 0;
           color: var(--gold);
@@ -162,7 +162,7 @@ const BlogPost = () => {
           border-radius: 0 12px 12px 0;
         }
         .pull-quote p {
-          font-family: 'Playfair Display', serif;
+          font-family: 'DM Serif Display', Georgia, serif;
           font-size: 1.3rem !important;
           font-style: italic;
           color: var(--ink) !important;
@@ -181,8 +181,8 @@ const BlogPost = () => {
           width: 56px; height: 56px; border-radius: 50%;
           background: linear-gradient(135deg, var(--gold), var(--rust));
           display: flex; align-items: center; justify-content: center;
-          font-family: 'Playfair Display', serif;
-          font-size: 1.4rem; color: #fff; font-weight: 700;
+          font-family: 'DM Serif Display', Georgia, serif;
+          font-size: 1.4rem; color: #fff; font-weight: 400;
           flex-shrink: 0;
         }
 
@@ -252,6 +252,13 @@ const BlogPost = () => {
         /* Noise grain overlay */
         .grain { position: fixed; inset: 0; z-index: -1; opacity: 0.025; pointer-events: none;
           background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* DM Serif Display headings inside article */
+        .article-card h2,
+        .article-card h3 {
+          font-family: 'DM Serif Display', Georgia, serif;
+          font-weight: 400;
         }
       `}</style>
 
@@ -393,7 +400,7 @@ const BlogPost = () => {
               >
                 <div className="author-avatar">{post.author.charAt(0)}</div>
                 <div>
-                  <p style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "1.05rem", marginBottom: 2 }}>{post.author}</p>
+                  <p style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, fontSize: "1.05rem", marginBottom: 2 }}>{post.author}</p>
                   <p style={{ fontSize: 12, color: "var(--muted)", letterSpacing: 0.5 }}>HVAC Specialist & Industry Expert</p>
                 </div>
                 <div style={{ marginLeft: "auto" }}>
@@ -406,7 +413,7 @@ const BlogPost = () => {
                 className="expert-cta"
                 initial={{ opacity: 0, scale: 0.97 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
               >
-                <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", fontWeight: 700, color: "#fff", marginBottom: "0.5rem", position: "relative" }}>
+                <p style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontSize: "1.5rem", fontWeight: 400, color: "#fff", marginBottom: "0.5rem", position: "relative" }}>
                   Need expert advice?
                 </p>
                 <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.875rem", marginBottom: "1.5rem", position: "relative" }}>
@@ -425,7 +432,7 @@ const BlogPost = () => {
                 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, margin: "-80px" }}
               >
                 <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "2rem" }}>
-                  <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.75rem", fontWeight: 900 }}>Related Articles</span>
+                  <span style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontSize: "1.75rem", fontWeight: 400 }}>Related Articles</span>
                   <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, rgba(201,168,76,0.4), transparent)" }} />
                 </div>
 
@@ -444,7 +451,7 @@ const BlogPost = () => {
                         </div>
                         <div style={{ padding: "1.1rem 1.25rem 1.25rem" }}>
                           <span style={{ fontSize: 10, color: "var(--gold)", fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase" }}>{rp.category}</span>
-                          <p style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "0.95rem", marginTop: "0.4rem", lineHeight: 1.35, color: "var(--ink)" }}>{rp.title}</p>
+                          <p style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, fontSize: "0.95rem", marginTop: "0.4rem", lineHeight: 1.35, color: "var(--ink)" }}>{rp.title}</p>
                           <span style={{ fontSize: 11, color: "var(--muted)", display: "flex", alignItems: "center", gap: 4, marginTop: "0.75rem" }}>
                             <Clock size={10} /> {rp.readTime}
                           </span>
@@ -474,4 +481,4 @@ const BlogPost = () => {
   );
 };
 
-export default BlogPost;  
+export default BlogPost;

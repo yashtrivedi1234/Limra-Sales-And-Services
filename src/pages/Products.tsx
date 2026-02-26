@@ -7,7 +7,6 @@ import {
   Phone,
   Star,
   ChevronRight,
-  ArrowLeft,
   AirVent,
   Move,
 } from "lucide-react";
@@ -83,18 +82,18 @@ const categories: Category[] = [
       { name: "Daikin FVA100A", ton: "3 Ton", price: "₹1,25,000", stars: 5 },
     ],
   },
-  {
-    id: "portable",
-    icon: <Move size={22} />,
-    title: "Portable AC",
-    description: "Mobile ACs",
-    image:
-      "https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600&q=80",
-    brands: ["Cruise"],
-    products: [
-      { name: "Cruise Portable", ton: "1.5 Ton", price: "₹28,000", stars: 3 },
-    ],
-  },
+{
+  id: "portable",
+  icon: <Move size={22} />,
+  title: "Portable AC",
+  description: "Mobile ACs",
+  image:
+    "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80",
+  brands: ["Cruise"],
+  products: [
+    { name: "Cruise Portable", ton: "1.5 Ton", price: "₹28,000", stars: 3 },
+  ],
+},
 ];
 
 /* ================= COMPONENTS ================= */
@@ -134,7 +133,10 @@ function ProductCard({ cat }: { cat: Category }) {
 
       {/* Content */}
       <div className="p-5 flex flex-col flex-1">
-        <h3 className="text-[#1a3a5c] font-bold text-lg mb-1">
+        <h3
+          style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400 }}
+          className="text-[#1a3a5c] text-lg mb-1"
+        >
           {cat.title}
         </h3>
         <p className="text-slate-500 text-sm mb-3">{cat.description}</p>
@@ -166,7 +168,12 @@ function ProductCard({ cat }: { cat: Category }) {
               <p className="font-semibold">{p.name}</p>
               <StarRating count={p.stars} />
             </div>
-            <span className="text-[#e07830] font-bold">{p.price}</span>
+            <span
+              style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400 }}
+              className="text-[#e07830] text-base"
+            >
+              {p.price}
+            </span>
           </div>
         ))}
 
@@ -210,40 +217,50 @@ export default function ProductsPage() {
   );
 
   return (
-    <div className="bg-[#f5f7fa] min-h-screen">
-      {/* HERO */}
-      <div className="bg-[#1a3a5c] text-white py-14 px-6 text-center mt-12">
-        <h1 className="text-4xl font-bold mb-3 ">Our Products</h1>
-        <p className="text-white/70">
-          Explore our wide range of air conditioning solutions.
-        </p>
-      </div>
-
-      {/* FILTERS */}
-      <div className="bg-white sticky top-0 z-10 border-b px-6 py-3 flex gap-2 overflow-x-auto">
-        {filters.map((f) => (
-          <button
-            key={f.id}
-            onClick={() => setActiveFilter(f.id)}
-            className={`px-4 py-2 rounded-full text-sm border ${
-              activeFilter === f.id
-                ? "bg-[#1a3a5c] text-white"
-                : "text-slate-600"
-            }`}
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display:ital,wght@0,400;1,400&display=swap');
+      `}</style>
+      <div className="bg-[#f5f7fa] min-h-screen">
+        {/* HERO */}
+        <div className="bg-[#1a3a5c] text-white py-14 px-6 text-center mt-12">
+          <h1
+            style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400 }}
+            className="text-4xl mb-3"
           >
-            {f.label}
-          </button>
-        ))}
-      </div>
+            Our Products
+          </h1>
+          <p className="text-white/70">
+            Explore our wide range of air conditioning solutions.
+          </p>
+        </div>
 
-      {/* GRID */}
-      <div className="max-w-6xl mx-auto px-6 py-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {visible.map((cat) => (
-            <ProductCard key={cat.id} cat={cat} />
+        {/* FILTERS */}
+        <div className="bg-white sticky top-0 z-10 border-b px-6 py-3 flex gap-2 overflow-x-auto">
+          {filters.map((f) => (
+            <button
+              key={f.id}
+              onClick={() => setActiveFilter(f.id)}
+              className={`px-4 py-2 rounded-full text-sm border ${
+                activeFilter === f.id
+                  ? "bg-[#1a3a5c] text-white"
+                  : "text-slate-600"
+              }`}
+            >
+              {f.label}
+            </button>
           ))}
         </div>
+
+        {/* GRID */}
+        <div className="max-w-6xl mx-auto px-6 py-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {visible.map((cat) => (
+              <ProductCard key={cat.id} cat={cat} />
+            ))}
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

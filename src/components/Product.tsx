@@ -1,3 +1,4 @@
+// ─── CommercialApplications.tsx ───────────────────────────────────────────────
 import { motion } from "framer-motion";
 import { Hotel, Cross, GraduationCap, Dumbbell, Scissors, Briefcase, ShoppingBag, BarChart2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -14,16 +15,16 @@ const applications = [
   { icon: <BarChart2 size={30} strokeWidth={1.5} color="#14B8A6" />, label: "Industrial Buildings" },
 ];
 
-export default function CommercialApplications() {
+export function CommercialApplications() {
   const navigate = useNavigate();
   return (
-    <section style={{ padding: "100px 0", background: BRAND.white, fontFamily: "'Inter', sans-serif" }}>
+    <section style={{ padding: "100px 0", background: BRAND.white, fontFamily: "'DM Sans', sans-serif" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 48px" }}>
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} style={{ textAlign: "center", marginBottom: "56px" }}>
           <div style={{ display: "inline-block", background: `${BRAND.primary}1A`, border: `1px solid ${BRAND.primary}40`, color: BRAND.primary, fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 14px", borderRadius: "100px", marginBottom: "18px" }}>
             Industries We Serve
           </div>
-          <h2 style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.dark, lineHeight: 1.15, fontWeight: 800 }}>
+          <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.dark, lineHeight: 1.15 }}>
             Commercial HVAC Applications
           </h2>
         </motion.div>
@@ -46,7 +47,7 @@ export default function CommercialApplications() {
                 transition: "all 0.25s"
               }}
             >
-            <div>{app.icon}</div>
+              <div>{app.icon}</div>
               <span style={{ fontSize: "0.82rem", color: BRAND.slate600, fontWeight: 600, textAlign: "center", lineHeight: 1.4 }}>{app.label}</span>
             </motion.div>
           ))}
@@ -70,3 +71,5 @@ export default function CommercialApplications() {
     </section>
   );
 }
+
+export default CommercialApplications;

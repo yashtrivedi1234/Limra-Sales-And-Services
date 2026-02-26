@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Shield, Award, Users, Target } from "lucide-react";
+import { Shield, Award, Users, Target, Phone } from "lucide-react";
 
 
 const COLORS = {
@@ -229,16 +229,40 @@ const About = () => (
           <p style={{ color: "rgba(219,234,254,0.75)", marginBottom: "36px", fontSize: "1.05rem", fontWeight: 300 }}>
             Whether it's a residential split AC or a commercial VRV system — we've got you covered.
           </p>
-          <a href="tel:+919839171701" style={{
-            display: "inline-flex", alignItems: "center", gap: "8px",
-            padding: "14px 36px",
-            background: COLORS.white, color: COLORS.navy,
-            fontWeight: 700, fontSize: "0.95rem",
-            borderRadius: "100px", textDecoration: "none",
-            boxShadow: "0 8px 24px rgba(0,0,0,0.2)"
-          }}>
-            Get a Free Consultation
-          </a>
+        
+
+<a
+  href="tel:+919839171701"
+  style={{
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "8px",
+    padding: "14px 36px",
+    background: COLORS.white,
+    color: COLORS.navy,
+    fontWeight: 700,
+    fontSize: "0.95rem",
+    borderRadius: "100px",
+    textDecoration: "none",
+    boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
+    transition: "all 0.3s ease",
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.transform = "translateY(-3px) scale(1.03)";
+    e.currentTarget.style.boxShadow = "0 12px 30px rgba(0,0,0,0.25)";
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.transform = "translateY(0) scale(1)";
+    e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.2)";
+  }}
+>
+  <Phone
+    size={18}
+    style={{ transition: "transform 0.3s ease" }}
+    className="phone-icon"
+  />
+  Get a Free Consultation
+</a>
         </div>
       </section>
     </main>
