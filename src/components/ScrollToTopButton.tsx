@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const COLORS = {
-  navy: "#0B1F4B",
-  blue: "#1D4ED8",
-  blueLight: "#3B82F6",
-  white: "#FFFFFF",
-};
+import { BRAND } from "@/lib/colors";
 
 const ScrollToTopButton = () => {
   const [visible, setVisible] = useState(false);
@@ -30,20 +24,14 @@ const ScrollToTopButton = () => {
           aria-label="Scroll to top"
           style={{
             position: "fixed", bottom: "96px", right: "24px",
-            zIndex: 50, width: "46px", height: "46px",
-            borderRadius: "50%",
-            background: `linear-gradient(135deg, ${COLORS.navy} 0%, ${COLORS.blue} 100%)`,
-            color: COLORS.white,
-            border: "none", cursor: "pointer",
+            zIndex: 50, width: "46px", height: "46px", borderRadius: "50%",
+            background: `linear-gradient(135deg, ${BRAND.dark} 0%, ${BRAND.primary} 100%)`,
+            color: BRAND.white, border: "none", cursor: "pointer",
             display: "flex", alignItems: "center", justifyContent: "center",
-            boxShadow: "0 8px 24px rgba(29,78,216,0.35)",
-            transition: "transform 0.2s, box-shadow 0.2s",
-            fontFamily: "'DM Sans', sans-serif",
+            boxShadow: `0 8px 24px ${BRAND.primary}59`,
+            fontFamily: "'Inter', sans-serif",
           }}
-          whileHover={{
-            scale: 1.1,
-            boxShadow: "0 12px 32px rgba(29,78,216,0.45)"
-          }}
+          whileHover={{ scale: 1.1, boxShadow: `0 12px 32px ${BRAND.primary}73` }}
           whileTap={{ scale: 0.95 }}
         >
           <ArrowUp size={20} />
