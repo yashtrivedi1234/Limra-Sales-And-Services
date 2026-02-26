@@ -65,9 +65,10 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
           style={{
-            fontFamily: "'Inter', sans-serif",
+            fontFamily: "'DM Serif Display', Georgia, serif",
+            wordSpacing: "0.05em",
             fontSize: "clamp(2.2rem, 5vw, 4.2rem)",
-            lineHeight: 1.1, letterSpacing: "-0.02em",
+            lineHeight: 1.1, letterSpacing: "0.02em",
             color: BRAND.white, fontWeight: 800,
             marginBottom: "20px", maxWidth: "min(95vw, 690px)", wordBreak: "break-word",
           }}

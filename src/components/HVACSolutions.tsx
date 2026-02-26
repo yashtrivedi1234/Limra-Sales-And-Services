@@ -84,8 +84,8 @@ export default function HVACSolutions() {
           <div style={{ display: "inline-block", background: `${BRAND.primary}1A`, border: `1px solid ${BRAND.primary}40`, color: BRAND.primary, fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 14px", borderRadius: "100px", marginBottom: "18px" }}>
             Solutions
           </div>
-          <h2 style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.dark, lineHeight: 1.15, marginBottom: "12px", fontWeight: 800 }}>
-            Complete HVAC Solutions
+          <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.dark, lineHeight: 1.15, marginBottom: "12px" }}>
+          Complete HVAC Solutions
           </h2>
           <p style={{ color: BRAND.slate400, fontSize: "1.05rem" }}>From residential comfort to large commercial projects, we've got you covered.</p>
         </motion.div>

@@ -60,9 +60,9 @@ export default function AboutPreview() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.dark, lineHeight: 1.15, marginBottom: "16px", fontWeight: 800 }}
+            style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.dark, lineHeight: 1.15, marginBottom: "16px" }}
           >
-            Building Comfort Since 2017
+           Building Comfort Since 2017
           </motion.h2>
 
           <motion.p

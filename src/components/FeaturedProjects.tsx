@@ -39,13 +39,14 @@ export default function FeaturedProjects() {
           </div>
 
           <h2 style={{
+            fontFamily: "'DM Serif Display', Georgia, serif",
+            fontWeight: 400,
             fontSize: "clamp(2rem, 4vw, 3.2rem)",
             color: BRAND.dark,
             lineHeight: 1.15,
-            marginBottom: "16px",
-            fontWeight: 800
+            marginBottom: "16px"
           }}>
-            Featured Projects
+           Featured Projects
           </h2>
 
           <Link

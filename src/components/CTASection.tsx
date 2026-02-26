@@ -38,8 +38,8 @@ const CTASection: React.FC<CTAProps> = ({
             <div style={{ display: "inline-block", background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)", color: BRAND.accentOnDark, fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 16px", borderRadius: "100px", marginBottom: "24px" }}>
               Get In Touch
             </div>
-            <h2 style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.white, lineHeight: 1.15, marginBottom: "20px", fontWeight: 800 }}>
-              Ready to Transform <span style={{ color: BRAND.accentOnDark }}>Your Business?</span>
+            <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.white, lineHeight: 1.15, marginBottom: "20px" }}>
+              Ready to Transform Your Business?
             </h2>
             <p style={{ fontSize: "1.05rem", color: BRAND.textOnDark, maxWidth: "520px", margin: "0 auto 40px", lineHeight: 1.75, fontWeight: 400 }}>
               Let's discuss how our HVAC solutions can elevate comfort in your space and keep your customers and team happy year-round.
