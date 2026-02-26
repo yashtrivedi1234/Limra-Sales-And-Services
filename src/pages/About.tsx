@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Shield, Award, Users, Target } from "lucide-react";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
+
 
 const COLORS = {
   navy: "#0B1F4B",
@@ -48,7 +47,7 @@ const About = () => (
       .about-page { font-family: 'DM Sans', sans-serif; }
     `}</style>
 
-    <SiteHeader />
+    
 
     <main className="about-page" style={{ paddingTop: "68px" }}>
 
@@ -244,7 +243,7 @@ const About = () => (
       </section>
     </main>
 
-    <SiteFooter />
+    
   </>
 );
 
