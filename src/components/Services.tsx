@@ -1,11 +1,6 @@
 import { motion } from "framer-motion";
 import { Wrench, ShieldCheck, MapPin, Clock } from "lucide-react";
-
-const COLORS = {
-  navy: "#0B1F4B",
-  blue: "#1D4ED8",
-  white: "#FFFFFF",
-};
+import { BRAND } from "@/lib/colors";
 
 const services = [
   { icon: Wrench, title: "Expert Installation", desc: "Certified technicians with precision setup for optimal performance and longevity." },
@@ -18,34 +13,17 @@ export default function Services() {
   return (
     <section style={{
       padding: "100px 0", position: "relative", overflow: "hidden",
-      background: "linear-gradient(135deg, #0B1F4B 0%, #1A3580 50%, #1D4ED8 100%)",
-      fontFamily: "'DM Sans', sans-serif"
+      background: `linear-gradient(135deg, ${BRAND.dark} 0%, ${BRAND.darkMid} 50%, ${BRAND.primary} 100%)`,
+      fontFamily: "'Inter', sans-serif"
     }}>
-      {/* Dot pattern overlay */}
-      <div style={{
-        position: "absolute", inset: 0, opacity: 0.4,
-        backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px)",
-        backgroundSize: "28px 28px"
-      }} />
+      <div style={{ position: "absolute", inset: 0, opacity: 0.4, backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
 
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 48px", position: "relative", zIndex: 10 }}>
-        <motion.div
-          initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          style={{ textAlign: "center", marginBottom: "64px" }}
-        >
-          <div style={{
-            display: "inline-block",
-            background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)",
-            color: "#93C5FD", fontWeight: 700, fontSize: "0.72rem",
-            letterSpacing: "0.18em", textTransform: "uppercase",
-            padding: "5px 16px", borderRadius: "100px", marginBottom: "18px"
-          }}>
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} style={{ textAlign: "center", marginBottom: "64px" }}>
+          <div style={{ display: "inline-block", background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)", color: BRAND.accentOnDark, fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 16px", borderRadius: "100px", marginBottom: "18px" }}>
             What We Do
           </div>
-          <h2 style={{
-            fontFamily: "'DM Serif Display', serif",
-            fontSize: "clamp(2rem, 4vw, 3.2rem)", color: COLORS.white, lineHeight: 1.15
-          }}>
+          <h2 style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.white, lineHeight: 1.15, fontWeight: 800 }}>
             Professional Services
           </h2>
         </motion.div>
@@ -66,15 +44,19 @@ export default function Services() {
                 transition: "all 0.3s"
               }}
             >
-              <div style={{
-                width: "56px", height: "56px", borderRadius: "14px",
-                background: "rgba(255,255,255,0.1)",
-                display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "24px"
-              }}>
-                <s.icon size={26} style={{ color: "#93C5FD" }} />
-              </div>
-              <h3 style={{ fontWeight: 700, color: COLORS.white, marginBottom: "10px", fontSize: "1.05rem" }}>{s.title}</h3>
-              <p style={{ color: "rgba(219,234,254,0.65)", fontSize: "0.87rem", lineHeight: 1.7 }}>{s.desc}</p>
+              <motion.div
+                whileHover={{ scale: 1.15, rotate: 5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                style={{
+                  width: "56px", height: "56px", borderRadius: "14px",
+                  background: "rgba(255,255,255,0.1)",
+                  display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "24px"
+                }}
+              >
+                <s.icon size={26} style={{ color: BRAND.accentOnDark }} />
+              </motion.div>
+              <h3 style={{ fontWeight: 700, color: BRAND.white, marginBottom: "10px", fontSize: "1.05rem" }}>{s.title}</h3>
+              <p style={{ color: BRAND.textOnDarkMuted, fontSize: "0.87rem", lineHeight: 1.7 }}>{s.desc}</p>
             </motion.div>
           ))}
         </div>

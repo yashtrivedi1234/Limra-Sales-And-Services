@@ -1,17 +1,6 @@
 import { motion } from "framer-motion";
 import { Shield, Award, Users, Target, ArrowRight } from "lucide-react";
-
-const COLORS = {
-  navy: "#0B1F4B",
-  blue: "#1D4ED8",
-  blueLight: "#3B82F6",
-  blueSky: "#DBEAFE",
-  bluePale: "#EFF6FF",
-  white: "#FFFFFF",
-  slate100: "#E8EFFF",
-  slate200: "#C7D8F8",
-  slate400: "#6B8AC7",
-};
+import { BRAND } from "@/lib/colors";
 
 const stats = [
   { value: "9+", label: "Years Experience" },
@@ -27,19 +16,23 @@ const values = [
   { icon: Target, title: "Innovation", desc: "Latest energy-efficient and smart HVAC technologies, always ahead of the curve." },
 ];
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.6 } }),
+};
+
 export default function AboutPreview() {
   return (
-    <section style={{ padding: "100px 0", background: COLORS.white, fontFamily: "'DM Sans', sans-serif" }}>
+    <section style={{ padding: "100px 0", background: BRAND.white, fontFamily: "'Inter', sans-serif" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 48px" }}>
 
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "64px" }}>
-          <motion.div
-            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+          <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
             style={{
               display: "inline-block",
-              background: "rgba(29,78,216,0.1)", border: "1px solid rgba(29,78,216,0.25)",
-              color: "#1D4ED8", fontWeight: 700, fontSize: "0.72rem",
+              background: `${BRAND.primary}1A`, border: `1px solid ${BRAND.primary}40`,
+              color: BRAND.primary, fontWeight: 700, fontSize: "0.72rem",
               letterSpacing: "0.18em", textTransform: "uppercase",
               padding: "5px 14px", borderRadius: "100px", marginBottom: "18px"
             }}
@@ -47,39 +40,34 @@ export default function AboutPreview() {
             Who We Are
           </motion.div>
           <motion.h2
-            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            style={{
-              fontFamily: "'DM Serif Display', serif",
-              fontSize: "clamp(2rem, 4vw, 3.2rem)", color: COLORS.navy,
-              lineHeight: 1.15, marginBottom: "16px"
-            }}
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
+            style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.dark, lineHeight: 1.15, marginBottom: "16px", fontWeight: 800 }}
           >
             Building Comfort Since 2017
           </motion.h2>
           <motion.p
-            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
-            style={{ color: COLORS.slate400, fontSize: "1.05rem", lineHeight: 1.75, maxWidth: "580px", margin: "0 auto" }}
+            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2, duration: 0.6 }}
+            style={{ color: BRAND.slate400, fontSize: "1.05rem", lineHeight: 1.75, maxWidth: "580px", margin: "0 auto" }}
           >
-            LIMRA Sales And Services is Bareilly's most trusted HVAC partner — delivering premium air conditioning
-            solutions for homes, offices, hospitals, hotels, and industrial facilities across Uttar Pradesh.
+            LIMRA Sales And Services is Bareilly's most trusted HVAC partner — delivering premium air conditioning solutions for homes, offices, hospitals, hotels, and industrial facilities across Uttar Pradesh.
           </motion.p>
         </div>
 
-        {/* Stats */}
+        {/* Stats with parallax-like stagger */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "20px", marginBottom: "64px" }}>
           {stats.map((s, i) => (
             <motion.div
               key={s.label}
-              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+              custom={i}
+              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
               style={{
-                background: COLORS.bluePale, borderRadius: "16px",
+                background: BRAND.primaryPale, borderRadius: "16px",
                 padding: "32px 24px", textAlign: "center",
-                border: `1px solid ${COLORS.slate100}`
+                border: `1px solid ${BRAND.slate100}`
               }}
             >
-              <div style={{ fontFamily: "'DM Serif Display', serif", fontSize: "2.8rem", color: COLORS.blue, lineHeight: 1, marginBottom: "8px" }}>{s.value}</div>
-              <div style={{ fontSize: "0.85rem", color: COLORS.slate400, fontWeight: 500 }}>{s.label}</div>
+              <div style={{ fontSize: "2.8rem", color: BRAND.primary, lineHeight: 1, marginBottom: "8px", fontWeight: 800 }}>{s.value}</div>
+              <div style={{ fontSize: "0.85rem", color: BRAND.slate400, fontWeight: 500 }}>{s.label}</div>
             </motion.div>
           ))}
         </div>
@@ -89,41 +77,33 @@ export default function AboutPreview() {
           {values.map((v, i) => (
             <motion.div
               key={v.title}
-              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+              custom={i}
+              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+              whileHover={{ y: -4 }}
               style={{
-                background: COLORS.white,
-                border: `1px solid ${COLORS.slate100}`,
+                background: BRAND.white,
+                border: `1px solid ${BRAND.slate100}`,
                 borderRadius: "16px", padding: "28px",
-                boxShadow: "0 2px 16px rgba(29,78,216,0.08)",
+                boxShadow: `0 2px 16px ${BRAND.primary}14`,
                 transition: "all 0.3s"
               }}
             >
               <div style={{
                 width: "48px", height: "48px", borderRadius: "12px",
-                background: COLORS.blueSky, display: "flex", alignItems: "center",
+                background: BRAND.primarySky, display: "flex", alignItems: "center",
                 justifyContent: "center", marginBottom: "16px"
               }}>
-                <v.icon size={22} style={{ color: COLORS.blue }} />
+                <v.icon size={22} style={{ color: BRAND.primary }} />
               </div>
-              <h3 style={{ fontWeight: 700, color: COLORS.navy, marginBottom: "8px", fontSize: "1rem" }}>{v.title}</h3>
-              <p style={{ fontSize: "0.87rem", color: COLORS.slate400, lineHeight: 1.65 }}>{v.desc}</p>
+              <h3 style={{ fontWeight: 700, color: BRAND.dark, marginBottom: "8px", fontSize: "1rem" }}>{v.title}</h3>
+              <p style={{ fontSize: "0.87rem", color: BRAND.slate400, lineHeight: 1.65 }}>{v.desc}</p>
             </motion.div>
           ))}
         </div>
 
         {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.3 }}
-          style={{ textAlign: "center" }}
-        >
-          <a
-            href="/about"
-            style={{
-              display: "inline-flex", alignItems: "center", gap: "8px",
-              color: COLORS.blue, fontWeight: 700, fontSize: "0.9rem", textDecoration: "none"
-            }}
-          >
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.3 }} style={{ textAlign: "center" }}>
+          <a href="/about" style={{ display: "inline-flex", alignItems: "center", gap: "8px", color: BRAND.primary, fontWeight: 700, fontSize: "0.9rem", textDecoration: "none" }}>
             Learn More About Us <ArrowRight size={16} />
           </a>
         </motion.div>
