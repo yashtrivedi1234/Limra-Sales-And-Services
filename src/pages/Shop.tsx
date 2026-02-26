@@ -64,7 +64,7 @@ const products: Product[] = [
     discountPercentage: 14,
     isFeatured: false,
     reviewCount: 67,
-    imageUrl: 'https://images.unsplash.com/photo-1598514982630-0f0f3c9c6d4e?q=80&w=400&h=200&auto=format&fit=crop'
+   imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=400&h=200&auto=format&fit=crop',
   },
   {
     id: '3',
@@ -82,7 +82,7 @@ const products: Product[] = [
     discountPercentage: 20,
     isFeatured: true,
     reviewCount: 48,
-    imageUrl: 'https://images.unsplash.com/photo-1621905252472-e8b6e4b8e4d3?q=80&w=400&h=200&auto=format&fit=crop'
+    imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=400&h=200&auto=format&fit=crop'
   },
   {
     id: '4',
@@ -312,9 +312,13 @@ export default function Shop() {
                   </div>
 
                   <div className="p-4 grid grid-cols-2 gap-3 border-t border-slate-100">
-                    <button className="flex items-center justify-center gap-2 border border-slate-300 text-slate-700 py-2 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-colors">
+                    <a
+                      href="tel:+919839171701"
+                      className="flex items-center justify-center gap-2 border border-slate-300 text-slate-700 py-2 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-colors"
+                      style={{ textDecoration: 'none' }}
+                    >
                       <Phone className="w-4 h-4" /> Call Now
-                    </button>
+                    </a>
                     <button 
                       onClick={() => handleBuyNow(product)}
                       className="flex items-center justify-center gap-2 bg-[#f97316] text-white py-2 rounded-lg text-sm font-semibold hover:bg-[#ea580c] transition-colors shadow-sm shadow-orange-200"
