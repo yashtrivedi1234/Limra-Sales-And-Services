@@ -18,6 +18,7 @@ import ContactUs from "./pages/ContactUs";
 import BrandDetail from "./pages/BrandDetail";
 import OrderSuccess from "./pages/OrderSuccess";
 import  Product  from "./pages/Shop";
+import Brand from "./pages/Brand";
 const queryClient = new QueryClient();
 
 const App: React.FC = () => (
@@ -41,6 +42,7 @@ const App: React.FC = () => (
             <Route path="/brand/:slug" element={<BrandDetail />} />
             <Route path="/order-success" element={<OrderSuccess />} />
             <Route path="/product" element={<Product />} />
+            <Route path="/brands" element={<Brand />} />
           </Route>
 
           {/* Routes without layout */}

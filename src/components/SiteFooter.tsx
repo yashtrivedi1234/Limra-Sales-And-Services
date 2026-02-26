@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Facebook, Instagram, Youtube, Star } from "lucide-react";
 import cclogo from "../assets/cc-logo.png";
 
-
-
 const residentialProducts = [
   "Inverter Split AC", "Non-Inverter Split AC", "Window AC",
   "Portable AC", "Water Coolers", "Air Purifiers & Water Softeners",
@@ -18,8 +16,12 @@ const commercialProducts = [
 ];
 
 const quickLinks = [
-  "All Products", "Our Projects", "Privacy Policy",
-  "Terms & Conditions", "Refund Policy",
+  { label: "All Products", to: "/shop" },
+  { label: "Our Projects", to: "/case-studies" },
+  { label: "Privacy Policy", to: "#" },
+  { label: "Terms & Conditions", to: "#" },
+  { label: "Refund Policy", to: "#" },
+  { label: "Brands", to: "/brands" },
 ];
 
 const socialLinks = [
@@ -41,210 +43,136 @@ const colVariants = {
 const SiteFooter = () => (
   <>
     <style>{`
-      /* Scoped overrides — prevents global Tailwind/CSS from breaking footer colors */
-      .limra-footer,
-      .limra-footer * {
-        box-sizing: border-box;
-      }
-      .limra-footer a {
-        text-decoration: none !important;
-        transition: color 0.2s !important;
-      }
-      .limra-footer ul {
-        list-style: none !important;
-        padding: 0 !important;
-        margin: 0 !important;
-      }
+      .limra-footer a { text-decoration: none !important; transition: color 0.2s !important; }
+      .limra-footer ul { list-style: none !important; padding: 0 !important; margin: 0 !important; }
       .limra-footer-link {
-        color: rgba(255, 255, 255, 0.65) !important;
+        color: rgba(255,255,255,0.65) !important;
         font-size: 0.875rem !important;
         display: block !important;
         font-family: 'DM Sans', sans-serif !important;
       }
-      .limra-footer-link:hover {
-        color: #ffffff !important;
-      }
+      .limra-footer-link:hover { color: #ffffff !important; }
       .limra-footer-heading {
         font-size: 0.72rem !important;
         font-weight: 700 !important;
         color: #ffffff !important;
-        margin: 0 0 18px 0 !important;
-        padding: 0 !important;
+        margin-bottom: 18px !important;
         letter-spacing: 0.14em !important;
         text-transform: uppercase !important;
-        font-family: 'DM Sans', sans-serif !important;
       }
-      .limra-bottom-link {
-        color: rgba(255, 255, 255, 0.6) !important;
-        font-size: 0.8rem !important;
-        text-decoration: none !important;
-        transition: color 0.2s !important;
-      }
-      .limra-bottom-link:hover {
-        color: #ffffff !important;
-      }
-      .limra-bottom-link-white {
-        color: #ffffff !important;
-        font-weight: 600 !important;
-      }
-      .limra-bottom-link-blue {
-        color: #93C5FD !important;
-        font-weight: 600 !important;
-      }
-      .limra-social-icon {
-        color: rgba(255, 255, 255, 0.65) !important;
-        display: flex !important;
-        align-items: center !important;
-        transition: color 0.2s !important;
-      }
-      .limra-social-icon:hover {
-        color: #ffffff !important;
-      }
+      .limra-social-icon { color: rgba(255,255,255,0.65); transition: color 0.2s; }
+      .limra-social-icon:hover { color: #ffffff; }
     `}</style>
 
     <motion.footer
       className="limra-footer"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-60px" }}
       variants={containerVariants}
       style={{
-        background: "linear-gradient(160deg, #0B1F4B 0%, #0F2460 60%, #0B1F4B 100%)",
-        color: "#ffffff",
-        fontFamily: "'DM Sans', sans-serif",
-        position: "relative",
-        overflow: "hidden",
-        display: "block",
-        width: "100%",
+        background: "linear-gradient(160deg,#0B1F4B 0%,#0F2460 60%,#0B1F4B 100%)",
+        color: "#fff",
       }}
     >
-      {/* Dot pattern overlay */}
-      <div style={{
-        position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
-        opacity: 0.09,
-        backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)",
-        backgroundSize: "32px 32px",
-        pointerEvents: "none", zIndex: 0,
-      }} />
-
-      {/* Top gradient accent line */}
-      <div style={{
-        height: "3px", position: "relative", zIndex: 1,
-        background: "linear-gradient(90deg, #0B1F4B 0%, #1D4ED8 30%, #3B82F6 50%, #1D4ED8 70%, #0B1F4B 100%)",
-      }} />
-
-      {/* ── Main grid ── */}
-      <div style={{
-        maxWidth: "1200px", margin: "0 auto",
-        padding: "64px 32px 56px",
-        position: "relative", zIndex: 2,
-      }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "64px 32px" }}>
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(165px, 1fr))",
-          gap: "40px 28px",
+          gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))",
+          gap: 40,
         }}>
 
-          {/* ── Brand column ── */}
+          {/* Brand */}
           <motion.div variants={colVariants}>
-            <a href="#" style={{ display: "inline-block", marginBottom: "14px" }}>
-              <span style={{
-                fontFamily: "'DM Serif Display', serif",
-                fontSize: "1.05rem", fontWeight: 700,
-                color: "#ffffff",
-                borderBottom: "1px solid rgba(255,255,255,0.35)",
-                paddingBottom: "3px",
-              }}>
-                LIMRA Sales &amp; Services
-              </span>
-            </a>
-            <p style={{
-              fontSize: "0.875rem",
-              color: "rgba(255,255,255,0.65)",
-              lineHeight: 1.75, marginBottom: "16px",
-              fontFamily: "'DM Sans', sans-serif",
-            }}>
+            <Link to="/" style={{ fontWeight: 700, color: "#fff" }}>
+              LIMRA Sales & Services
+            </Link>
+
+            <p style={{ color: "rgba(255,255,255,0.65)", margin: "12px 0" }}>
               Your trusted partner for all HVAC and air conditioning needs.
-              Authorized dealer for premium brands with expert installation and service.
             </p>
-            <div style={{ display: "flex", alignItems: "center", gap: "7px", marginBottom: "20px" }}>
-              <Star size={14} style={{ color: "#60A5FA", flexShrink: 0 }} fill="#60A5FA" />
-              <span style={{
-                fontSize: "0.875rem", fontWeight: 600, color: "#ffffff",
-                fontFamily: "'DM Sans', sans-serif",
-              }}>
-                9+ Years of Excellence
-              </span>
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+
+            <div style={{ display: "flex", gap: 12 }}>
               {socialLinks.map((s) => (
-                <a key={s.label} href={s.href} aria-label={s.label} className="limra-social-icon">
+                <a key={s.label} href={s.href} className="limra-social-icon">
                   <s.icon size={20} />
                 </a>
               ))}
             </div>
           </motion.div>
 
-          
-
-          {/* ── Residential ── */}
+          {/* Residential */}
           <motion.div variants={colVariants}>
             <p className="limra-footer-heading">Residential</p>
             <ul>
               {residentialProducts.map((p) => (
-                <li key={p} style={{ marginBottom: "9px" }}>
-                  <a href="#" className="limra-footer-link">{p}</a>
+                <li key={p}>
+                  <Link
+                    to={`/shop?product=${encodeURIComponent(p)}`}
+                    className="limra-footer-link"
+                  >
+                    {p}
+                  </Link>
                 </li>
               ))}
             </ul>
           </motion.div>
 
-          {/* ── Commercial ── */}
+          {/* Commercial */}
           <motion.div variants={colVariants}>
             <p className="limra-footer-heading">Commercial</p>
             <ul>
               {commercialProducts.map((p) => (
-                <li key={p} style={{ marginBottom: "9px" }}>
-                  <a href="#" className="limra-footer-link">{p}</a>
+                <li key={p}>
+                  <Link
+                    to={`/shop?product=${encodeURIComponent(p)}`}
+                    className="limra-footer-link"
+                  >
+                    {p}
+                  </Link>
                 </li>
               ))}
             </ul>
           </motion.div>
 
-          {/* ── Contact + Quick Links ── */}
+          {/* Contact */}
           <motion.div variants={colVariants}>
             <p className="limra-footer-heading">Contact Info</p>
-            <ul style={{ marginBottom: "28px" }}>
-              <li style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
-                <Phone size={14} style={{ color: "#60A5FA", flexShrink: 0 }} />
-                <a href="tel:+919839171701" className="limra-footer-link" style={{ display: "inline" }}>
+            <ul style={{ marginBottom: 20 }}>
+              <li style={{ display: "flex", gap: 10 }}>
+                <Phone size={14} />
+                <a href="tel:+919839171701" className="limra-footer-link">
                   +91 9839171701
                 </a>
               </li>
-              <li style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
-                <Mail size={14} style={{ color: "#60A5FA", flexShrink: 0 }} />
-                <a href="mailto:info@limrasales.com" className="limra-footer-link" style={{ display: "inline", wordBreak: "break-all" }}>
+
+              <li style={{ display: "flex", gap: 10 }}>
+                <Mail size={14} />
+                <a href="mailto:info@limrasales.com" className="limra-footer-link">
                   info@limrasales.com
                 </a>
               </li>
-              <li style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
-                <MapPin size={14} style={{ color: "#60A5FA", flexShrink: 0, marginTop: "2px" }} />
-                <span style={{
-                  fontSize: "0.875rem",
-                  color: "rgba(255,255,255,0.65)",
-                  fontFamily: "'DM Sans', sans-serif",
-                }}>
+
+              {/* ✅ FIXED ADDRESS LINK */}
+              <li style={{ display: "flex", gap: 10 }}>
+                <MapPin size={14} />
+                <a
+                  href="https://maps.google.com/?q=Civil+Lines,+Bareilly,+UP+243001"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="limra-footer-link"
+                >
                   Civil Lines, Bareilly, UP 243001
-                </span>
+                </a>
               </li>
             </ul>
 
-            
-            <p className="limra-footer-heading ">Quick Links</p>
+            <p className="limra-footer-heading">Quick Links</p>
             <ul>
               {quickLinks.map((l) => (
-                <li key={l} style={{ marginBottom: "9px" }}>
-                  <a href="#" className="limra-footer-link">{l}</a>
+                <li key={l.label}>
+                  <Link to={l.to} className="limra-footer-link">
+                    {l.label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -253,57 +181,24 @@ const SiteFooter = () => (
         </div>
       </div>
 
-      {/* ── Bottom bar ── */}
-      <motion.div
-        variants={colVariants}
-        style={{
-          background: "#05091A",
-          borderTop: "1px solid rgba(255,255,255,0.07)",
-          padding: "16px 32px",
-          position: "relative", zIndex: 2,
-        }}
-      >
-        <div style={{
-          maxWidth: "1200px", margin: "0 auto",
-          display: "flex",
-          flexWrap: "wrap",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "6px 8px",
-          textAlign: "center",
-          fontSize: "0.8rem",
-          color: "rgba(255,255,255,0.55)",
-          fontFamily: "'DM Sans', sans-serif",
-        }}>
-          <span>
-            Copyright © {new Date().getFullYear()} LIMRA Sales And Services. All rights reserved.
-          </span>
-          <span style={{ color: "rgba(255,255,255,0.2)" }}>|</span>
-          <span>Designed By</span>
-          <Link
-            to="https://www.codecrafter.co.in/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Code Crafter"
-            style={{ display: "inline-flex", alignItems: "center", lineHeight: 1 }}
-          >
-            <img
-              src={cclogo}
-              alt="CodeCrafter Logo"
-              style={{
-                width: "80px",
-                objectFit: "contain",
-                transition: "transform 0.2s",
-                verticalAlign: "middle",
-                filter: "brightness(0) invert(1) opacity(0.75)",
-              }}
-              onMouseEnter={e => (e.currentTarget as HTMLImageElement).style.transform = "scale(1.08)"}
-              onMouseLeave={e => (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"}
-            />
-          </Link>
-        </div>
-      </motion.div>
-
+      {/* Bottom */}
+      <div style={{
+        background: "#05091A",
+        padding: 16,
+        textAlign: "center",
+        fontSize: 12,
+        color: "rgba(255,255,255,0.55)"
+      }}>
+        © {new Date().getFullYear()} LIMRA Sales & Services | Designed by
+        <a
+          href="https://www.codecrafter.co.in/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ marginLeft: 6 }}
+        >
+          <img src={cclogo} alt="CodeCrafter" style={{ width: 70 }} />
+        </a>
+      </div>
     </motion.footer>
   </>
 );
