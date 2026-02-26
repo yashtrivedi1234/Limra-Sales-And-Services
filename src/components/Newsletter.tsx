@@ -17,7 +17,7 @@ const Newsletter = () => {
     if (!validateEmail(email)) { toast.error("Please enter a valid email"); return; }
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:5000/api/newsletter", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email }) });
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/newsletter`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email }) });
       const data = await res.json();
       if (res.status === 409) { toast.warning(data.message || "Already subscribed"); return; }
       if (!res.ok) throw new Error(data.message || "Something went wrong");
