@@ -31,11 +31,7 @@ const SiteHeader = () => {
   const isBrandDetail = location.pathname.startsWith("/brand/");
   const useWhiteText = (isHome || isBrandDetail) && !scrolled;
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  // ...existing code...
 
   useEffect(() => {
     setMenuOpen(false);
@@ -45,24 +41,24 @@ const SiteHeader = () => {
   const navLinkColor = (path: string, exact = true) => {
     const active = exact ? location.pathname === path : location.pathname.startsWith(path);
     if (active) return BRAND.primary;
-    return useWhiteText ? "rgba(255,255,255,0.85)" : BRAND.dark;
+    return BRAND.dark;
   };
 
   return (
     <header style={{
       position: "fixed", top: 0, left: 0, right: 0, zIndex: 50,
       transition: "all 0.4s ease",
-      background: scrolled ? "rgba(255,255,255,0.85)" : "transparent",
-      backdropFilter: scrolled ? "blur(20px)" : "none",
-      WebkitBackdropFilter: scrolled ? "blur(20px)" : "none",
-      boxShadow: scrolled ? `0 2px 24px ${BRAND.primary}1A` : "none",
-      borderBottom: scrolled ? `1px solid ${BRAND.slate100}` : "none",
+      background: "rgba(255,255,255,0.85)",
+      backdropFilter: "blur(20px)",
+      WebkitBackdropFilter: "blur(20px)",
+      boxShadow: `0 2px 24px ${BRAND.primary}1A`,
+      borderBottom: `1px solid ${BRAND.slate100}`,
       fontFamily: "'Inter', sans-serif",
     }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 48px", display: "flex", alignItems: "center", justifyContent: "space-between", height: "68px" }}>
         <Link to="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
           <img src={logo1} alt="LIMRA Sales & Services" style={{ height: "48px", width: "auto", objectFit: "contain" }} />
-          <span style={{ fontSize: "1.05rem", fontWeight: 700, whiteSpace: "nowrap", color: useWhiteText ? BRAND.white : BRAND.dark, transition: "color 0.4s" }}>
+          <span style={{ fontSize: "1.05rem", fontWeight: 700, whiteSpace: "nowrap", color: BRAND.dark, transition: "color 0.4s" }}>
             LIMRA Sales &amp; Services
           </span>
         </Link>
@@ -77,10 +73,9 @@ const SiteHeader = () => {
                 <div className="nav-dropdown" style={{ position: "absolute", left: 0, top: "100%", paddingTop: "8px", display: "none" }}>
                   <div style={{ background: "rgba(255,255,255,0.95)", backdropFilter: "blur(16px)", border: `1px solid ${BRAND.slate100}`, boxShadow: `0 12px 40px ${BRAND.primary}1F`, borderRadius: "14px", overflow: "hidden", minWidth: "200px" }}>
                     {link.submenu.map((sub) => (
-                      <Link key={sub.name} to={sub.path} style={{ display: "block", padding: "10px 18px", fontSize: "0.875rem", color: BRAND.dark, textDecoration: "none", transition: "all 0.15s", fontWeight: 500 }}
-                        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = BRAND.primaryPale; (e.currentTarget as HTMLElement).style.color = BRAND.primary; }}
-                        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = BRAND.dark; }}
-                      >{sub.name}</Link>
+                      <Link key={sub.name} to={sub.path} style={{ display: "block", padding: "10px 18px", fontSize: "0.875rem", color: BRAND.dark, textDecoration: "none", transition: "all 0.15s", fontWeight: 500 }}>
+                        {sub.name}
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -98,7 +93,7 @@ const SiteHeader = () => {
           <a href="tel:+919839171701" style={{ display: "inline-flex", alignItems: "center", gap: "7px", padding: "9px 20px", background: `linear-gradient(135deg, ${BRAND.dark} 0%, ${BRAND.primary} 100%)`, color: BRAND.white, fontSize: "0.875rem", fontWeight: 700, borderRadius: "100px", textDecoration: "none", boxShadow: `0 4px 16px ${BRAND.primary}4D`, transition: "all 0.2s" }}>
             <Phone size={14} /> Enquiry Now
           </a>
-          <button style={{ display: "none", padding: "8px", borderRadius: "8px", background: "transparent", border: "none", cursor: "pointer", color: useWhiteText ? BRAND.white : BRAND.dark }} className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)}>
+          <button style={{ display: "none", padding: "8px", borderRadius: "8px", background: "transparent", border: "none", cursor: "pointer", color: BRAND.dark }} className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
@@ -129,7 +124,7 @@ const SiteHeader = () => {
                   <Link key={link.name} to={link.path} onClick={() => setMenuOpen(false)} style={{ display: "block", padding: "12px 16px", borderRadius: "10px", fontWeight: 600, fontSize: "0.95rem", textDecoration: "none", color: location.pathname === link.path ? BRAND.primary : BRAND.dark }}>{link.name}</Link>
                 )
               )}
-              <a href="tel:+919839171701" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", marginTop: "16px", padding: "13px", background: `linear-gradient(135deg, ${BRAND.dark} 0%, ${BRAND.primary} 100%)`, color: BRAND.white, fontSize: "0.9rem", fontWeight: 700, borderRadius: "100px", textDecoration: "none" }}>
+              <a href="tel:+919839171701" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", marginTop: "16px", padding: "13px", background: `linear-gradient(135deg, ${BRAND.dark} 0%, ${BRAND.primary} 100%)`, color: BRAND.dark, fontSize: "0.9rem", fontWeight: 700, borderRadius: "100px", textDecoration: "none" }}>
                 <Phone size={15} /> Call Now
               </a>
             </div>

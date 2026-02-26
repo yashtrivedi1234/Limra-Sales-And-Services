@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { BRAND } from "@/lib/colors";
 
 const applications = [
-  { icon: <Hotel size={30} strokeWidth={1.5} />, label: "Hotels & Restaurants" },
-  { icon: <Cross size={30} strokeWidth={1.5} />, label: "Hospitals & Clinics" },
-  { icon: <GraduationCap size={30} strokeWidth={1.5} />, label: "Schools & Colleges" },
-  { icon: <Dumbbell size={30} strokeWidth={1.5} />, label: "Gyms & Fitness Centers" },
-  { icon: <Scissors size={30} strokeWidth={1.5} />, label: "Salons & Spas" },
-  { icon: <Briefcase size={30} strokeWidth={1.5} />, label: "Offices & IT Parks" },
-  { icon: <ShoppingBag size={30} strokeWidth={1.5} />, label: "Retail Stores" },
-  { icon: <BarChart2 size={30} strokeWidth={1.5} />, label: "Industrial Buildings" },
+  { icon: <Hotel size={30} strokeWidth={1.5} color="#F59E0B" />, label: "Hotels & Restaurants" },
+  { icon: <Cross size={30} strokeWidth={1.5} color="#EF4444" />, label: "Hospitals & Clinics" },
+  { icon: <GraduationCap size={30} strokeWidth={1.5} color="#3B82F6" />, label: "Schools & Colleges" },
+  { icon: <Dumbbell size={30} strokeWidth={1.5} color="#10B981" />, label: "Gyms & Fitness Centers" },
+  { icon: <Scissors size={30} strokeWidth={1.5} color="#EC4899" />, label: "Salons & Spas" },
+  { icon: <Briefcase size={30} strokeWidth={1.5} color="#6366F1" />, label: "Offices & IT Parks" },
+  { icon: <ShoppingBag size={30} strokeWidth={1.5} color="#F97316" />, label: "Retail Stores" },
+  { icon: <BarChart2 size={30} strokeWidth={1.5} color="#14B8A6" />, label: "Industrial Buildings" },
 ];
 
 export default function CommercialApplications() {
@@ -46,7 +46,7 @@ export default function CommercialApplications() {
                 transition: "all 0.25s"
               }}
             >
-              <div style={{ color: BRAND.dark }}>{app.icon}</div>
+            <div>{app.icon}</div>
               <span style={{ fontSize: "0.82rem", color: BRAND.slate600, fontWeight: 600, textAlign: "center", lineHeight: 1.4 }}>{app.label}</span>
             </motion.div>
           ))}
