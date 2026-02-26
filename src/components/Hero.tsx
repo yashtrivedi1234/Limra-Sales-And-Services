@@ -1,12 +1,6 @@
 import { motion } from "framer-motion";
 import { Phone, ShoppingCart, Eye, CheckCircle, MapPin } from "lucide-react";
 
-const stats = [
-  { value: "50,000+", label: "AC Installations" },
-  { value: "500+", label: "Projects" },
-  { value: "25+", label: "Years Experience" },
-];
-
 const badges = [
   { icon: CheckCircle, text: "Free Site Visit & Consultation" },
   { icon: CheckCircle, text: "Expert Installation Team" },
@@ -212,31 +206,7 @@ export default function HeroSection() {
           ))}
         </motion.div>
 
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "32px",
-            flexWrap: "wrap",
-          }}
-        >
-          {stats.map((s, i) => (
-            <div
-              key={i}
-              style={{ display: "flex", alignItems: "center", gap: "32px" }}
-            >
-              <div>
-                <div style={statValue}>{s.value}</div>
-                <div style={statLabel}>{s.label}</div>
-              </div>
-              {i < stats.length - 1 && <div style={divider} />}
-            </div>
-          ))}
-        </motion.div>
+       
       </div>
     </section>
   );

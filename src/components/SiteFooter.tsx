@@ -3,10 +3,7 @@ import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Facebook, Instagram, Youtube, Star } from "lucide-react";
 import cclogo from "../assets/cc-logo.png";
 
-const brands = [
-  "Daikin (VRV Systems)", "Mitsubishi Heavy", "Carrier",
-  "Amstrad", "Midea", "Godrej", "Cruise", "Voltas",
-];
+
 
 const residentialProducts = [
   "Inverter Split AC", "Non-Inverter Split AC", "Window AC",
@@ -188,17 +185,7 @@ const SiteFooter = () => (
             </div>
           </motion.div>
 
-          {/* ── Our Brands ── */}
-          <motion.div variants={colVariants}>
-            <p className="limra-footer-heading">Our Brands</p>
-            <ul>
-              {brands.map((b) => (
-                <li key={b} style={{ marginBottom: "9px" }}>
-                  <a href="#" className="limra-footer-link">{b}</a>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
+          
 
           {/* ── Residential ── */}
           <motion.div variants={colVariants}>

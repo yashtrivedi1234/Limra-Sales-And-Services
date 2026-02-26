@@ -16,31 +16,18 @@ const COLORS = {
 
 const navLinks = [
   { name: "Home", path: "/" },
-  { name: "Shop", path: "/shop" },
+  { name: "Our Story", path: "/about" },
+  { name: "Services", path: "/services" },
   {
-    name: "Product Categories",
-    path: "/categories",
+    name: "Products",
+    path: "/products",
     submenu: [
-      { name: "Residential", path: "/categories/residential" },
-      { name: "Commercial", path: "/categories/commercial" },
-    ],
-  },
-  {
-    name: "Brands",
-    path: "/brands",
-    submenu: [
-      { name: "Daikin", path: "/brand/daikin-vrv-systems" },
-      { name: "Mitsubishi Heavy", path: "/brand/mitsubishi-heavy" },
-      { name: "Carrier", path: "/brand/carrier" },
-      { name: "Amstrad", path: "/brand/amstrad" },
-      { name: "Midea", path: "/brand/midea" },
-      { name: "Godrej", path: "/brand/godrej" },
-      { name: "Cruise", path: "/brand/cruise" },
-      { name: "Voltas", path: "/brand/voltas" },
+      { name: "Residential", path: "/products/residential" },
+      { name: "Commercial", path: "/products/commercial" },
     ],
   },
   { name: "Projects", path: "/case-studies" },
-  { name: "Blogs", path: "/blog" },
+  { name: "Blog", path: "/blog" },
   { name: "Contact Us", path: "/contact" },
 ];
 
@@ -192,7 +179,7 @@ const useWhiteText = (isHome || isBrandDetail) && !scrolled;
             }}
           >
             <Phone size={14} />
-            Call Now
+            Enquiry Now
           </a>
 
           {/* Mobile hamburger */}
