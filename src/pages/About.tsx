@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Shield, Award, Users, Target, Phone } from "lucide-react";
-
+import CountUp from "@/components/ui/CountUp";
 
 const COLORS = {
   navy: "#0B1F4B",
@@ -15,10 +15,10 @@ const COLORS = {
 };
 
 const stats = [
-  { value: "9+", label: "Years Experience" },
-  { value: "5000+", label: "Projects Completed" },
-  { value: "50+", label: "Expert Technicians" },
-  { value: "8+", label: "Premium Brands" },
+  { value: 9, suffix: "+", label: "Years Experience" },
+  { value: 5000, suffix: "+", label: "Projects Completed" },
+  { value: 50, suffix: "+", label: "Expert Technicians" },
+  { value: 8, suffix: "+", label: "Premium Brands" },
 ];
 
 const values = [
@@ -89,22 +89,72 @@ const About = () => (
 
       {/* ── Stats ── */}
       <section style={{ padding: "80px 24px", background: COLORS.white }}>
-        <div style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "24px" }}>
-          {stats.map((s, i) => (
-            <motion.div key={s.label}
-              initial="hidden" whileInView="visible" viewport={{ once: true }}
-              variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.5 } } }}
-              style={{
-                textAlign: "center", background: COLORS.bluePale,
-                borderRadius: "16px", padding: "32px 20px",
-                border: `1px solid ${COLORS.slate100}`
-              }}>
-              <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "3rem", color: COLORS.blue, lineHeight: 1, marginBottom: "8px" }}>{s.value}</p>
-              <p style={{ fontSize: "0.85rem", color: COLORS.slate400, fontWeight: 500 }}>{s.label}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+  <div
+    style={{
+      maxWidth: "1000px",
+      margin: "0 auto",
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+      gap: "24px",
+    }}
+  >
+    {stats.map((s, i) => (
+      <motion.div
+        key={s.label}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={{
+          hidden: { opacity: 0, y: 24 },
+          visible: {
+            opacity: 1,
+            y: 0,
+            transition: { delay: i * 0.1, duration: 0.5 },
+          },
+        }}
+        style={{
+          textAlign: "center",
+          background: COLORS.bluePale,
+          borderRadius: "16px",
+          padding: "32px 20px",
+          border: `1px solid ${COLORS.slate100}`,
+        }}
+      >
+        {/* ✅ CountUp Animation */}
+        <p
+          style={{
+            fontFamily: "'DM Serif Display', serif",
+            fontSize: "3rem",
+            color: COLORS.blue,
+            lineHeight: 1,
+            marginBottom: "8px",
+            fontWeight: 700,
+          }}
+        >
+          <CountUp
+            from={0}
+            to={s.value}
+            duration={1.2}
+            separator=","
+            direction="up"
+            startCounting={true}
+          />
+          {s.suffix}
+        </p>
+
+        <p
+          style={{
+            fontSize: "0.85rem",
+            color: COLORS.slate400,
+            fontWeight: 500,
+          }}
+        >
+          {s.label}
+        </p>
+      </motion.div>
+    ))}
+  </div>
+</section>
 
       {/* ── Our Story ── */}
       <section style={{ padding: "80px 24px", background: COLORS.slate50 }}>
