@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Wind, Building2, Snowflake, Fan, ThermometerSun, AirVent, ArrowRight } from "lucide-react";
 import { BRAND } from "@/lib/colors";
+import { useNavigate } from "react-router-dom";
 
 const categories = [
   { icon: Snowflake, title: "Inverter Split AC", type: "Residential", desc: "Energy-efficient cooling for homes" },
@@ -12,6 +13,7 @@ const categories = [
 ];
 
 export default function ProductCategories() {
+  const navigate = useNavigate();
   return (
     <section style={{
       padding: "100px 0", background: BRAND.bgSoft, fontFamily: "'Inter', sans-serif",
@@ -43,6 +45,7 @@ export default function ProductCategories() {
                 transition: "all 0.3s", position: "relative", overflow: "hidden",
                 boxShadow: `0 2px 16px ${BRAND.primary}14`
               }}
+              onClick={() => navigate("/product")}
             >
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: `linear-gradient(90deg, ${BRAND.dark}, ${BRAND.primary})` }} />
               <span style={{ display: "inline-flex", alignItems: "center", fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", color: BRAND.primary, background: BRAND.primarySky, padding: "4px 12px", borderRadius: "100px", marginBottom: "20px" }}>

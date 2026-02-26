@@ -10,11 +10,8 @@ const navLinks = [
   { name: "Our Story", path: "/about" },
   { name: "Services", path: "/services" },
   {
-    name: "Products", path: "/products",
-    submenu: [
-      { name: "Residential", path: "/products/residential" },
-      { name: "Commercial", path: "/products/commercial" },
-    ],
+    name: "Products", path: "/product",
+   
   },
   { name: "Projects", path: "/case-studies" },
   { name: "Blog", path: "/blog" },

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Phone, ShoppingCart, Eye, CheckCircle, MapPin } from "lucide-react";
 import { BRAND } from "@/lib/colors";
 import type { CSSProperties } from "react";
@@ -96,12 +97,12 @@ export default function HeroSection() {
           <a href="tel:+919839171701" style={btnPrimary}>
             <Phone size={16} fill="white" stroke="none" /> Call Now — Free Consultation
           </a>
-          <a href="#products" style={btnOutline}>
-            <Eye size={16} /> View Products
-          </a>
-          <a href="#shop" style={btnGhost}>
+          <Link to="/product" style={btnOutline}>
+            <Eye size={16} /> View Product
+          </Link>
+          <Link to="/shop" style={btnGhost}>
             <ShoppingCart size={16} /> Shop Online
-          </a>
+          </Link>
         </motion.div>
 
         {/* Badges */}

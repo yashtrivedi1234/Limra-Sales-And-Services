@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Phone, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { BRAND } from '@/lib/colors';
@@ -12,6 +13,8 @@ const CTASection: React.FC<CTAProps> = ({
   phoneNumber = "+91-9236477974",
   onConsultationClick,
 }) => {
+  const navigate = useNavigate();
+  const handleConsultationClick = onConsultationClick || (() => navigate('/contact'));
   return (
     <section style={{ width: "100%", background: BRAND.bgSoft, padding: "80px 24px", fontFamily: "'Inter', sans-serif" }}>
       <div style={{ maxWidth: "900px", margin: "0 auto" }}>
@@ -43,7 +46,7 @@ const CTASection: React.FC<CTAProps> = ({
             </p>
 
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: "14px", marginBottom: "28px" }}>
-              <button onClick={onConsultationClick} style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "14px 32px", background: BRAND.white, color: BRAND.dark, fontWeight: 700, fontSize: "0.95rem", borderRadius: "12px", border: "none", cursor: "pointer", boxShadow: "0 8px 24px rgba(0,0,0,0.2)", transition: "all 0.2s" }}>
+              <button onClick={handleConsultationClick} style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "14px 32px", background: BRAND.white, color: BRAND.dark, fontWeight: 700, fontSize: "0.95rem", borderRadius: "12px", border: "none", cursor: "pointer", boxShadow: "0 8px 24px rgba(0,0,0,0.2)", transition: "all 0.2s" }}>
                 Get Free Consultation <ArrowRight size={17} />
               </button>
               <a href={`tel:${phoneNumber.replace(/[^0-9+]/g, '')}`} style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "13px 32px", background: "transparent", color: BRAND.white, fontWeight: 700, fontSize: "0.95rem", borderRadius: "12px", border: "2px solid rgba(255,255,255,0.35)", cursor: "pointer", textDecoration: "none", transition: "all 0.2s" }}>

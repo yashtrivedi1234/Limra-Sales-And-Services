@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import MainLayout from "./layouts/MainLayout";
 
+// Pages
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Blog from "./pages/Blog";
@@ -17,8 +18,13 @@ import Checkout from "./pages/Checkout";
 import ContactUs from "./pages/ContactUs";
 import BrandDetail from "./pages/BrandDetail";
 import OrderSuccess from "./pages/OrderSuccess";
-import  Product  from "./pages/Shop";
+import ProductPage from "./pages/Products";
 import Brand from "./pages/Brand";
+
+// ✅ FIXED IMPORTS
+import ServicesPage from "./pages/ServicesPage";
+import ServiceDetailPage from "./pages/ServiceDetailPage";
+
 const queryClient = new QueryClient();
 
 const App: React.FC = () => (
@@ -26,7 +32,8 @@ const App: React.FC = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-    <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer position="top-right" autoClose={3000} />
+
       <BrowserRouter>
         <Routes>
           {/* Routes with Header & Footer */}
@@ -41,8 +48,12 @@ const App: React.FC = () => (
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/brand/:slug" element={<BrandDetail />} />
             <Route path="/order-success" element={<OrderSuccess />} />
-            <Route path="/product" element={<Product />} />
+            <Route path="/product" element={<ProductPage />} />
             <Route path="/brands" element={<Brand />} />
+
+            {/* ✅ SERVICES ROUTES */}
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/services/:slug" element={<ServiceDetailPage />} />
           </Route>
 
           {/* Routes without layout */}

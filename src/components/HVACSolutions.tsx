@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { Phone, Wind, Droplets, ThermometerSun, AirVent, Building2, Home } from "lucide-react";
 import { BRAND } from "@/lib/colors";
 
@@ -24,6 +25,7 @@ const cardVariants = {
 };
 
 function SolutionCard({ title, items, primaryBtnLabel, imageUrl, badgeIcon, index }: any) {
+  const navigate = useNavigate();
   return (
     <motion.div
       custom={index}
@@ -56,10 +58,16 @@ function SolutionCard({ title, items, primaryBtnLabel, imageUrl, badgeIcon, inde
           ))}
         </ul>
         <div style={{ display: "flex", gap: "10px" }}>
-          <button style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", background: BRAND.dark, color: BRAND.white, fontWeight: 600, padding: "12px 16px", borderRadius: "10px", border: "none", cursor: "pointer", fontSize: "0.88rem", transition: "background 0.2s" }}>
+          <a
+            href="tel:+91 9839171701"
+            style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", background: BRAND.dark, color: BRAND.white, fontWeight: 600, padding: "12px 16px", borderRadius: "10px", border: "none", cursor: "pointer", fontSize: "0.88rem", transition: "background 0.2s", textDecoration: "none" }}
+          >
             <Phone size={15} /> {primaryBtnLabel}
-          </button>
-          <button style={{ flex: 1, background: BRAND.primaryPale, color: BRAND.primary, fontWeight: 600, padding: "12px 16px", borderRadius: "10px", border: `1px solid ${BRAND.slate200}`, cursor: "pointer", fontSize: "0.88rem", transition: "background 0.2s" }}>
+          </a>
+          <button
+            style={{ flex: 1, background: BRAND.primaryPale, color: BRAND.primary, fontWeight: 600, padding: "12px 16px", borderRadius: "10px", border: `1px solid ${BRAND.slate200}` , cursor: "pointer", fontSize: "0.88rem", transition: "background 0.2s" }}
+            onClick={() => navigate('/product')}
+          >
             View Products
           </button>
         </div>
