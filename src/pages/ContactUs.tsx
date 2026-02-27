@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { BRAND } from "@/lib/colors";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   User,
@@ -474,11 +475,7 @@ export default function ContactUs() {
 
   return (
     <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display:ital,wght@0,400;1,400&display=swap');
-        a.no-underline { text-decoration: none; }
-      `}</style>
-      <div className="min-h-screen font-sans" style={{ background: "#f8fafc" }}>
+      <div className="min-h-screen font-sans" style={{ background: BRAND.bgSoft, fontFamily: "'Inter', sans-serif" }}>
         {/* Background Decoration */}
         <div className="fixed inset-0 pointer-events-none overflow-hidden">
           <div className="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full opacity-60"
@@ -496,12 +493,12 @@ export default function ContactUs() {
             className="text-center mb-16"
           >
             <h1
-              style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400 }}
+              style={{ fontWeight: 800 }}
               className="text-5xl sm:text-7xl text-slate-900 tracking-tight leading-[1.1] mt-4"
             >
               Let's Build Your
               <br />
-              <span style={{ background: "linear-gradient(90deg, #2563eb, #3b82f6, #60a5fa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+              <span style={{ background: `linear-gradient(90deg, ${BRAND.dark}, ${BRAND.primary}, ${BRAND.primaryLight})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                 Perfect Climate.
               </span>
             </h1>
@@ -566,7 +563,7 @@ export default function ContactUs() {
                     onSubmit={handleSubmit} className="p-6 sm:p-10"
                   >
                     <div className="mb-8">
-                      <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400 }} className="text-slate-900 text-2xl mb-2">
+                      <h2 style={{ fontWeight: 800 }} className="text-slate-900 text-2xl mb-2">
                         Send Us a Message
                       </h2>
                       <p className="text-slate-500 text-sm">Describe your needs and a real expert will call you back.</p>
@@ -593,8 +590,8 @@ export default function ContactUs() {
                         type="submit" disabled={!canSubmit}
                         className="group relative w-full flex items-center justify-center gap-3 py-4 rounded-xl font-bold text-sm text-white tracking-wide overflow-hidden transition-all duration-300 mt-2"
                         style={{
-                          background: canSubmit ? "linear-gradient(135deg,#1d4ed8 0%,#3b82f6 100%)" : "#cbd5e1",
-                          boxShadow: canSubmit ? "0 10px 20px -5px rgba(59,130,246,0.4)" : "none",
+                          background: canSubmit ? `linear-gradient(135deg,${BRAND.dark} 0%,${BRAND.primary} 100%)` : "#cbd5e1",
+                          boxShadow: canSubmit ? `0 10px 20px -5px ${BRAND.primary}66` : "none",
                           cursor: canSubmit ? "pointer" : "not-allowed",
                         }}
                       >

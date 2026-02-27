@@ -75,20 +75,18 @@ const BlogPost = () => {
     <>
       {/* ─── GLOBAL STYLES ─── */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display:ital,wght@0,400;1,400&display=swap');
-
         :root {
-          --ink: #0b0a09;
-          --paper: #faf8f4;
-          --gold: #c9a84c;
-          --gold-light: #e8c96b;
-          --rust: #b24a2c;
-          --muted: #6b6560;
-          --border: rgba(201,168,76,0.2);
+          --ink: #082A45;
+          --paper: #F4FAFE;
+          --gold: #0695CD;
+          --gold-light: #3BB4E0;
+          --rust: #0E3D5E;
+          --muted: #5A9AB5;
+          --border: rgba(6,149,205,0.2);
         }
 
-        .blog-root { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
-        .display-font { font-family: 'DM Serif Display', Georgia, serif; }
+        .blog-root { font-family: 'Inter', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
+        .display-font { font-family: 'Inter', sans-serif; font-weight: 800; }
 
         /* Progress bar */
         .progress-bar {
@@ -104,7 +102,7 @@ const BlogPost = () => {
         .hero-content { position: absolute; bottom: 0; left: 0; right: 0; padding: clamp(2rem,6vw,5rem); max-width: 900px; }
 
         .split-heading {
-          font-family: 'DM Serif Display', Georgia, serif;
+          font-family: 'Inter', sans-serif;
           font-size: clamp(1.4rem, 2.8vw, 2.4rem);
           font-weight: 400;
           line-height: 1.25;
@@ -139,7 +137,7 @@ const BlogPost = () => {
 
         /* Drop cap */
         .article-body > p:first-child::first-letter {
-          font-family: 'DM Serif Display', Georgia, serif;
+          font-family: 'Inter', sans-serif;
           font-size: 5.5rem; font-weight: 400;
           float: left; line-height: 0.8;
           margin: 0.12em 0.1em 0 0;
@@ -162,7 +160,7 @@ const BlogPost = () => {
           border-radius: 0 12px 12px 0;
         }
         .pull-quote p {
-          font-family: 'DM Serif Display', Georgia, serif;
+          font-family: 'Inter', sans-serif;
           font-size: 1.3rem !important;
           font-style: italic;
           color: var(--ink) !important;
@@ -181,7 +179,7 @@ const BlogPost = () => {
           width: 56px; height: 56px; border-radius: 50%;
           background: linear-gradient(135deg, var(--gold), var(--rust));
           display: flex; align-items: center; justify-content: center;
-          font-family: 'DM Serif Display', Georgia, serif;
+          font-family: 'Inter', sans-serif;
           font-size: 1.4rem; color: #fff; font-weight: 400;
           flex-shrink: 0;
         }
@@ -257,8 +255,8 @@ const BlogPost = () => {
         /* DM Serif Display headings inside article */
         .article-card h2,
         .article-card h3 {
-          font-family: 'DM Serif Display', Georgia, serif;
-          font-weight: 400;
+          font-family: 'Inter', sans-serif;
+          font-weight: 700;
         }
       `}</style>
 

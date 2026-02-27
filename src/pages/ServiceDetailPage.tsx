@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft, CheckCircle2, Clock, Star, Phone,
@@ -9,14 +10,12 @@ import {
 import { services, getService } from "../data/servicesData";
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
+import { BRAND as _B } from "@/lib/colors";
 const BRAND = {
-  dark:       "#0a0f1e",
-  darkMid:    "#0d1730",
-  primary:    "#1a3a6e",
-  accent:     "#38bdf8",
+  ..._B,
+  accent:     _B.accentOnDark,
   accentWarm: "#f0a500",
-  white:      "#ffffff",
-  textMuted:  "rgba(255,255,255,0.55)",
+  textMuted:  _B.textOnDarkMuted,
 };
 
 // ─── FAQ accordion ────────────────────────────────────────────────────────────
@@ -94,7 +93,8 @@ function FAQItem({ faq, index }) {
 }
 
 // ─── Page component ───────────────────────────────────────────────────────────
-export default function ServiceDetailPage({ slug }) {
+export default function ServiceDetailPage() {
+  const { slug } = useParams<{ slug: string }>();
   // getService returns undefined if slug is unknown; fall back to first service
   const service = getService(slug) ?? services[0];
   const Icon = service.icon;

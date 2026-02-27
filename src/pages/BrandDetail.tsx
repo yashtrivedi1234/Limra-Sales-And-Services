@@ -4,23 +4,10 @@ import { Phone, Trophy, Heart, IndianRupee, Star, CheckCircle2, ArrowRight, Shie
 import { brandsData } from '../data/brandsdata';
 import { motion } from 'framer-motion';
 import PageTransition from '../components/PageTransition';
-
-const COLORS = {
-  navy: "#0B1F4B",
-  blue: "#1D4ED8",
-  blueLight: "#3B82F6",
-  blueSky: "#DBEAFE",
-  bluePale: "#EFF6FF",
-  white: "#FFFFFF",
-  slate50: "#F8FAFF",
-  slate100: "#E8EFFF",
-  slate200: "#C7D8F8",
-  slate400: "#6B8AC7",
-  slate600: "#3A5A9C",
-};
+import { BRAND } from '@/lib/colors';
 
 const renderIcon = (iconName: string): React.ReactNode => {
-  const style = { color: COLORS.blue };
+  const style = { color: BRAND.primary };
   switch (iconName) {
     case 'trophy': return <Trophy size={24} style={style} />;
     case 'heart': return <Heart size={24} style={style} />;
@@ -45,12 +32,12 @@ export default function BrandDetail() {
   if (!brand) {
     return (
       <PageTransition>
-        <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: COLORS.white, fontFamily: "'DM Sans', sans-serif" }}>
-          <h2 style={{ fontSize: "1.8rem", fontWeight: 700, color: COLORS.navy, marginBottom: "12px" }}>Brand not found</h2>
-          <p style={{ color: COLORS.slate400, marginBottom: "24px" }}>We couldn't find details for "{slug}".</p>
+        <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: BRAND.white, fontFamily: "'Inter', sans-serif" }}>
+          <h2 style={{ fontSize: "1.8rem", fontWeight: 700, color: BRAND.dark, marginBottom: "12px" }}>Brand not found</h2>
+          <p style={{ color: BRAND.slate400, marginBottom: "24px" }}>We couldn't find details for "{slug}".</p>
           <Link to="/" style={{
-            background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.blue})`,
-            color: COLORS.white, padding: "10px 24px", borderRadius: "8px",
+            background: `linear-gradient(135deg, ${BRAND.dark}, ${BRAND.primary})`,
+            color: BRAND.white, padding: "10px 24px", borderRadius: "8px",
             textDecoration: "none", fontWeight: 600
           }}>
             Go Back Home
@@ -62,18 +49,11 @@ export default function BrandDetail() {
 
   return (
     <PageTransition>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&display=swap');
-        .brand-page { font-family: 'DM Sans', sans-serif; background: ${COLORS.white}; }
-      `}</style>
-
-      <div className="brand-page" style={{ width: "100%" }}>
-
-     
+      <div style={{ width: "100%", fontFamily: "'Inter', sans-serif", background: BRAND.white }}>
 
         {/* ── Hero ── */}
         <section style={{
-          background: "linear-gradient(135deg, #0B1F4B 0%, #1A3580 50%, #1D4ED8 100%)",
+          background: `linear-gradient(135deg, ${BRAND.dark} 0%, ${BRAND.darkMid} 50%, ${BRAND.primary} 100%)`,
           padding: "80px 24px",
           position: "relative", overflow: "hidden"
         }}>
@@ -92,31 +72,30 @@ export default function BrandDetail() {
                 display: "inline-flex", alignItems: "center", gap: "7px",
                 background: "rgba(255,255,255,0.12)",
                 border: "1px solid rgba(255,255,255,0.25)",
-                color: "#93C5FD", padding: "6px 16px", borderRadius: "100px",
+                color: BRAND.accentOnDark, padding: "6px 16px", borderRadius: "100px",
                 fontSize: "0.8rem", fontWeight: 600, marginBottom: "24px"
               }}>
                 <Shield size={13} /> Authorized Dealer in Bareilly
               </div>
 
               <h1 style={{
-                fontFamily: "'DM Serif Display', serif",
                 fontSize: "clamp(2rem, 4.5vw, 3.5rem)",
-                color: "#ffffff", lineHeight: 1.1, marginBottom: "12px"
+                color: BRAND.white, lineHeight: 1.1, marginBottom: "12px", fontWeight: 800
               }}>
-                <span style={{ color: "#93C5FD" }}>{brand.brandName}</span>
+                <span style={{ color: BRAND.accentOnDark }}>{brand.brandName}</span>
                 <br />{brand.title}
               </h1>
 
-              <p style={{ color: "rgba(219,234,254,0.65)", fontWeight: 700, fontSize: "0.8rem", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "16px" }}>
+              <p style={{ color: BRAND.textOnDarkMuted, fontWeight: 700, fontSize: "0.8rem", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "16px" }}>
                 {brand.subtitle}
               </p>
-              <p style={{ color: "rgba(219,234,254,0.75)", lineHeight: 1.75, maxWidth: "500px", fontWeight: 300, marginBottom: "28px" }}>
+              <p style={{ color: BRAND.textOnDark, lineHeight: 1.75, maxWidth: "500px", fontWeight: 300, marginBottom: "28px" }}>
                 {brand.description}
               </p>
 
               <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
                 <a href="tel:+919839171701" style={{
-                  background: COLORS.white, color: COLORS.navy,
+                  background: BRAND.white, color: BRAND.dark,
                   padding: "12px 24px", borderRadius: "10px", fontWeight: 700,
                   display: "inline-flex", alignItems: "center", gap: "8px",
                   textDecoration: "none", fontSize: "0.9rem",
@@ -127,7 +106,7 @@ export default function BrandDetail() {
                 <a href={`https://wa.me/919839171701?text=Hi, I'm interested in ${brand.brandName} products`}
                   target="_blank" rel="noopener noreferrer"
                   style={{
-                    background: "rgba(255,255,255,0.1)", color: "#ffffff",
+                    background: "rgba(255,255,255,0.1)", color: BRAND.white,
                     border: "1px solid rgba(255,255,255,0.25)",
                     padding: "12px 24px", borderRadius: "10px", fontWeight: 600,
                     display: "inline-flex", alignItems: "center", gap: "8px",
@@ -144,7 +123,7 @@ export default function BrandDetail() {
               <div style={{ position: "relative" }}>
                 <div style={{
                   position: "absolute", inset: "-12px",
-                  background: "rgba(59,130,246,0.2)",
+                  background: `${BRAND.primary}33`,
                   borderRadius: "20px", filter: "blur(24px)"
                 }} />
                 <img src={brand.heroImage} alt={brand.title}
@@ -156,21 +135,21 @@ export default function BrandDetail() {
         </section>
 
         {/* ── Features ── */}
-        <section style={{ padding: "80px 24px", background: COLORS.white }}>
+        <section style={{ padding: "80px 24px", background: BRAND.white }}>
           <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
             <motion.div style={{ textAlign: "center", marginBottom: "56px" }}
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <div style={{
                 display: "inline-block",
-                background: "rgba(29,78,216,0.1)", border: "1px solid rgba(29,78,216,0.25)",
-                color: COLORS.blue, fontWeight: 700, fontSize: "0.72rem",
+                background: `${BRAND.primary}1A`, border: `1px solid ${BRAND.primary}40`,
+                color: BRAND.primary, fontWeight: 700, fontSize: "0.72rem",
                 letterSpacing: "0.18em", textTransform: "uppercase",
                 padding: "5px 14px", borderRadius: "100px", marginBottom: "16px"
               }}>Why Choose</div>
-              <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "clamp(1.8rem, 3vw, 2.8rem)", color: COLORS.navy }}>
+              <h2 style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)", color: BRAND.dark, fontWeight: 800 }}>
                 {brand.brandName} in Bareilly
               </h2>
-              <div style={{ width: "48px", height: "3px", background: `linear-gradient(90deg, ${COLORS.navy}, ${COLORS.blueLight})`, borderRadius: "2px", margin: "16px auto 0" }} />
+              <div style={{ width: "48px", height: "3px", background: `linear-gradient(90deg, ${BRAND.dark}, ${BRAND.primary})`, borderRadius: "2px", margin: "16px auto 0" }} />
             </motion.div>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "16px" }}>
@@ -178,28 +157,17 @@ export default function BrandDetail() {
                 <motion.div key={idx} custom={idx} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
                   style={{
                     display: "flex", alignItems: "flex-start", gap: "18px",
-                    padding: "24px", background: COLORS.white,
-                    border: `1px solid ${COLORS.slate100}`, borderRadius: "16px",
-                    boxShadow: "0 2px 12px rgba(29,78,216,0.07)",
+                    padding: "24px", background: BRAND.white,
+                    border: `1px solid ${BRAND.slate100}`, borderRadius: "16px",
+                    boxShadow: `0 2px 12px ${BRAND.primary}14`,
                     transition: "all 0.3s"
-                  }}
-                  onMouseEnter={e => {
-                    (e.currentTarget as HTMLElement).style.borderColor = COLORS.slate200;
-                    (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 28px rgba(29,78,216,0.12)";
-                  }}
-                  onMouseLeave={e => {
-                    (e.currentTarget as HTMLElement).style.borderColor = COLORS.slate100;
-                    (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 12px rgba(29,78,216,0.07)";
                   }}>
-                  <div style={{
-                    padding: "12px", borderRadius: "12px",
-                    background: COLORS.blueSky, flexShrink: 0
-                  }}>
+                  <div style={{ padding: "12px", borderRadius: "12px", background: BRAND.primarySky, flexShrink: 0 }}>
                     {renderIcon(feature.icon)}
                   </div>
                   <div>
-                    <h3 style={{ fontWeight: 700, color: COLORS.navy, fontSize: "1rem", marginBottom: "6px" }}>{feature.title}</h3>
-                    <p style={{ color: COLORS.slate400, fontSize: "0.875rem", lineHeight: 1.6 }}>{feature.desc}</p>
+                    <h3 style={{ fontWeight: 700, color: BRAND.dark, fontSize: "1rem", marginBottom: "6px" }}>{feature.title}</h3>
+                    <p style={{ color: BRAND.slate400, fontSize: "0.875rem", lineHeight: 1.6 }}>{feature.desc}</p>
                   </div>
                 </motion.div>
               ))}
@@ -208,67 +176,65 @@ export default function BrandDetail() {
         </section>
 
         {/* ── Product Range ── */}
-        <section style={{ padding: "80px 24px", background: COLORS.slate50 }}>
+        <section style={{ padding: "80px 24px", background: BRAND.bgSoft }}>
           <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
             <motion.div style={{ textAlign: "center", marginBottom: "56px" }}
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <div style={{
                 display: "inline-block",
-                background: "rgba(29,78,216,0.1)", border: "1px solid rgba(29,78,216,0.25)",
-                color: COLORS.blue, fontWeight: 700, fontSize: "0.72rem",
+                background: `${BRAND.primary}1A`, border: `1px solid ${BRAND.primary}40`,
+                color: BRAND.primary, fontWeight: 700, fontSize: "0.72rem",
                 letterSpacing: "0.18em", textTransform: "uppercase",
                 padding: "5px 14px", borderRadius: "100px", marginBottom: "16px"
               }}>Our Collection</div>
-              <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "clamp(1.8rem, 3vw, 2.8rem)", color: COLORS.navy }}>
+              <h2 style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)", color: BRAND.dark, fontWeight: 800 }}>
                 {brand.brandName} Product Range
               </h2>
-              <div style={{ width: "48px", height: "3px", background: `linear-gradient(90deg, ${COLORS.navy}, ${COLORS.blueLight})`, borderRadius: "2px", margin: "16px auto 0" }} />
+              <div style={{ width: "48px", height: "3px", background: `linear-gradient(90deg, ${BRAND.dark}, ${BRAND.primary})`, borderRadius: "2px", margin: "16px auto 0" }} />
             </motion.div>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "20px" }}>
               {brand.products.map((product, idx) => (
                 <motion.div key={idx} custom={idx} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
                   style={{
-                    background: COLORS.white, border: `1px solid ${COLORS.slate100}`,
+                    background: BRAND.white, border: `1px solid ${BRAND.slate100}`,
                     borderRadius: "20px", overflow: "hidden",
-                    boxShadow: "0 2px 16px rgba(29,78,216,0.07)",
+                    boxShadow: `0 2px 16px ${BRAND.primary}14`,
                     transition: "all 0.3s"
                   }}
                   onMouseEnter={e => {
                     (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)";
-                    (e.currentTarget as HTMLElement).style.boxShadow = "0 12px 36px rgba(29,78,216,0.13)";
+                    (e.currentTarget as HTMLElement).style.boxShadow = `0 12px 36px ${BRAND.primary}22`;
                   }}
                   onMouseLeave={e => {
                     (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
-                    (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 16px rgba(29,78,216,0.07)";
+                    (e.currentTarget as HTMLElement).style.boxShadow = `0 2px 16px ${BRAND.primary}14`;
                   }}>
                   <div style={{
-                    height: "200px", background: COLORS.bluePale,
+                    height: "200px", background: BRAND.primaryPale,
                     display: "flex", alignItems: "center", justifyContent: "center",
                     padding: "24px", position: "relative", overflow: "hidden"
                   }}>
-                    <div style={{ height: "3px", position: "absolute", top: 0, left: 0, right: 0, background: `linear-gradient(90deg, ${COLORS.navy}, ${COLORS.blueLight})` }} />
-                    <img src={product.image} alt={product.title}
-                      style={{ maxHeight: "100%", objectFit: "contain" }}
-                    />
+                    <div style={{ height: "3px", position: "absolute", top: 0, left: 0, right: 0, background: `linear-gradient(90deg, ${BRAND.dark}, ${BRAND.primary})` }} />
+                    <img src={product.image} alt={product.title} style={{ maxHeight: "100%", objectFit: "contain" }} />
                   </div>
-                  <div style={{ padding: "24px", borderTop: `1px solid ${COLORS.slate100}` }}>
-                    <h3 style={{ fontWeight: 700, fontSize: "1.1rem", color: COLORS.navy, marginBottom: "6px" }}>{product.title}</h3>
-                    <p style={{ color: COLORS.slate400, fontSize: "0.875rem", marginBottom: "18px" }}>{product.desc}</p>
+                  <div style={{ padding: "24px", borderTop: `1px solid ${BRAND.slate100}` }}>
+                    <h3 style={{ fontWeight: 700, fontSize: "1.1rem", color: BRAND.dark, marginBottom: "6px" }}>{product.title}</h3>
+                    <p style={{ color: BRAND.slate400, fontSize: "0.875rem", marginBottom: "18px" }}>{product.desc}</p>
                     <ul style={{ listStyle: "none", padding: 0, margin: "0 0 20px", display: "flex", flexDirection: "column", gap: "8px" }}>
                       {product.featuresList.map((item, fIdx) => (
-                        <li key={fIdx} style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.875rem", color: COLORS.slate600 }}>
-                          <CheckCircle2 size={15} style={{ color: COLORS.blue, flexShrink: 0 }} />
+                        <li key={fIdx} style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.875rem", color: BRAND.slate600 }}>
+                          <CheckCircle2 size={15} style={{ color: BRAND.primary, flexShrink: 0 }} />
                           {item}
                         </li>
                       ))}
                     </ul>
                     <a href="tel:+919839171701" style={{
                       width: "100%", display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "8px",
-                      background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.blue})`,
-                      color: COLORS.white, padding: "11px", borderRadius: "10px",
+                      background: `linear-gradient(135deg, ${BRAND.dark}, ${BRAND.primary})`,
+                      color: BRAND.white, padding: "11px", borderRadius: "10px",
                       textDecoration: "none", fontWeight: 600, fontSize: "0.875rem",
-                      boxShadow: "0 4px 14px rgba(29,78,216,0.25)"
+                      boxShadow: `0 4px 14px ${BRAND.primary}40`
                     }}>
                       <Phone size={14} /> Enquire Now
                     </a>
@@ -281,7 +247,7 @@ export default function BrandDetail() {
 
         {/* ── Footer CTA ── */}
         <section style={{
-          background: "linear-gradient(135deg, #0B1F4B 0%, #1A3580 50%, #1D4ED8 100%)",
+          background: `linear-gradient(135deg, ${BRAND.dark} 0%, ${BRAND.darkMid} 50%, ${BRAND.primary} 100%)`,
           padding: "80px 24px", textAlign: "center",
           position: "relative", overflow: "hidden"
         }}>
@@ -292,15 +258,15 @@ export default function BrandDetail() {
           }} />
           <motion.div style={{ maxWidth: "580px", margin: "0 auto", position: "relative", zIndex: 2 }}
             initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", color: "#ffffff", marginBottom: "16px" }}>
-              Ready to Experience <span style={{ color: "#93C5FD" }}>{brand.brandName}</span>?
+            <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", color: BRAND.white, marginBottom: "16px", fontWeight: 800 }}>
+              Ready to Experience <span style={{ color: BRAND.accentOnDark }}>{brand.brandName}</span>?
             </h2>
-            <p style={{ color: "rgba(219,234,254,0.7)", marginBottom: "36px", fontSize: "1.05rem", fontWeight: 300 }}>
+            <p style={{ color: BRAND.textOnDark, marginBottom: "36px", fontSize: "1.05rem", fontWeight: 300 }}>
               Get the best deals on {brand.brandName} air conditioners in Bareilly with expert installation &amp; service.
             </p>
             <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "14px" }}>
               <a href="tel:+919839171701" style={{
-                background: COLORS.white, color: COLORS.navy,
+                background: BRAND.white, color: BRAND.dark,
                 padding: "13px 28px", borderRadius: "10px", fontWeight: 700,
                 display: "inline-flex", alignItems: "center", gap: "8px",
                 textDecoration: "none", fontSize: "0.95rem",
@@ -309,7 +275,7 @@ export default function BrandDetail() {
                 <Phone size={16} /> Call for Best Price
               </a>
               <Link to="/contact" style={{
-                background: "rgba(255,255,255,0.1)", color: "#ffffff",
+                background: "rgba(255,255,255,0.1)", color: BRAND.white,
                 border: "1px solid rgba(255,255,255,0.25)",
                 padding: "13px 28px", borderRadius: "10px", fontWeight: 600,
                 display: "inline-flex", alignItems: "center", gap: "8px",
