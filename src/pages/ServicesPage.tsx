@@ -1100,16 +1100,7 @@ function DetailPage({ slug, onBack, onNavigate }) {
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
     >
       {/* Back */}
-      <motion.button
-        className="back-btn"
-        onClick={onBack}
-        initial={{ opacity: 0, x: -16 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.1 }}
-      >
-        <ArrowLeft size={14} />
-        All Services
-      </motion.button>
+      
 
       {/* Hero grid */}
       <div className="detail-hero">

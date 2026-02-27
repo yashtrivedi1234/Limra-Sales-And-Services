@@ -284,17 +284,7 @@ const BlogPost = () => {
 
           <motion.div className="hero-content" style={{ opacity: heroOpacity }}>
             {/* Back link */}
-            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
-              <Link
-                to="/blog"
-                style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "rgba(255,255,255,0.6)", fontSize: 13, textDecoration: "none", marginBottom: "1.25rem", letterSpacing: "1px", textTransform: "uppercase" }}
-                onMouseEnter={e => e.currentTarget.style.color = "#c9a84c"}
-                onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.6)"}
-              >
-                <ArrowLeft size={14} />
-                Back to Journal
-              </Link>
-            </motion.div>
+            
 
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
               <span className="category-pill">

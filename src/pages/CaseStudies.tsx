@@ -160,14 +160,7 @@ const CaseStudies = () => {
         }} />
 
         <div style={{ maxWidth: "1100px", margin: "0 auto", position: "relative", zIndex: 2 }}>
-          <Link to="/" style={{
-            display: "inline-flex", alignItems: "center", gap: "7px",
-            color: BRAND.textOnDark, fontSize: "0.875rem",
-            textDecoration: "none", marginBottom: "32px",
-            transition: "color 0.2s"
-          }}>
-            <ArrowLeft size={15} /> Back to Home
-          </Link>
+         
 
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
             <div style={{

@@ -260,7 +260,7 @@ export default function BrandDetail() {
             initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", color: BRAND.white, marginBottom: "16px", fontWeight: 800 }}>
               Ready to Experience <span style={{ color: BRAND.accentOnDark }}>{brand.brandName}</span>?
-            </h2>
+            </h2>    
             <p style={{ color: BRAND.textOnDark, marginBottom: "36px", fontSize: "1.05rem", fontWeight: 300 }}>
               Get the best deals on {brand.brandName} air conditioners in Bareilly with expert installation &amp; service.
             </p>

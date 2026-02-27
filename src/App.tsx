@@ -6,7 +6,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import MainLayout from "./layouts/MainLayout";
 
-// Pages
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Blog from "./pages/Blog";
@@ -20,8 +19,6 @@ import BrandDetail from "./pages/BrandDetail";
 import OrderSuccess from "./pages/OrderSuccess";
 import ProductPage from "./pages/Products";
 import Brand from "./pages/Brand";
-
-// ✅ FIXED IMPORTS
 import ServicesPage from "./pages/ServicesPage";
 import ServiceDetailPage from "./pages/ServiceDetailPage";
 
@@ -36,7 +33,6 @@ const App: React.FC = () => (
 
       <BrowserRouter>
         <Routes>
-          {/* Routes with Header & Footer */}
           <Route element={<MainLayout />}>
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
@@ -50,13 +46,10 @@ const App: React.FC = () => (
             <Route path="/order-success" element={<OrderSuccess />} />
             <Route path="/product" element={<ProductPage />} />
             <Route path="/brands" element={<Brand />} />
-
-            {/* ✅ SERVICES ROUTES */}
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/services/:slug" element={<ServiceDetailPage />} />
           </Route>
 
-          {/* Routes without layout */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

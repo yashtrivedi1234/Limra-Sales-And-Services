@@ -153,27 +153,7 @@ export default function ServiceDetailPage() {
         }}
       >
         {/* ── Back nav ─────────────────────────────────────────────────── */}
-        <motion.a
-          href="/services"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4 }}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            color: BRAND.textMuted,
-            textDecoration: "none",
-            fontSize: "0.9rem",
-            marginBottom: 48,
-            transition: "color 0.2s",
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = BRAND.white)}
-          onMouseLeave={(e) => (e.currentTarget.style.color = BRAND.textMuted)}
-        >
-          <ArrowLeft size={16} />
-          All Services
-        </motion.a>
+        
 
         {/* ── HERO ─────────────────────────────────────────────────────── */}
         <div
