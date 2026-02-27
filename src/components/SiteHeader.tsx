@@ -61,29 +61,12 @@ const SiteHeader = () => {
         </Link>
 
         <nav style={{ display: "none", alignItems: "center", gap: "4px" }} className="desktop-nav">
-          {navLinks.map((link) =>
-            link.submenu ? (
-              <div key={link.name} style={{ position: "relative" }} className="nav-group">
-                <span style={{ cursor: "pointer", fontWeight: 500, fontSize: "0.9rem", padding: "8px 12px", borderRadius: "8px", display: "inline-flex", alignItems: "center", gap: "5px", color: navLinkColor(link.path, false), transition: "all 0.2s" }}>
-                  {link.name} <ChevronDown size={13} style={{ opacity: 0.6 }} />
-                </span>
-                <div className="nav-dropdown" style={{ position: "absolute", left: 0, top: "100%", paddingTop: "8px", display: "none" }}>
-                  <div style={{ background: "rgba(255,255,255,0.95)", backdropFilter: "blur(16px)", border: `1px solid ${BRAND.slate100}`, boxShadow: `0 12px 40px ${BRAND.primary}1F`, borderRadius: "14px", overflow: "hidden", minWidth: "200px" }}>
-                    {link.submenu.map((sub) => (
-                      <Link key={sub.name} to={sub.path} style={{ display: "block", padding: "10px 18px", fontSize: "0.875rem", color: BRAND.dark, textDecoration: "none", transition: "all 0.15s", fontWeight: 500 }}>
-                        {sub.name}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ) : (
+          {navLinks.map((link) => (
               <Link key={link.name} to={link.path} style={{ fontWeight: 500, fontSize: "0.9rem", padding: "8px 12px", borderRadius: "8px", color: navLinkColor(link.path), textDecoration: "none", transition: "all 0.2s" }}
-                onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = scrolled ? BRAND.slate100 : "rgba(255,255,255,0.12)"}
+                onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = BRAND.slate100}
                 onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "transparent"}
               >{link.name}</Link>
-            )
-          )}
+          ))}
         </nav>
 
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
@@ -100,27 +83,9 @@ const SiteHeader = () => {
         {menuOpen && (
           <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.3, ease: "easeInOut" }} style={{ background: "rgba(255,255,255,0.97)", backdropFilter: "blur(20px)", borderTop: `1px solid ${BRAND.slate100}`, overflow: "hidden" }}>
             <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "16px 24px 24px" }}>
-              {navLinks.map((link) =>
-                link.submenu ? (
-                  <div key={link.name}>
-                    <button onClick={() => setOpenSubmenu(openSubmenu === link.name ? null : link.name)} style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", fontWeight: 600, fontSize: "0.95rem", color: BRAND.dark, background: "transparent", border: "none", borderRadius: "10px", cursor: "pointer" }}>
-                      {link.name}
-                      <ChevronDown size={16} style={{ transition: "transform 0.3s", transform: openSubmenu === link.name ? "rotate(180deg)" : "rotate(0deg)" }} />
-                    </button>
-                    <AnimatePresence>
-                      {openSubmenu === link.name && (
-                        <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.2 }} style={{ overflow: "hidden" }}>
-                          {link.submenu.map((sub) => (
-                            <Link key={sub.name} to={sub.path} onClick={() => setMenuOpen(false)} style={{ display: "block", padding: "10px 32px", fontSize: "0.875rem", color: BRAND.primary, textDecoration: "none", borderRadius: "8px", fontWeight: 500 }}>{sub.name}</Link>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                ) : (
+              {navLinks.map((link) => (
                   <Link key={link.name} to={link.path} onClick={() => setMenuOpen(false)} style={{ display: "block", padding: "12px 16px", borderRadius: "10px", fontWeight: 600, fontSize: "0.95rem", textDecoration: "none", color: location.pathname === link.path ? BRAND.primary : BRAND.dark }}>{link.name}</Link>
-                )
-              )}
+              ))}
               <a href="tel:+919839171701" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", marginTop: "16px", padding: "13px", background: `linear-gradient(135deg, ${BRAND.dark} 0%, ${BRAND.primary} 100%)`, color: BRAND.dark, fontSize: "0.9rem", fontWeight: 700, borderRadius: "100px", textDecoration: "none" }}>
                 <Phone size={15} /> Call Now
               </a>

@@ -145,16 +145,13 @@ export default function Shop() {
     navigate('/checkout', { state: { product } });
   };
 
-  const displayFont = { fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400 };
+  const displayFont = { fontFamily: "'Inter', sans-serif", fontWeight: 800 as const };
 
   return (
     <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display:ital,wght@0,400;1,400&display=swap');
-      `}</style>
-      <div className="min-h-screen bg-[#f8fafc] font-sans text-slate-800 pb-12">
+      <div className="min-h-screen bg-[#F4FAFE] font-sans text-slate-800 pb-12">
         {/* Header Section */}
-        <div className="bg-[#f0f4f8] pt-12 pb-8 px-4 flex flex-col items-center text-center">
+        <div className="bg-[#E8F6FC] pt-12 pb-8 px-4 flex flex-col items-center text-center">
           <h1
             style={displayFont}
             className="text-3xl md:text-4xl text-slate-900 mb-4 mt-14"
@@ -224,7 +221,7 @@ export default function Shop() {
                   className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              <button className="bg-[#0f2c59] text-white px-8 py-2 rounded-lg font-medium hover:bg-[#0a1e3f] transition-colors">
+              <button className="bg-[#082A45] text-white px-8 py-2 rounded-lg font-medium hover:bg-[#0E3D5E] transition-colors">
                 Search
               </button>
             </div>
@@ -305,7 +302,7 @@ export default function Shop() {
 
                     <div className="mt-auto">
                       <div className="flex items-baseline gap-2">
-                        <span style={displayFont} className="text-[#0f2c59] text-xl">{formatCurrency(product.currentPrice)}</span>
+                        <span style={displayFont} className="text-[#082A45] text-xl">{formatCurrency(product.currentPrice)}</span>
                         <span className="text-slate-400 text-sm line-through">{formatCurrency(product.originalPrice)}</span>
                       </div>
                     </div>

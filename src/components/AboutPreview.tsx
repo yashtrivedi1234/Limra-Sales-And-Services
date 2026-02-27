@@ -102,7 +102,7 @@ export default function AboutPreview() {
                   duration={1.2}
                   separator=","
                   direction="up"
-                  startCounting={true}
+                  startWhen={true}
                 />
                 {s.suffix}
               </div>
