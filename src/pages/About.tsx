@@ -4,10 +4,10 @@ import CountUp from "@/components/ui/CountUp";
 import { BRAND } from "@/lib/colors";
 
 const stats = [
+  { value: 5000, suffix: "+", label: "Customers" },
+  { value: 500, suffix: "+", label: "Commercial Projects" },
   { value: 9, suffix: "+", label: "Years Experience" },
-  { value: 5000, suffix: "+", label: "Projects Completed" },
-  { value: 50, suffix: "+", label: "Expert Technicians" },
-  { value: 8, suffix: "+", label: "Premium Brands" },
+  { value: 20, suffix: "+", label: "Cities" },
 ];
 
 const values = [
@@ -96,12 +96,13 @@ const About = () => (
             padding: "5px 14px", borderRadius: "100px", marginBottom: "18px"
           }}>Our Story</div>
           <h2 style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)", color: BRAND.dark, lineHeight: 1.2, marginBottom: "28px", fontWeight: 800 }}>
-            From a Workshop to UP's Leading HVAC Partner
+            Trusted HVAC & Cooling Experts in Uttar Pradesh
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: "18px", color: BRAND.slate400, lineHeight: 1.8, fontSize: "1.02rem", fontWeight: 300 }}>
-            <p>What started as a humble air conditioning service workshop in Bareilly in 2017 has grown into one of the region's leading HVAC solutions providers. LIMRA Sales And Services was founded with a simple belief: everyone deserves reliable, energy-efficient comfort.</p>
-            <p>Over the years, we've built deep partnerships with the world's finest brands — Daikin, Mitsubishi Heavy, Carrier, Midea, and more — becoming their authorized dealer and installation partner for residential and large-scale commercial projects.</p>
-            <p>From cooling a single room to engineering climate control for airports and five-star hotels, our team of 50+ certified technicians delivers solutions that are designed to last, built to perform, and backed by our unwavering service commitment.</p>
+            <p>LIMRA Sales & Services is a leading HVAC and air conditioning solutions provider based in Uttar Pradesh, delivering reliable installation, maintenance, and large-scale commercial cooling projects across the state. With strong technical expertise and years of hands-on industry experience, we provide complete climate control solutions for residential, commercial, and industrial spaces.</p>
+            <p>From standard AC installations to advanced VRF/VRV systems, ducting, ventilation, cold rooms, ice plants, and chiller plants, our team ensures every project is executed with precision, safety, and efficiency. We specialize in the installation and servicing of Window, Split, Cassette, Ductable, Package AC, and AHU systems, along with copper piping and complete HVAC line work.</p>
+            <p>Our services also include air-cooled and water-cooled chiller plants, gas charging, compressor replacement, PCB, heating and cooling coil repairs, and 3-phase industrial machine installations. Whether it is residential AC servicing or complex commercial and industrial HVAC projects, we deliver reliable, energy-efficient, and technically sound solutions across Uttar Pradesh.</p>
+            <p>With a commitment to quality workmanship, transparent service, and long-term customer satisfaction, LIMRA Sales & Services continues to build trust through performance and professionalism.</p>
           </div>
         </motion.div>
       </div>

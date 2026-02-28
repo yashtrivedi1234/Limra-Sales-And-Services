@@ -14,13 +14,16 @@ import HVACSolutions from "@/components/HVACSolutions";
 const Index = () => (
   <main>
     <Hero />
-    <BrandMarquee />
+    
     <AboutPreview />
+   
     <HVACSolutions />
-    <Product />
+    
     <Services />
     <ProductCategories />
+    <BrandMarquee />
     <FeaturedProjects />
+    <Product />
     <WhyChooseUs />
     <CTASection />
     <BlogPreview />

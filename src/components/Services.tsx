@@ -41,7 +41,7 @@ export default function Services() {
           </h2>
         </motion.div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "20px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "20px" }}>
           {topServices && topServices.map((s: any, i: number) => {
             const Icon = renderIcon(s.icon);
             return (

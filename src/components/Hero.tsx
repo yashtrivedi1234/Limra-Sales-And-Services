@@ -2,7 +2,9 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Phone, ShoppingCart, Eye, CheckCircle, MapPin } from "lucide-react";
 import { BRAND } from "@/lib/colors";
+import heroImage from "@/assets/heroimage.webp";
 import type { CSSProperties } from "react";
+import CountUp from "./ui/CountUp";
 
 const badges = [
   { icon: CheckCircle, text: "Free Site Visit & Consultation" },
@@ -10,8 +12,12 @@ const badges = [
   { icon: MapPin, text: "Uttar Pradesh" },
 ];
 
+
+
+
 export default function HeroSection() {
   return (
+    <>
     <section
       style={{
         position: "relative",
@@ -28,14 +34,14 @@ export default function HeroSection() {
       <div style={{ position: "absolute", inset: 0, opacity: 0.07, backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)", backgroundSize: "56px 56px" }} />
 
       {/* Right photo */}
-      <div style={{ position: "absolute", right: 0, top: 0, width: "48%", height: "100%", zIndex: 0 }}>
+      <div style={{ position: "absolute", right: "2%", top: 0, width: "46%", height: "100%", zIndex: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
         <img
-          src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1200&auto=format&fit=crop"
+          src={heroImage}
           alt="HVAC technician installing air conditioning unit"
           loading="eager"
-          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
+          style={{ width: "100%", height: "85%", objectFit: "contain", objectPosition: "center" }}
         />
-        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to right, ${BRAND.dark} 0%, ${BRAND.dark}B3 40%, ${BRAND.dark}1A 100%)` }} />
+        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to right, ${BRAND.dark} 0%, ${BRAND.dark}B3 25%, transparent 100%)`, pointerEvents: "none" }} />
       </div>
 
       {/* Diagonal slice */}
@@ -67,13 +73,13 @@ export default function HeroSection() {
           style={{
             fontFamily: "'DM Serif Display', Georgia, serif",
             wordSpacing: "0.05em",
-            fontSize: "clamp(2.2rem, 5vw, 4.2rem)",
+            fontSize: "clamp(1rem, 3vw, 4rem)",
             lineHeight: 1.1, letterSpacing: "0.02em",
             color: BRAND.white, fontWeight: 800,
             marginBottom: "16px", maxWidth: "min(95vw, 690px)", wordBreak: "break-word",
           }}
         >
-          Professional HVAC Solutions <span style={{ color: BRAND.accentOnDark }}>&amp; Air Conditioning Services</span>
+          #1 HVAC Installation <span style={{ color: BRAND.accentOnDark }}>&amp; Service Experts in Uttar Pradesh</span> Trusted by 5,000+ Customers Since 2017
         </motion.h1>
 
         <motion.p
@@ -85,7 +91,7 @@ export default function HeroSection() {
             maxWidth: "480px", marginBottom: "32px", fontWeight: 400,
           }}
         >
-          Expert installation, servicing & commercial HVAC projects across Uttar Pradesh. Trusted by 50,000+ satisfied customers.
+        Industrial | Commercial | Residential HVAC Solutions in Lucknow & Across UP
         </motion.p>
 
         {/* CTAs */}
@@ -95,15 +101,13 @@ export default function HeroSection() {
           transition={{ duration: 0.5, delay: 0.3 }}
           style={{ display: "flex", flexWrap: "wrap", gap: "12px", marginBottom: "32px" }}
         >
-          <a href="tel:+919839171701" style={btnPrimary}>
-            <Phone size={16} fill="white" stroke="none" /> Call Now — Free Consultation
-          </a>
-          <Link to="/product" style={btnOutline}>
-            <Eye size={16} /> View Product
+          <Link to="/contact" style={btnPrimary}>
+            <Phone size={16} fill="white" stroke="none" /> Get Free Site Inspection
           </Link>
-          <Link to="/shop" style={btnGhost}>
-            <ShoppingCart size={16} /> Shop Online
+          <Link to="/case-studies" style={btnOutline}>
+            <Eye size={16} />  View Our Projects
           </Link>
+         
         </motion.div>
 
         {/* Badges */}
@@ -122,8 +126,13 @@ export default function HeroSection() {
             </span>
           ))}
         </motion.div>
+
+        
       </div>
     </section>
+    
+    
+    </>
   );
 }
 
