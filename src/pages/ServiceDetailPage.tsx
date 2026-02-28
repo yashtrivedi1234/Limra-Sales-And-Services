@@ -1,684 +1,223 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect } from "react";
+import { motion } from "framer-motion";
 import {
-  ArrowLeft, CheckCircle2, Clock, Star, Phone,
-  Calendar, Shield, Zap, ChevronDown, ArrowUpRight,
-  ShieldCheck, MapPin, Settings2, Wind, Wrench
+  Wrench, ShieldCheck, MapPin, Settings2, Wind,
+  ArrowLeft, CheckCircle2, Star, Phone, Calendar,
+  Shield, Zap, ArrowUpRight, Clock
 } from "lucide-react";
-
-// ✅ Pull data from RTK Query
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetServicesQuery } from "@/store/api";
-
-import { BRAND as _B } from "@/lib/colors";
 import Loader from "@/components/ui/Loader";
-const BRAND = {
-  ..._B,
-  accent:     _B.accentOnDark,
-  accentWarm: "#f0a500",
-  textMuted:  _B.textOnDarkMuted,
+
+const renderIcon = (iconName: string) => {
+  switch (iconName) {
+    case 'ShieldCheck': return ShieldCheck;
+    case 'MapPin': return MapPin;
+    case 'Settings2': return Settings2;
+    case 'Wind': return Wind;
+    default: return Wrench;
+  }
 };
 
-// ─── FAQ accordion ────────────────────────────────────────────────────────────
-function FAQItem({ faq, index }) {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.06 }}
-      style={{
-        borderRadius: 16,
-        overflow: "hidden",
-        border: `1px solid ${open ? BRAND.accent + "44" : "rgba(255,255,255,0.1)"}`,
-        transition: "border-color 0.3s",
-        marginBottom: 12,
-      }}
-    >
-      <button
-        onClick={() => setOpen((o) => !o)}
-        style={{
-          width: "100%",
-          background: "rgba(255,255,255,0.04)",
-          border: "none",
-          cursor: "pointer",
-          padding: "18px 24px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 16,
-        }}
-      >
-        <span
-          style={{
-            color: BRAND.white,
-            fontWeight: 600,
-            fontSize: "0.95rem",
-            textAlign: "left",
-            fontFamily: "'Sora', sans-serif",
-          }}
-        >
-          {faq.q}
-        </span>
-        <motion.span animate={{ rotate: open ? 180 : 0 }} style={{ flexShrink: 0 }}>
-          <ChevronDown size={18} style={{ color: BRAND.accent }} />
-        </motion.span>
-      </button>
-
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            style={{ overflow: "hidden" }}
-          >
-            <div
-              style={{
-                padding: "0 24px 20px",
-                color: BRAND.textMuted,
-                fontSize: "0.9rem",
-                lineHeight: 1.8,
-              }}
-            >
-              {faq.a}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  );
-}
-
-// ─── Page component ───────────────────────────────────────────────────────────
 export default function ServiceDetailPage() {
   const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
   const { data: services = [], isLoading } = useGetServicesQuery();
 
-  if (isLoading) {
-    return <Loader fullScreen />;
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [slug]);
+
+  if (isLoading) return <Loader fullScreen />;
+
+  const service = services.find((s: any) => s.slug === slug);
+
+  if (!service) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="font-['DM_Sans',sans-serif] text-[rgba(8,42,69,0.48)]">Service not found.</p>
+      </div>
+    );
   }
 
-  // getService returns undefined if slug is unknown
-  const service = services.find((s: any) => s.slug === slug);
-  if (!service) return <div className="min-h-screen flex items-center justify-center text-slate-500">Service not found.</div>;
-
-  const renderIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'ShieldCheck': return ShieldCheck;
-      case 'MapPin': return MapPin;
-      case 'Settings2': return Settings2;
-      case 'Wind': return Wind;
-      default: return Wrench;
-    }
-  };
   const Icon = renderIcon(service.icon);
-
-  // Related = up to 3 other services
-  const related = services.filter((s: any) => s.slug !== service.slug).slice(0, 3);
+  const hue = service.accentHue || "195";
+  const hsl = `hsl(${hue}, 65%, 40%)`;
+  const related = services.filter((s: any) => s.slug !== slug).slice(0, 3);
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: `linear-gradient(160deg, ${BRAND.dark} 0%, ${BRAND.darkMid} 60%, ${BRAND.primary} 100%)`,
-        fontFamily: "'Inter', sans-serif",
-        position: "relative",
-      }}
-    >
-      {/* Fonts */}
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap');`}</style>
-
-      {/* Dot-grid background */}
-      <div
-        style={{
-          position: "fixed",
-          inset: 0,
-          opacity: 0.25,
-          backgroundImage:
-            "radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px)",
-          backgroundSize: "28px 28px",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      />
-
-      {/* Glow orb */}
-      <div
-        style={{
-          position: "fixed",
-          top: -200,
-          right: -200,
-          width: 600,
-          height: 600,
-          borderRadius: "50%",
-          background: `radial-gradient(circle, ${BRAND.accent}14 0%, transparent 70%)`,
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      />
-
-      <div
-        style={{
-          maxWidth: 1100,
-          margin: "0 auto",
-          padding: "48px 32px 120px",
-          position: "relative",
-          zIndex: 10,
-        }}
-      >
-        {/* ── Back nav ─────────────────────────────────────────────────── */}
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
+      `}</style>
+      <div className="min-h-screen relative overflow-x-hidden bg-[#F4FAFE] text-[#082A45] font-['DM_Sans',sans-serif] antialiased">
+        <div 
+          className="fixed inset-0 opacity-[0.022] pointer-events-none z-[1]"
+          style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.75\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\' opacity=\'1\'/%3E%3C/svg%3E")' }}
+        />
         
-
-        {/* ── HERO ─────────────────────────────────────────────────────── */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr auto",
-            gap: 32,
-            alignItems: "flex-start",
-            marginBottom: 72,
-            flexWrap: "wrap",
+        <div 
+          className="fixed inset-0 pointer-events-none z-0"
+          style={{ 
+            backgroundImage: 'linear-gradient(rgba(0,0,0,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.035) 1px, transparent 1px)',
+            backgroundSize: '40px 40px'
           }}
-        >
-          {/* Left — copy */}
+        />
+
+        <div 
+          className="fixed -top-[200px] left-1/2 -translate-x-1/2 w-[900px] h-[600px] pointer-events-none z-0"
+          style={{ background: 'radial-gradient(ellipse at center, rgba(186,230,253,0.35) 0%, transparent 70%)' }}
+        />
+
+        <div className="relative z-[2] max-w-[1200px] mx-auto px-6 pb-[100px]">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           >
-            {/* Badge */}
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-                background: "rgba(255,255,255,0.08)",
-                border: "1px solid rgba(255,255,255,0.18)",
-                borderRadius: 100,
-                padding: "5px 14px",
-                marginBottom: 20,
-              }}
+            <motion.button
+              className="inline-flex items-center gap-2 text-[rgba(8,42,69,0.48)] bg-transparent border border-[rgba(6,149,205,0.12)] rounded-full cursor-pointer text-[0.85rem] font-['DM_Sans',sans-serif] py-2 pr-[18px] pl-[14px] mb-[48px] mt-[45px] transition-all duration-200 shadow-[0_1px_3px_rgba(6,149,205,0.06),0_1px_2px_rgba(6,149,205,0.04)] hover:text-[#082A45] hover:border-[rgba(6,149,205,0.25)] hover:bg-[#ffffff]"
+              onClick={() => navigate("/services")}
+              initial={{ opacity: 0, x: -16 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.08 }}
             >
-              <Icon size={13} style={{ color: BRAND.accent }} />
-              <span
-                style={{
-                  color: BRAND.accent,
-                  fontWeight: 700,
-                  fontSize: "0.68rem",
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                }}
+              <ArrowLeft size={15} />
+              All Services
+            </motion.button>
+
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-12 items-start mb-[72px]">
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.12 }}
               >
-                {service.badge}
-              </span>
-            </div>
-
-            <h1
-              style={{
-                fontSize: "clamp(2.2rem, 4.5vw, 3.6rem)",
-                fontWeight: 800,
-                color: BRAND.white,
-                lineHeight: 1.1,
-                marginBottom: 16,
-                fontFamily: "'Sora', sans-serif",
-              }}
-            >
-              {service.title}
-            </h1>
-
-            <p
-              style={{
-                color: BRAND.accentWarm,
-                fontWeight: 600,
-                fontSize: "1.05rem",
-                marginBottom: 18,
-                fontFamily: "'Sora', sans-serif",
-              }}
-            >
-              {service.tagline}
-            </p>
-
-            <p
-              style={{
-                color: BRAND.textMuted,
-                fontSize: "1rem",
-                maxWidth: 560,
-                lineHeight: 1.85,
-                marginBottom: 32,
-              }}
-            >
-              {service.longDesc}
-            </p>
-
-            {/* Meta row */}
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: 20,
-                alignItems: "center",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <Star size={16} style={{ color: BRAND.accentWarm, fill: BRAND.accentWarm }} />
-                <span style={{ color: BRAND.white, fontWeight: 700 }}>
-                  {service.rating}
-                </span>
-                <span style={{ color: BRAND.textMuted, fontSize: "0.85rem" }}>
-                  ({service.reviews} reviews)
-                </span>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <Clock size={15} style={{ color: BRAND.accent }} />
-                <span style={{ color: BRAND.textMuted, fontSize: "0.9rem" }}>
-                  {service.duration}
-                </span>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <Zap size={15} style={{ color: BRAND.accent }} />
-                <span style={{ color: BRAND.white, fontWeight: 700 }}>
-                  {service.price}
-                </span>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Right — CTA card */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            style={{
-              minWidth: 260,
-              padding: "32px 28px",
-              borderRadius: 24,
-              background: "rgba(255,255,255,0.06)",
-              border: "1px solid rgba(255,255,255,0.12)",
-              backdropFilter: "blur(12px)",
-            }}
-          >
-            <div
-              style={{
-                color: BRAND.white,
-                fontWeight: 800,
-                fontSize: "1.6rem",
-                marginBottom: 4,
-                fontFamily: "'Sora', sans-serif",
-              }}
-            >
-              {service.price}
-            </div>
-            <div
-              style={{ color: BRAND.textMuted, fontSize: "0.8rem", marginBottom: 24 }}
-            >
-              {service.duration}
-            </div>
-
-            <motion.a
-              href={`/book?service=${service.slug}`}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 8,
-                width: "100%",
-                padding: "14px 0",
-                borderRadius: 100,
-                background: `linear-gradient(135deg, ${BRAND.accent}, #0ea5e9)`,
-                color: BRAND.dark,
-                fontWeight: 700,
-                textDecoration: "none",
-                fontSize: "0.95rem",
-                marginBottom: 12,
-                fontFamily: "'Sora', sans-serif",
-                boxShadow: `0 8px 24px ${BRAND.accent}40`,
-              }}
-            >
-              <Calendar size={16} /> Book Now
-            </motion.a>
-
-            <motion.a
-              href="tel:+911234567890"
-              whileHover={{ scale: 1.03 }}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 8,
-                width: "100%",
-                padding: "13px 0",
-                borderRadius: 100,
-                border: "1px solid rgba(255,255,255,0.2)",
-                color: BRAND.white,
-                fontWeight: 600,
-                textDecoration: "none",
-                fontSize: "0.9rem",
-                fontFamily: "'Sora', sans-serif",
-              }}
-            >
-              <Phone size={15} /> Call Us
-            </motion.a>
-
-            <div
-              style={{
-                marginTop: 24,
-                paddingTop: 20,
-                borderTop: "1px solid rgba(255,255,255,0.08)",
-              }}
-            >
-              {[
-                { icon: Shield, text: "Certified technicians" },
-                { icon: Star,   text: "Satisfaction guarantee" },
-              ].map(({ icon: I, text }) => (
-                <div
-                  key={text}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 8,
-                    marginBottom: 10,
-                  }}
-                >
-                  <I size={13} style={{ color: BRAND.accent }} />
-                  <span style={{ color: BRAND.textMuted, fontSize: "0.82rem" }}>
-                    {text}
-                  </span>
+                <div className="inline-flex items-center gap-2 rounded-full py-[5px] px-4 text-[0.68rem] font-semibold tracking-[0.12em] uppercase mb-5 bg-[#E8F6FC] border border-[rgba(6,149,205,0.12)] text-[#0E3D5E]">
+                  <Icon size={12} color={hsl} />
+                  <span style={{ color: hsl }}>{service.badge}</span>
                 </div>
-              ))}
+
+                <h1 className="font-['DM_Serif_Display',serif] text-[clamp(2.4rem,5vw,3.6rem)] font-normal tracking-[-0.01em] leading-[1.1] mb-3 text-[#082A45]">{service.title}</h1>
+                <p className="text-[#0695CD] font-semibold text-[0.9rem] uppercase tracking-[0.06em] mb-[22px]">{service.tagline}</p>
+                <p className="text-[#0E3D5E] text-base leading-[1.85] max-w-[560px] mb-[36px] font-normal">{service.longDesc}</p>
+
+                <div className="flex flex-wrap gap-5 items-center">
+                  <div className="flex items-center gap-[7px] text-[0.88rem] text-[#0E3D5E]">
+                    <Star size={15} color="#d97706" fill="#d97706" />
+                    <strong className="font-['DM_Serif_Display',serif] font-normal">{service.rating}</strong>
+                    <span className="text-[rgba(8,42,69,0.48)] text-[0.83rem]">({service.reviews} reviews)</span>
+                  </div>
+                  <div className="flex items-center gap-[7px] text-[0.88rem] text-[#0E3D5E]">
+                    <Clock size={14} color="#0695CD" />
+                    <span className="text-[rgba(8,42,69,0.48)]">{service.duration}</span>
+                  </div>
+                  <div className="flex items-center gap-[7px] text-[0.88rem] text-[#0E3D5E]">
+                    <Zap size={14} color="#0695CD" />
+                    <strong className="font-['DM_Serif_Display',serif] font-normal">{service.price}</strong>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="bg-[#ffffff] border border-[rgba(6,149,205,0.12)] rounded-[20px] py-8 px-7 shadow-[0_4px_12px_rgba(6,149,205,0.08),0_2px_4px_rgba(6,149,205,0.04)] sticky top-6"
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                <div className="font-['DM_Serif_Display',serif] text-[2rem] font-normal text-[#082A45] mb-1">{service.price}</div>
+                <div className="text-[rgba(8,42,69,0.48)] text-[0.82rem] mb-7">{service.duration}</div>
+
+                <a href={`/book?service=${service.slug}`} className="flex items-center justify-center gap-2 w-full p-[15px] rounded-xl bg-[#0695CD] text-[#ffffff] font-semibold text-[0.93rem] font-['DM_Sans',sans-serif] border-none cursor-pointer mb-2.5 shadow-[0_4px_14px_rgba(3,105,161,0.25)] transition-all duration-200 no-underline hover:bg-[#0284c7] hover:-translate-y-[1px] hover:shadow-[0_6px_20px_rgba(3,105,161,0.3)]">
+                  <Calendar size={15} /> Book Now
+                </a>
+                <a href="tel:+911234567890" className="flex items-center justify-center gap-2 w-full p-[14px] rounded-xl bg-[#E8F6FC] text-[#082A45] font-medium text-[0.88rem] font-['DM_Sans',sans-serif] border border-[rgba(6,149,205,0.12)] cursor-pointer transition-all duration-200 no-underline hover:bg-[#daeefa] hover:border-[rgba(6,149,205,0.25)]">
+                  <Phone size={14} /> Call Us
+                </a>
+
+                <div className="mt-6 pt-5 border-t border-[rgba(6,149,205,0.12)]">
+                  {[
+                    { icon: Shield, text: "Certified technicians" },
+                    { icon: Star, text: "Satisfaction guarantee" },
+                  ].map(({ icon: I, text }) => (
+                    <div key={text} className="flex items-center gap-[9px] mb-2.5 text-[rgba(8,42,69,0.48)] text-[0.82rem]">
+                      <I size={13} color="#0695CD" />
+                      {text}
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+
+            <div className="mb-[72px]">
+              <h2 className="font-['DM_Serif_Display',serif] text-[1.7rem] font-normal tracking-[-0.01em] mb-8 text-[#082A45] flex items-center gap-4 after:content-[''] after:flex-1 after:h-[1px] after:bg-[rgba(6,149,205,0.12)]">What's Included</h2>
+              <div className="grid grid-cols-[repeat(auto-fill,minmax(210px,1fr))] gap-3">
+                {service.highlights?.map((h: string, i: number) => (
+                  <motion.div
+                    key={h}
+                    className="flex items-center gap-[14px] py-4 px-5 rounded-[14px] bg-[#ffffff] border border-[rgba(6,149,205,0.12)] shadow-[0_1px_3px_rgba(6,149,205,0.06),0_1px_2px_rgba(6,149,205,0.04)]"
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.07 }}
+                  >
+                    <div className="w-7 h-7 rounded-full bg-[#E8F6FC] border border-[#B3E0F2] flex items-center justify-center shrink-0">
+                      <CheckCircle2 size={14} color="#0695CD" />
+                    </div>
+                    <span className="text-[0.88rem] font-medium text-[#0E3D5E]">{h}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mb-[72px]">
+              <h2 className="font-['DM_Serif_Display',serif] text-[1.7rem] font-normal tracking-[-0.01em] mb-8 text-[#082A45] flex items-center gap-4 after:content-[''] after:flex-1 after:h-[1px] after:bg-[rgba(6,149,205,0.12)]">How It Works</h2>
+              <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4">
+                {service.process?.map((p: any, i: number) => (
+                  <motion.div
+                    key={p.step}
+                    className="p-6 rounded-[18px] bg-[#ffffff] border border-[rgba(6,149,205,0.12)] relative overflow-hidden shadow-[0_1px_3px_rgba(6,149,205,0.06),0_1px_2px_rgba(6,149,205,0.04)] transition-all duration-200 hover:shadow-[0_4px_12px_rgba(6,149,205,0.08),0_2px_4px_rgba(6,149,205,0.04)] hover:border-[rgba(6,149,205,0.25)]"
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.07 }}
+                  >
+                    <div className="absolute top-3 right-4 font-['DM_Serif_Display',serif] text-[3.5rem] font-normal text-[rgba(0,0,0,0.04)] leading-none select-none">{p.step}</div>
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-[#E8F6FC] border border-[#B3E0F2] mb-3.5 text-[0.7rem] font-bold text-[#0695CD] font-['DM_Sans',sans-serif] tracking-[0.04em]">{p.step}</div>
+                    <h4 className="font-['DM_Serif_Display',serif] text-base font-normal mb-2 text-[#082A45]">{p.title}</h4>
+                    <p className="text-[rgba(8,42,69,0.48)] text-[0.85rem] leading-[1.75]">{p.desc}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mb-[72px]">
+              <h2 className="font-['DM_Serif_Display',serif] text-[1.7rem] font-normal tracking-[-0.01em] mb-8 text-[#082A45] flex items-center gap-4 after:content-[''] after:flex-1 after:h-[1px] after:bg-[rgba(6,149,205,0.12)]">Other Services</h2>
+              <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-3">
+                {related.map((s: any, i: number) => {
+                  const RelIcon = renderIcon(s.icon);
+                  return (
+                    <motion.div
+                      key={s.slug}
+                      className="flex items-center gap-4 py-[18px] px-5 rounded-[16px] bg-[#ffffff] border border-[rgba(6,149,205,0.12)] cursor-pointer transition-all duration-300 shadow-[0_1px_3px_rgba(6,149,205,0.06),0_1px_2px_rgba(6,149,205,0.04)] hover:border-[rgba(3,105,161,0.3)] hover:-translate-y-[2px] hover:shadow-[0_4px_12px_rgba(6,149,205,0.08),0_2px_4px_rgba(6,149,205,0.04)]"
+                      initial={{ opacity: 0, y: 16 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.08 }}
+                      onClick={() => navigate(`/service/${s.slug}`)}
+                    >
+                      <div className="w-11 h-11 rounded-xl bg-[#E8F6FC] border border-[#B3E0F2] flex items-center justify-center shrink-0">
+                        <RelIcon size={18} color="#0695CD" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-['DM_Serif_Display',serif] font-normal text-[0.95rem] mb-[2px] text-[#082A45]">{s.title}</div>
+                        <div className="text-[rgba(8,42,69,0.48)] text-[0.78rem]">{s.price}</div>
+                      </div>
+                      <ArrowUpRight size={15} color="#0695CD" />
+                    </motion.div>
+                  );
+                })}
+              </div>
             </div>
           </motion.div>
         </div>
-
-        {/* ── HIGHLIGHTS ───────────────────────────────────────────────── */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          style={{ marginBottom: 72 }}
-        >
-          <h2
-            style={{
-              color: BRAND.white,
-              fontWeight: 800,
-              fontSize: "1.5rem",
-              marginBottom: 28,
-              fontFamily: "'Sora', sans-serif",
-            }}
-          >
-            What's Included
-          </h2>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-              gap: 16,
-            }}
-          >
-            {service.highlights && service.highlights.map((h: string, i: number) => (
-              <motion.div
-                key={h}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.07 }}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 14,
-                  padding: "18px 20px",
-                  borderRadius: 16,
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                }}
-              >
-                <CheckCircle2
-                  size={18}
-                  style={{ color: BRAND.accent, flexShrink: 0 }}
-                />
-                <span
-                  style={{
-                    color: BRAND.white,
-                    fontSize: "0.9rem",
-                    fontWeight: 500,
-                  }}
-                >
-                  {h}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* ── HOW IT WORKS ─────────────────────────────────────────────── */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          style={{ marginBottom: 72 }}
-        >
-          <h2
-            style={{
-              color: BRAND.white,
-              fontWeight: 800,
-              fontSize: "1.5rem",
-              marginBottom: 36,
-              fontFamily: "'Sora', sans-serif",
-            }}
-          >
-            How It Works
-          </h2>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-              gap: 20,
-            }}
-          >
-            {service.process && service.process.map((p: any, i: number) => (
-              <motion.div
-                key={p.step}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.07 }}
-                style={{
-                  padding: 24,
-                  borderRadius: 20,
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.09)",
-                  position: "relative",
-                  overflow: "hidden",
-                }}
-              >
-                {/* Ghost step number */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 16,
-                    right: 20,
-                    fontSize: "2.4rem",
-                    fontWeight: 900,
-                    color: "rgba(255,255,255,0.04)",
-                    fontFamily: "'Sora', sans-serif",
-                    lineHeight: 1,
-                  }}
-                >
-                  {p.step}
-                </div>
-
-                {/* Step badge */}
-                <div
-                  style={{
-                    width: 32,
-                    height: 32,
-                    borderRadius: 10,
-                    background: `${BRAND.accent}20`,
-                    border: `1px solid ${BRAND.accent}44`,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginBottom: 16,
-                  }}
-                >
-                  <span
-                    style={{
-                      color: BRAND.accent,
-                      fontWeight: 800,
-                      fontSize: "0.75rem",
-                      fontFamily: "'Sora', sans-serif",
-                    }}
-                  >
-                    {p.step}
-                  </span>
-                </div>
-
-                <h4
-                  style={{
-                    color: BRAND.white,
-                    fontWeight: 700,
-                    fontSize: "0.95rem",
-                    marginBottom: 8,
-                    fontFamily: "'Sora', sans-serif",
-                  }}
-                >
-                  {p.title}
-                </h4>
-                <p
-                  style={{
-                    color: BRAND.textMuted,
-                    fontSize: "0.85rem",
-                    lineHeight: 1.75,
-                  }}
-                >
-                  {p.desc}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* ── FAQ ──────────────────────────────────────────────────────── */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          style={{ marginBottom: 80 }}
-        >
-          <h2
-            style={{
-              color: BRAND.white,
-              fontWeight: 800,
-              fontSize: "1.5rem",
-              marginBottom: 28,
-              fontFamily: "'Sora', sans-serif",
-            }}
-          >
-            Frequently Asked Questions
-          </h2>
-          {service.faqs && service.faqs.map((faq: any, i: number) => (
-            <FAQItem key={i} faq={faq} index={i} />
-          ))}
-        </motion.div>
-
-        {/* ── RELATED SERVICES ─────────────────────────────────────────── */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <h2
-            style={{
-              color: BRAND.white,
-              fontWeight: 800,
-              fontSize: "1.5rem",
-              marginBottom: 28,
-              fontFamily: "'Sora', sans-serif",
-            }}
-          >
-            Other Services
-          </h2>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
-              gap: 16,
-            }}
-          >
-            {related && related.map((s: any, i: number) => {
-              const RelIcon = renderIcon(s.icon);
-              return (
-                <motion.a
-                  key={s.slug}
-                  href={`/services/${s.slug}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08 }}
-                  whileHover={{ y: -4 }}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 16,
-                    padding: 20,
-                    borderRadius: 18,
-                    textDecoration: "none",
-                    background: "rgba(255,255,255,0.05)",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    transition: "border-color 0.3s",
-                  }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.borderColor = `${BRAND.accent}44`)
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)")
-                  }
-                >
-                  <div
-                    style={{
-                      width: 44,
-                      height: 44,
-                      borderRadius: 12,
-                      flexShrink: 0,
-                      background: `${BRAND.accent}18`,
-                      border: `1px solid ${BRAND.accent}33`,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <RelIcon size={20} style={{ color: BRAND.accent }} />
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div
-                      style={{
-                        color: BRAND.white,
-                        fontWeight: 700,
-                        fontSize: "0.9rem",
-                        fontFamily: "'Sora', sans-serif",
-                      }}
-                    >
-                      {s.title}
-                    </div>
-                    <div style={{ color: BRAND.textMuted, fontSize: "0.78rem" }}>
-                      {s.price}
-                    </div>
-                  </div>
-                  <ArrowUpRight
-                    size={16}
-                    style={{ color: BRAND.accent, flexShrink: 0 }}
-                  />
-                </motion.a>
-              );
-            })}
-          </div>
-        </motion.div>
       </div>
-    </div>
+    </>
   );
 }
