@@ -1,3 +1,4 @@
+import "dotenv/config.js";
 import express from "express";
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
@@ -5,7 +6,6 @@ import { typeDefs, resolvers } from './graphql.js';
 import { upload } from './config/cloudinary.js';
 import jwt from 'jsonwebtoken';
 import cors from "cors";
-import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import contactRoutes from "./routes/contact.routes.js";
 import newsletterRoutes from "./routes/newsletter.routes.js";
@@ -14,8 +14,6 @@ import blogRoutes from "./routes/blog.routes.js";
 import serviceRoutes from "./routes/service.routes.js";
 import brandRoutes from "./routes/brand.routes.js";
 import projectRoutes from "./routes/project.routes.js";
-dotenv.config();
-
 const allowedOrigins = [
   process.env.FRONTEND_URL || "http://localhost:5173",
   "http://localhost:8080",

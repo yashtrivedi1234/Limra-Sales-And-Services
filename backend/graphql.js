@@ -7,63 +7,25 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
 export const typeDefs = `#graphql
+
+  # Blog: image upload handled via REST /api/blogs
+  # Model fields: title, content([String]), category, image
   type Blog {
     id: ID!
     _id: ID!
-    slug: String!
     title: String!
-    excerpt: String!
     content: [String]!
     category: String!
-    date: String
-    readTime: String
     image: String!
-    author: String
-    tags: [String]
     createdAt: String
     updatedAt: String
   }
 
-  type Feature {
-    icon: String
-    title: String
-    desc: String
-    bg: String
-    iconColor: String
-  }
-
-  type Product {
-    title: String
-    desc: String
-    image: String
-    featuresList: [String]
-  }
-
+  # Brand: image upload handled via REST /api/brands
   type Brand {
     id: ID!
     _id: ID!
-    slug: String!
-    brandName: String!
-    title: String!
-    subtitle: String
-    description: String
     heroImage: String
-    features: [Feature]
-    products: [Product]
-    createdAt: String
-    updatedAt: String
-  }
-
-  type Project {
-    id: ID!
-    _id: ID!
-    slug: String!
-    title: String!
-    description: String!
-    location: String
-    completionDate: String
-    images: [String]
-    featuredImage: String
     createdAt: String
     updatedAt: String
   }
@@ -79,6 +41,7 @@ export const typeDefs = `#graphql
     a: String
   }
 
+  # Service: image upload handled via REST /api/services
   type Service {
     id: ID!
     _id: ID!
@@ -101,19 +64,19 @@ export const typeDefs = `#graphql
     updatedAt: String
   }
 
-  input FeatureInput {
-    icon: String
-    title: String
-    desc: String
-    bg: String
-    iconColor: String
-  }
-
-  input ProductInput {
-    title: String
-    desc: String
-    image: String
-    featuresList: [String]
+  # Project: image upload handled via REST /api/projects
+  type Project {
+    id: ID!
+    _id: ID!
+    slug: String!
+    title: String!
+    description: String!
+    location: String
+    completionDate: String
+    images: [String]
+    featuredImage: String
+    createdAt: String
+    updatedAt: String
   }
 
   input ProcessInput {
@@ -133,14 +96,21 @@ export const typeDefs = `#graphql
   }
 
   type Query {
+    # Blogs: read via GraphQL, write via REST /api/blogs
     getBlogs: [Blog]
-    getBlogBySlug(slug: String!): Blog
+    getBlogById(id: ID!): Blog
+
+    # Brands: read via GraphQL, write via REST /api/brands
     getBrands: [Brand]
-    getBrandBySlug(slug: String!): Brand
-    getProjects: [Project]
-    getProjectBySlug(slug: String!): Project
+    getBrandById(id: ID!): Brand
+
+    # Services: read via GraphQL, write via REST /api/services
     getServices: [Service]
     getServiceBySlug(slug: String!): Service
+
+    # Projects: read via GraphQL, write via REST /api/projects
+    getProjects: [Project]
+    getProjectBySlug(slug: String!): Project
   }
 
   type Mutation {
@@ -148,39 +118,39 @@ export const typeDefs = `#graphql
     loginUser(email: String!, password: String!): AuthPayload
     registerUser(name: String!, email: String!, password: String!): AuthPayload
 
-    createBlog(slug: String!, title: String!, excerpt: String!, content: [String]!, category: String!, date: String, readTime: String, image: String!, author: String, tags: [String]): Blog
-    updateBlog(id: ID!, slug: String, title: String, excerpt: String, content: [String], category: String, date: String, readTime: String, image: String, author: String, tags: [String]): Blog
+    # Blog: delete only via GraphQL (create/update via REST /api/blogs)
     deleteBlog(id: ID!): Boolean
 
-    createBrand(slug: String!, brandName: String!, title: String!, subtitle: String, description: String, heroImage: String, features: [FeatureInput], products: [ProductInput]): Brand
-    updateBrand(id: ID!, slug: String, brandName: String, title: String, subtitle: String, description: String, heroImage: String, features: [FeatureInput], products: [ProductInput]): Brand
+    # Brand: delete only via GraphQL (create/update via REST /api/brands)
     deleteBrand(id: ID!): Boolean
 
-    createProject(slug: String!, title: String!, description: String!, location: String, completionDate: String, images: [String], featuredImage: String): Project
-    updateProject(id: ID!, slug: String, title: String, description: String, location: String, completionDate: String, images: [String], featuredImage: String): Project
-    deleteProject(id: ID!): Boolean
-
-    createService(slug: String!, icon: String!, image: String, badge: String, title: String!, tagline: String, desc: String!, longDesc: String, highlights: [String], duration: String, price: String, rating: Float, reviews: Int, process: [ProcessInput], faqs: [FAQInput]): Service
-    updateService(id: ID!, slug: String, icon: String, image: String, badge: String, title: String, tagline: String, desc: String, longDesc: String, highlights: [String], duration: String, price: String, rating: Float, reviews: Int, process: [ProcessInput], faqs: [FAQInput]): Service
+    # Service: delete only via GraphQL (create/update via REST /api/services)
     deleteService(id: ID!): Boolean
+
+    # Project: delete only via GraphQL (create/update via REST /api/projects)
+    deleteProject(id: ID!): Boolean
   }
 `;
 
 export const resolvers = {
   Query: {
+    // Blogs: read via GraphQL (writes go through REST)
     getBlogs: async () => await Blog.find().sort({ createdAt: -1 }),
-    getBlogBySlug: async (_, { slug }) => await Blog.findOne({ slug }),
-    
+    getBlogById: async (_, { id }) => await Blog.findById(id),
+
+    // Brands: read via GraphQL (writes go through REST)
     getBrands: async () => await Brand.find().sort({ createdAt: -1 }),
-    getBrandBySlug: async (_, { slug }) => await Brand.findOne({ slug }),
-    
+    getBrandById: async (_, { id }) => await Brand.findById(id),
+
+    // Services: read via GraphQL (writes go through REST)
+    getServices: async () => await Service.find().sort({ createdAt: -1 }),
+    getServiceBySlug: async (_, { slug }) => await Service.findOne({ slug }),
+
+    // Projects: read via GraphQL (writes go through REST)
     getProjects: async () => await Project.find().sort({ createdAt: -1 }),
     getProjectBySlug: async (_, { slug }) => await Project.findOne({ slug }),
-    
-    getServices: async () => await Service.find().sort({ createdAt: -1 }),
-    getServiceBySlug: async (_, { slug }) => await Service.findOne({ slug })
   },
-  
+
   Mutation: {
     registerUser: async (_, { name, email, password }) => {
       const existingUser = await User.findOne({ email });
@@ -223,82 +193,45 @@ export const resolvers = {
         throw new Error('Admin credentials not set on server');
       }
 
-      // Check credentials (for a single built-in admin account)
       if (email !== validEmail || password !== validPass) {
         throw new Error('Invalid email or password');
       }
 
-      // Sign token
       const token = jwt.sign(
         { email, role: 'ADMIN' },
         process.env.JWT_SECRET || 'secret',
         { expiresIn: '7d' }
       );
 
-      return {
-        token,
-        user: email
-      };
+      return { token, user: email };
     },
 
-    createBlog: async (_, args, context) => {
-      if (!context.user) throw new Error('Unauthorized');
-      const blog = new Blog(args);
-      return await blog.save();
-    },
-    updateBlog: async (_, { id, ...args }, context) => {
-      if (!context.user) throw new Error('Unauthorized');
-      return await Blog.findByIdAndUpdate(id, args, { new: true });
-    },
+    // Blog: delete only (create/update handled by REST /api/blogs)
     deleteBlog: async (_, { id }, context) => {
       if (!context.user) throw new Error('Unauthorized');
       const doc = await Blog.findByIdAndDelete(id);
       return !!doc;
     },
 
-    createBrand: async (_, args, context) => {
-      if (!context.user) throw new Error('Unauthorized');
-      const brand = new Brand(args);
-      return await brand.save();
-    },
-    updateBrand: async (_, { id, ...args }, context) => {
-      if (!context.user) throw new Error('Unauthorized');
-      return await Brand.findByIdAndUpdate(id, args, { new: true });
-    },
+    // Brand: delete only (create/update handled by REST /api/brands)
     deleteBrand: async (_, { id }, context) => {
       if (!context.user) throw new Error('Unauthorized');
       const doc = await Brand.findByIdAndDelete(id);
       return !!doc;
     },
 
-    createProject: async (_, args, context) => {
+    // Service: delete only (create/update handled by REST /api/services)
+    deleteService: async (_, { id }, context) => {
       if (!context.user) throw new Error('Unauthorized');
-      const project = new Project(args);
-      return await project.save();
+      const doc = await Service.findByIdAndDelete(id);
+      return !!doc;
     },
-    updateProject: async (_, { id, ...args }, context) => {
-      if (!context.user) throw new Error('Unauthorized');
-      return await Project.findByIdAndUpdate(id, args, { new: true });
-    },
+
+    // Project: delete only (create/update handled by REST /api/projects)
     deleteProject: async (_, { id }, context) => {
       if (!context.user) throw new Error('Unauthorized');
       const doc = await Project.findByIdAndDelete(id);
       return !!doc;
     },
-
-    createService: async (_, args, context) => {
-      if (!context.user) throw new Error('Unauthorized');
-      const service = new Service(args);
-      return await service.save();
-    },
-    updateService: async (_, { id, ...args }, context) => {
-      if (!context.user) throw new Error('Unauthorized');
-      return await Service.findByIdAndUpdate(id, args, { new: true });
-    },
-    deleteService: async (_, { id }, context) => {
-      if (!context.user) throw new Error('Unauthorized');
-      const doc = await Service.findByIdAndDelete(id);
-      return !!doc;
-    }
   }
 };

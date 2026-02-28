@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
-import { useAddBlogMutation, useUpdateBlogMutation } from '@/store/api';
-import { uploadImageToCloudinary } from '@/lib/uploadImageToCloudinary';
+import React, { useState, useEffect, useRef } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { useGetBlogsQuery, addBlogREST, updateBlogREST, buildBlogFormData } from '@/store/api';
 import { toast } from 'sonner';
 
 interface AdminBlogModalProps {
@@ -10,149 +9,345 @@ interface AdminBlogModalProps {
   blog?: any;
 }
 
-const AdminBlogModal: React.FC<AdminBlogModalProps> = ({ isOpen, onClose, blog }) => {
-  const [addBlog, { isLoading: isAdding }] = useAddBlogMutation();
-  const [updateBlog, { isLoading: isUpdating }] = useUpdateBlogMutation();
-  const [isUploading, setIsUploading] = useState(false);
-  const isLoading = isAdding || isUpdating || isUploading;
+const inputClass = "w-full border border-neutral-200 rounded-xl px-3 py-2.5 text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent transition-all";
+const labelClass = "block text-xs font-semibold text-neutral-500 uppercase tracking-wide mb-1.5";
 
-  const [formData, setFormData] = useState({
-    title: '',
-    category: '',
-    content: '',
-  });
+const AdminBlogModal: React.FC<AdminBlogModalProps> = ({ isOpen, onClose, blog }) => {
+  const { refetch } = useGetBlogsQuery();
+  const [isLoading, setIsLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<'info' | 'content'>('info');
+
+  const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('');
+  const [content, setContent] = useState('');
+
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [uploadedImageUrl, setUploadedImageUrl] = useState<string>('');
+  const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (blog) {
-      setFormData({
-        title: blog.title || '',
-        category: blog.category || '',
-        content: Array.isArray(blog.content) ? blog.content.join('\n\n') : (blog.content || ''),
-      });
+    if (isOpen) {
+      setActiveTab('info');
       setImageFile(null);
-      setUploadedImageUrl(blog.image || '');
-    } else {
-      setFormData({
-        title: '', category: '', content: ''
-      });
-      setImageFile(null);
-      setUploadedImageUrl('');
+      setIsDragging(false);
+      if (blog) {
+        setTitle(blog.title || '');
+        setCategory(blog.category || '');
+        setContent(Array.isArray(blog.content) ? blog.content.join('\n\n') : (blog.content || ''));
+        setPreviewUrl(blog.image || '');
+      } else {
+        setTitle('');
+        setCategory('');
+        setContent('');
+        setPreviewUrl('');
+      }
     }
   }, [blog, isOpen]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const applyFile = (file: File) => {
+    setImageFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setImageFile(e.target.files[0]);
-    }
+    const file = e.target.files?.[0];
+    if (file) applyFile(file);
   };
 
-  const handleUploadImage = async () => {
-    if (!imageFile) return;
-    try {
-      setIsUploading(true);
-      const url = await uploadImageToCloudinary(imageFile);
-      setUploadedImageUrl(url);
-      toast.success('Image uploaded successfully to Cloudinary');
-    } catch (err) {
-      toast.error('Failed to upload image');
-    } finally {
-      setIsUploading(false);
-    }
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault(); setIsDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file?.type.startsWith('image/')) applyFile(file);
+    else toast.error('Please drop a valid image file');
   };
+
+  const removeImage = () => {
+    setImageFile(null);
+    setPreviewUrl('');
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
+  // Parse content string into paragraphs array
+  const parseContent = () =>
+    content.split('\n\n').map(p => p.trim()).filter(Boolean);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    try {
-      setIsUploading(true);
-      
-      if (!uploadedImageUrl && !blog) {
-        toast.error('Featured image must be uploaded for new blogs');
-        setIsUploading(false);
-        return;
-      }
 
-      const variables = {
-        title: formData.title,
-        category: formData.category,
-        content: formData.content.split('\n\n').filter(p => p.trim() !== ''),
-        image: uploadedImageUrl,
-      };
+    const parsedContent = parseContent();
+    if (parsedContent.length === 0) {
+      toast.error('Content cannot be empty');
+      setActiveTab('content');
+      return;
+    }
+    if (!blog && !imageFile) {
+      toast.error('Featured image is required for new posts');
+      setActiveTab('info');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const fd = buildBlogFormData({ title, category, content: parsedContent }, imageFile);
 
       if (blog) {
-        await updateBlog({ id: blog._id || blog.id, variables }).unwrap();
+        await updateBlogREST(blog._id || blog.id, fd);
         toast.success('Blog updated successfully');
       } else {
-        await addBlog(variables).unwrap();
+        await addBlogREST(fd);
         toast.success('Blog created successfully');
       }
+      await refetch();
       onClose();
     } catch (err: any) {
-      toast.error(err?.data?.message || err.message || 'Error saving blog');
+      toast.error(err?.message || 'Error saving blog');
     } finally {
-      setIsUploading(false);
+      setIsLoading(false);
     }
   };
 
+  const isEditing = !!blog;
+  const paragraphCount = parseContent().length;
+
+  const tabs = [
+    { key: 'info', label: 'Post Info' },
+    { key: 'content', label: `Content${paragraphCount > 0 ? ` (${paragraphCount}p)` : ''}` },
+  ] as const;
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white">
-        <DialogHeader>
-          <DialogTitle>{blog ? 'Edit Blog' : 'Add New Blog'}</DialogTitle>
-        </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="text-sm font-medium">Title *</label>
-              <input name="title" required value={formData.title} onChange={handleChange} className="w-full border rounded p-2 mt-1" />
+      <DialogContent className="max-w-2xl p-0 gap-0 bg-white rounded-2xl overflow-hidden border border-neutral-200 shadow-xl">
+
+        {/* ── Header ── */}
+        <DialogHeader className="px-6 pt-6 pb-4 border-b border-neutral-100">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-neutral-900 flex items-center justify-center flex-shrink-0">
+              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
             </div>
             <div>
-              <label className="text-sm font-medium">Category *</label>
-              <input name="category" required value={formData.category} onChange={handleChange} className="w-full border rounded p-2 mt-1" />
+              <DialogTitle className="text-base font-semibold text-neutral-900 leading-tight">
+                {isEditing ? 'Edit Blog Post' : 'New Blog Post'}
+              </DialogTitle>
+              <p className="text-xs text-neutral-400 mt-0.5">
+                {isEditing ? `Editing: ${blog.title}` : 'Fill in the details to publish a new post'}
+              </p>
             </div>
           </div>
 
-          <div>
-            <label className="text-sm font-medium">Featured Image {blog ? '(leave empty to keep current)' : '*'}</label>
-            <div className="flex gap-2 items-center mt-1">
-              <input type="file" accept="image/*" onChange={handleFileChange} className="flex-1 border rounded p-2" />
-              <button 
-                type="button" 
-                onClick={handleUploadImage} 
-                disabled={!imageFile || isUploading}
-                className="px-4 py-2 bg-neutral-800 text-white rounded hover:bg-neutral-900 disabled:opacity-50"
+          {/* Tabs */}
+          <div className="flex gap-1 mt-4 bg-neutral-100 rounded-xl p-1">
+            {tabs.map(tab => (
+              <button
+                key={tab.key}
+                type="button"
+                onClick={() => setActiveTab(tab.key)}
+                className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all duration-200 ${
+                  activeTab === tab.key
+                    ? 'bg-white text-neutral-900 shadow-sm'
+                    : 'text-neutral-500 hover:text-neutral-700'
+                }`}
               >
-                {isUploading ? 'Uploading...' : 'Upload Image'}
+                {tab.label}
               </button>
-            </div>
-            {uploadedImageUrl && (
-              <div className="mt-2 flex items-center gap-2 text-xs text-green-600 font-medium">
-                ✓ Image uploaded: <a href={uploadedImageUrl} target="_blank" rel="noreferrer" className="underline truncate max-w-[300px]">{uploadedImageUrl}</a>
+            ))}
+          </div>
+        </DialogHeader>
+
+        {/* ── Form ── */}
+        <form onSubmit={handleSubmit}>
+          <div className="px-6 py-5 overflow-y-auto max-h-[55vh]">
+
+            {/* ── Tab: Post Info ── */}
+            {activeTab === 'info' && (
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="col-span-2">
+                    <label className={labelClass}>Title *</label>
+                    <input
+                      required
+                      value={title}
+                      onChange={e => setTitle(e.target.value)}
+                      className={inputClass}
+                      placeholder="e.g. Top 5 Tips for AC Maintenance"
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    <label className={labelClass}>Category *</label>
+                    <input
+                      required
+                      value={category}
+                      onChange={e => setCategory(e.target.value)}
+                      className={inputClass}
+                      placeholder="e.g. Tips & Guides, News, How-to"
+                    />
+                  </div>
+                </div>
+
+                {/* Featured Image */}
+                <div>
+                  <label className={labelClass}>
+                    Featured Image {!isEditing && '*'}
+                  </label>
+
+                  {previewUrl ? (
+                    <div className="rounded-xl border border-neutral-200 bg-neutral-50 overflow-hidden">
+                      <div className="flex items-center justify-center p-4 min-h-[140px]">
+                        <img
+                          src={previewUrl}
+                          alt="Preview"
+                          className="max-h-32 max-w-full object-contain drop-shadow-sm rounded"
+                        />
+                      </div>
+                      <div className="flex items-center justify-between px-4 py-2.5 border-t border-neutral-200 bg-white">
+                        <div className="flex items-center gap-2 min-w-0">
+                          <div className="w-4 h-4 rounded bg-green-100 flex items-center justify-center flex-shrink-0">
+                            <svg className="w-2.5 h-2.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                          <span className="text-xs text-neutral-500 truncate">
+                            {imageFile ? `${imageFile.name} (${(imageFile.size / 1024).toFixed(0)} KB)` : 'Current image'}
+                          </span>
+                        </div>
+                        <div className="flex gap-1 ml-2 flex-shrink-0">
+                          <button type="button" onClick={() => fileInputRef.current?.click()} className="text-xs text-neutral-600 hover:text-neutral-900 font-medium px-2 py-1 hover:bg-neutral-100 rounded-lg transition-colors">Replace</button>
+                          <button type="button" onClick={removeImage} className="text-xs text-red-500 hover:text-red-700 font-medium px-2 py-1 hover:bg-red-50 rounded-lg transition-colors">Remove</button>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div
+                      onDrop={handleDrop}
+                      onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+                      onDragLeave={() => setIsDragging(false)}
+                      onClick={() => fileInputRef.current?.click()}
+                      className={`flex flex-col items-center justify-center min-h-[130px] rounded-xl border-2 border-dashed cursor-pointer transition-all duration-200 ${
+                        isDragging ? 'border-neutral-900 bg-neutral-50 scale-[1.01]' : 'border-neutral-300 hover:border-neutral-400 bg-neutral-50 hover:bg-white'
+                      }`}
+                    >
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-2 transition-colors ${isDragging ? 'bg-neutral-900' : 'bg-neutral-200'}`}>
+                        <svg className={`w-5 h-5 transition-colors ${isDragging ? 'text-white' : 'text-neutral-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        </svg>
+                      </div>
+                      <p className="text-sm font-semibold text-neutral-600">{isDragging ? 'Drop image' : 'Drop featured image'}</p>
+                      <p className="text-xs text-neutral-400 mt-0.5">or <span className="underline underline-offset-2 text-neutral-600 font-medium">browse files</span></p>
+                    </div>
+                  )}
+                  <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
+
+                  {isEditing && !imageFile && blog?.image && (
+                    <div className="flex items-center gap-2 px-3 py-2 mt-2 bg-amber-50 border border-amber-200 rounded-lg">
+                      <svg className="w-3.5 h-3.5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <p className="text-xs text-amber-700">No new image selected — existing image will be kept.</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* ── Tab: Content ── */}
+            {activeTab === 'content' && (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <label className={labelClass + ' mb-0'}>
+                    Blog Content *
+                  </label>
+                  <span className="text-xs text-neutral-400">
+                    {paragraphCount} paragraph{paragraphCount !== 1 ? 's' : ''}
+                  </span>
+                </div>
+                <p className="text-xs text-neutral-400 -mt-1">
+                  Separate paragraphs with a blank line (double Enter). Each paragraph is saved as a separate block.
+                </p>
+                <textarea
+                  required
+                  value={content}
+                  onChange={e => setContent(e.target.value)}
+                  className={`${inputClass} font-normal leading-relaxed`}
+                  rows={16}
+                  placeholder={`Write your first paragraph here...\n\nStart a new paragraph by pressing Enter twice.\n\nEach paragraph block will be saved separately.`}
+                  spellCheck
+                />
+
+                {/* Live paragraph preview */}
+                {paragraphCount > 0 && (
+                  <div className="rounded-xl border border-neutral-200 bg-neutral-50 p-4">
+                    <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wide mb-3">Preview — {paragraphCount} paragraph{paragraphCount !== 1 ? 's' : ''}</p>
+                    <div className="space-y-2">
+                      {parseContent().map((p, i) => (
+                        <div key={i} className="flex gap-2.5">
+                          <span className="text-xs font-mono text-neutral-300 mt-0.5 flex-shrink-0 w-5">{i + 1}</span>
+                          <p className="text-xs text-neutral-600 leading-relaxed line-clamp-2">{p}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
 
+          {/* ── Footer ── */}
+          <div className="px-6 pb-6 pt-4 border-t border-neutral-100 flex items-center justify-between">
+            {/* Dot indicators */}
+            <div className="flex gap-1">
+              {tabs.map(tab => (
+                <button
+                  key={tab.key}
+                  type="button"
+                  onClick={() => setActiveTab(tab.key)}
+                  className={`h-2 rounded-full transition-all duration-200 ${activeTab === tab.key ? 'bg-neutral-900 w-5' : 'bg-neutral-300 hover:bg-neutral-400 w-2'}`}
+                />
+              ))}
+            </div>
 
-
-          <div>
-            <label className="text-sm font-medium">Content * (Separate paragraphs with double enter)</label>
-            <textarea name="content" required value={formData.content} onChange={handleChange} className="w-full border rounded p-2 mt-1" rows={6}></textarea>
+            <div className="flex items-center gap-2">
+              {activeTab === 'content' && (
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('info')}
+                  className="px-4 py-2.5 text-sm font-medium text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded-xl transition-colors"
+                >
+                  ← Back
+                </button>
+              )}
+              {activeTab === 'info' ? (
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('content')}
+                  className="px-5 py-2.5 bg-neutral-900 hover:bg-neutral-700 text-white text-sm font-semibold rounded-xl transition-all active:scale-95"
+                >
+                  Next →
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-neutral-900 hover:bg-neutral-700 text-white text-sm font-semibold rounded-xl transition-all duration-200 disabled:opacity-60 active:scale-95"
+                >
+                  {isLoading ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      Saving...
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      {isEditing ? 'Update Post' : 'Publish Post'}
+                    </>
+                  )}
+                </button>
+              )}
+            </div>
           </div>
-
-
-
-          <DialogFooter>
-            <button type="button" onClick={onClose} className="px-4 py-2 text-neutral-600 hover:bg-neutral-100 rounded-lg">Cancel</button>
-            <button type="submit" disabled={isLoading} className="px-4 py-2 bg-brand-blue text-white rounded-lg hover:bg-brand-blue-dark">
-              {isLoading ? 'Saving...' : 'Save Blog'}
-            </button>
-          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>

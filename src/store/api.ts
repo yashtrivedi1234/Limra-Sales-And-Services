@@ -2,10 +2,13 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query';
 import { gql } from 'graphql-request';
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+
+// ─── GraphQL API ─────────────────────────────────────────────────────────────
 export const api = createApi({
     reducerPath: 'api',
     baseQuery: graphqlRequestBaseQuery({
-        url: `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'}/graphql`,
+        url: `${BASE_URL}/graphql`,
         prepareHeaders: (headers) => {
             const token = localStorage.getItem('adminToken');
             if (token) headers.set('Authorization', `Bearer ${token}`);
@@ -58,7 +61,9 @@ export const api = createApi({
             }),
         }),
 
-        // ================= BLOGS =================
+        // ================= BLOGS (GraphQL: read + delete only) =================
+        // Create & Update → REST: POST/PUT /api/blogs  (multipart/form-data)
+        // Required fields: title, category, content (JSON array), image (File)
         getBlogs: builder.query<any[], void>({
             query: () => ({
                 document: gql`
@@ -66,50 +71,18 @@ export const api = createApi({
                         getBlogs {
                             id
                             _id
-                            slug
                             title
-                            excerpt
                             content
                             category
-                            date
-                            readTime
                             image
-                            author
-                            tags
+                            createdAt
+                            updatedAt
                         }
                     }
                 `,
             }),
             transformResponse: (res: any) => res.getBlogs,
             providesTags: ['Blog'],
-        }),
-
-        addBlog: builder.mutation<any, any>({
-            query: (variables) => ({
-                document: gql`
-                    mutation CreateBlog($title: String!, $content: [String]!, $category: String!, $image: String!) {
-                        createBlog(title: $title, content: $content, category: $category, image: $image) {
-                            id
-                        }
-                    }
-                `,
-                variables,
-            }),
-            invalidatesTags: ['Blog'],
-        }),
-
-        updateBlog: builder.mutation<any, { id: string; variables: any }>({
-            query: ({ id, variables }) => ({
-                document: gql`
-                    mutation UpdateBlog($id: ID!, $title: String, $content: [String], $category: String, $image: String) {
-                        updateBlog(id: $id, title: $title, content: $content, category: $category, image: $image) {
-                            id
-                        }
-                    }
-                `,
-                variables: { id, ...variables },
-            }),
-            invalidatesTags: ['Blog'],
         }),
 
         deleteBlog: builder.mutation<any, string>({
@@ -124,7 +97,8 @@ export const api = createApi({
             invalidatesTags: ['Blog'],
         }),
 
-        // ================= SERVICES =================
+        // ================= SERVICES (GraphQL: read + delete only) =================
+        // Create & Update → REST: POST/PUT /api/services  (multipart/form-data)
         getServices: builder.query<any[], void>({
             query: () => ({
                 document: gql`
@@ -134,11 +108,11 @@ export const api = createApi({
                             _id
                             slug
                             icon
-                            title
-                            desc
                             image
                             badge
+                            title
                             tagline
+                            desc
                             longDesc
                             highlights
                             duration
@@ -155,54 +129,6 @@ export const api = createApi({
             providesTags: ['Service'],
         }),
 
-        addService: builder.mutation<any, any>({
-            query: (variables) => ({
-                document: gql`
-                    mutation CreateService(
-                        $slug: String!, $icon: String!, $title: String!,
-                        $desc: String!, $image: String, $badge: String,
-                        $tagline: String, $longDesc: String, $highlights: [String],
-                        $duration: String, $price: String, $rating: Float,
-                        $reviews: Int, $process: [ProcessInput], $faqs: [FAQInput]
-                    ) {
-                        createService(
-                            slug: $slug, icon: $icon, title: $title,
-                            desc: $desc, image: $image, badge: $badge,
-                            tagline: $tagline, longDesc: $longDesc,
-                            highlights: $highlights, duration: $duration,
-                            price: $price, rating: $rating,
-                            reviews: $reviews, process: $process, faqs: $faqs
-                        ) { id }
-                    }
-                `,
-                variables,
-            }),
-            invalidatesTags: ['Service'],
-        }),
-
-        updateService: builder.mutation<any, { id: string; variables: any }>({
-            query: ({ id, variables }) => ({
-                document: gql`
-                    mutation UpdateService($id: ID!, $slug: String, $icon: String, $title: String,
-                        $desc: String, $image: String, $badge: String, $tagline: String,
-                        $longDesc: String, $highlights: [String], $duration: String,
-                        $price: String, $rating: Float, $reviews: Int,
-                        $process: [ProcessInput], $faqs: [FAQInput]) {
-                        updateService(
-                            id: $id, slug: $slug, icon: $icon, title: $title,
-                            desc: $desc, image: $image, badge: $badge,
-                            tagline: $tagline, longDesc: $longDesc,
-                            highlights: $highlights, duration: $duration,
-                            price: $price, rating: $rating,
-                            reviews: $reviews, process: $process, faqs: $faqs
-                        ) { id }
-                    }
-                `,
-                variables: { id, ...variables },
-            }),
-            invalidatesTags: ['Service'],
-        }),
-
         deleteService: builder.mutation<any, string>({
             query: (id) => ({
                 document: gql`
@@ -215,7 +141,8 @@ export const api = createApi({
             invalidatesTags: ['Service'],
         }),
 
-        // ================= BRANDS =================
+        // ================= BRANDS (GraphQL: read + delete only) =================
+        // Create & Update → REST: POST/PUT /api/brands  (multipart/form-data)
         getBrands: builder.query<any[], void>({
             query: () => ({
                 document: gql`
@@ -223,57 +150,15 @@ export const api = createApi({
                         getBrands {
                             id
                             _id
-                            slug
-                            brandName
-                            title
-                            subtitle
-                            description
                             heroImage
-                            features { icon title desc bg iconColor }
-                            products { title desc image featuresList }
+                            createdAt
+                            updatedAt
                         }
                     }
                 `,
             }),
             transformResponse: (res: any) => res.getBrands,
             providesTags: ['Brand'],
-        }),
-
-        addBrand: builder.mutation<any, any>({
-            query: (variables) => ({
-                document: gql`
-                    mutation CreateBrand($slug: String!, $brandName: String!, $title: String!,
-                        $subtitle: String, $description: String, $heroImage: String,
-                        $features: [FeatureInput], $products: [ProductInput]) {
-                        createBrand(
-                            slug: $slug, brandName: $brandName, title: $title,
-                            subtitle: $subtitle, description: $description,
-                            heroImage: $heroImage, features: $features, products: $products
-                        ) { id }
-                    }
-                `,
-                variables,
-            }),
-            invalidatesTags: ['Brand'],
-        }),
-
-        updateBrand: builder.mutation<any, { id: string; variables: any }>({
-            query: ({ id, variables }) => ({
-                document: gql`
-                    mutation UpdateBrand($id: ID!, $slug: String, $brandName: String,
-                        $title: String, $subtitle: String, $description: String,
-                        $heroImage: String, $features: [FeatureInput], $products: [ProductInput]) {
-                        updateBrand(
-                            id: $id, slug: $slug, brandName: $brandName,
-                            title: $title, subtitle: $subtitle,
-                            description: $description, heroImage: $heroImage,
-                            features: $features, products: $products
-                        ) { id }
-                    }
-                `,
-                variables: { id, ...variables },
-            }),
-            invalidatesTags: ['Brand'],
         }),
 
         deleteBrand: builder.mutation<any, string>({
@@ -288,7 +173,9 @@ export const api = createApi({
             invalidatesTags: ['Brand'],
         }),
 
-        // ================= PROJECTS =================
+        // ================= PROJECTS (GraphQL: read + delete only) =================
+        // Create & Update → REST: POST/PUT /api/projects  (multipart/form-data)
+        // Fields: featuredImage (single), images (up to 10)
         getProjects: builder.query<any[], void>({
             query: () => ({
                 document: gql`
@@ -311,44 +198,6 @@ export const api = createApi({
             providesTags: ['Project'],
         }),
 
-        addProject: builder.mutation<any, any>({
-            query: (variables) => ({
-                document: gql`
-                    mutation CreateProject($slug: String!, $title: String!, $description: String!,
-                        $location: String, $completionDate: String, $images: [String],
-                        $featuredImage: String) {
-                        createProject(
-                            slug: $slug, title: $title, description: $description,
-                            location: $location, completionDate: $completionDate,
-                            images: $images, featuredImage: $featuredImage
-                        ) { id }
-                    }
-                `,
-                variables,
-            }),
-            invalidatesTags: ['Project'],
-        }),
-
-        updateProject: builder.mutation<any, { id: string; variables: any }>({
-            query: ({ id, variables }) => ({
-                document: gql`
-                    mutation UpdateProject($id: ID!, $slug: String, $title: String,
-                        $description: String, $location: String,
-                        $completionDate: String, $images: [String],
-                        $featuredImage: String) {
-                        updateProject(
-                            id: $id, slug: $slug, title: $title,
-                            description: $description, location: $location,
-                            completionDate: $completionDate,
-                            images: $images, featuredImage: $featuredImage
-                        ) { id }
-                    }
-                `,
-                variables: { id, ...variables },
-            }),
-            invalidatesTags: ['Project'],
-        }),
-
         deleteProject: builder.mutation<any, string>({
             query: (id) => ({
                 document: gql`
@@ -363,28 +212,180 @@ export const api = createApi({
     }),
 });
 
+// ─── Auth header helper ───────────────────────────────────────────────────────
+const getAuthHeaders = () => {
+    const token = localStorage.getItem('adminToken');
+    return token ? { Authorization: `Bearer ${token}` } : {};
+};
+
+// ─── REST helpers: Blog ───────────────────────────────────────────────────────
+// Required fields: title, category, content (JSON stringified array), image (File)
+
+/** POST /api/blogs — create a blog post with image */
+export const addBlogREST = async (formData: FormData) => {
+    const res = await fetch(`${BASE_URL}/api/blogs`, {
+        method: 'POST',
+        headers: getAuthHeaders(),
+        body: formData,
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return res.json();
+};
+
+/** PUT /api/blogs/:id — update a blog post; image optional */
+export const updateBlogREST = async (id: string, formData: FormData) => {
+    const res = await fetch(`${BASE_URL}/api/blogs/${id}`, {
+        method: 'PUT',
+        headers: getAuthHeaders(),
+        body: formData,
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return res.json();
+};
+
+/**
+ * Build FormData for a blog post.
+ * content must be an array — it is JSON.stringify'd automatically.
+ *
+ * Usage:
+ *   const fd = buildBlogFormData({ title, category, content }, imageFile);
+ *   await addBlogREST(fd);
+ */
+export const buildBlogFormData = (
+    data: { title: string; category: string; content: string[] },
+    imageFile?: File | null
+): FormData => {
+    const fd = new FormData();
+    fd.append('title', data.title);
+    fd.append('category', data.category);
+    fd.append('content', JSON.stringify(data.content));
+    if (imageFile) fd.append('image', imageFile);
+    return fd;
+};
+
+// ─── REST helpers: Brand ─────────────────────────────────────────────────────
+/** POST /api/brands — upload heroImage */
+export const addBrandREST = async (formData: FormData) => {
+    const res = await fetch(`${BASE_URL}/api/brands`, {
+        method: 'POST',
+        headers: getAuthHeaders(),
+        body: formData,
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return res.json();
+};
+
+/** PUT /api/brands/:id — update heroImage */
+export const updateBrandREST = async (id: string, formData: FormData) => {
+    const res = await fetch(`${BASE_URL}/api/brands/${id}`, {
+        method: 'PUT',
+        headers: getAuthHeaders(),
+        body: formData,
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return res.json();
+};
+
+// ─── REST helpers: Service ────────────────────────────────────────────────────
+/** POST /api/services — create with optional image; arrays JSON.stringify'd */
+export const addServiceREST = async (formData: FormData) => {
+    const res = await fetch(`${BASE_URL}/api/services`, {
+        method: 'POST',
+        headers: getAuthHeaders(),
+        body: formData,
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return res.json();
+};
+
+/** PUT /api/services/:id — update with optional new image */
+export const updateServiceREST = async (id: string, formData: FormData) => {
+    const res = await fetch(`${BASE_URL}/api/services/${id}`, {
+        method: 'PUT',
+        headers: getAuthHeaders(),
+        body: formData,
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return res.json();
+};
+
+/**
+ * Build FormData for a service.
+ * Arrays (highlights, process, faqs) are JSON.stringify'd automatically.
+ */
+export const buildServiceFormData = (
+    data: Record<string, any>,
+    imageFile?: File | null
+): FormData => {
+    const fd = new FormData();
+    const arrayFields = ['highlights', 'process', 'faqs'];
+    Object.entries(data).forEach(([key, value]) => {
+        if (value === undefined || value === null) return;
+        fd.append(key, arrayFields.includes(key) ? JSON.stringify(value) : String(value));
+    });
+    if (imageFile) fd.append('image', imageFile);
+    return fd;
+};
+
+// ─── REST helpers: Project ────────────────────────────────────────────────────
+/** POST /api/projects — create with featuredImage + images[] */
+export const addProjectREST = async (formData: FormData) => {
+    const res = await fetch(`${BASE_URL}/api/projects`, {
+        method: 'POST',
+        headers: getAuthHeaders(),
+        body: formData,
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return res.json();
+};
+
+/** PUT /api/projects/:id — update with optional new images */
+export const updateProjectREST = async (id: string, formData: FormData) => {
+    const res = await fetch(`${BASE_URL}/api/projects/${id}`, {
+        method: 'PUT',
+        headers: getAuthHeaders(),
+        body: formData,
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return res.json();
+};
+
+/**
+ * Build FormData for a project.
+ * @param data          Plain fields: slug, title, description, location, completionDate
+ * @param featuredImage Single featured image file (optional)
+ * @param imageFiles    Array of gallery image files (optional, max 10)
+ */
+export const buildProjectFormData = (
+    data: Record<string, any>,
+    featuredImage?: File | null,
+    imageFiles?: File[]
+): FormData => {
+    const fd = new FormData();
+    Object.entries(data).forEach(([key, value]) => {
+        if (value === undefined || value === null) return;
+        fd.append(key, String(value));
+    });
+    if (featuredImage) fd.append('featuredImage', featuredImage);
+    if (imageFiles?.length) imageFiles.forEach(file => fd.append('images', file));
+    return fd;
+};
+
+// ─── Exports ──────────────────────────────────────────────────────────────────
 export const {
     useLoginAdminMutation,
     useLoginUserMutation,
     useRegisterUserMutation,
 
     useGetBlogsQuery,
-    useAddBlogMutation,
-    useUpdateBlogMutation,
     useDeleteBlogMutation,
 
     useGetServicesQuery,
-    useAddServiceMutation,
-    useUpdateServiceMutation,
     useDeleteServiceMutation,
 
     useGetBrandsQuery,
-    useAddBrandMutation,
-    useUpdateBrandMutation,
     useDeleteBrandMutation,
 
     useGetProjectsQuery,
-    useAddProjectMutation,
-    useUpdateProjectMutation,
     useDeleteProjectMutation,
 } = api;

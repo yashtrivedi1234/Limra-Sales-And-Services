@@ -1,5 +1,9 @@
 import Service from '../model/service.model.js';
 
+const generateSlug = (title) => {
+  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+};
+
 // Get all services
 export const getServices = async (req, res) => {
   try {
@@ -15,6 +19,17 @@ export const createService = async (req, res) => {
     const serviceData = { ...req.body };
     if (req.file) {
       serviceData.image = req.file.path; // Cloudinary URL
+    }
+
+    if (!serviceData.slug && serviceData.title) {
+      let baseSlug = generateSlug(serviceData.title);
+      let slug = baseSlug;
+      let counter = 1;
+      while (await Service.findOne({ slug })) {
+        slug = `${baseSlug}-${counter}`;
+        counter++;
+      }
+      serviceData.slug = slug;
     }
 
     // Parse nested arrays from FormData string
@@ -43,6 +58,20 @@ export const updateService = async (req, res) => {
       updateData.image = req.file.path; // New Cloudinary URL
     }
 
+    const existingService = await Service.findById(req.params.id);
+    if (!existingService) return res.status(404).json({ message: 'Service not found' });
+
+    if (!updateData.slug && !existingService.slug && updateData.title) {
+      let baseSlug = generateSlug(updateData.title);
+      let slug = baseSlug;
+      let counter = 1;
+      while (await Service.findOne({ slug, _id: { $ne: req.params.id } })) {
+        slug = `${baseSlug}-${counter}`;
+        counter++;
+      }
+      updateData.slug = slug;
+    }
+
     // Parse nested arrays from FormData string
     if (typeof updateData.highlights === 'string') {
       try { updateData.highlights = JSON.parse(updateData.highlights); } catch(e) { updateData.highlights = [updateData.highlights]; }
@@ -55,7 +84,6 @@ export const updateService = async (req, res) => {
     }
 
     const updatedService = await Service.findByIdAndUpdate(req.params.id, updateData, { new: true, runValidators: true });
-    if (!updatedService) return res.status(404).json({ message: 'Service not found' });
     res.status(200).json(updatedService);
   } catch (error) {
     res.status(400).json({ message: error.message });
