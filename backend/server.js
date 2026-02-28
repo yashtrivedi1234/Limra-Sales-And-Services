@@ -88,7 +88,9 @@ app.use('/graphql', expressMiddleware(server, {
     const token = authHeader.replace('Bearer ', '');
     if (!token) return { user: null };
 
+    try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      return { user: decoded };
     } catch (err) {
       return { user: null }; // Invalid or expired token
     }
