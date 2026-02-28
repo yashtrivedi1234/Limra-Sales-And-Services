@@ -51,10 +51,10 @@ const Blog = () => {
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "24px" }}>
           {blogPosts.map((post: any, i: number) => (
-            <motion.article key={post.slug}
+            <motion.article key={post.slug || post._id}
               initial="hidden" whileInView="visible" viewport={{ once: true }}
               variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.5 } } }}>
-              <Link to={`/blog/${post.slug}`} style={{ textDecoration: "none", display: "block", height: "100%" }}>
+              <Link to={`/blog/${post.slug || post._id}`} style={{ textDecoration: "none", display: "block", height: "100%" }}>
                 <div style={{
                   background: BRAND.white, borderRadius: "20px",
                   border: `1px solid ${BRAND.slate100}`, overflow: "hidden",

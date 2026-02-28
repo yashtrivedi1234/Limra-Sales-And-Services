@@ -36,7 +36,7 @@ const BlogPost = () => {
   const { slug } = useParams();
   const { data: blogPosts = [], isLoading } = useGetBlogsQuery();
   
-  const post = blogPosts.find((p: any) => p.slug === slug);
+  const post = blogPosts.find((p: any) => p.slug === slug || String(p._id) === slug);
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   
@@ -60,7 +60,7 @@ const BlogPost = () => {
 
   if (isLoading) return <div className="min-h-screen flex items-center justify-center text-slate-500">Loading article...</div>;
   if (!post) return <Navigate to="/blog" replace />;
-  const relatedPosts = blogPosts.filter((p: any) => p.slug !== slug).slice(0, 3);
+  const relatedPosts = blogPosts.filter((p: any) => p.slug !== slug && String(p._id) !== slug).slice(0, 3);
   
   // Fake views counter setup
   const [views, setViews] = useState(0);
@@ -258,13 +258,13 @@ const BlogPost = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
              {relatedPosts.map((rp: any, i: number) => (
               <motion.div
-                key={rp.slug}
+                key={rp.slug || rp._id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
               >
-                <Link to={`/blog/${rp.slug}`} className="group block h-full bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-slate-900/10 transition-all duration-500 hover:-translate-y-2">
+                <Link to={`/blog/${rp.slug || rp._id}`} className="group block h-full bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-slate-900/10 transition-all duration-500 hover:-translate-y-2">
                   <div className="aspect-[16/10] overflow-hidden relative">
                     <img src={rp.image} alt={rp.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
                     <div className="absolute inset-0 bg-slate-900/5 group-hover:bg-transparent transition-colors duration-300" />
