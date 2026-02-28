@@ -14,13 +14,7 @@ import blogRoutes from "./routes/blog.routes.js";
 import serviceRoutes from "./routes/service.routes.js";
 import brandRoutes from "./routes/brand.routes.js";
 import projectRoutes from "./routes/project.routes.js";
-const allowedOrigins = [
-  process.env.FRONTEND_URL || "http://localhost:5173",
-  "http://localhost:8080",
-  "https://limra-sales-and-services.vercel.app",
-  "https://limra-sales-and-services.netlify.app",
-  "https://limra-sales-and-services.vercel.app/"
-];
+const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : [];
 connectDB();
 
 const app = express();
@@ -94,9 +88,7 @@ app.use('/graphql', expressMiddleware(server, {
     const token = authHeader.replace('Bearer ', '');
     if (!token) return { user: null };
 
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret');
-      return { user: decoded };
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
     } catch (err) {
       return { user: null }; // Invalid or expired token
     }
