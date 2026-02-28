@@ -16,9 +16,9 @@ const staggerReveal = {
 
 export default function WhyChooseUs() {
   return (
-    <section style={{ padding: "100px 0", background: BRAND.bgSoft, fontFamily: "'DM Sans', sans-serif" }}>
-      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 48px" }}>
-        <div style={{ textAlign: "center", marginBottom: "64px" }}>
+    <section style={{ padding: "64px 0", background: BRAND.bgSoft, fontFamily: "'DM Sans', sans-serif" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(24px, 5vw, 48px)" }}>
+        <div style={{ textAlign: "center", marginBottom: "48px" }}>
           <div style={{ display: "inline-block", background: `${BRAND.primary}1A`, border: `1px solid ${BRAND.primary}40`, color: BRAND.primary, fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 14px", borderRadius: "100px", marginBottom: "18px" }}>
             Why Choose Us
           </div>

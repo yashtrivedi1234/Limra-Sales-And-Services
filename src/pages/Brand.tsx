@@ -1,32 +1,9 @@
+import { useGetBrandsQuery } from "@/store/api";
 import { motion } from "framer-motion";
 import { BRAND } from "@/lib/colors";
+import Loader from "@/components/ui/Loader";
 
-interface BrandItem {
-  name: string;
-  image: string;
-}
-
-import amstrad    from "@/assets/amstrad.png";
-import blueStar   from "@/assets/blue-star.png";
-import carrier    from "@/assets/carrier.png";
-import daikin     from "@/assets/dalkin.png";
-import hitachi    from "@/assets/hitachi.png";
-import midea      from "@/assets/Midea.png";
-import mitsubishi from "@/assets/mitsubishi.png";
-import voltas     from "@/assets/voltas.png";
-
-const brands: BrandItem[] = [
-  { name: "Daikin",           image: daikin     },
-  { name: "Mitsubishi Heavy", image: mitsubishi },
-  { name: "Carrier",          image: carrier    },
-  { name: "Voltas",           image: voltas     },
-  { name: "Amstrad",          image: amstrad    },
-  { name: "Midea",            image: midea      },
-  { name: "Blue Star",        image: blueStar   },
-  { name: "Hitachi",          image: hitachi    },
-];
-
-const BrandCard: React.FC<{ brand: BrandItem; index: number }> = ({ brand, index }) => (
+const BrandCard: React.FC<{ brand: any; index: number }> = ({ brand, index }) => (
   <motion.div
     initial={{ opacity: 0, y: 24 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -52,11 +29,15 @@ const BrandCard: React.FC<{ brand: BrandItem; index: number }> = ({ brand, index
       position: "absolute", top: 0, left: "10%", right: "10%", height: "1px",
       background: `linear-gradient(90deg, transparent, ${BRAND.primary}4D, transparent)`,
     }} />
-    <img src={brand.image} alt={brand.name} style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
+    <img src={brand.heroImage || brand.image} alt={brand.brandName || brand.name} style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
   </motion.div>
 );
 
 const Brand: React.FC = () => {
+  const { data: brands = [], isLoading } = useGetBrandsQuery();
+
+  if (isLoading) return <Loader />;
+
   return (
     <section style={{
       background: BRAND.bgSoft,
@@ -129,8 +110,8 @@ const Brand: React.FC = () => {
         margin: "0 auto",
         position: "relative",
       }}>
-        {brands.map((brand, i) => (
-          <BrandCard key={brand.name} brand={brand} index={i} />
+        {brands.map((brand: any, i: number) => (
+          <BrandCard key={brand._id || brand.name} brand={brand} index={i} />
         ))}
       </div>
     </section>

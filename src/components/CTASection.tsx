@@ -16,7 +16,7 @@ const CTASection: React.FC<CTAProps> = ({
   const navigate = useNavigate();
   const handleConsultationClick = onConsultationClick || (() => navigate('/contact'));
   return (
-    <section style={{ width: "100%", background: BRAND.bgSoft, padding: "80px 24px", fontFamily: "'Inter', sans-serif" }}>
+    <section style={{ width: "100%", background: BRAND.bgSoft, padding: "64px 24px", fontFamily: "'Inter', sans-serif" }}>
       <div style={{ maxWidth: "900px", margin: "0 auto" }}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -26,7 +26,7 @@ const CTASection: React.FC<CTAProps> = ({
           style={{
             position: "relative", overflow: "hidden",
             background: `linear-gradient(135deg, ${BRAND.dark} 0%, ${BRAND.darkMid} 50%, ${BRAND.primary} 100%)`,
-            borderRadius: "32px", padding: "72px 64px",
+            borderRadius: "32px", padding: "clamp(48px, 6vw, 64px) clamp(32px, 5vw, 64px)",
             boxShadow: `0 24px 64px ${BRAND.primary}47`,
           }}
         >
@@ -35,13 +35,13 @@ const CTASection: React.FC<CTAProps> = ({
           <div style={{ position: "absolute", inset: 0, opacity: 0.15, backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1px)", backgroundSize: "28px 28px", pointerEvents: "none" }} />
 
           <div style={{ position: "relative", zIndex: 10, textAlign: "center" }}>
-            <div style={{ display: "inline-block", background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)", color: BRAND.accentOnDark, fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 16px", borderRadius: "100px", marginBottom: "24px" }}>
+            <div style={{ display: "inline-block", background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)", color: BRAND.accentOnDark, fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 16px", borderRadius: "100px", marginBottom: "16px" }}>
               Get In Touch
             </div>
             <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.white, lineHeight: 1.15, marginBottom: "20px" }}>
               Ready to Transform Your Business?
             </h2>
-            <p style={{ fontSize: "1.05rem", color: BRAND.textOnDark, maxWidth: "520px", margin: "0 auto 40px", lineHeight: 1.75, fontWeight: 400 }}>
+            <p style={{ fontSize: "1.05rem", color: BRAND.textOnDark, maxWidth: "520px", margin: "0 auto 32px", lineHeight: 1.75, fontWeight: 400 }}>
               Let's discuss how our HVAC solutions can elevate comfort in your space and keep your customers and team happy year-round.
             </p>
 

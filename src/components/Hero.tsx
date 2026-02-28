@@ -42,7 +42,7 @@ export default function HeroSection() {
       <div style={{ position: "absolute", bottom: -2, left: 0, right: 0, height: "120px", zIndex: 5, background: BRAND.white, clipPath: "polygon(0 60%, 100% 0, 100% 100%, 0% 100%)" }} />
 
       {/* Content */}
-      <div style={{ position: "relative", zIndex: 10, width: "100%", maxWidth: "1200px", margin: "0 auto", padding: "100px 48px 120px" }}>
+      <div style={{ position: "relative", zIndex: 10, width: "100%", maxWidth: "1200px", margin: "0 auto", padding: "100px clamp(24px, 5vw, 48px) 80px" }}>
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -54,7 +54,7 @@ export default function HeroSection() {
             color: BRAND.accentOnDark,
             fontWeight: 700, fontSize: "0.72rem",
             letterSpacing: "0.18em", textTransform: "uppercase" as const,
-            padding: "5px 16px", borderRadius: "100px", marginBottom: "24px",
+            padding: "5px 16px", borderRadius: "100px", marginBottom: "20px",
           }}
         >
           HVAC & Air Conditioning Experts
@@ -70,7 +70,7 @@ export default function HeroSection() {
             fontSize: "clamp(2.2rem, 5vw, 4.2rem)",
             lineHeight: 1.1, letterSpacing: "0.02em",
             color: BRAND.white, fontWeight: 800,
-            marginBottom: "20px", maxWidth: "min(95vw, 690px)", wordBreak: "break-word",
+            marginBottom: "16px", maxWidth: "min(95vw, 690px)", wordBreak: "break-word",
           }}
         >
           Professional HVAC Solutions <span style={{ color: BRAND.accentOnDark }}>&amp; Air Conditioning Services</span>
@@ -82,7 +82,7 @@ export default function HeroSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           style={{
             color: BRAND.textOnDark, fontSize: "1.05rem", lineHeight: 1.75,
-            maxWidth: "480px", marginBottom: "36px", fontWeight: 400,
+            maxWidth: "480px", marginBottom: "32px", fontWeight: 400,
           }}
         >
           Expert installation, servicing & commercial HVAC projects across Uttar Pradesh. Trusted by 50,000+ satisfied customers.
@@ -93,7 +93,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          style={{ display: "flex", flexWrap: "wrap", gap: "12px", marginBottom: "36px" }}
+          style={{ display: "flex", flexWrap: "wrap", gap: "12px", marginBottom: "32px" }}
         >
           <a href="tel:+919839171701" style={btnPrimary}>
             <Phone size={16} fill="white" stroke="none" /> Call Now — Free Consultation
@@ -113,7 +113,7 @@ export default function HeroSection() {
           transition={{ duration: 0.5, delay: 0.4 }}
           style={{
             display: "flex", flexWrap: "wrap", gap: "20px",
-            borderBottom: "1px solid rgba(255,255,255,0.12)", paddingBottom: "32px",
+            borderBottom: "1px solid rgba(255,255,255,0.12)", paddingBottom: "24px",
           }}
         >
           {badges.map((b, i) => (

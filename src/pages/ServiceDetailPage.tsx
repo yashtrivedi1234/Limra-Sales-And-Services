@@ -4,13 +4,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft, CheckCircle2, Clock, Star, Phone,
   Calendar, Shield, Zap, ChevronDown, ArrowUpRight,
+  ShieldCheck, MapPin, Settings2, Wind, Wrench
 } from "lucide-react";
 
-// ✅ Pull data from the dedicated data file
-import { services, getService } from "../data/servicesData";
+// ✅ Pull data from RTK Query
+import { useGetServicesQuery } from "@/store/api";
 
-// ─── Design tokens ────────────────────────────────────────────────────────────
 import { BRAND as _B } from "@/lib/colors";
+import Loader from "@/components/ui/Loader";
 const BRAND = {
   ..._B,
   accent:     _B.accentOnDark,
@@ -95,12 +96,29 @@ function FAQItem({ faq, index }) {
 // ─── Page component ───────────────────────────────────────────────────────────
 export default function ServiceDetailPage() {
   const { slug } = useParams<{ slug: string }>();
-  // getService returns undefined if slug is unknown; fall back to first service
-  const service = getService(slug) ?? services[0];
-  const Icon = service.icon;
+  const { data: services = [], isLoading } = useGetServicesQuery();
+
+  if (isLoading) {
+    return <Loader fullScreen />;
+  }
+
+  // getService returns undefined if slug is unknown
+  const service = services.find((s: any) => s.slug === slug);
+  if (!service) return <div className="min-h-screen flex items-center justify-center text-slate-500">Service not found.</div>;
+
+  const renderIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'ShieldCheck': return ShieldCheck;
+      case 'MapPin': return MapPin;
+      case 'Settings2': return Settings2;
+      case 'Wind': return Wind;
+      default: return Wrench;
+    }
+  };
+  const Icon = renderIcon(service.icon);
 
   // Related = up to 3 other services
-  const related = services.filter((s) => s.slug !== service.slug).slice(0, 3);
+  const related = services.filter((s: any) => s.slug !== service.slug).slice(0, 3);
 
   return (
     <div
@@ -402,7 +420,7 @@ export default function ServiceDetailPage() {
               gap: 16,
             }}
           >
-            {service.highlights.map((h, i) => (
+            {service.highlights && service.highlights.map((h: string, i: number) => (
               <motion.div
                 key={h}
                 initial={{ opacity: 0, y: 20 }}
@@ -462,7 +480,7 @@ export default function ServiceDetailPage() {
               gap: 20,
             }}
           >
-            {service.process.map((p, i) => (
+            {service.process && service.process.map((p: any, i: number) => (
               <motion.div
                 key={p.step}
                 initial={{ opacity: 0, y: 30 }}
@@ -563,7 +581,7 @@ export default function ServiceDetailPage() {
           >
             Frequently Asked Questions
           </h2>
-          {service.faqs.map((faq, i) => (
+          {service.faqs && service.faqs.map((faq: any, i: number) => (
             <FAQItem key={i} faq={faq} index={i} />
           ))}
         </motion.div>
@@ -592,8 +610,8 @@ export default function ServiceDetailPage() {
               gap: 16,
             }}
           >
-            {related.map((s, i) => {
-              const RelIcon = s.icon;
+            {related && related.map((s: any, i: number) => {
+              const RelIcon = renderIcon(s.icon);
               return (
                 <motion.a
                   key={s.slug}

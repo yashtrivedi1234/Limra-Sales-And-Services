@@ -21,6 +21,19 @@ import ProductPage from "./pages/Products";
 import Brand from "./pages/Brand";
 import ServicesPage from "./pages/ServicesPage";
 import ServiceDetailPage from "./pages/ServiceDetailPage";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+
+// Contexts
+import { UserAuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./context/AdminAuthContext";
+import AdminLogin from "./pages/admin/AdminLogin";
+import AdminLayout from "./layouts/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminBlogs from "./pages/admin/AdminBlogs";
+import AdminServices from "./pages/admin/AdminServices";
+import AdminBrands from "./pages/admin/AdminBrands";
+import AdminProjects from "./pages/admin/AdminProjects";
 
 const queryClient = new QueryClient();
 
@@ -33,7 +46,11 @@ const App: React.FC = () => (
 
       <BrowserRouter>
         <Routes>
-          <Route element={<MainLayout />}>
+          <Route element={
+            <UserAuthProvider>
+              <MainLayout />
+            </UserAuthProvider>
+          }>
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
@@ -48,6 +65,27 @@ const App: React.FC = () => (
             <Route path="/brands" element={<Brand />} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/services/:slug" element={<ServiceDetailPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
+
+          {/* Admin routes wrapped with AuthProvider */}
+          <Route path="/admin/login" element={
+            <AuthProvider>
+              <AdminLogin />
+            </AuthProvider>
+          } />
+          
+          <Route path="/admin" element={
+            <AuthProvider>
+              <AdminLayout />
+            </AuthProvider>
+          }>
+            <Route index element={<AdminDashboard />} />
+            <Route path="blogs" element={<AdminBlogs />} />
+            <Route path="services" element={<AdminServices />} />
+            <Route path="brands" element={<AdminBrands />} />
+            <Route path="projects" element={<AdminProjects />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

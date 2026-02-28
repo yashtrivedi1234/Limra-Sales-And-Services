@@ -1,31 +1,19 @@
 import { motion } from "framer-motion";
-import amstrad from "@/assets/amstrad.png";
-import blueStar from "@/assets/blue-star.png";
-import carrier from "@/assets/carrier.png";
-import daikin from "@/assets/dalkin.png";
-import hitachi from "@/assets/hitachi.png";
-import midea from "@/assets/Midea.png";
-import mitsubishi from "@/assets/mitsubishi.png";
-import voltas from "@/assets/voltas.png";
-import { BRAND } from "@/lib/colors";
+import { useGetBrandsQuery } from "@/store/api";
 
-const brands = [
-  { name: "Daikin", image: daikin },
-  { name: "Mitsubishi Heavy", image: mitsubishi },
-  { name: "Carrier", image: carrier },
-  { name: "Voltas", image: voltas },
-  { name: "Amstrad", image: amstrad },
-  { name: "Midea", image: midea },
-  { name: "Blue Star", image: blueStar },
-  { name: "Hitachi", image: hitachi },
-];
+import { BRAND } from "@/lib/colors";
+import Loader from "@/components/ui/Loader";
 
 const BrandMarquee = () => {
+  const { data: brands = [], isLoading } = useGetBrandsQuery();
   const doubled = [...brands, ...brands];
 
+  if (isLoading) return <Loader />;
+  if (brands.length === 0) return null;
+
   return (
-      <section style={{ padding: "72px 0", background: BRAND.white, overflow: "hidden", position: "relative", fontFamily: "'DM Serif Display', serif" }}>
-      <div style={{ textAlign: "center", marginBottom: "48px", padding: "0 24px" }}>
+      <section style={{ padding: "64px 0", background: BRAND.white, overflow: "hidden", position: "relative", fontFamily: "'DM Serif Display', serif" }}>
+      <div style={{ textAlign: "center", marginBottom: "32px", padding: "0 24px" }}>
         <div style={{ display: "inline-block", background: `${BRAND.primary}1A`, border: `1px solid ${BRAND.primary}40`, color: BRAND.primary, fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 14px", borderRadius: "100px", marginBottom: "14px" }}>
           Trusted Brands
         </div>
@@ -44,7 +32,7 @@ const BrandMarquee = () => {
           onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.animationPlayState = "paused")}
           onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.animationPlayState = "running")}
         >
-          {doubled.map((brand, i) => (
+          {doubled.map((brand: any, i: number) => (
             <motion.div
               key={i}
               whileHover={{ y: -8, scale: 1.05 }}
@@ -58,7 +46,7 @@ const BrandMarquee = () => {
               }}
             >
               <div style={{ height: "72px", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "4px" }}>
-                <img src={brand.image} alt={brand.name} loading="lazy" style={{ maxHeight: "60px", maxWidth: "100%", objectFit: "contain" }} />
+                <img src={brand.heroImage || brand.image} alt={brand.brandName || brand.name} loading="lazy" style={{ maxHeight: "60px", maxWidth: "100%", objectFit: "contain" }} />
               </div>
               <div style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", height: "3px", width: "0", background: `linear-gradient(90deg, ${BRAND.dark}, ${BRAND.primary})`, borderRadius: "2px", transition: "width 0.3s" }} />
             </motion.div>

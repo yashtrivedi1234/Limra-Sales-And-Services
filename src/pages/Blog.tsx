@@ -1,10 +1,17 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Clock, Calendar } from "lucide-react";
-import { blogPosts } from "@/data/blogPosts";
+import { useGetBlogsQuery } from "@/store/api";
 import { BRAND } from "@/lib/colors";
+import React from 'react';
+import Loader from "@/components/ui/Loader";
 
-const Blog = () => (
+const Blog = () => {
+  const { data: blogPosts = [], isLoading } = useGetBlogsQuery();
+
+  if (isLoading) return <Loader />;
+
+  return (
   <main style={{ fontFamily: "'Inter', sans-serif" }}>
 
     {/* ── Hero ── */}
@@ -43,7 +50,7 @@ const Blog = () => (
     <section style={{ padding: "80px 24px", background: BRAND.bgSoft }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "24px" }}>
-          {blogPosts.map((post, i) => (
+          {blogPosts.map((post: any, i: number) => (
             <motion.article key={post.slug}
               initial="hidden" whileInView="visible" viewport={{ once: true }}
               variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.5 } } }}>
@@ -132,6 +139,7 @@ const Blog = () => (
       </div>
     </section>
   </main>
-);
+  );
+};
 
 export default Blog;

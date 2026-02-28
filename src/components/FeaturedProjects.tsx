@@ -3,16 +3,19 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { BRAND } from "@/lib/colors";
 
-const projects = [
-  { name: "Invertis University", location: "Bareilly, UP", units: "200+ Units", image: "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80" },
-  { name: "Jim Corbett Marriott Resort", location: "Jim Corbett, Uttarakhand", units: "150+ Units", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80" },
-  { name: "Bareilly Airport", location: "Bareilly, UP", units: "80+ Units", image: "https://images.unsplash.com/photo-1474302770737-173ee21bab63?w=800&q=80" },
-];
+import { useGetProjectsQuery } from "@/store/api";
+import Loader from "@/components/ui/Loader";
 
 export default function FeaturedProjects() {
+  const { data: projects = [], isLoading } = useGetProjectsQuery();
+  const featured = projects.slice(0, 3);
+
+  if (isLoading) return <Loader />;
+  if (featured.length === 0) return null;
+
   return (
-    <section style={{ padding: "100px 0", background: BRAND.bgSoft, fontFamily: "'Inter', sans-serif" }}>
-      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 48px" }}>
+    <section style={{ padding: "64px 0", background: BRAND.bgSoft, fontFamily: "'Inter', sans-serif" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(24px, 5vw, 48px)" }}>
         
         {/* Header */}
         <motion.div
@@ -20,7 +23,7 @@ export default function FeaturedProjects() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          style={{ textAlign: "center", marginBottom: "56px" }}
+          style={{ textAlign: "center", marginBottom: "48px" }}
         >
           <div style={{
             display: "inline-block",
@@ -73,9 +76,9 @@ export default function FeaturedProjects() {
             gap: "24px",
           }}
         >
-          {projects.map((project, i) => (
+          {featured.map((project: any, i: number) => (
             <motion.div
-              key={project.name}
+              key={project._id || project.title}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -91,8 +94,8 @@ export default function FeaturedProjects() {
             >
               <div style={{ position: "relative", aspectRatio: "4/3" }}>
                 <img
-                  src={project.image}
-                  alt={project.name}
+                  src={project.featuredImage || project.images?.[0] || ""}
+                  alt={project.title}
                   loading="lazy"
                   style={{
                     width: "100%",
@@ -124,7 +127,7 @@ export default function FeaturedProjects() {
                     color: BRAND.accentOnDark,
                     marginBottom: "6px"
                   }}>
-                    {project.units}
+                    {project.client || "Client"}
                   </span>
 
                   <h3 style={{
@@ -133,7 +136,7 @@ export default function FeaturedProjects() {
                     marginBottom: "4px",
                     fontWeight: 700
                   }}>
-                    {project.name}
+                    {project.title}
                   </h3>
 
                   <p style={{

@@ -3,63 +3,10 @@ import { Download, MapPin, Building2, Thermometer, ArrowLeft } from "lucide-reac
 import { Link } from "react-router-dom";
 import { BRAND } from "@/lib/colors";
 import jsPDF from "jspdf";
+import { useGetProjectsQuery } from "@/store/api";
+import Loader from "@/components/ui/Loader";
 
-const caseStudies = [
-  {
-    id: 1,
-    name: "Invertis University",
-    location: "Bareilly, UP",
-    units: "200+ Units",
-    category: "Education",
-    image: "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
-    challenge: "Invertis University needed a centralized cooling solution for 15+ buildings across a sprawling campus, with varying load requirements for classrooms, labs, and auditoriums.",
-    solution: "We deployed a hybrid VRV and ductable AC system with smart zoning controls, allowing independent climate management for each building while reducing energy consumption by 35%.",
-    results: ["200+ units installed across 15 buildings", "35% reduction in energy consumption", "Centralized monitoring dashboard", "3-year AMC with 24/7 support"],
-    systemType: "VRV + Ductable Hybrid",
-    completionYear: "2022",
-  },
-  {
-    id: 2,
-    name: "Jim Corbett Marriott Resort",
-    location: "Jim Corbett, Uttarakhand",
-    units: "150+ Units",
-    category: "Hospitality",
-    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80",
-    challenge: "A luxury resort in a wildlife sanctuary zone required whisper-quiet, eco-friendly cooling that blended with the natural surroundings and met strict environmental regulations.",
-    solution: "We installed Daikin inverter VRV systems with low-noise outdoor units concealed in landscaped enclosures, paired with smart room-level thermostats for guest comfort control.",
-    results: ["150+ units across 80 suites and common areas", "Noise levels under 25 dB in guest rooms", "Eco-compliant refrigerant systems", "Guest satisfaction score improved by 28%"],
-    systemType: "Daikin VRV IV",
-    completionYear: "2023",
-  },
-  {
-    id: 3,
-    name: "Bareilly Airport",
-    location: "Bareilly, UP",
-    units: "80+ Units",
-    category: "Infrastructure",
-    image: "https://images.unsplash.com/photo-1474302770737-173ee21bab63?w=800&q=80",
-    challenge: "The newly expanded terminal building required high-capacity cooling for large open areas with high foot traffic, strict ventilation standards, and redundancy for critical zones.",
-    solution: "We implemented a combination of high-capacity cassette ACs for the terminal and precision cooling for server and control rooms, all integrated with the building management system.",
-    results: ["80+ units covering 50,000 sq ft", "99.9% uptime for critical zone cooling", "BMS integration for automated control", "Compliant with DGCA ventilation norms"],
-    systemType: "Cassette + Precision Cooling",
-    completionYear: "2023",
-  },
-  {
-    id: 4,
-    name: "Bareilly Haat",
-    location: "Bareilly, UP",
-    units: "120+ Units",
-    category: "Commercial",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
-    challenge: "A large commercial complex with mixed-use retail spaces, food courts, and office areas needed a flexible cooling system that could handle diverse loads and operating hours.",
-    solution: "We designed a modular VRV system allowing individual shop owners to control their zones independently, with shared outdoor units to maximize space and reduce installation costs.",
-    results: ["120+ units across 200+ retail spaces", "40% lower installation cost vs individual systems", "Independent zone billing for tenants", "Modular expansion capability"],
-    systemType: "Modular VRV System",
-    completionYear: "2021",
-  },
-];
-
-function generatePDF(study: (typeof caseStudies)[0]) {
+function generatePDF(study: any) {
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
   const margin = 20;
@@ -81,7 +28,7 @@ function generatePDF(study: (typeof caseStudies)[0]) {
   doc.setTextColor(8, 42, 69);
   doc.setFontSize(20);
   doc.setFont("helvetica", "bold");
-  doc.text(study.name, margin, y);
+  doc.text(study.title || study.name, margin, y);
   y += 10;
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
@@ -140,10 +87,16 @@ function generatePDF(study: (typeof caseStudies)[0]) {
   doc.setTextColor(150, 150, 150);
   doc.text("LIMRA Sales And Services | Bareilly & Shahjahanpur, UP | www.limrasales.com", margin, footerY);
 
-  doc.save(`${study.name.replace(/\s+/g, "-").toLowerCase()}-case-study.pdf`);
+  doc.save(`${(study.title || study.name || 'study').replace(/\s+/g, "-").toLowerCase()}-case-study.pdf`);
 }
 
 const CaseStudies = () => {
+  const { data: projects = [], isLoading } = useGetProjectsQuery();
+
+  if (isLoading) {
+    return <Loader fullScreen />;
+  }
+
   return (
     <main style={{ fontFamily: "'Inter', sans-serif", background: BRAND.bgSoft, minHeight: "100vh" }}>
 
@@ -191,8 +144,8 @@ const CaseStudies = () => {
       {/* ── Case Study Cards ── */}
       <section style={{ padding: "80px 32px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "32px" }}>
-          {caseStudies.map((study, i) => (
-            <motion.article key={study.id}
+          {projects.map((study: any, i: number) => (
+            <motion.article key={study._id || study.id}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
@@ -209,7 +162,7 @@ const CaseStudies = () => {
               }}>
               {/* Image */}
               <div style={{ position: "relative", overflow: "hidden", minHeight: "280px" }}>
-                <img src={study.image} alt={study.name}
+                <img src={study.featuredImage || study.images?.[0] || study.image} alt={study.title || study.name}
                   style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.6s", display: "block" }}
                 />
                 <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to top, ${BRAND.dark}80 0%, ${BRAND.dark}0D 60%)` }} />
@@ -231,9 +184,9 @@ const CaseStudies = () => {
                 <div>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: "14px", marginBottom: "16px" }}>
                     {[
-                      { icon: <MapPin size={13} />, text: study.location },
-                      { icon: <Building2 size={13} />, text: study.units },
-                      { icon: <Thermometer size={13} />, text: study.systemType },
+                      { icon: <MapPin size={13} />, text: study.location || "Various Locations" },
+                      { icon: <Building2 size={13} />, text: study.client || study.units || "Commercial" },
+                      { icon: <Thermometer size={13} />, text: study.systemType || "HVAC System" },
                     ].map((m, idx) => (
                       <span key={idx} style={{ display: "inline-flex", alignItems: "center", gap: "5px", fontSize: "0.8rem", color: BRAND.slate400 }}>
                         <span style={{ color: BRAND.primary }}>{m.icon}</span> {m.text}
@@ -242,11 +195,11 @@ const CaseStudies = () => {
                   </div>
 
                   <h2 style={{ fontSize: "clamp(1.4rem, 2.5vw, 1.9rem)", color: BRAND.dark, marginBottom: "20px", fontWeight: 700 }}>
-                    {study.name}
+                    {study.title || study.name}
                   </h2>
 
                   <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginBottom: "20px" }}>
-                    {[{ label: "Challenge", text: study.challenge }, { label: "Solution", text: study.solution }].map(item => (
+                    {[{ label: "Project Details", text: study.description || study.challenge }].map(item => (
                       <div key={item.label}>
                         <h3 style={{ fontWeight: 700, color: BRAND.dark, fontSize: "0.875rem", marginBottom: "5px" }}>{item.label}</h3>
                         <p style={{ fontSize: "0.875rem", color: BRAND.slate400, lineHeight: 1.65 }}>{item.text}</p>
@@ -257,7 +210,7 @@ const CaseStudies = () => {
                   <div>
                     <h3 style={{ fontWeight: 700, color: BRAND.dark, fontSize: "0.875rem", marginBottom: "10px" }}>Key Results</h3>
                     <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
-                      {study.results.map((r, idx) => (
+                      {(study.results || ["Successfully installed and commissioned", "On-time completion", "Energy-efficient operation"]).map((r: string, idx: number) => (
                         <li key={idx} style={{ display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "0.82rem", color: BRAND.slate400 }}>
                           <span style={{ marginTop: "5px", width: "7px", height: "7px", borderRadius: "50%", background: BRAND.primary, flexShrink: 0, display: "block" }} />
                           {r}

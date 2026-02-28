@@ -28,7 +28,7 @@ const Newsletter = () => {
   };
 
   return (
-    <section style={{ padding: "80px 24px", background: BRAND.white, borderTop: `1px solid ${BRAND.slate100}`, borderBottom: `1px solid ${BRAND.slate100}`, fontFamily: "'Inter', sans-serif", position: "relative", overflow: "hidden" }}>
+    <section style={{ padding: "64px 24px", background: BRAND.white, borderTop: `1px solid ${BRAND.slate100}`, borderBottom: `1px solid ${BRAND.slate100}`, fontFamily: "'Inter', sans-serif", position: "relative", overflow: "hidden" }}>
       <div style={{ position: "absolute", top: "-80px", right: "-80px", width: "320px", height: "320px", background: `${BRAND.primarySky}80`, borderRadius: "50%", filter: "blur(64px)", pointerEvents: "none" }} />
       <div style={{ position: "absolute", bottom: "-80px", left: "-80px", width: "320px", height: "320px", background: `${BRAND.primarySky}59`, borderRadius: "50%", filter: "blur(64px)", pointerEvents: "none" }} />
 
@@ -42,10 +42,10 @@ const Newsletter = () => {
         <div style={{ display: "inline-block", background: `${BRAND.primary}1A`, border: `1px solid ${BRAND.primary}40`, color: BRAND.primary, fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 14px", borderRadius: "100px", marginBottom: "20px" }}>
           Newsletter
         </div>
-        <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", color: BRAND.dark, lineHeight: 1.15, marginBottom: "16px" }}>
+        <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", color: BRAND.dark, lineHeight: 1.15, marginBottom: "12px" }}>
           Stay Updated with Latest HVAC Trends
         </h2>
-        <p style={{ color: BRAND.slate400, fontSize: "1.05rem", lineHeight: 1.75, marginBottom: "36px", fontWeight: 400 }}>
+        <p style={{ color: BRAND.slate400, fontSize: "1.05rem", lineHeight: 1.75, marginBottom: "24px", fontWeight: 400 }}>
           Subscribe for industry insights, product updates, maintenance tips, and exclusive offers.
         </p>
 
@@ -74,7 +74,7 @@ const Newsletter = () => {
           </button>
         </form>
 
-        <p style={{ marginTop: "20px", fontSize: "0.78rem", color: BRAND.slate400, fontWeight: 500 }}>
+        <p style={{ marginTop: "16px", fontSize: "0.78rem", color: BRAND.slate400, fontWeight: 500 }}>
           No spam, ever. Unsubscribe at any time.
         </p>
       </motion.div>

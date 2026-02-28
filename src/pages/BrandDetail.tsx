@@ -1,10 +1,11 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Phone, Trophy, Heart, IndianRupee, Star, CheckCircle2, ArrowRight, Shield, ChevronRight } from 'lucide-react';
-import { brandsData } from '../data/brandsdata';
+import { useGetBrandsQuery } from '@/store/api';
 import { motion } from 'framer-motion';
 import PageTransition from '../components/PageTransition';
 import { BRAND } from '@/lib/colors';
+import Loader from '@/components/ui/Loader';
 
 const renderIcon = (iconName: string): React.ReactNode => {
   const style = { color: BRAND.primary };
@@ -27,7 +28,12 @@ const fadeUp = {
 
 export default function BrandDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const brand = slug ? brandsData[slug] : undefined;
+  const { data: brands = [], isLoading } = useGetBrandsQuery();
+  const brand = brands.find((b: any) => b.slug === slug);
+
+  if (isLoading) {
+    return <Loader fullScreen />;
+  }
 
   if (!brand) {
     return (
@@ -153,7 +159,7 @@ export default function BrandDetail() {
             </motion.div>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "16px" }}>
-              {brand.features.map((feature, idx) => (
+              {brand.features && brand.features.map((feature: any, idx: number) => (
                 <motion.div key={idx} custom={idx} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
                   style={{
                     display: "flex", alignItems: "flex-start", gap: "18px",
@@ -163,7 +169,7 @@ export default function BrandDetail() {
                     transition: "all 0.3s"
                   }}>
                   <div style={{ padding: "12px", borderRadius: "12px", background: BRAND.primarySky, flexShrink: 0 }}>
-                    {renderIcon(feature.icon)}
+                    {renderIcon(feature.icon || "star")}
                   </div>
                   <div>
                     <h3 style={{ fontWeight: 700, color: BRAND.dark, fontSize: "1rem", marginBottom: "6px" }}>{feature.title}</h3>
@@ -194,7 +200,7 @@ export default function BrandDetail() {
             </motion.div>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "20px" }}>
-              {brand.products.map((product, idx) => (
+              {brand.products && brand.products.map((product: any, idx: number) => (
                 <motion.div key={idx} custom={idx} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
                   style={{
                     background: BRAND.white, border: `1px solid ${BRAND.slate100}`,
@@ -222,7 +228,7 @@ export default function BrandDetail() {
                     <h3 style={{ fontWeight: 700, fontSize: "1.1rem", color: BRAND.dark, marginBottom: "6px" }}>{product.title}</h3>
                     <p style={{ color: BRAND.slate400, fontSize: "0.875rem", marginBottom: "18px" }}>{product.desc}</p>
                     <ul style={{ listStyle: "none", padding: 0, margin: "0 0 20px", display: "flex", flexDirection: "column", gap: "8px" }}>
-                      {product.featuresList.map((item, fIdx) => (
+                      {Array.isArray(product.featuresList) && product.featuresList.map((item: string, fIdx: number) => (
                         <li key={fIdx} style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.875rem", color: BRAND.slate600 }}>
                           <CheckCircle2 size={15} style={{ color: BRAND.primary, flexShrink: 0 }} />
                           {item}

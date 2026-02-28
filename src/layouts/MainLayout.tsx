@@ -7,12 +7,14 @@ import ScrollToTop from "../components/ScrollToTop";
 import ScrollToTopButton from "../components/ScrollToTopButton";
 import FloatingActionButton from "../components/FloatingActionButton";
 import PageTransition from "../components/PageTransition";
+import ProgressBar from "../components/ProgressBar";
 
 const MainLayout: React.FC = () => {
   const location = useLocation();
 
   return (
     <>
+      <ProgressBar />
       <ScrollToTop />
       <SiteHeader />
       <AnimatePresence mode="wait">

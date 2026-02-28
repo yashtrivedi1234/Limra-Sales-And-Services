@@ -5,194 +5,18 @@ import {
   ArrowLeft, CheckCircle2, Star, Phone, Calendar,
   Shield, Zap, ChevronDown, ArrowUpRight, Sparkles
 } from "lucide-react";
+import { useGetServicesQuery } from "@/store/api";
+import Loader from "@/components/ui/Loader";
 
-// ─── DATA ─────────────────────────────────────────────────────────────────────
-const services = [
-  {
-    slug: "expert-installation",
-    icon: Wrench,
-    badge: "Most Popular",
-    badgeColor: "#d97706",
-    title: "Expert Installation",
-    tagline: "Precision from day one.",
-    desc: "Certified technicians with precision setup for optimal performance and longevity.",
-    longDesc: "Our installation service is built around doing it right the first time. Every job starts with an on-site walkthrough, where our technician confirms the optimal placement for airflow, drain routing, and electrical load. We use manufacturer-approved tools and materials, torque-test every flare fitting, and run a full commissioning cycle before we leave. You get a photographic job report and a two-year workmanship warranty on top of the brand warranty.",
-    highlights: ["Certified technicians", "Same-day availability", "Post-install testing", "2-year workmanship warranty"],
-    duration: "2–4 hrs",
-    price: "From ₹1,499",
-    rating: 4.9,
-    reviews: 347,
-    accentHue: "195",
-    process: [
-      { step: "01", title: "Site assessment", desc: "Technician surveys the room, checks electrical panel and drain options." },
-      { step: "02", title: "Unit positioning", desc: "Indoor and outdoor unit placement optimised for airflow and noise." },
-      { step: "03", title: "Wiring & piping", desc: "Copper piping flared and brazed; electrical wiring to code." },
-      { step: "04", title: "Leak & vacuum test", desc: "Nitrogen pressure test + deep vacuum before releasing refrigerant." },
-      { step: "05", title: "Commissioning", desc: "Full test cycle, temperature verification, remote pairing." },
-      { step: "06", title: "Handover & report", desc: "Photo report emailed; warranty card & care tips handed over." },
-    ],
-    faqs: [
-      { q: "How long does installation take?", a: "Typically 2–4 hours for a standard split AC. Multi-head or ducted systems may take a full day." },
-      { q: "Do I need to be home?", a: "Yes for the first 30 minutes (site check) and the last 15 minutes (handover). You don't need to supervise the whole job." },
-      { q: "Is drilling included?", a: "Yes — wall drilling for pipe routing is included at no extra charge." },
-      { q: "What if my unit develops a fault?", a: "Our 2-year workmanship warranty covers any fault that originates from the installation. One call and we come back free of charge." },
-    ],
-  },
-  {
-    slug: "maintenance-repair",
-    icon: ShieldCheck,
-    badge: "Recommended",
-    badgeColor: "#16a34a",
-    title: "Maintenance & Repair",
-    tagline: "Keep it running at peak.",
-    desc: "Scheduled servicing, gas top-ups, deep cleaning and swift troubleshooting.",
-    longDesc: "A neglected AC works 25–40% harder, consuming more power while delivering less comfort. Our maintenance visit covers every component: filters are deep-washed, the evaporator coil is foamed and rinsed, the condenser fins are combed straight, refrigerant pressure is verified, and all electrical contacts are checked for corrosion. We hand you a printed health card so you know exactly where your unit stands.",
-    highlights: ["Filter deep-clean", "Refrigerant top-up", "PCB diagnostics", "Full health report"],
-    duration: "1–3 hrs",
-    price: "From ₹799",
-    rating: 4.8,
-    reviews: 892,
-    accentHue: "142",
-    process: [
-      { step: "01", title: "Filter wash", desc: "Filters removed, jet-washed, dried and refitted." },
-      { step: "02", title: "Coil cleaning", desc: "Evaporator foamed; condenser fins combed and rinsed." },
-      { step: "03", title: "Drain flush", desc: "Condensate pan and drain line cleared and sanitised." },
-      { step: "04", title: "Gas check", desc: "Refrigerant pressure verified; top-up if within included allowance." },
-      { step: "05", title: "Electrical check", desc: "Capacitors, contactors, PCB and thermostat tested." },
-      { step: "06", title: "Health card handover", desc: "Printed report listing every parameter checked." },
-    ],
-    faqs: [
-      { q: "How often should I service my AC?", a: "Twice a year — once before summer and once at the end of the season — is ideal for most households." },
-      { q: "Is gas top-up always needed?", a: "Not always. We check pressure first; top-up is only done if levels are below spec." },
-      { q: "Can I book same-day?", a: "Yes, subject to technician availability in your area." },
-      { q: "What's not covered?", a: "Major part replacements (compressor, PCB board) are quoted separately after diagnosis." },
-    ],
-  },
-  {
-    slug: "free-site-visit",
-    icon: MapPin,
-    badge: "Free",
-    badgeColor: "#7c3aed",
-    title: "Free Site Visit",
-    tagline: "The right fit, every time.",
-    desc: "Complimentary assessment of your space to recommend the perfect cooling solution.",
-    longDesc: "Buying the wrong capacity AC is one of the most common — and costly — mistakes homeowners make. An undersized unit runs continuously and still can't cool the room; an oversized one short-cycles, fails to dehumidify and wears out faster. Our free site visit eliminates the guesswork: we calculate your room's heat load, factor in occupancy, window orientation and insulation, and recommend the exact tonnage and model that will save you money for years.",
-    highlights: ["Load calculation", "Unit size advisory", "Ducting feasibility", "No-obligation quote"],
-    duration: "30–60 min",
-    price: "Complimentary",
-    rating: 5.0,
-    reviews: 214,
-    accentHue: "270",
-    process: [
-      { step: "01", title: "Book a slot", desc: "Choose a convenient time via our booking form or WhatsApp." },
-      { step: "02", title: "Technician arrives", desc: "Our expert visits your home at the agreed time." },
-      { step: "03", title: "Heat load calculation", desc: "Room dimensions, window area, sun orientation, and occupancy measured." },
-      { step: "04", title: "Site feasibility", desc: "Pipe routing, power point and outdoor unit placement evaluated." },
-      { step: "05", title: "Recommendation", desc: "Tonnage, brand and model shortlist presented on the spot." },
-      { step: "06", title: "Quote delivered", desc: "Itemised quote emailed within the hour — no obligation." },
-    ],
-    faqs: [
-      { q: "Is there really no charge?", a: "Absolutely none. No hidden fees, no obligation to buy from us." },
-      { q: "How long does the visit take?", a: "Usually 30–45 minutes, slightly longer for large homes or commercial spaces." },
-      { q: "Can I get a quote for multiple rooms?", a: "Yes — just let us know when booking and we'll allocate extra time." },
-      { q: "What if I decide not to proceed?", a: "No problem at all. We'll leave you with the report for future reference." },
-    ],
-  },
-  {
-    slug: "emergency-service",
-    icon: Clock,
-    badge: "24 / 7",
-    badgeColor: "#dc2626",
-    title: "Emergency Service",
-    tagline: "Help when you need it most.",
-    desc: "Round-the-clock support because breakdowns don't wait for business hours.",
-    longDesc: "Whether it's 2 AM and your bedroom AC has quit, or a mid-afternoon heatwave has knocked out the office units, our emergency team picks up every call and dispatches the nearest available technician. Our vans carry the most common replacement parts — capacitors, contactors, motors, PCB modules — so most jobs are resolved in a single visit.",
-    highlights: ["60-min response SLA", "Night & weekend coverage", "Spare parts on-van", "Priority queue"],
-    duration: "On-demand",
-    price: "From ₹999",
-    rating: 4.7,
-    reviews: 563,
-    accentHue: "350",
-    process: [
-      { step: "01", title: "Call or WhatsApp", desc: "Reach us at any hour — the line is always open." },
-      { step: "02", title: "Dispatch", desc: "Nearest technician assigned and ETA confirmed within 10 minutes." },
-      { step: "03", title: "Diagnosis", desc: "Fault identified on arrival using diagnostic tools." },
-      { step: "04", title: "Repair", desc: "Most faults fixed on the spot with van-stocked parts." },
-      { step: "05", title: "Test run", desc: "Unit run through full cooling cycle to confirm the fix." },
-      { step: "06", title: "Job report", desc: "Digital report emailed immediately after job completion." },
-    ],
-    faqs: [
-      { q: "What counts as an emergency?", a: "Any situation where your AC has stopped working or is behaving unsafely (burning smell, water leak, sparking)." },
-      { q: "Is the ₹999 the total cost?", a: "₹999 is the call-out fee. Parts and labour are quoted transparently before any work begins." },
-      { q: "Do you cover weekends and holidays?", a: "Yes — 365 days a year, including public holidays." },
-      { q: "How fast is the 60-minute SLA?", a: "60 minutes from the time you call to a technician arriving, within our service zones." },
-    ],
-  },
-  {
-    slug: "amc-plans",
-    icon: Settings2,
-    badge: "Save 30%",
-    badgeColor: "#ea580c",
-    title: "AMC Plans",
-    tagline: "One plan, zero worries.",
-    desc: "Annual Maintenance Contracts covering unlimited service calls, parts, and priority support.",
-    longDesc: "An AMC turns unpredictable AC expenses into a single fixed annual fee. You get two scheduled services per unit, unlimited breakdown call-outs, parts at our cost price and priority scheduling — no waiting behind walk-in customers. Most AMC holders recover the plan cost in their first emergency call-out.",
-    highlights: ["Unlimited service calls", "Parts at cost price", "Priority scheduling", "Dedicated account manager"],
-    duration: "Year-round",
-    price: "From ₹2,999/yr",
-    rating: 4.9,
-    reviews: 128,
-    accentHue: "25",
-    process: [
-      { step: "01", title: "Choose plan", desc: "Silver, Gold or Platinum — we explain what each covers." },
-      { step: "02", title: "Baseline inspection", desc: "Full health check on all covered units before plan starts." },
-      { step: "03", title: "Schedule service 1", desc: "First planned service done at your chosen date." },
-      { step: "04", title: "Priority support", desc: "Your calls are routed to the priority queue automatically." },
-      { step: "05", title: "Mid-year service", desc: "Second planned service scheduled at mid-contract." },
-      { step: "06", title: "Annual review", desc: "End-of-year report and renewal discussion." },
-    ],
-    faqs: [
-      { q: "Can I add units mid-contract?", a: "Yes — additional units are added on a pro-rated basis." },
-      { q: "What's not covered?", a: "Compressor replacement and structural modifications are excluded. Everything else is included." },
-      { q: "Is there a minimum number of units?", a: "No minimum — you can start with a single unit." },
-      { q: "Can I cancel early?", a: "Yes, with 30 days notice. We'll refund the unused months pro-rata." },
-    ],
-  },
-  {
-    slug: "air-quality",
-    icon: Wind,
-    badge: "New",
-    badgeColor: "#0284c7",
-    title: "Air Quality Upgrade",
-    tagline: "Breathe cleaner, live better.",
-    desc: "HEPA filter retrofits, UV sanitisation modules and smart air-quality monitoring.",
-    longDesc: "Standard AC filters capture only large particles. Our air quality upgrade adds a HEPA-grade filtration layer that traps PM2.5, allergens, bacteria and mould spores — then a UV-C module sterilises whatever tries to pass through. A compact sensor clips to your existing unit and feeds real-time AQI data to your phone, so you always know what you're breathing.",
-    highlights: ["HEPA retrofitting", "UV-C sanitisation", "PM2.5 monitoring", "Allergen reduction"],
-    duration: "1–2 hrs",
-    price: "From ₹2,199",
-    rating: 4.8,
-    reviews: 76,
-    accentHue: "200",
-    process: [
-      { step: "01", title: "Compatibility check", desc: "Technician confirms your unit can accept the upgrade kit." },
-      { step: "02", title: "HEPA fitment", desc: "Factory-sized HEPA media panel installed in the return air path." },
-      { step: "03", title: "UV-C module", desc: "UV lamp positioned at the coil; timer wired to existing control." },
-      { step: "04", title: "Sensor placement", desc: "Air quality sensor mounted; Wi-Fi paired to your phone." },
-      { step: "05", title: "Calibration", desc: "Sensor calibrated against a reference instrument." },
-      { step: "06", title: "App setup", desc: "App installed, alerts configured, baseline AQI recorded." },
-    ],
-    faqs: [
-      { q: "Does this fit any brand of AC?", a: "We support 95% of split AC models sold in India. Compatibility is confirmed during booking." },
-      { q: "Does it reduce cooling efficiency?", a: "The HEPA panel is sized to maintain rated airflow, so performance impact is negligible (<3%)." },
-      { q: "How often do filters need replacing?", a: "HEPA panels last 12–18 months under normal use. UV bulbs last ~9,000 hours." },
-      { q: "Does the sensor need Wi-Fi?", a: "Yes — it uses your home Wi-Fi to push data to the app. Offline logging is also stored on the device." },
-    ],
-  },
-];
-
-function getServiceBySlug(slug) {
-  return services.find((s) => s.slug === slug) || null;
-}
+const renderIcon = (iconName: string) => {
+  switch (iconName) {
+    case 'ShieldCheck': return ShieldCheck;
+    case 'MapPin': return MapPin;
+    case 'Settings2': return Settings2;
+    case 'Wind': return Wind;
+    default: return Wrench;
+  }
+};
 
 // ─── STYLES ───────────────────────────────────────────────────────────────────
 const css = `
@@ -1005,12 +829,13 @@ function FAQItem({ faq, index }) {
 }
 
 // ─── SERVICE CARD (listing) ───────────────────────────────────────────────────
-function ServiceCard({ service, onClick, index }) {
-  const Icon = service.icon;
-  const hsl = `hsl(${service.accentHue}, 65%, 40%)`;
-  const hslLight = `hsl(${service.accentHue}, 70%, 94%)`;
-  const hslBorder = `hsl(${service.accentHue}, 60%, 82%)`;
-  const hslGlow = `hsl(${service.accentHue}, 70%, 88%)`;
+function ServiceCard({ service, onClick, index }: any) {
+  const Icon = renderIcon(service.icon);
+  const hue = service.accentHue || "195";
+  const hsl = `hsl(${hue}, 65%, 40%)`;
+  const hslLight = `hsl(${hue}, 70%, 94%)`;
+  const hslBorder = `hsl(${hue}, 60%, 82%)`;
+  const hslGlow = `hsl(${hue}, 70%, 88%)`;
 
   return (
     <motion.div
@@ -1024,7 +849,7 @@ function ServiceCard({ service, onClick, index }) {
       {/* Top accent strip */}
       <div
         className="card-top-strip"
-        style={{ background: `linear-gradient(90deg, ${hsl}, hsl(${service.accentHue}, 50%, 60%))` }}
+        style={{ background: `linear-gradient(90deg, ${hsl}, hsl(${hue}, 50%, 60%))` }}
       />
 
       {/* Corner glow */}
@@ -1043,12 +868,12 @@ function ServiceCard({ service, onClick, index }) {
         <span
           className="card-badge"
           style={{
-            color: service.badgeColor,
-            borderColor: `${service.badgeColor}30`,
-            background: `${service.badgeColor}12`,
+            color: service.badgeColor || "#d97706",
+            borderColor: `${service.badgeColor || "#d97706"}30`,
+            background: `${service.badgeColor || "#d97706"}12`,
           }}
         >
-          {service.badge}
+          {service.badge || "Standard"}
         </span>
       </div>
 
@@ -1060,12 +885,12 @@ function ServiceCard({ service, onClick, index }) {
         <div className="card-meta">
           <span className="card-meta-item">
             <Star size={13} color="#d97706" fill="#d97706" />
-            <span style={{ color: "var(--text)", fontWeight: 600 }}>{service.rating}</span>
-            <span>({service.reviews})</span>
+            <span style={{ color: "var(--text)", fontWeight: 600 }}>{service.rating || "4.9"}</span>
+            <span>({service.reviews || "120"})</span>
           </span>
           <span className="card-meta-item">
             <Clock size={13} color="var(--accent)" />
-            {service.duration}
+            {service.duration || "2 hrs"}
           </span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -1080,16 +905,17 @@ function ServiceCard({ service, onClick, index }) {
 }
 
 // ─── DETAIL PAGE ──────────────────────────────────────────────────────────────
-function DetailPage({ slug, onBack, onNavigate }) {
-  const service = getServiceBySlug(slug);
+function DetailPage({ slug, onBack, onNavigate, services }: any) {
+  const service = services?.find((s: any) => s.slug === slug);
   useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, [slug]);
 
   if (!service) return null;
-  const Icon = service.icon;
-  const hsl = `hsl(${service.accentHue}, 65%, 40%)`;
-  const hslLight = `hsl(${service.accentHue}, 70%, 94%)`;
-  const hslBorder = `hsl(${service.accentHue}, 60%, 82%)`;
-  const related = services.filter((s) => s.slug !== slug).slice(0, 3);
+  const Icon = renderIcon(service.icon);
+  const hue = service.accentHue || "195";
+  const hsl = `hsl(${hue}, 65%, 40%)`;
+  const hslLight = `hsl(${hue}, 70%, 94%)`;
+  const hslBorder = `hsl(${hue}, 60%, 82%)`;
+  const related = services?.filter((s: any) => s.slug !== slug).slice(0, 3) || [];
 
   return (
     <motion.div
@@ -1166,7 +992,7 @@ function DetailPage({ slug, onBack, onNavigate }) {
       <div className="section">
         <h2 className="section-title">What's Included</h2>
         <div className="highlights-grid">
-          {service.highlights.map((h, i) => (
+          {service.highlights && service.highlights.map((h: string, i: number) => (
             <motion.div
               key={h}
               className="highlight-item"
@@ -1187,7 +1013,7 @@ function DetailPage({ slug, onBack, onNavigate }) {
       <div className="section">
         <h2 className="section-title">How It Works</h2>
         <div className="process-grid">
-          {service.process.map((p, i) => (
+          {service.process && service.process.map((p: any, i: number) => (
             <motion.div
               key={p.step}
               className="process-card"
@@ -1207,7 +1033,7 @@ function DetailPage({ slug, onBack, onNavigate }) {
       {/* FAQ */}
       <div className="section">
         <h2 className="section-title">FAQ</h2>
-        {service.faqs.map((faq, i) => (
+        {service.faqs && service.faqs.map((faq: any, i: number) => (
           <FAQItem key={i} faq={faq} index={i} />
         ))}
       </div>
@@ -1216,8 +1042,8 @@ function DetailPage({ slug, onBack, onNavigate }) {
       <div className="section">
         <h2 className="section-title">Other Services</h2>
         <div className="related-grid">
-          {related.map((s, i) => {
-            const RelIcon = s.icon;
+          {related && related.map((s: any, i: number) => {
+            const RelIcon = renderIcon(s.icon);
             return (
               <motion.div
                 key={s.slug}
@@ -1245,7 +1071,7 @@ function DetailPage({ slug, onBack, onNavigate }) {
 }
 
 // ─── LISTING PAGE ─────────────────────────────────────────────────────────────
-function ListingPage({ onSelect }) {
+function ListingPage({ onSelect, services }: any) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -1311,8 +1137,8 @@ function ListingPage({ onSelect }) {
       </div>
 
       <div className="services-grid">
-        {services.map((service, i) => (
-          <ServiceCard key={service.slug} service={service} onClick={onSelect} index={i} />
+        {services && services.map((service: any, i: number) => (
+          <ServiceCard key={service.slug || service._id} service={service} onClick={onSelect} index={i} />
         ))}
       </div>
     </motion.div>
@@ -1322,6 +1148,11 @@ function ListingPage({ onSelect }) {
 // ─── ROOT APP ─────────────────────────────────────────────────────────────────
 export default function ServicesApp() {
   const [activeSlug, setActiveSlug] = useState(null);
+  const { data: services = [], isLoading } = useGetServicesQuery();
+
+  if (isLoading) {
+    return <Loader fullScreen />;
+  }
 
   return (
     <>
@@ -1332,13 +1163,14 @@ export default function ServicesApp() {
         <div className="page-wrap">
           <AnimatePresence mode="wait">
             {activeSlug === null ? (
-              <ListingPage key="listing" onSelect={(slug) => setActiveSlug(slug)} />
+              <ListingPage key="listing" onSelect={(slug: any) => setActiveSlug(slug)} services={services} />
             ) : (
               <DetailPage
                 key={activeSlug}
                 slug={activeSlug}
+                services={services}
                 onBack={() => setActiveSlug(null)}
-                onNavigate={(slug) => setActiveSlug(slug)}
+                onNavigate={(slug: any) => setActiveSlug(slug)}
               />
             )}
           </AnimatePresence>

@@ -35,6 +35,7 @@ const quickLinks = [
   { label: "Terms & Conditions", to: "#" },
   { label: "Refund Policy", to: "#" },
   { label: "Brands", to: "/brands" },
+  { label: "Admin Login", to: "/admin" },
 ];
 
 const socialLinks = [

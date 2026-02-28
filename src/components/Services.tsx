@@ -1,25 +1,38 @@
 import { motion } from "framer-motion";
-import { Wrench, ShieldCheck, MapPin, Clock } from "lucide-react";
+
 import { BRAND } from "@/lib/colors";
 
-const services = [
-  { icon: Wrench, title: "Expert Installation", desc: "Certified technicians with precision setup for optimal performance and longevity." },
-  { icon: ShieldCheck, title: "Maintenance & Repair", desc: "Scheduled servicing, gas top-ups, deep cleaning and swift troubleshooting." },
-  { icon: MapPin, title: "Free Site Visit", desc: "Complimentary assessment of your space to recommend the perfect cooling solution." },
-  { icon: Clock, title: "24/7 Emergency Service", desc: "Round-the-clock support because breakdowns don't wait for business hours." },
-];
+import { useGetServicesQuery } from "@/store/api";
+import Loader from "@/components/ui/Loader";
+import { Wrench, ShieldCheck, MapPin, Clock, Settings2, Wind } from "lucide-react";
+
+const renderIcon = (iconName: string) => {
+  switch (iconName) {
+    case 'ShieldCheck': return ShieldCheck;
+    case 'MapPin': return MapPin;
+    case 'Settings2': return Settings2;
+    case 'Wind': return Wind;
+    default: return Wrench;
+  }
+};
 
 export default function Services() {
+  const { data: services = [], isLoading } = useGetServicesQuery();
+  const topServices = services.slice(0, 4);
+
+  if (isLoading) return <Loader />;
+  if (topServices.length === 0) return null;
+
   return (
     <section style={{
-      padding: "100px 0", position: "relative", overflow: "hidden",
+      padding: "64px 0", position: "relative", overflow: "hidden",
       background: `linear-gradient(135deg, ${BRAND.dark} 0%, ${BRAND.darkMid} 50%, ${BRAND.primary} 100%)`,
       fontFamily: "'DM Sans', sans-serif"
     }}>
       <div style={{ position: "absolute", inset: 0, opacity: 0.4, backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
 
-      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 48px", position: "relative", zIndex: 10 }}>
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} style={{ textAlign: "center", marginBottom: "64px" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(24px, 5vw, 48px)", position: "relative", zIndex: 10 }}>
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} style={{ textAlign: "center", marginBottom: "48px" }}>
           <div style={{ display: "inline-block", background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)", color: BRAND.accentOnDark, fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 16px", borderRadius: "100px", marginBottom: "18px" }}>
             What We Do
           </div>
@@ -29,9 +42,11 @@ export default function Services() {
         </motion.div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "20px" }}>
-          {services.map((s, i) => (
-            <motion.div
-              key={s.title}
+          {topServices && topServices.map((s: any, i: number) => {
+            const Icon = renderIcon(s.icon);
+            return (
+              <motion.div
+                key={s.slug || s.title}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -53,12 +68,13 @@ export default function Services() {
                   display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "24px"
                 }}
               >
-                <s.icon size={26} style={{ color: BRAND.accentOnDark }} />
+                <Icon size={26} style={{ color: BRAND.accentOnDark }} />
               </motion.div>
               <h3 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, color: BRAND.white, marginBottom: "10px", fontSize: "1.15rem" }}>{s.title}</h3>
               <p style={{ color: BRAND.textOnDarkMuted, fontSize: "0.87rem", lineHeight: 1.7 }}>{s.desc}</p>
             </motion.div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

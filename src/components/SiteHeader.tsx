@@ -1,14 +1,8 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Phone } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, Phone, User as UserIcon, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  SignUpButton,
-  UserButton,
-} from "@clerk/clerk-react";
+import { useUserAuth } from "@/context/AuthContext";
 
 import logo1 from "../assets/logo1.png";
 import { BRAND } from "@/lib/colors";
@@ -26,6 +20,8 @@ const navLinks = [
 const SiteHeader = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { isAuthenticated, userEmail, logout } = useUserAuth();
 
   useEffect(() => {
     setMenuOpen(false);
@@ -131,9 +127,10 @@ const SiteHeader = () => {
           }}
         >
           {/* Auth Buttons */}
-          <SignedOut>
-            <SignInButton mode="modal">
+          {!isAuthenticated ? (
+            <div style={{ display: "flex", gap: "8px" }}>
               <button
+                onClick={() => navigate('/login')}
                 style={{
                   padding: "7px 16px",
                   borderRadius: "999px",
@@ -149,10 +146,9 @@ const SiteHeader = () => {
               >
                 Sign In
               </button>
-            </SignInButton>
 
-            <SignUpButton mode="modal">
               <button
+                onClick={() => navigate('/register')}
                 style={{
                   padding: "7px 16px",
                   borderRadius: "999px",
@@ -168,12 +164,38 @@ const SiteHeader = () => {
               >
                 Sign Up
               </button>
-            </SignUpButton>
-          </SignedOut>
-
-          <SignedIn>
-            <UserButton afterSignOutUrl="/" />
-          </SignedIn>
+            </div>
+          ) : (
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", background: "#f8fafc", padding: "4px 12px", borderRadius: "999px", border: `1px solid ${BRAND.slate100}` }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "6px", color: BRAND.dark, fontSize: "0.85rem", fontWeight: 500 }}>
+                <div style={{ width: "24px", height: "24px", borderRadius: "50%", background: BRAND.primary, color: "white", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <UserIcon size={14} />
+                </div>
+                <span className="hidden sm:inline-block max-w-[100px] truncate" title={userEmail || ''}>
+                  {userEmail?.split('@')[0]}
+                </span>
+              </div>
+              <button
+                onClick={() => {
+                  logout();
+                  navigate('/');
+                }}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  color: BRAND.dark,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "4px",
+                }}
+                title="Logout"
+              >
+                <LogOut size={16} />
+              </button>
+            </div>
+          )}
 
           {/* Enquiry Button */}
           <a
@@ -252,20 +274,34 @@ const SiteHeader = () => {
 
               {/* Mobile Auth */}
               <div style={{ marginTop: "16px" }}>
-                <SignedOut>
-                  <SignInButton mode="modal">
-                    <button className="mobile-auth-btn">Sign In</button>
-                  </SignInButton>
-                  <SignUpButton mode="modal">
-                    <button className="mobile-auth-btn primary">Sign Up</button>
-                  </SignUpButton>
-                </SignedOut>
-
-                <SignedIn>
-                  <div style={{ padding: "12px 16px" }}>
-                    <UserButton afterSignOutUrl="/" />
+                {!isAuthenticated ? (
+                  <>
+                    <button onClick={() => navigate('/login')} className="mobile-auth-btn">Sign In</button>
+                    <button onClick={() => navigate('/register')} className="mobile-auth-btn primary">Sign Up</button>
+                  </>
+                ) : (
+                  <div style={{ padding: "12px 16px", borderTop: `1px solid ${BRAND.slate100}`, marginTop: "8px" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 600 }}>
+                        <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: BRAND.primary, color: "white", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <UserIcon size={16} />
+                        </div>
+                        <span className="truncate max-w-[200px]">{userEmail}</span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => {
+                        logout();
+                        navigate('/');
+                        setMenuOpen(false);
+                      }}
+                      className="mobile-auth-btn"
+                      style={{ border: `1px solid #ef4444`, color: "#ef4444", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}
+                    >
+                      <LogOut size={16} /> Sign Out
+                    </button>
                   </div>
-                </SignedIn>
+                )}
               </div>
 
               {/* Mobile Call */}

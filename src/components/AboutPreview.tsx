@@ -28,11 +28,11 @@ const fadeUp = {
 
 export default function AboutPreview() {
   return (
-    <section style={{ padding: "100px 0", background: BRAND.white, fontFamily: "'Inter', sans-serif" }}>
-      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 48px" }}>
+    <section style={{ padding: "64px 0", background: BRAND.white, fontFamily: "'Inter', sans-serif" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(24px, 5vw, 48px)" }}>
 
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "64px" }}>
+        <div style={{ textAlign: "center", marginBottom: "48px" }}>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -77,7 +77,7 @@ export default function AboutPreview() {
         </div>
 
         {/* Stats with CountUp */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "20px", marginBottom: "64px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "20px", marginBottom: "48px" }}>
           {stats.map((s, i) => (
             <motion.div
               key={s.label}
@@ -115,7 +115,7 @@ export default function AboutPreview() {
         </div>
 
         {/* Values */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "20px", marginBottom: "48px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "20px", marginBottom: "40px" }}>
           {values.map((v, i) => (
             <motion.div
               key={v.title}

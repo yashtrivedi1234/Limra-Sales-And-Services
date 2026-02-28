@@ -1,5 +1,5 @@
 import { useParams, Link, Navigate } from "react-router-dom";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import {
   ArrowLeft,
@@ -7,7 +7,6 @@ import {
   Tag,
   Calendar,
   User,
-  Share2,
   Facebook,
   Twitter,
   Linkedin,
@@ -15,25 +14,16 @@ import {
   Eye,
   ChevronUp,
 } from "lucide-react";
-import { blogPosts } from "@/data/blogPosts";
+import { useGetBlogsQuery } from "@/store/api";
 
-/* ─── Floating Orb decoration ─── */
-const Orb = ({ style }) => (
-  <div
-    style={style}
-    className="pointer-events-none absolute rounded-full blur-3xl opacity-20"
-  />
-);
-
-/* ─── Animated character-split heading ─── */
-const SplitHeading = ({ text }) => (
-  <h1 className="split-heading">
+const SplitHeading = ({ text }: { text: string }) => (
+  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-8 font-serif tracking-tight">
     {text.split("").map((char, i) => (
       <motion.span
         key={i}
-        initial={{ opacity: 0, y: 60, rotateX: -90 }}
+        initial={{ opacity: 0, y: 40, rotateX: -90 }}
         animate={{ opacity: 1, y: 0, rotateX: 0 }}
-        transition={{ delay: 0.04 * i, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ delay: 0.02 * i, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         style={{ display: char === " " ? "inline" : "inline-block" }}
       >
         {char === " " ? "\u00A0" : char}
@@ -44,428 +34,275 @@ const SplitHeading = ({ text }) => (
 
 const BlogPost = () => {
   const { slug } = useParams();
-  const post = blogPosts.find((p) => p.slug === slug);
-  const containerRef = useRef(null);
-  const heroRef = useRef(null);
+  const { data: blogPosts = [], isLoading } = useGetBlogsQuery();
+  
+  const post = blogPosts.find((p: any) => p.slug === slug);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+  
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [readPct, setReadPct] = useState(0);
+  
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
 
-  const { scrollYProgress } = useScroll({ target: containerRef });
-  const heroY = useTransform(scrollYProgress, [0, 0.4], [0, 160]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.35], [1, 0]);
-  const smooth = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
+  const heroY = useTransform(heroProgress, [0, 1], ["0%", "40%"]);
+  const heroOpacity = useTransform(heroProgress, [0, 0.8], [1, 0]);
 
   useEffect(() => {
-    const update = () => {
-      const el = containerRef.current;
-      if (!el) return;
-      const { scrollTop, scrollHeight, clientHeight } = el.parentElement || document.documentElement;
-      const pct = Math.min(100, (scrollTop / (scrollHeight - clientHeight)) * 100);
-      setReadPct(pct);
-      setShowScrollTop(scrollTop > 400);
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 500);
     };
-    window.addEventListener("scroll", update);
-    return () => window.removeEventListener("scroll", update);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  if (isLoading) return <div className="min-h-screen flex items-center justify-center text-slate-500">Loading article...</div>;
   if (!post) return <Navigate to="/blog" replace />;
-  const relatedPosts = blogPosts.filter((p) => p.slug !== slug).slice(0, 3);
+  const relatedPosts = blogPosts.filter((p: any) => p.slug !== slug).slice(0, 3);
+  
+  // Fake views counter setup
+  const [views, setViews] = useState(0);
+  useEffect(() => {
+    let start = 0;
+    const end = 3245;
+    const duration = 2000;
+    const increment = end / (duration / 16);
+    const timer = setInterval(() => {
+      start += increment;
+      if (start >= end) {
+        setViews(end);
+        clearInterval(timer);
+      } else {
+        setViews(Math.floor(start));
+      }
+    }, 16);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <>
-      {/* ─── GLOBAL STYLES ─── */}
-      <style>{`
-        :root {
-          --ink: #082A45;
-          --paper: #F4FAFE;
-          --gold: #0695CD;
-          --gold-light: #3BB4E0;
-          --rust: #0E3D5E;
-          --muted: #5A9AB5;
-          --border: rgba(6,149,205,0.2);
-        }
+    <div className="bg-slate-50 min-h-screen font-sans text-slate-900" ref={containerRef}>
+      {/* 2️⃣ Hero Section (Immersive) */}
+      <section ref={heroRef} className="relative w-full h-[85vh] min-h-[600px] flex justify-center items-end overflow-hidden bg-slate-900">
+        {/* Parallax Image */}
+        <motion.div className="absolute inset-0 w-full h-[120%]" style={{ y: heroY }}>
+          <img src={post.image} alt={post.title} className="w-full h-full object-cover opacity-80" />
+        </motion.div>
+        
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent" />
+        
+        {/* Floating Gradient Orbs */}
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[100px] mix-blend-screen pointer-events-none animate-pulse duration-10000" />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[80px] mix-blend-screen pointer-events-none" />
 
-        .blog-root { font-family: 'Inter', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
-        .display-font { font-family: 'Inter', sans-serif; font-weight: 800; }
-
-        /* Progress bar */
-        .progress-bar {
-          position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--rust));
-          z-index: 9999; transition: width 0.1s linear;
-          box-shadow: 0 0 12px var(--gold-light);
-        }
-
-        /* Hero */
-        .hero-wrap { position: relative; height: 100vh; overflow: hidden; }
-        .hero-img { position: absolute; inset: 0; width: 100%; height: 120%; object-fit: cover; will-change: transform; }
-        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(11,10,9,0.96) 20%, rgba(11,10,9,0.5) 60%, rgba(11,10,9,0.1) 100%); }
-        .hero-content { position: absolute; bottom: 0; left: 0; right: 0; padding: clamp(2rem,6vw,5rem); max-width: 900px; }
-
-        .split-heading {
-          font-family: 'Inter', sans-serif;
-          font-size: clamp(1.4rem, 2.8vw, 2.4rem);
-          font-weight: 400;
-          line-height: 1.25;
-          color: #fff;
-          perspective: 600px;
-          margin: 0.75rem 0 1.5rem;
-          max-width: 650px;
-        }
-
-        .category-pill {
-          display: inline-flex; align-items: center; gap: 6px;
-          border: 1px solid var(--gold); color: var(--gold);
-          padding: 4px 14px; border-radius: 100px; font-size: 11px;
-          letter-spacing: 2px; text-transform: uppercase; font-weight: 500;
-          background: rgba(201,168,76,0.08); backdrop-filter: blur(6px);
-        }
-
-        /* Article card */
-        .article-card {
-          background: #fff;
-          border: 1px solid rgba(11,10,9,0.08);
-          border-radius: 24px;
-          box-shadow: 0 32px 80px rgba(11,10,9,0.08), 0 4px 16px rgba(11,10,9,0.04);
-          padding: clamp(2rem, 5vw, 4rem);
-          position: relative;
-          overflow: hidden;
-        }
-        .article-card::before {
-          content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-          background: linear-gradient(90deg, var(--gold), var(--rust));
-        }
-
-        /* Drop cap */
-        .article-body > p:first-child::first-letter {
-          font-family: 'Inter', sans-serif;
-          font-size: 5.5rem; font-weight: 400;
-          float: left; line-height: 0.8;
-          margin: 0.12em 0.1em 0 0;
-          color: var(--gold);
-          text-shadow: 2px 2px 0 rgba(178,74,44,0.15);
-        }
-
-        .article-body p {
-          font-size: 1.075rem; line-height: 1.85;
-          color: #2a2724; margin-bottom: 1.75rem;
-          font-weight: 300;
-        }
-
-        /* Pull quote */
-        .pull-quote {
-          border-left: 4px solid var(--gold);
-          margin: 2.5rem 0;
-          padding: 1.5rem 2rem;
-          background: linear-gradient(135deg, rgba(201,168,76,0.06), transparent);
-          border-radius: 0 12px 12px 0;
-        }
-        .pull-quote p {
-          font-family: 'Inter', sans-serif;
-          font-size: 1.3rem !important;
-          font-style: italic;
-          color: var(--ink) !important;
-          margin: 0 !important;
-        }
-
-        /* Author */
-        .author-box {
-          display: flex; gap: 1.25rem; align-items: center;
-          padding: 1.5rem; border-radius: 16px;
-          background: linear-gradient(135deg, #fdfbf7, #f5f0e8);
-          border: 1px solid var(--border);
-          margin-top: 3rem;
-        }
-        .author-avatar {
-          width: 56px; height: 56px; border-radius: 50%;
-          background: linear-gradient(135deg, var(--gold), var(--rust));
-          display: flex; align-items: center; justify-content: center;
-          font-family: 'Inter', sans-serif;
-          font-size: 1.4rem; color: #fff; font-weight: 400;
-          flex-shrink: 0;
-        }
-
-        /* CTA */
-        .expert-cta {
-          margin-top: 3rem;
-          padding: 2.5rem;
-          border-radius: 20px;
-          background: linear-gradient(135deg, var(--ink) 0%, #1f1a15 100%);
-          position: relative; overflow: hidden; text-align: center;
-        }
-        .expert-cta::before {
-          content: ''; position: absolute; inset: 0;
-          background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.25) 0%, transparent 70%);
-        }
-        .cta-btn {
-          display: inline-flex; align-items: center; gap: 8px;
-          padding: 12px 28px; border-radius: 100px;
-          background: linear-gradient(135deg, var(--gold), var(--gold-light));
-          color: var(--ink); font-weight: 700; font-size: 0.875rem;
-          text-decoration: none; letter-spacing: 0.5px;
-          transition: transform 0.2s, box-shadow 0.2s;
-          box-shadow: 0 4px 20px rgba(201,168,76,0.4);
-        }
-        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,168,76,0.5); }
-
-        /* Related */
-        .related-card {
-          border-radius: 20px; overflow: hidden;
-          border: 1px solid rgba(11,10,9,0.07);
-          background: #fff;
-          transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s;
-          text-decoration: none; display: block;
-        }
-        .related-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(11,10,9,0.12); }
-        .related-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; transition: transform 0.5s; }
-        .related-card:hover img { transform: scale(1.06); }
-
-        /* Meta chips */
-        .meta-chip { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--muted); }
-
-        /* Divider ornament */
-        .ornament { text-align: center; margin: 2.5rem 0; color: var(--gold); font-size: 1.2rem; letter-spacing: 12px; opacity: 0.5; }
-
-        /* Scroll-to-top */
-        .scroll-top {
-          position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
-          width: 44px; height: 44px; border-radius: 50%;
-          background: var(--ink); color: var(--gold);
-          display: flex; align-items: center; justify-content: center;
-          cursor: pointer; border: 1px solid var(--border);
-          box-shadow: 0 4px 20px rgba(11,10,9,0.3);
-          transition: transform 0.2s;
-        }
-        .scroll-top:hover { transform: translateY(-3px); }
-
-        /* Reading time badge */
-        .read-badge {
-          position: absolute; top: -1.5rem; right: 2rem;
-          background: linear-gradient(135deg, var(--gold), var(--rust));
-          color: #fff; padding: 0.5rem 1.2rem;
-          border-radius: 100px; font-size: 11px; font-weight: 700;
-          letter-spacing: 1px; text-transform: uppercase;
-          box-shadow: 0 4px 16px rgba(178,74,44,0.4);
-        }
-
-        /* Noise grain overlay */
-        .grain { position: fixed; inset: 0; z-index: -1; opacity: 0.025; pointer-events: none;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-        }
-
-        /* DM Serif Display headings inside article */
-        .article-card h2,
-        .article-card h3 {
-          font-family: 'Inter', sans-serif;
-          font-weight: 700;
-        }
-      `}</style>
-
-      {/* ─── PROGRESS BAR ─── */}
-      <div className="progress-bar" style={{ width: `${readPct}%` }} />
-
-      {/* ─── GRAIN ─── */}
-      <div className="grain" />
-
-      <main className="blog-root" ref={containerRef}>
-        {/* ════════════ HERO ════════════ */}
-        <div className="hero-wrap">
-          <motion.img
-            ref={heroRef}
-            src={post.image}
-            alt={post.title}
-            className="hero-img"
-            style={{ y: heroY }}
-          />
-          <div className="hero-overlay" />
-
-          {/* Floating orbs */}
-          <Orb style={{ width: 400, height: 400, background: "#c9a84c", top: "20%", left: "-10%", animationDuration: "8s" }} />
-          <Orb style={{ width: 300, height: 300, background: "#b24a2c", bottom: "30%", right: "-5%", animationDuration: "12s" }} />
-
-          <motion.div className="hero-content" style={{ opacity: heroOpacity }}>
-            {/* Back link */}
+        <motion.div className="relative z-10 w-full max-w-5xl px-6 pb-24 sm:pb-32" style={{ opacity: heroOpacity }}>
+          <Link to="/blog" className="inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors mb-8 text-sm font-semibold tracking-wide">
+            <ArrowLeft size={16} /> Back to Blog
+          </Link>
+          
+          <div>
+            <motion.span
+              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-400/30 bg-blue-500/10 text-blue-300 text-xs font-bold uppercase tracking-widest backdrop-blur-md mb-6"
+            >
+              <Tag size={12} /> {post.category}
+            </motion.span>
             
-
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
-              <span className="category-pill">
-                <Tag size={10} />
-                {post.category}
-              </span>
-            </motion.div>
-
             <SplitHeading text={post.title} />
 
-            {/* Meta row */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}
-              style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem", color: "rgba(255,255,255,0.55)", fontSize: 13 }}
+              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}
+              className="flex flex-wrap items-center gap-6 sm:gap-8 text-slate-300 text-sm font-medium"
             >
-              {[
-                { icon: <Calendar size={13} />, text: new Date(post.date).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" }) },
-                { icon: <Clock size={13} />, text: post.readTime },
-                { icon: <User size={13} />, text: post.author },
-                { icon: <Eye size={13} />, text: "3.2k views" },
-              ].map((m, i) => (
-                <span key={i} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  {m.icon} {m.text}
-                </span>
-              ))}
+              <div className="flex items-center gap-2"><Calendar size={16} className="text-blue-400" /> {post.date ? new Date(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : new Date(post.createdAt || Date.now()).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</div>
+              <div className="flex items-center gap-2"><Clock size={16} className="text-blue-400" /> {post.readTime || "5 min"}</div>
+              <div className="flex items-center gap-2"><User size={16} className="text-blue-400" /> {post.author || "Admin"}</div>
+              <div className="flex items-center gap-2"><Eye size={16} className="text-blue-400" /> {views.toLocaleString()} views</div>
             </motion.div>
-          </motion.div>
-        </div>
-
-        {/* ════════════ ARTICLE ════════════ */}
-        <section style={{ position: "relative", zIndex: 10, marginTop: "-5rem" }}>
-          <div style={{ maxWidth: 820, margin: "0 auto", padding: "0 1.5rem" }}>
-            <motion.div
-              initial={{ opacity: 0, y: 60 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="article-card"
-              style={{ position: "relative" }}
-            >
-              <div className="read-badge">✦ {post.readTime}</div>
-
-              {/* Share strip */}
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem", paddingBottom: "1.5rem", borderBottom: "1px solid rgba(11,10,9,0.07)" }}>
-                <span style={{ fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: "var(--muted)" }}>Share this article</span>
-                <div style={{ display: "flex", gap: "0.75rem" }}>
-                  {[Facebook, Twitter, Linkedin, Bookmark].map((Icon, i) => (
-                    <button key={i} style={{ width: 34, height: 34, borderRadius: "50%", border: "1px solid rgba(201,168,76,0.3)", background: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--muted)", transition: "all 0.2s" }}
-                      onMouseEnter={e => { e.currentTarget.style.background = "var(--gold)"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "var(--gold)"; }}
-                      onMouseLeave={e => { e.currentTarget.style.background = "none"; e.currentTarget.style.color = "var(--muted)"; e.currentTarget.style.borderColor = "rgba(201,168,76,0.3)"; }}>
-                      <Icon size={13} />
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Article body */}
-              <div className="article-body">
-                {post.content.map((para, i) => (
-                  <>
-                    <motion.p
-                      key={i}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-60px" }}
-                      transition={{ delay: i * 0.05, duration: 0.6 }}
-                    >
-                      {para}
-                    </motion.p>
-                    {/* Insert a pull quote after 2nd paragraph */}
-                    {i === 1 && (
-                      <motion.div
-                        className="pull-quote"
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                      >
-                        <p>"{para.slice(0, 120)}..."</p>
-                      </motion.div>
-                    )}
-                    {/* Ornament divider after middle paragraph */}
-                    {i === Math.floor(post.content.length / 2) - 1 && (
-                      <div className="ornament">✦ ✦ ✦</div>
-                    )}
-                  </>
-                ))}
-              </div>
-
-              {/* Tags */}
-              <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginTop: "2rem", paddingTop: "2rem", borderTop: "1px solid rgba(11,10,9,0.07)" }}>
-                {["HVAC", post.category, "Tips", "Expert Advice"].map(tag => (
-                  <span key={tag} style={{ padding: "4px 12px", borderRadius: 100, border: "1px solid rgba(201,168,76,0.35)", fontSize: 11, letterSpacing: 1, textTransform: "uppercase", color: "var(--gold)", fontWeight: 500 }}>
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              {/* Author box */}
-              <motion.div
-                className="author-box"
-                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-              >
-                <div className="author-avatar">{post.author.charAt(0)}</div>
-                <div>
-                  <p style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, fontSize: "1.05rem", marginBottom: 2 }}>{post.author}</p>
-                  <p style={{ fontSize: 12, color: "var(--muted)", letterSpacing: 0.5 }}>HVAC Specialist & Industry Expert</p>
-                </div>
-                <div style={{ marginLeft: "auto" }}>
-                  <span style={{ fontSize: 11, color: "var(--gold)", border: "1px solid var(--gold)", padding: "4px 12px", borderRadius: 100, letterSpacing: 1, textTransform: "uppercase" }}>Follow</span>
-                </div>
-              </motion.div>
-
-              {/* CTA */}
-              <motion.div
-                className="expert-cta"
-                initial={{ opacity: 0, scale: 0.97 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
-              >
-                <p style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontSize: "1.5rem", fontWeight: 400, color: "#fff", marginBottom: "0.5rem", position: "relative" }}>
-                  Need expert advice?
-                </p>
-                <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.875rem", marginBottom: "1.5rem", position: "relative" }}>
-                  Our HVAC specialists are ready to help you choose the perfect AC system.
-                </p>
-                <a href="tel:+919839171701" className="cta-btn" style={{ position: "relative" }}>
-                  📞 Talk to an Expert
-                </a>
-              </motion.div>
-            </motion.div>
-
-            {/* ════════ RELATED POSTS ════════ */}
-            {relatedPosts.length > 0 && (
-              <motion.section
-                style={{ margin: "5rem 0 4rem" }}
-                initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, margin: "-80px" }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "2rem" }}>
-                  <span style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontSize: "1.75rem", fontWeight: 400 }}>Related Articles</span>
-                  <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, rgba(201,168,76,0.4), transparent)" }} />
-                </div>
-
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "1.5rem" }}>
-                  {relatedPosts.map((rp, i) => (
-                    <motion.div
-                      key={rp.slug}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: i * 0.1 }}
-                    >
-                      <Link to={`/blog/${rp.slug}`} className="related-card">
-                        <div style={{ overflow: "hidden" }}>
-                          <img src={rp.image} alt={rp.title} loading="lazy" />
-                        </div>
-                        <div style={{ padding: "1.1rem 1.25rem 1.25rem" }}>
-                          <span style={{ fontSize: 10, color: "var(--gold)", fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase" }}>{rp.category}</span>
-                          <p style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, fontSize: "0.95rem", marginTop: "0.4rem", lineHeight: 1.35, color: "var(--ink)" }}>{rp.title}</p>
-                          <span style={{ fontSize: 11, color: "var(--muted)", display: "flex", alignItems: "center", gap: 4, marginTop: "0.75rem" }}>
-                            <Clock size={10} /> {rp.readTime}
-                          </span>
-                        </div>
-                      </Link>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.section>
-            )}
           </div>
-        </section>
+        </motion.div>
+      </section>
+
+      {/* 3️⃣ Article Container Card */}
+      <main className="relative z-20 w-full max-w-6xl mx-auto px-4 sm:px-6 -mt-16 sm:-mt-24 pb-24">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl shadow-slate-900/10 p-6 sm:p-12 md:p-16 border border-slate-100 relative"
+        >
+          {/* Gradient Top Border Accent */}
+          <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-blue-600 to-cyan-400 rounded-t-2xl sm:rounded-t-3xl" />
+          
+          {/* Floating Read Time Badge */}
+          <div className="absolute -top-4 right-8 bg-slate-900 text-white px-5 py-2 rounded-full text-xs font-bold tracking-widest uppercase shadow-lg shadow-slate-900/20">
+            {post.readTime} Read
+          </div>
+
+          {/* 4️⃣ Share Strip (Inline) */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-8 mb-10 border-b border-slate-100">
+            <span className="text-xs font-bold tracking-widest text-slate-400 uppercase">Share this article</span>
+            <div className="flex gap-3">
+              {[Facebook, Twitter, Linkedin, Bookmark].map((Icon, i) => (
+                <button key={i} className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 text-slate-500 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300">
+                  <Icon size={16} />
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Article Typography */}
+          <div className="text-slate-700 text-lg leading-[1.85] font-light space-y-8 max-w-4xl mx-auto">
+            {post.content && Array.isArray(post.content) ? post.content.map((para: string, i: number) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6 }}
+              >
+                {i === 0 ? (
+                  <p className="first-letter:text-6xl sm:first-letter:text-7xl first-letter:font-serif first-letter:font-bold first-letter:text-blue-600 first-letter:pr-3 first-letter:mt-2 first-letter:float-left first-line:tracking-wide">
+                    {para}
+                  </p>
+                ) : (
+                  <p>{para}</p>
+                )}
+
+                {/* Pull Quote after 2nd paragraph */}
+                {i === 1 && para.length > 50 && (
+                  <blockquote className="my-12 pl-6 sm:pl-8 py-4 sm:py-6 border-l-4 border-blue-600 bg-gradient-to-r from-blue-50 to-transparent rounded-r-2xl">
+                    <p className="text-xl sm:text-2xl font-serif italic text-slate-900 leading-snug m-0">
+                      "{para.slice(0, 120)}..."
+                    </p>
+                  </blockquote>
+                )}
+
+                {/* Decorative Divider Mid-Article */}
+                {i === Math.floor(post.content.length / 2) && (
+                  <div className="flex justify-center items-center gap-4 my-16 text-blue-200">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-current" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                  </div>
+                )}
+              </motion.div>
+            )) : <p>{post.content}</p>}
+          </div>
+
+          {/* 5️⃣ Tags Section */}
+          <div className="flex flex-wrap gap-3 mt-16 pt-8 border-t border-slate-100">
+            {["HVAC", post.category, "Tips", "Expert Advice", "Home Comfort"].map(tag => (
+              <span key={tag} className="px-5 py-2 rounded-full border border-slate-200 text-xs font-bold tracking-widest uppercase text-slate-500 hover:border-blue-600 hover:text-blue-600 transition-colors cursor-pointer bg-slate-50 hover:bg-white">
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          {/* 6️⃣ Author Box */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
+            className="mt-12 p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-50 to-blue-50/40 border border-slate-100 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-6 group"
+          >
+            <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-blue-700 to-cyan-400 flex items-center justify-center text-white text-3xl font-serif shrink-0 shadow-xl shadow-blue-500/20 group-hover:scale-105 transition-transform">
+              {post.author.charAt(0)}
+            </div>
+            <div className="flex-1">
+              <h4 className="text-xl font-bold text-slate-900 mb-1">{post.author || "Admin"}</h4>
+              <p className="text-sm text-slate-500 mb-4">HVAC Specialist & Senior Technician</p>
+              <p className="text-sm text-slate-600 leading-relaxed max-w-md mx-auto sm:mx-0">
+                With over a decade of experience, {(post.author || "Admin").split(' ')[0]} shares insights to help you maximize efficiency and comfort in your spaces.
+              </p>
+            </div>
+            <button className="px-6 py-2.5 rounded-full border-2 border-slate-900 text-slate-900 font-bold text-sm tracking-wide hover:bg-slate-900 hover:text-white transition-colors shrink-0">
+              Follow
+            </button>
+          </motion.div>
+
+          {/* 7️⃣ Conversion CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            className="mt-16 p-8 sm:p-12 rounded-3xl bg-slate-900 relative overflow-hidden group border border-slate-800"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <div className="absolute -top-32 -right-32 w-64 h-64 bg-blue-500/20 rounded-full blur-[80px]" />
+            <div className="relative z-10 text-center">
+              <h3 className="text-2xl sm:text-3xl font-serif text-white mb-3">Need personalized expert advice?</h3>
+              <p className="text-slate-400 mb-8 max-w-sm mx-auto text-sm sm:text-base">
+                Our certified HVAC specialists are ready to help you optimize your comfort and energy efficiency today.
+              </p>
+              <a href="tel:+919839171701" className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-blue-600 text-white font-bold tracking-wide hover:bg-blue-500 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/40 hover:-translate-y-1 transition-all duration-300">
+                📞 Talk to an Expert
+              </a>
+            </div>
+          </motion.div>
+
+        </motion.div>
       </main>
 
-      {/* ─── SCROLL TO TOP ─── */}
-      {showScrollTop && (
-        <motion.button
-          className="scroll-top"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        >
-          <ChevronUp size={18} />
-        </motion.button>
+      {/* 8️⃣ Related Articles Section */}
+      {relatedPosts.length > 0 && (
+        <section className="w-full max-w-6xl mx-auto px-6 py-24 sm:py-32">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-12">
+            <div>
+              <h2 className="text-3xl sm:text-4xl font-serif text-slate-900 font-bold mb-2">Read Next</h2>
+              <p className="text-slate-500">Discover more expert insights from our team</p>
+            </div>
+            <Link to="/blog" className="px-6 py-2.5 rounded-full border border-slate-200 text-slate-700 font-bold text-sm tracking-wide hover:bg-slate-50 transition-colors">
+              View All Posts
+            </Link>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+             {relatedPosts.map((rp: any, i: number) => (
+              <motion.div
+                key={rp.slug}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.6 }}
+              >
+                <Link to={`/blog/${rp.slug}`} className="group block h-full bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-slate-900/10 transition-all duration-500 hover:-translate-y-2">
+                  <div className="aspect-[16/10] overflow-hidden relative">
+                    <img src={rp.image} alt={rp.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
+                    <div className="absolute inset-0 bg-slate-900/5 group-hover:bg-transparent transition-colors duration-300" />
+                  </div>
+                  <div className="p-6 sm:p-8 flex flex-col h-[calc(100%-60%)]">
+                    <span className="text-xs font-bold tracking-widest text-blue-600 uppercase mb-3 block">{rp.category}</span>
+                    <h3 className="text-xl font-bold font-serif text-slate-900 mb-4 line-clamp-2 leading-tight group-hover:text-blue-600 transition-colors">{rp.title}</h3>
+                    <div className="mt-auto flex items-center justify-between text-sm text-slate-500">
+                      <div className="flex items-center gap-2">
+                        <Clock size={14} /> {rp.readTime || "5 min"}
+                      </div>
+                      <span className="text-blue-600 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 font-medium">Read Article →</span>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </section>
       )}
-    </>
+
+      {/* 9️⃣ Scroll-to-Top Button */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.5, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.5, y: 20 }}
+            whileHover={{ y: -4, scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 w-12 h-12 rounded-full bg-slate-900 text-white flex items-center justify-center shadow-xl shadow-slate-900/30 hover:bg-blue-600 transition-colors z-50 group"
+          >
+            <ChevronUp size={20} className="group-hover:-translate-y-1 transition-transform" />
+          </motion.button>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 
