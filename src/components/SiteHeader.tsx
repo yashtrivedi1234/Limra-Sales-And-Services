@@ -132,6 +132,7 @@ const SiteHeader = () => {
         >
           {/* Auth Buttons */}
           <SignedOut>
+            <span className="desktop-auth" style={{ display: "flex", gap: "8px" }}>
             <SignInButton mode="modal">
               <button
                 style={{
@@ -169,14 +170,18 @@ const SiteHeader = () => {
                 Sign Up
               </button>
             </SignUpButton>
+            </span>
           </SignedOut>
 
-          <SignedIn>
-            <UserButton afterSignOutUrl="/" />
-          </SignedIn>
+          <span className="desktop-auth">
+            <SignedIn>
+              <UserButton afterSignOutUrl="/" />
+            </SignedIn>
+          </span>
 
           {/* Enquiry Button */}
           <a
+            className="desktop-enquiry"
             href="tel:+919839171701"
             style={{
               display: "inline-flex",
@@ -296,6 +301,8 @@ const SiteHeader = () => {
       <style>{`
         .desktop-nav { display: none !important; }
         .mobile-menu-btn { display: flex !important; }
+        .desktop-auth { display: none !important; }
+        .desktop-enquiry { display: none !important; }
         .mobile-auth-btn {
           width: 100%;
           padding: 10px;
@@ -315,6 +322,8 @@ const SiteHeader = () => {
         @media (min-width: 1024px) {
           .desktop-nav { display: flex !important; }
           .mobile-menu-btn { display: none !important; }
+          .desktop-auth { display: flex !important; }
+          .desktop-enquiry { display: inline-flex !important; }
         }
       `}</style>
     </header>
