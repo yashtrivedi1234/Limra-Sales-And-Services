@@ -71,7 +71,7 @@ const BlogPreview = () => {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", // Slightly better for mobile than hardcoded 3, but looks identical on desktop
+            gridTemplateColumns: "repeat(3, 1fr)",
             gap: "24px",
           }}
         >
@@ -92,12 +92,11 @@ const BlogPreview = () => {
                   borderRadius: "20px",
                   overflow: "hidden",
                   boxShadow: `0 4px 24px ${BRAND.primary}1A`,
-                  background: BRAND.white,
-                  position: "relative",
-                  aspectRatio: "4/3"
+                  background: BRAND.white
                 }}
               >
-                {/* Background Image */}
+                <div style={{ position: "relative", aspectRatio: "4/3" }}>
+                  {/* Background Image */}
                 <img
                   src={post.image}
                   alt={post.title}
@@ -184,6 +183,7 @@ const BlogPreview = () => {
                     {post.excerpt || (Array.isArray(post.content) ? post.content[0]?.slice(0, 80) : post.content?.slice(0, 80))}...
                   </p>
                 </div>
+              </div>
               </motion.div>
             </Link>
           ))}

@@ -18,7 +18,7 @@ const renderIcon = (iconName: string) => {
 
 export default function Services() {
   const { data: services = [], isLoading } = useGetServicesQuery();
-  const topServices = services.slice(0, 4);
+  const topServices = services.slice(0);
 
   if (isLoading) return <Loader />;
   if (topServices.length === 0) return null;
