@@ -9,18 +9,18 @@ const AdminLogin = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const { login } = useAdminAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Prevent submission if already loading
     if (isLoading) return;
 
     setIsLoading(true);
-    
+
     try {
       const success = await login(email, password);
       if (success) {
@@ -37,9 +37,9 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-50 px-4">
+    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: "rgb(215 242 255 / 58%)" }}>
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden p-8 border border-neutral-200 transition-all">
-        
+
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold font-syne text-brand-blue tracking-tight">
@@ -50,7 +50,7 @@ const AdminLogin = () => {
 
         {/* Form */}
         <form onSubmit={handleLogin} className="space-y-6">
-          
+
           {/* Email Input */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-2">
@@ -80,7 +80,7 @@ const AdminLogin = () => {
                 Forgot password?
               </a>
             </div>
-            
+
             <div className="relative">
               <input
                 id="password"

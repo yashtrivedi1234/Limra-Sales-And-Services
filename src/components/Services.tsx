@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 import { BRAND } from "@/lib/colors";
 
@@ -17,6 +18,7 @@ const renderIcon = (iconName: string) => {
 };
 
 export default function Services() {
+  const navigate = useNavigate();
   const { data: services = [], isLoading } = useGetServicesQuery();
   const topServices = [...services].reverse().slice(0);
 
@@ -47,6 +49,7 @@ export default function Services() {
             return (
               <motion.div
                 key={s.slug || s.title}
+                onClick={() => navigate(`/service/${s.slug}`)}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -56,7 +59,8 @@ export default function Services() {
                   padding: "32px", borderRadius: "20px",
                   background: "rgba(255,255,255,0.07)",
                   border: "1px solid rgba(255,255,255,0.12)",
-                  transition: "all 0.3s"
+                  transition: "all 0.3s",
+                  cursor: "pointer"
                 }}
               >
                 <motion.div
