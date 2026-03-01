@@ -17,7 +17,7 @@ const CTASection: React.FC<CTAProps> = ({
   const handleConsultationClick = onConsultationClick || (() => navigate('/contact'));
   return (
     <section style={{ width: "100%", background: BRAND.bgSoft, padding: "64px 24px", fontFamily: "'Inter', sans-serif" }}>
-      <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

@@ -58,10 +58,6 @@ const BlogPost = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  if (isLoading) return <div className="min-h-screen flex items-center justify-center text-slate-500">Loading article...</div>;
-  if (!post) return <Navigate to="/blog" replace />;
-  const relatedPosts = blogPosts.filter((p: any) => p.slug !== slug && String(p._id) !== slug).slice(0, 3);
-  
   // Fake views counter setup
   const [views, setViews] = useState(0);
   useEffect(() => {
@@ -80,6 +76,11 @@ const BlogPost = () => {
     }, 16);
     return () => clearInterval(timer);
   }, []);
+
+  if (isLoading) return <div className="min-h-screen flex items-center justify-center text-slate-500">Loading article...</div>;
+  if (!post) return <Navigate to="/blog" replace />;
+  const relatedPosts = blogPosts.filter((p: any) => p.slug !== slug && String(p._id) !== slug).slice(0, 3);
+
 
   return (
     <div className="bg-slate-50 min-h-screen font-sans text-slate-900" ref={containerRef}>
@@ -207,7 +208,7 @@ const BlogPost = () => {
             className="mt-12 p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-50 to-blue-50/40 border border-slate-100 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-6 group"
           >
             <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-blue-700 to-cyan-400 flex items-center justify-center text-white text-3xl font-serif shrink-0 shadow-xl shadow-blue-500/20 group-hover:scale-105 transition-transform">
-              {post.author.charAt(0)}
+              {(post.author || "Admin").charAt(0)}
             </div>
             <div className="flex-1">
               <h4 className="text-xl font-bold text-slate-900 mb-1">{post.author || "Admin"}</h4>

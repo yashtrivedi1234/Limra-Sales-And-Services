@@ -54,42 +54,7 @@ const SiteFooter = () => {
       <div style={{ height: 3, background: `linear-gradient(90deg, ${BRAND.primary}, ${BRAND.primaryLight}, ${BRAND.primary})` }} />
 
       {/* CTA Strip */}
-      <div
-        style={{
-          background: `linear-gradient(135deg, ${BRAND.primary}15 0%, ${BRAND.dark}00 100%)`,
-          borderBottom: `1px solid rgba(255,255,255,0.06)`,
-        }}
-      >
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 py-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ background: `${BRAND.primary}20`, border: `1px solid ${BRAND.primary}30` }}
-              >
-                <Phone size={20} style={{ color: BRAND.primaryLight }} />
-              </div>
-              <div>
-                <p className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.5)" }}>Need Expert HVAC Advice?</p>
-                <p className="text-lg font-bold text-white">Call us at +91 9839171701</p>
-              </div>
-            </div>
-            <a
-              href="tel:+919839171701"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300"
-              style={{
-                background: `linear-gradient(135deg, ${BRAND.primary}, ${BRAND.primaryLight})`,
-                color: BRAND.white,
-                boxShadow: `0 4px 20px ${BRAND.primary}40`,
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = `0 8px 30px ${BRAND.primary}60`; }}
-              onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = `0 4px 20px ${BRAND.primary}40`; }}
-            >
-              Get Free Consultation <ArrowRight size={15} />
-            </a>
-          </div>
-        </div>
-      </div>
+     
 
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-6 sm:px-8 py-14">
@@ -107,14 +72,14 @@ const SiteFooter = () => {
             </Link>
 
             <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,255,255,0.55)" }}>
-              Established in 1998, we are Bareilly's most trusted HVAC partner — delivering expert AC installation, maintenance, and sales for homes & businesses.
+              Established in 2017, we are Bareilly's most trusted HVAC partner — delivering expert AC installation, maintenance, and sales for homes & businesses.
             </p>
 
             {/* Trust badges */}
             <div className="flex flex-col gap-3 mb-6">
               <div className="flex items-center gap-2.5 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
                 <Shield size={14} style={{ color: BRAND.primaryLight }} />
-                <span>25+ Years of Trusted Service</span>
+                <span>9+ Years of Trusted Service</span>
               </div>
               <div className="flex items-center gap-2.5 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
                 <Clock size={14} style={{ color: BRAND.primaryLight }} />
@@ -185,19 +150,23 @@ const SiteFooter = () => {
               <p className="text-sm" style={{ color: "rgba(255,255,255,0.35)" }}>Unable to load services</p>
             ) : (
               <ul className="space-y-2.5">
-                {services?.slice(0, 6).map((s: any) => (
-                  <li key={s._id || s.id}>
-                    <Link
-                      to={`/service/${s.slug}`}
-                      className="text-sm transition-all duration-200"
-                      style={{ color: "rgba(255,255,255,0.55)", textDecoration: "none" }}
-                      onMouseEnter={(e) => { e.currentTarget.style.color = BRAND.primaryLight; e.currentTarget.style.transform = "translateX(3px)"; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.55)"; e.currentTarget.style.transform = "translateX(0)"; }}
-                    >
-                      {s.title}
-                    </Link>
-                  </li>
-                ))}
+                {services && services.length > 0 ? (
+                  services.slice(0, 6).map((s: any) => (
+                    <li key={s._id || s.id}>
+                      <Link
+                        to={`/service/${s.slug}`}
+                        className="text-sm transition-all duration-200"
+                        style={{ color: "rgba(255,255,255,0.55)", textDecoration: "none" }}
+                        onMouseEnter={(e) => { e.currentTarget.style.color = BRAND.primaryLight; e.currentTarget.style.transform = "translateX(3px)"; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.55)"; e.currentTarget.style.transform = "translateX(0)"; }}
+                      >
+                        {s.title}
+                      </Link>
+                    </li>
+                  ))
+                ) : (
+                  <li className="text-sm" style={{ color: "rgba(255,255,255,0.35)" }}>No services available.</li>
+                )}
               </ul>
             )}
           </motion.div>
@@ -323,11 +292,23 @@ const SiteFooter = () => {
               href="https://www.codecrafter.co.in/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2"
+              className="group relative flex items-center gap-3 px-4 py-2.5 rounded-2xl transition-all duration-500 hover:-translate-y-1 shadow-[0_8px_30px_rgba(255,255,255,0.05)] border border-white/10 bg-white/[0.04] backdrop-blur-md overflow-hidden"
               style={{ textDecoration: "none" }}
             >
-              <span className="text-[10px]" style={{ color: "rgba(255,255,255,0.3)" }}>Designed by</span>
-              <img src={cclogo} alt="CodeCrafter" style={{ width: 80, opacity: 0.6 }} />
+              <span className="text-[10px] font-medium tracking-[0.2em] text-white/80 transition-colors duration-500 uppercase z-10">
+                Designed by
+              </span>
+              
+              <div className="relative flex items-center z-10">
+                {/* Expanded smooth cinematic glow behind logo */}
+                <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/0 via-white/20 to-white/0 blur-xl opacity-100 transition-all duration-700 ease-out scale-110" />
+                
+                <img 
+                  src={cclogo} 
+                  alt="CodeCrafter" 
+                  className="w-[85px] opacity-100 scale-105 transition-all duration-500 filter brightness-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] relative z-10" 
+                />
+              </div>
             </a>
           </div>
         </div>
