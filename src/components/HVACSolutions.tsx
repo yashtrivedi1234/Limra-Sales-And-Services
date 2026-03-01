@@ -91,8 +91,8 @@ export default function HVACSolutions() {
         </motion.div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: "24px" }}>
-          <SolutionCard index={0} title="Residential Solutions" items={residentialItems} primaryBtnLabel="Get Home Quote" imageUrl="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=800&auto=format&fit=crop&q=80" badgeIcon={<Home size={18} style={{ color: BRAND.primary }} />} />
-          <SolutionCard index={1} title="Commercial & VRV Systems" items={commercialItems} primaryBtnLabel="Get Commercial Quote" imageUrl="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&auto=format&fit=crop&q=80" badgeIcon={<Building2 size={18} style={{ color: BRAND.primary }} />} />
+          <SolutionCard index={0} title="Residential Solutions" items={residentialItems} primaryBtnLabel="Get Quote" imageUrl="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=800&auto=format&fit=crop&q=80" badgeIcon={<Home size={18} style={{ color: BRAND.primary }} />} />
+          <SolutionCard index={1} title="Commercial & VRV Systems" items={commercialItems} primaryBtnLabel="Get Quote" imageUrl="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&auto=format&fit=crop&q=80" badgeIcon={<Building2 size={18} style={{ color: BRAND.primary }} />} />
         </div>
       </div>
     </section>
