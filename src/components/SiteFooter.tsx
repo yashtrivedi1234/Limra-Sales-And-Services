@@ -52,10 +52,7 @@ const SiteFooter = () => {
     >
       {/* Top accent line */}
       <div style={{ height: 3, background: `linear-gradient(90deg, ${BRAND.primary}, ${BRAND.primaryLight}, ${BRAND.primary})` }} />
-
-      {/* CTA Strip */}
      
-
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-6 sm:px-8 py-14">
         <div
@@ -233,6 +230,8 @@ const SiteFooter = () => {
             {/* Admin Login */}
             <Link
               to="/admin"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-300"
               style={{
                 background: "rgba(255,255,255,0.05)",

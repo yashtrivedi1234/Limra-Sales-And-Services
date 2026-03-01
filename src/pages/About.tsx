@@ -4,7 +4,7 @@ import CountUp from "@/components/ui/CountUp";
 import { BRAND } from "@/lib/colors";
 
 const stats = [
-  { value: 5000, suffix: "+", label: "Customers" },
+   { value: 5000, suffix: "+", label: "Customers" },
   { value: 500, suffix: "+", label: "Commercial Projects" },
   { value: 9, suffix: "+", label: "Years Experience" },
   { value: 20, suffix: "+", label: "Cities" },
