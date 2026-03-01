@@ -82,18 +82,18 @@ const categories: Category[] = [
       { name: "Daikin FVA100A", ton: "3 Ton", price: "₹1,25,000", stars: 5 },
     ],
   },
-{
-  id: "portable",
-  icon: <Move size={22} />,
-  title: "Portable AC",
-  description: "Mobile ACs",
-  image:
-    "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80",
-  brands: ["Cruise"],
-  products: [
-    { name: "Cruise Portable", ton: "1.5 Ton", price: "₹28,000", stars: 3 },
-  ],
-},
+  {
+    id: "portable",
+    icon: <Move size={22} />,
+    title: "Portable AC",
+    description: "Mobile ACs",
+    image:
+      "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80",
+    brands: ["Cruise"],
+    products: [
+      { name: "Cruise Portable", ton: "1.5 Ton", price: "₹28,000", stars: 3 },
+    ],
+  },
 ];
 
 /* ================= COMPONENTS ================= */
@@ -236,16 +236,15 @@ export default function ProductsPage() {
         </div>
 
         {/* FILTERS */}
-        <div className="bg-white sticky top-0 z-10 border-b px-6 py-3 flex gap-2 overflow-x-auto">
+        <div className="bg-white sticky top-0 z-10 border-b px-6 py-3 flex gap-2 justify-center overflow-x-auto w-full">
           {filters.map((f) => (
             <button
               key={f.id}
               onClick={() => setActiveFilter(f.id)}
-              className={`px-4 py-2 rounded-full text-sm border ${
-                activeFilter === f.id
-                  ? "bg-[#1a3a5c] text-white"
-                  : "text-slate-600"
-              }`}
+              className={`px-4 py-2 rounded-full text-sm border font-medium whitespace-nowrap ${activeFilter === f.id
+                  ? "bg-[#1a3a5c] text-white border-[#1a3a5c]"
+                  : "text-slate-600 bg-white hover:bg-slate-50 border-slate-200"
+                }`}
             >
               {f.label}
             </button>

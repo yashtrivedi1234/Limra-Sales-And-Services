@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { MapPin, Phone, Mail, Facebook, Instagram, Youtube, UserCheck, ArrowRight, Clock, Shield } from "lucide-react";
+import { MapPin, Phone, Mail, Facebook, Instagram, Youtube, UserCheck, ArrowRight, Clock, Shield, ChevronRight } from "lucide-react";
 import cclogo from "../assets/cc-logo.png";
 import logo1 from "../assets/logo1.png";
 import { BRAND } from "@/lib/colors";
@@ -30,12 +30,17 @@ const socialLinks = [
 
 const containerVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.12 } },
 };
 
 const colVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 32 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+};
+
+const linkItemVariants = {
+  hidden: { opacity: 0, x: -12 },
+  visible: { opacity: 1, x: 0 },
 };
 
 const SiteFooter = () => {
@@ -46,13 +51,23 @@ const SiteFooter = () => {
     <motion.footer
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
+      viewport={{ once: true, amount: 0.05 }}
       variants={containerVariants}
       style={{ background: `linear-gradient(160deg, ${BRAND.dark} 0%, #051B30 50%, ${BRAND.dark} 100%)` }}
     >
-      {/* Top accent line */}
-      <div style={{ height: 3, background: `linear-gradient(90deg, ${BRAND.primary}, ${BRAND.primaryLight}, ${BRAND.primary})` }} />
-     
+      {/* Top animated accent line */}
+      <motion.div
+        initial={{ scaleX: 0, opacity: 0 }}
+        whileInView={{ scaleX: 1, opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+        style={{
+          height: 3,
+          background: `linear-gradient(90deg, ${BRAND.primary}, ${BRAND.primaryLight}, ${BRAND.primary})`,
+          transformOrigin: "left",
+        }}
+      />
+
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-6 sm:px-8 py-14">
         <div
@@ -61,57 +76,75 @@ const SiteFooter = () => {
         >
           {/* Brand Column */}
           <motion.div variants={colVariants} className="sm:col-span-1 lg:pr-6">
-            <Link to="/" className="flex items-center gap-3 mb-5" style={{ textDecoration: "none" }}>
-              <img src={logo1} alt="LIMRA" style={{ height: 40, width: "auto" }} />
-              <span className="text-base font-bold text-white whitespace-nowrap">
-                LIMRA Sales & Services
-              </span>
-            </Link>
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <Link to="/" className="flex items-center gap-3 mb-5" style={{ textDecoration: "none" }}>
+                <img src={logo1} alt="LIMRA" style={{ height: 40, width: "auto" }} />
+                <span className="text-base font-bold text-white whitespace-nowrap">
+                  LIMRA Sales & Services
+                </span>
+              </Link>
+            </motion.div>
 
-            <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,255,255,0.55)" }}>
+            <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,255,255,0.9)" }}>
               Established in 2017, we are Bareilly's most trusted HVAC partner — delivering expert AC installation, maintenance, and sales for homes & businesses.
             </p>
 
             {/* Trust badges */}
             <div className="flex flex-col gap-3 mb-6">
-              <div className="flex items-center gap-2.5 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
-                <Shield size={14} style={{ color: BRAND.primaryLight }} />
-                <span>9+ Years of Trusted Service</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
-                <Clock size={14} style={{ color: BRAND.primaryLight }} />
-                <span>Mon – Sat: 9:00 AM – 7:00 PM</span>
-              </div>
+              {[
+                { icon: Shield, text: "9+ Years of Trusted Service" },
+                { icon: Clock, text: "Mon – Sat: 9:00 AM – 7:00 PM" },
+              ].map(({ icon: Icon, text }, i) => (
+                <motion.div
+                  key={text}
+                  initial={{ opacity: 0, x: -16 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 + i * 0.1, duration: 0.5 }}
+                  className="flex items-center gap-2.5 text-xs"
+                  style={{ color: "rgba(255,255,255,0.5)" }}
+                >
+                  <Icon size={14} style={{ color: BRAND.primaryLight }} />
+                  <span>{text}</span>
+                </motion.div>
+              ))}
             </div>
 
             {/* Social Icons */}
             <div className="flex gap-2.5">
-              {socialLinks.map((s) => (
-                <a
+              {socialLinks.map((s, i) => (
+                <motion.a
                   key={s.label}
                   href={s.href}
                   aria-label={s.label}
-                  className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-300"
+                  initial={{ opacity: 0, scale: 0.6 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 + i * 0.08, type: "spring", stiffness: 260, damping: 18 }}
+                  whileHover={{ scale: 1.18, y: -3 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="w-9 h-9 rounded-lg flex items-center justify-center"
                   style={{
                     background: "rgba(255,255,255,0.06)",
                     border: "1px solid rgba(255,255,255,0.08)",
-                    color: "rgba(255,255,255,0.55)",
+                    color: "rgba(255,255,255,0.9)",
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = `${BRAND.primary}30`;
                     e.currentTarget.style.borderColor = `${BRAND.primary}50`;
                     e.currentTarget.style.color = BRAND.primaryLight;
-                    e.currentTarget.style.transform = "translateY(-2px)";
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = "rgba(255,255,255,0.06)";
                     e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
-                    e.currentTarget.style.color = "rgba(255,255,255,0.55)";
-                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.color = "rgba(255,255,255,0.9)";
                   }}
                 >
                   <s.icon size={16} />
-                </a>
+                </motion.a>
               ))}
             </div>
           </motion.div>
@@ -119,21 +152,34 @@ const SiteFooter = () => {
           {/* Quick Links */}
           <motion.div variants={colVariants}>
             <p className="text-[11px] font-bold text-white uppercase tracking-[0.16em] mb-5">Quick Links</p>
-            <ul className="space-y-2.5">
+            <motion.ul
+              className="space-y-2.5"
+              variants={{ visible: { transition: { staggerChildren: 0.06 } } }}
+            >
               {quickLinks.map((l) => (
-                <li key={l.label}>
+                <motion.li key={l.label} variants={linkItemVariants}>
                   <Link
                     to={l.to}
-                    className="text-sm flex items-center gap-1.5 transition-all duration-200"
-                    style={{ color: "rgba(255,255,255,0.55)", textDecoration: "none" }}
-                    onMouseEnter={(e) => { e.currentTarget.style.color = BRAND.primaryLight; e.currentTarget.style.transform = "translateX(3px)"; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.55)"; e.currentTarget.style.transform = "translateX(0)"; }}
+                    className="text-sm flex items-center gap-1.5 group transition-all duration-200"
+                    style={{ color: "rgba(255,255,255,0.9)", textDecoration: "none" }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = BRAND.primaryLight;
+                      e.currentTarget.style.transform = "translateX(4px)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = "rgba(255,255,255,0.9)";
+                      e.currentTarget.style.transform = "translateX(0)";
+                    }}
                   >
+                    <ChevronRight
+                      size={13}
+                      style={{ color: BRAND.primaryLight, opacity: 0.7, flexShrink: 0 }}
+                    />
                     {l.label}
                   </Link>
-                </li>
+                </motion.li>
               ))}
-            </ul>
+            </motion.ul>
           </motion.div>
 
           {/* Services */}
@@ -141,30 +187,51 @@ const SiteFooter = () => {
             <p className="text-[11px] font-bold text-white uppercase tracking-[0.16em] mb-5">Our Services</p>
             {servicesLoading ? (
               <div className="space-y-2.5">
-                {[1,2,3].map(i => <div key={i} className="h-4 rounded" style={{ background: "rgba(255,255,255,0.06)", width: `${60 + i * 10}%` }} />)}
+                {[1, 2, 3].map((i) => (
+                  <motion.div
+                    key={i}
+                    animate={{ opacity: [0.4, 0.8, 0.4] }}
+                    transition={{ duration: 1.4, repeat: Infinity, delay: i * 0.2 }}
+                    className="h-4 rounded"
+                    style={{ background: "rgba(255,255,255,0.06)", width: `${60 + i * 10}%` }}
+                  />
+                ))}
               </div>
             ) : servicesError ? (
-              <p className="text-sm" style={{ color: "rgba(255,255,255,0.35)" }}>Unable to load services</p>
+              <p className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>Unable to load services</p>
             ) : (
-              <ul className="space-y-2.5">
+              <motion.ul
+                className="space-y-2.5"
+                variants={{ visible: { transition: { staggerChildren: 0.07 } } }}
+              >
                 {services && services.length > 0 ? (
                   services.slice(0, 6).map((s: any) => (
-                    <li key={s._id || s.id}>
+                    <motion.li key={s._id || s.id} variants={linkItemVariants}>
                       <Link
                         to={`/service/${s.slug}`}
-                        className="text-sm transition-all duration-200"
-                        style={{ color: "rgba(255,255,255,0.55)", textDecoration: "none" }}
-                        onMouseEnter={(e) => { e.currentTarget.style.color = BRAND.primaryLight; e.currentTarget.style.transform = "translateX(3px)"; }}
-                        onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.55)"; e.currentTarget.style.transform = "translateX(0)"; }}
+                        className="text-sm flex items-center gap-1.5 transition-all duration-200"
+                        style={{ color: "rgba(255,255,255,0.9)", textDecoration: "none" }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.color = BRAND.primaryLight;
+                          e.currentTarget.style.transform = "translateX(4px)";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.color = "rgba(255,255,255,0.9)";
+                          e.currentTarget.style.transform = "translateX(0)";
+                        }}
                       >
+                        <ChevronRight
+                          size={13}
+                          style={{ color: BRAND.primaryLight, opacity: 0.7, flexShrink: 0 }}
+                        />
                         {s.title}
                       </Link>
-                    </li>
+                    </motion.li>
                   ))
                 ) : (
-                  <li className="text-sm" style={{ color: "rgba(255,255,255,0.35)" }}>No services available.</li>
+                  <li className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>No services available.</li>
                 )}
-              </ul>
+              </motion.ul>
             )}
           </motion.div>
 
@@ -172,94 +239,101 @@ const SiteFooter = () => {
           <motion.div variants={colVariants}>
             <p className="text-[11px] font-bold text-white uppercase tracking-[0.16em] mb-5">Contact Us</p>
             <ul className="space-y-4 mb-6">
-              <li>
-                <a
-                  href="tel:+919839171701"
-                  className="flex items-start gap-3 transition-colors duration-200 group"
-                  style={{ color: "rgba(255,255,255,0.55)", textDecoration: "none" }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = BRAND.primaryLight}
-                  onMouseLeave={(e) => e.currentTarget.style.color = "rgba(255,255,255,0.55)"}
+              {[
+                {
+                  href: "tel:+919839171701",
+                  Icon: Phone,
+                  label: "Phone",
+                  value: "+91 9839171701",
+                },
+                {
+                  href: "mailto:info@limrasales.com",
+                  Icon: Mail,
+                  label: "Email",
+                  value: "info@limrasales.com",
+                },
+                {
+                  href: "https://maps.google.com/?q=Civil+Lines,+Bareilly,+UP+243001",
+                  Icon: MapPin,
+                  label: "Location",
+                  value: "Civil Lines, Bareilly, UP 243001",
+                  target: "_blank",
+                },
+              ].map(({ href, Icon, label, value, target }, i) => (
+                <motion.li
+                  key={label}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 + i * 0.1, duration: 0.5 }}
                 >
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: `${BRAND.primary}15` }}>
-                    <Phone size={14} style={{ color: BRAND.primaryLight }} />
-                  </div>
-                  <div>
-                    <p className="text-xs mb-0.5" style={{ color: "rgba(255,255,255,0.35)" }}>Phone</p>
-                    <p className="text-sm font-medium">+91 9839171701</p>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="mailto:info@limrasales.com"
-                  className="flex items-start gap-3 transition-colors duration-200"
-                  style={{ color: "rgba(255,255,255,0.55)", textDecoration: "none" }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = BRAND.primaryLight}
-                  onMouseLeave={(e) => e.currentTarget.style.color = "rgba(255,255,255,0.55)"}
-                >
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: `${BRAND.primary}15` }}>
-                    <Mail size={14} style={{ color: BRAND.primaryLight }} />
-                  </div>
-                  <div>
-                    <p className="text-xs mb-0.5" style={{ color: "rgba(255,255,255,0.35)" }}>Email</p>
-                    <p className="text-sm font-medium">info@limrasales.com</p>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://maps.google.com/?q=Civil+Lines,+Bareilly,+UP+243001"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-start gap-3 transition-colors duration-200"
-                  style={{ color: "rgba(255,255,255,0.55)", textDecoration: "none" }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = BRAND.primaryLight}
-                  onMouseLeave={(e) => e.currentTarget.style.color = "rgba(255,255,255,0.55)"}
-                >
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: `${BRAND.primary}15` }}>
-                    <MapPin size={14} style={{ color: BRAND.primaryLight }} />
-                  </div>
-                  <div>
-                    <p className="text-xs mb-0.5" style={{ color: "rgba(255,255,255,0.35)" }}>Location</p>
-                    <p className="text-sm font-medium">Civil Lines, Bareilly, UP 243001</p>
-                  </div>
-                </a>
-              </li>
+                  <motion.a
+                    href={href}
+                    target={target}
+                    rel={target ? "noopener noreferrer" : undefined}
+                    className="flex items-start gap-3 group"
+                    style={{ color: "rgba(255,255,255,0.9)", textDecoration: "none" }}
+                    whileHover={{ x: 3 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = BRAND.primaryLight}
+                    onMouseLeave={(e) => e.currentTarget.style.color = "rgba(255,255,255,0.9)"}
+                  >
+                    <motion.div
+                      className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
+                      style={{ background: `${BRAND.primary}15` }}
+                      whileHover={{ scale: 1.15, background: `${BRAND.primary}30` }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <Icon size={14} style={{ color: BRAND.primaryLight }} />
+                    </motion.div>
+                    <div>
+                      <p className="text-xs mb-0.5" style={{ color: "rgba(255,255,255,0.7)" }}>{label}</p>
+                      <p className="text-sm font-medium">{value}</p>
+                    </div>
+                  </motion.a>
+                </motion.li>
+              ))}
             </ul>
 
             {/* Admin Login */}
-            <Link
-              to="/admin"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-300"
-              style={{
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.1)",
-                color: "rgba(255,255,255,0.6)",
-                textDecoration: "none",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(255,255,255,0.1)";
-                e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
-                e.currentTarget.style.color = "#fff";
-                e.currentTarget.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "rgba(255,255,255,0.05)";
-                e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-                e.currentTarget.style.color = "rgba(255,255,255,0.6)";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
-            >
-              <UserCheck size={14} /> Admin Portal
-            </Link>
+            <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
+              <Link
+                to="/admin"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-300"
+                style={{
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  color: "rgba(255,255,255,0.6)",
+                  textDecoration: "none",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "rgba(255,255,255,0.1)";
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
+                  e.currentTarget.style.color = "#fff";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+                  e.currentTarget.style.color = "rgba(255,255,255,0.6)";
+                }}
+              >
+                <UserCheck size={14} />
+                Admin Portal
+                <ArrowRight size={12} style={{ marginLeft: 2 }} />
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
       </div>
 
       {/* Bottom Bar */}
-      <div
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7, delay: 0.3 }}
         style={{
           borderTop: "1px solid rgba(255,255,255,0.06)",
           background: "rgba(0,0,0,0.25)",
@@ -273,16 +347,17 @@ const SiteFooter = () => {
 
             {/* Policy Links */}
             <div className="flex items-center gap-4 flex-wrap justify-center">
-              {policyLinks.map((l, i) => (
+              {policyLinks.map((l) => (
                 <Link
                   key={l.label}
                   to={l.to}
-                  className="text-xs transition-colors duration-200"
-                  style={{ color: "rgba(255,255,255,0.35)", textDecoration: "none" }}
+                  className="text-xs flex items-center gap-1 transition-colors duration-200"
+                  style={{ color: "rgba(255,255,255,0.7)", textDecoration: "none" }}
                   onMouseEnter={(e) => e.currentTarget.style.color = BRAND.primaryLight}
-                  onMouseLeave={(e) => e.currentTarget.style.color = "rgba(255,255,255,0.35)"}
+                  onMouseLeave={(e) => e.currentTarget.style.color = "rgba(255,255,255,0.7)"}
                 >
                   {l.label}
+                  <ArrowRight size={10} style={{ opacity: 0.6 }} />
                 </Link>
               ))}
             </div>
@@ -297,21 +372,19 @@ const SiteFooter = () => {
               <span className="text-[10px] font-medium tracking-[0.2em] text-white/80 transition-colors duration-500 uppercase z-10">
                 Designed by
               </span>
-              
+
               <div className="relative flex items-center z-10">
-                {/* Expanded smooth cinematic glow behind logo */}
                 <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/0 via-white/20 to-white/0 blur-xl opacity-100 transition-all duration-700 ease-out scale-110" />
-                
-                <img 
-                  src={cclogo} 
-                  alt="CodeCrafter" 
-                  className="w-[85px] opacity-100 scale-105 transition-all duration-500 filter brightness-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] relative z-10" 
+                <img
+                  src={cclogo}
+                  alt="CodeCrafter"
+                  className="w-[85px] opacity-100 scale-105 transition-all duration-500 filter brightness-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] relative z-10"
                 />
               </div>
             </a>
           </div>
         </div>
-      </div>
+      </motion.div>
     </motion.footer>
   );
 };

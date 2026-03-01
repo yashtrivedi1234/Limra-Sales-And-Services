@@ -1,9 +1,10 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { 
-  Search, SlidersHorizontal, Grid, List, ExternalLink, 
-  Truck, Award, ShieldCheck, CheckCircle, Star, 
-  Wind, Zap, Phone, ShoppingCart, ChevronDown 
+import {
+  Search, SlidersHorizontal, Grid, List, ExternalLink,
+  Truck, Award, ShieldCheck, CheckCircle, Star,
+  Wind, Zap, Phone, ShoppingCart, ChevronDown,
+  MessageCircle
 } from 'lucide-react';
 
 // --- TYPES ---
@@ -64,7 +65,7 @@ const products: Product[] = [
     discountPercentage: 14,
     isFeatured: false,
     reviewCount: 67,
-   imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=400&h=200&auto=format&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=400&h=200&auto=format&fit=crop',
   },
   {
     id: '3',
@@ -116,7 +117,7 @@ export const formatCurrency = (amount: number) => {
 
 export default function Shop() {
   const navigate = useNavigate();
-  
+
   // --- STATE ---
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedBrand, setSelectedBrand] = useState('All Brands');
@@ -128,11 +129,11 @@ export default function Shop() {
   // --- FILTER LOGIC ---
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
-      const matchesSearch = 
-        product.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      const matchesSearch =
+        product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.model.toLowerCase().includes(searchQuery.toLowerCase());
-      
+
       const matchesBrand = selectedBrand === 'All Brands' || product.brand === selectedBrand;
       const matchesRating = selectedRating === 'All Ratings' || product.rating === selectedRating;
 
@@ -159,7 +160,7 @@ export default function Shop() {
             Shop Premium Air Conditioners & HVAC Products
           </h1>
           <p className="text-slate-500 max-w-2xl mb-8">
-            Find the perfect solution for your home with our wide selection of energy-efficient 
+            Find the perfect solution for your home with our wide selection of energy-efficient
             HVAC products from top brands.
           </p>
 
@@ -174,7 +175,7 @@ export default function Shop() {
               </div>
             </div>
             <div className="bg-white rounded-xl shadow-sm px-6 py-4 flex items-center gap-4 min-w-[200px] relative">
-               <ExternalLink className="absolute top-2 right-2 w-4 h-4 text-slate-300" />
+              <ExternalLink className="absolute top-2 right-2 w-4 h-4 text-slate-300" />
               <div className="font-bold text-2xl text-red-600">IndiaMART</div>
               <div className="text-left">
                 <div className="font-semibold text-sm">IndiaMART</div>
@@ -182,7 +183,7 @@ export default function Shop() {
               </div>
             </div>
             <div className="bg-white rounded-xl shadow-sm px-6 py-4 flex items-center gap-4 min-w-[200px] relative">
-               <ExternalLink className="absolute top-2 right-2 w-4 h-4 text-slate-300" />
+              <ExternalLink className="absolute top-2 right-2 w-4 h-4 text-slate-300" />
               <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
                 <span className="text-blue-500 font-bold">G</span>
               </div>
@@ -213,11 +214,11 @@ export default function Shop() {
             <div className="flex flex-col md:flex-row gap-4 mb-4">
               <div className="relative flex-grow">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search for ACs by brand, model, or features..." 
+                  placeholder="Search for ACs by brand, model, or features..."
                   className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
@@ -229,11 +230,11 @@ export default function Shop() {
             <div className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-100 pt-4">
               <div className="flex flex-wrap gap-3">
                 <button className="flex items-center gap-2 border border-slate-200 px-4 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">
-                  <SlidersHorizontal className="w-4 h-4" /> Filters 
+                  <SlidersHorizontal className="w-4 h-4" /> Filters
                 </button>
-                
+
                 <div className="relative">
-                  <select 
+                  <select
                     value={selectedBrand}
                     onChange={(e) => setSelectedBrand(e.target.value)}
                     className="appearance-none flex items-center gap-2 border border-slate-200 pl-4 pr-10 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 bg-white outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
@@ -246,7 +247,7 @@ export default function Shop() {
                 </div>
 
                 <div className="relative">
-                  <select 
+                  <select
                     value={selectedRating}
                     onChange={(e) => setSelectedRating(e.target.value)}
                     className="appearance-none flex items-center gap-2 border border-slate-200 pl-4 pr-10 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 bg-white outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
@@ -275,9 +276,9 @@ export default function Shop() {
                     <div className="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded-full z-10">
                       -{product.discountPercentage}% OFF
                     </div>
-                    <img 
-                      src={product.imageUrl} 
-                      alt={product.title} 
+                    <img
+                      src={product.imageUrl}
+                      alt={product.title}
                       className="max-h-full object-contain mix-blend-multiply opacity-90 transition-transform hover:scale-105 duration-300"
                     />
                   </div>
@@ -316,11 +317,13 @@ export default function Shop() {
                     >
                       <Phone className="w-4 h-4" /> Call Now
                     </a>
-                    <button 
+
+
+                    <button
                       onClick={() => handleBuyNow(product)}
                       className="flex items-center justify-center gap-2 bg-[#f97316] text-white py-2 rounded-lg text-sm font-semibold hover:bg-[#ea580c] transition-colors shadow-sm shadow-orange-200"
                     >
-                      <ShoppingCart className="w-4 h-4" /> Buy Now
+                      <MessageCircle className="w-4 h-4" /> Enquiry
                     </button>
                   </div>
                 </div>

@@ -4,7 +4,7 @@ import CountUp from "@/components/ui/CountUp";
 import { BRAND } from "@/lib/colors";
 
 const stats = [
-   { value: 5000, suffix: "+", label: "Customers" },
+  { value: 5000, suffix: "+", label: "Customers" },
   { value: 500, suffix: "+", label: "Commercial Projects" },
   { value: 9, suffix: "+", label: "Years Experience" },
   { value: 20, suffix: "+", label: "Cities" },
@@ -85,8 +85,8 @@ const About = () => (
     </section>
 
     {/* ── Our Story ── */}
-    <section style={{ padding: "80px 24px", background: BRAND.bgSoft }}>
-      <div style={{ maxWidth: "780px", margin: "0 auto" }}>
+    <section style={{ padding: "80px 24px",background: "rgb(215 242 255 / 58%)", minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+      <div style={{ maxWidth: "1200px", width: "100%", margin: "0 auto" }}>
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
           <div style={{
             display: "inline-block",
@@ -149,7 +149,7 @@ const About = () => (
     </section>
 
     {/* ── Timeline ── */}
-    <section style={{ padding: "80px 24px", background: BRAND.bgSoft }}>
+    <section style={{ padding: "80px 24px", background: "rgb(215 242 255 / 58%)" }}>
       <div style={{ maxWidth: "640px", margin: "0 auto" }}>
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} style={{ textAlign: "center", marginBottom: "56px" }}>
           <div style={{

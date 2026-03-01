@@ -1,506 +1,442 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Wrench, ShieldCheck, MapPin, Settings2, Wind,
-  Clock, Star, Sparkles, ArrowUpRight
+  Clock, Star, Sparkles, ArrowUpRight, CheckCircle2, TrendingUp, Award
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useGetServicesQuery } from "@/store/api";
-import Loader from "@/components/ui/Loader";
 
-const renderIcon = (iconName: string) => {
-  switch (iconName) {
-    case 'ShieldCheck': return ShieldCheck;
-    case 'MapPin': return MapPin;
-    case 'Settings2': return Settings2;
-    case 'Wind': return Wind;
-    default: return Wrench;
-  }
+// ─── TYPES ────────────────────────────────────────────────────────────────────
+interface Service {
+  slug: string;
+  _id?: string;
+  icon: string;
+  title: string;
+  tagline: string;
+  desc: string;
+  badge?: string;
+  badgeColor?: string;
+  accentHue?: string;
+  rating?: string;
+  reviews?: string;
+  duration?: string;
+  price: string;
+  features?: string[];
+  highlights?: string[];
+}
+
+interface ServiceCardProps {
+  service: Service;
+  onClick: (slug: string) => void;
+  index: number;
+  isHovered: boolean;
+  onHover: (slug: string | null) => void;
+}
+
+interface StatItem {
+  num: string;
+  label: string;
+  icon?: React.ReactNode;
+}
+
+// ─── ICON MAP ─────────────────────────────────────────────────────────────────
+const iconMap: Record<string, React.ElementType> = {
+  ShieldCheck,
+  MapPin,
+  Settings2,
+  Wind,
+  Wrench,
 };
 
-// ─── STYLES ───────────────────────────────────────────────────────────────────
-const css = `
-  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
+const renderIcon = (name: string): React.ElementType =>
+  iconMap[name] ?? Wrench;
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #F4FAFE;
-    --bg2: #ffffff;
-    --bg3: #E8F6FC;
-    --border: rgba(6,149,205,0.12);
-    --border-hover: rgba(6,149,205,0.25);
-    --text: #082A45;
-    --text2: #0E3D5E;
-    --muted: rgba(8,42,69,0.48);
-    --accent: #0695CD;
-    --accent-light: #E8F6FC;
-    --accent-mid: #B3E0F2;
-    --warm: #0695CD;
-    --font-display: 'DM Serif Display', serif;
-    --font-body: 'DM Sans', sans-serif;
-    --shadow-sm: 0 1px 3px rgba(6,149,205,0.06), 0 1px 2px rgba(6,149,205,0.04);
-    --shadow-md: 0 4px 12px rgba(6,149,205,0.08), 0 2px 4px rgba(6,149,205,0.04);
-    --shadow-lg: 0 12px 32px rgba(6,149,205,0.10), 0 4px 8px rgba(6,149,205,0.06);
-  }
-
-  html { scroll-behavior: smooth; }
-  body { background: var(--bg); color: var(--text); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
-
-  .sp-root {
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
-  }
-
-  .sp-root::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-    opacity: 0.022;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .dot-grid {
-    position: fixed;
-    inset: 0;
-    background-image: 
-      linear-gradient(rgba(0,0,0,0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,0,0,0.035) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .bg-glow {
-    position: fixed;
-    top: -200px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 900px;
-    height: 600px;
-    background: radial-gradient(ellipse at center, rgba(186,230,253,0.35) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .sp-wrap {
-    position: relative;
-    z-index: 2;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px 100px;
-  }
-
-  /* ── HERO ── */
-  .sp-hero {
-    padding: 80px 0 64px;
-    text-align: center;
-  }
-
-  .sp-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--accent-light);
-    border: 1px solid var(--accent-mid);
-    border-radius: 100px;
-    padding: 6px 16px;
-    color: var(--accent);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    margin-bottom: 28px;
-  }
-
-  .sp-title {
-    font-family: var(--font-display);
-    font-size: clamp(2.8rem, 6vw, 5rem);
-    font-weight: 400;
-    line-height: 1.05;
-    letter-spacing: -0.01em;
-    color: var(--text);
-    margin-bottom: 20px;
-  }
-
-  .sp-title em {
-    font-style: italic;
-    color: var(--accent);
-  }
-
-  .sp-sub {
-    color: var(--muted);
-    font-size: 1.05rem;
-    max-width: 460px;
-    margin: 0 auto;
-    line-height: 1.75;
-    font-weight: 400;
-  }
-
-  .accent-divider {
-    width: 48px;
-    height: 3px;
-    background: var(--accent);
-    border-radius: 2px;
-    margin: 16px auto 0;
-    opacity: 0.6;
-  }
-
-  /* ── STATS BAR ── */
-  .stats-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 40px;
-    margin-top: 40px;
-    padding: 20px 36px;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    box-shadow: var(--shadow-sm);
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-    flex-wrap: wrap;
-  }
-
-  .stat-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.85rem;
-    color: var(--muted);
-    white-space: nowrap;
-  }
-
-  .stat-num {
-    font-family: var(--font-display);
-    font-size: 1.2rem;
-    color: var(--text);
-    font-weight: 400;
-  }
-
-  .stat-sep {
-    width: 1px;
-    height: 24px;
-    background: var(--border);
-  }
-
-  /* ── GRID ── */
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 18px;
-    margin-top: 48px;
-  }
-
-  .service-card {
-    position: relative;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 30px;
-    cursor: pointer;
-    overflow: hidden;
-    transition: border-color 0.3s, transform 0.2s, box-shadow 0.3s;
-    text-align: left;
-    box-shadow: var(--shadow-sm);
-  }
-
-  .service-card:hover {
-    border-color: var(--border-hover);
-    box-shadow: var(--shadow-lg);
-  }
-
-  .card-top-strip {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    border-radius: 20px 20px 0 0;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .service-card:hover .card-top-strip { opacity: 1; }
-
-  .card-glow {
-    position: absolute;
-    top: -40px; right: -40px;
-    width: 160px; height: 160px;
-    border-radius: 50%;
-    opacity: 0;
-    transition: opacity 0.4s;
-    pointer-events: none;
-  }
-
-  .service-card:hover .card-glow { opacity: 0.6; }
-
-  .card-top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 22px;
-  }
-
-  .card-icon-wrap {
-    width: 50px; height: 50px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid;
-  }
-
-  .card-badge {
-    font-size: 0.67rem;
-    font-weight: 600;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    padding: 4px 12px;
-    border-radius: 100px;
-    border: 1px solid;
-  }
-
-  .card-title {
-    font-family: var(--font-display);
-    font-size: 1.4rem;
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    color: var(--text);
-    margin-bottom: 6px;
-  }
-
-  .card-tagline {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--warm);
-    margin-bottom: 12px;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-  }
-
-  .card-desc {
-    color: var(--muted);
-    font-size: 0.88rem;
-    line-height: 1.75;
-    margin-bottom: 26px;
-  }
-
-  .card-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 18px;
-    border-top: 1px solid var(--border);
-  }
-
-  .card-meta {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .card-meta-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: var(--muted);
-    font-size: 0.78rem;
-  }
-
-  .card-price {
-    font-family: var(--font-display);
-    font-size: 1.05rem;
-    font-weight: 400;
-    color: var(--text);
-  }
-
-  .card-arrow {
-    width: 34px; height: 34px;
-    border-radius: 50%;
-    background: var(--accent-light);
-    border: 1px solid var(--accent-mid);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s, transform 0.2s;
-  }
-
-  .service-card:hover .card-arrow {
-    background: var(--accent);
-    border-color: var(--accent);
-  }
-
-  .service-card:hover .card-arrow svg { color: white !important; }
-
-  @media (max-width: 768px) {
-    .services-grid { grid-template-columns: 1fr; }
-    .sp-title { font-size: 2.6rem; }
-    .stats-bar { gap: 20px; padding: 16px 24px; }
-    .stat-sep { display: none; }
-  }
-`;
-
-// ─── SERVICE CARD ─────────────────────────────────────────────────────────────
-function ServiceCard({ service, onClick, index }: any) {
+// ─── CARD COMPONENT ───────────────────────────────────────────────────────────
+const ServiceCard: React.FC<ServiceCardProps> = ({
+  service,
+  onClick,
+  index,
+  isHovered,
+  onHover,
+}) => {
   const Icon = renderIcon(service.icon);
-  const hue = service.accentHue || "195";
-  const hsl = `hsl(${hue}, 65%, 40%)`;
-  const hslLight = `hsl(${hue}, 70%, 94%)`;
-  const hslBorder = `hsl(${hue}, 60%, 82%)`;
-  const hslGlow = `hsl(${hue}, 70%, 88%)`;
 
   return (
-    <motion.div
-      className="service-card"
-      initial={{ opacity: 0, y: 32 }}
+    <motion.article
+      initial={{ opacity: 0, y: 28 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.07, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -5 }}
+      transition={{
+        delay: index * 0.075,
+        duration: 0.5,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      whileHover={{ y: -6, transition: { duration: 0.22, ease: "easeOut" } }}
+      onHoverStart={() => onHover(service.slug)}
+      onHoverEnd={() => onHover(null)}
       onClick={() => onClick(service.slug)}
+      className="group relative flex flex-col rounded-2xl cursor-pointer overflow-hidden border transition-all duration-300"
+      style={{
+        background: "rgb(215 242 255 / 58%)",
+        borderColor: isHovered
+          ? "rgba(6,149,205,0.30)"
+          : "rgba(6,149,205,0.13)",
+        boxShadow: isHovered
+          ? "0 20px 48px rgba(6,149,205,0.13), 0 4px 12px rgba(6,149,205,0.08)"
+          : "0 2px 8px rgba(6,149,205,0.06), 0 1px 2px rgba(6,149,205,0.04)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+      }}
     >
+      {/* Top accent strip */}
       <div
-        className="card-top-strip"
-        style={{ background: `linear-gradient(90deg, ${hsl}, hsl(${hue}, 50%, 60%))` }}
-      />
-      <div
-        className="card-glow"
-        style={{ background: `radial-gradient(circle, ${hslGlow} 0%, transparent 70%)` }}
+        className="absolute top-0 inset-x-0 h-[2px] transition-opacity duration-300"
+        style={{
+          background: "linear-gradient(90deg, transparent, #0695CD, transparent)",
+          opacity: isHovered ? 1 : 0,
+        }}
       />
 
-      <div className="card-top">
-        <div className="card-icon-wrap" style={{ background: hslLight, borderColor: hslBorder }}>
-          <Icon size={22} color={hsl} />
+      {/* Corner glow */}
+      <div
+        className="absolute -top-12 -right-12 w-36 h-36 rounded-full transition-opacity duration-500 pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, rgba(6,149,205,0.18) 0%, transparent 70%)",
+          opacity: isHovered ? 1 : 0,
+        }}
+      />
+
+      <div className="p-7 flex flex-col flex-1">
+        {/* Header row */}
+        <div className="flex items-start justify-between mb-6">
+          {/* Icon */}
+          <div
+            className="flex items-center justify-center w-12 h-12 rounded-[14px] border transition-all duration-300"
+            style={{
+              background: isHovered
+                ? "rgba(6,149,205,0.15)"
+                : "rgba(6,149,205,0.08)",
+              borderColor: isHovered
+                ? "rgba(6,149,205,0.35)"
+                : "rgba(6,149,205,0.18)",
+            }}
+          >
+            <Icon size={20} color="#0695CD" />
+          </div>
+
+          {/* Badge */}
+          <span
+            className="text-[0.65rem] font-bold tracking-[0.11em] uppercase px-3 py-1.5 rounded-full border"
+            style={{
+              color: service.badgeColor ?? "#d97706",
+              borderColor: `${service.badgeColor ?? "#d97706"}35`,
+              background: `${service.badgeColor ?? "#d97706"}12`,
+            }}
+          >
+            {service.badge ?? "Standard"}
+          </span>
         </div>
-        <span
-          className="card-badge"
+
+        {/* Title & tagline */}
+        <p
+          className="text-[0.7rem] font-bold uppercase tracking-[0.12em] mb-1"
+          style={{ color: "#0695CD" }}
+        >
+          {service.tagline}
+        </p>
+        <h2
+          className="text-[1.35rem] font-semibold leading-snug mb-3"
           style={{
-            color: service.badgeColor || "#d97706",
-            borderColor: `${service.badgeColor || "#d97706"}30`,
-            background: `${service.badgeColor || "#d97706"}12`,
+            color: "#082A45",
+            fontFamily: "'DM Serif Display', Georgia, serif",
+            fontWeight: 400,
+            letterSpacing: "-0.01em",
           }}
         >
-          {service.badge || "Standard"}
-        </span>
-      </div>
+          {service.title}
+        </h2>
+        <p
+          className="text-[0.865rem] leading-relaxed mb-5"
+          style={{ color: "rgba(8,42,69,0.52)" }}
+        >
+          {service.desc}
+        </p>
 
-      <div className="card-title">{service.title}</div>
-      <div className="card-tagline">{service.tagline}</div>
-      <div className="card-desc">{service.desc}</div>
+        {/* Feature pills */}
+        {(service.features || service.highlights) && (
+          <ul className="flex flex-wrap gap-2 mb-6">
+            {(service.features || service.highlights || []).map((f) => (
+              <li
+                key={f}
+                className="flex items-center gap-1.5 text-[0.72rem] font-medium px-2.5 py-1 rounded-full"
+                style={{
+                  background: "rgba(6,149,205,0.09)",
+                  color: "#0E3D5E",
+                  border: "1px solid rgba(6,149,205,0.15)",
+                }}
+              >
+                <CheckCircle2 size={10} color="#0695CD" />
+                {f}
+              </li>
+            ))}
+          </ul>
+        )}
 
-      <div className="card-footer">
-        <div className="card-meta">
-          <span className="card-meta-item">
-            <Star size={13} color="#d97706" fill="#d97706" />
-            <span style={{ color: "var(--text)", fontWeight: 600 }}>{service.rating || "4.9"}</span>
-            <span>({service.reviews || "120"})</span>
-          </span>
-          <span className="card-meta-item">
-            <Clock size={13} color="var(--accent)" />
-            {service.duration || "2 hrs"}
-          </span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <span className="card-price">{service.price}</span>
-          <div className="card-arrow">
-            <ArrowUpRight size={15} color="var(--accent)" />
+        {/* Spacer */}
+        <div className="flex-1" />
+
+        {/* Footer */}
+        <div
+          className="flex items-center justify-between pt-5 mt-auto"
+          style={{ borderTop: "1px solid rgba(6,149,205,0.12)" }}
+        >
+          <div className="flex items-center gap-3.5">
+            <span className="flex items-center gap-1 text-[0.78rem]" style={{ color: "rgba(8,42,69,0.5)" }}>
+              <Clock size={12} color="#0695CD" />
+              {service.duration ?? "2 hrs"}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <span
+              className="text-[1rem] font-semibold"
+              style={{
+                color: "#082A45",
+                fontFamily: "'DM Serif Display', Georgia, serif",
+                fontWeight: 400,
+              }}
+            >
+              {service.price}
+            </span>
+            <motion.div
+              animate={isHovered ? { scale: 1.08 } : { scale: 1 }}
+              transition={{ duration: 0.18 }}
+              className="flex items-center justify-center w-8 h-8 rounded-full transition-all duration-250"
+              style={{
+                background: isHovered ? "#0695CD" : "rgba(6,149,205,0.1)",
+                border: `1px solid ${isHovered ? "#0695CD" : "rgba(6,149,205,0.22)"}`,
+              }}
+            >
+              <ArrowUpRight size={14} color={isHovered ? "#fff" : "#0695CD"} />
+            </motion.div>
           </div>
         </div>
       </div>
-    </motion.div>
+    </motion.article>
   );
-}
+};
 
-// ─── SERVICES PAGE ────────────────────────────────────────────────────────────
-export default function ServicesPage() {
+// ─── STATS BAR ────────────────────────────────────────────────────────────────
+const STATS: StatItem[] = [
+  { num: "10,000+", label: "Jobs completed", icon: <TrendingUp size={13} color="#0695CD" /> },
+  { num: "4.85", label: "Average rating", icon: <Star size={13} fill="#d97706" color="#d97706" /> },
+  { num: "48 hrs", label: "Avg. response", icon: <Clock size={13} color="#0695CD" /> },
+  { num: "6", label: "Services offered", icon: <Award size={13} color="#0695CD" /> },
+];
+
+// ─── PAGE ─────────────────────────────────────────────────────────────────────
+export default function ServicesPage(): React.ReactElement {
+  const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
   const navigate = useNavigate();
-  const { data: services = [], isLoading } = useGetServicesQuery();
 
-  if (isLoading) return <Loader fullScreen />;
+  const { data: apiServices = [], isLoading } = useGetServicesQuery();
+  const services: Service[] = apiServices;
 
-  const handleSelect = (slug: string) => {
+  const handleSelect = (slug: string): void => {
     navigate(`/service/${slug}`);
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen" style={{ background: "#F0F9FF" }}>
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          className="w-8 h-8 rounded-full border-2 border-transparent"
+          style={{ borderTopColor: "#0695CD" }}
+        />
+      </div>
+    );
+  }
+
   return (
     <>
-      <style>{css}</style>
-      <div className="sp-root">
-        <div className="dot-grid" />
-        <div className="bg-glow" />
-        <div className="sp-wrap">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.35 }}>
-            {/* Hero */}
-            <div className="sp-hero">
+      {/* Google Fonts */}
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap');
+        body { font-family: 'DM Sans', sans-serif; }
+      `}</style>
+
+      <div
+        className="relative min-h-screen overflow-x-hidden"
+        style={{ background: "linear-gradient(160deg, #EBF7FF 0%, #F7FCFF 50%, #EEF8FF 100%)" }}
+      >
+        {/* Grid texture */}
+        <div
+          className="fixed inset-0 pointer-events-none z-0"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(6,149,205,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(6,149,205,0.045) 1px, transparent 1px)",
+            backgroundSize: "44px 44px",
+          }}
+        />
+
+        {/* Radial glow */}
+        <div
+          className="fixed pointer-events-none z-0"
+          style={{
+            top: "-180px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "860px",
+            height: "560px",
+            background:
+              "radial-gradient(ellipse at center, rgba(6,149,205,0.12) 0%, transparent 68%)",
+          }}
+        />
+
+        {/* Content */}
+        <div className="relative z-10 max-w-[1180px] mx-auto px-6 pb-28">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
+          >
+            {/* ── HERO ── */}
+            <header className="pt-20 pb-16 text-center">
               <motion.div
-                className="sp-eyebrow"
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
+                transition={{ delay: 0.08 }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[0.68rem] font-bold tracking-[0.14em] uppercase mb-7"
+                style={{
+                  background: "rgb(215 242 255 / 58%)",
+                  border: "1px solid rgba(6,149,205,0.22)",
+                  color: "#0695CD",
+                  backdropFilter: "blur(8px)",
+                }}
               >
-                <Sparkles size={12} />
+                <Sparkles size={11} />
                 Premium AC Services
               </motion.div>
 
               <motion.h1
-                className="sp-title"
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 22 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.17 }}
+                transition={{ delay: 0.15 }}
+                className="text-[clamp(2.6rem,6vw,4.6rem)] leading-[1.06] tracking-tight mb-5"
+                style={{
+                  fontFamily: "'DM Serif Display', Georgia, serif",
+                  fontWeight: 400,
+                  color: "#082A45",
+                }}
               >
-                Every Service<br /><em>You Need</em>
+                Every Service
+                <br />
+                <em className="italic" style={{ color: "#0695CD" }}>
+                  You Need
+                </em>
               </motion.h1>
 
-              <div className="accent-divider" />
+              {/* Divider */}
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ delay: 0.22, duration: 0.4 }}
+                className="w-12 h-[3px] mx-auto rounded-full mb-6"
+                style={{ background: "#0695CD", opacity: 0.55 }}
+              />
 
               <motion.p
-                className="sp-sub"
-                style={{ marginTop: 24 }}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.24 }}
+                transition={{ delay: 0.25 }}
+                className="text-[1rem] leading-[1.8] max-w-[440px] mx-auto"
+                style={{ color: "rgba(8,42,69,0.52)", fontWeight: 400 }}
               >
                 From day-one installation to year-round maintenance — certified technicians, transparent pricing.
               </motion.p>
 
+              {/* Stats bar */}
               <motion.div
-                className="stats-bar"
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.34 }}
+                className="inline-flex flex-wrap items-center justify-center gap-6 mt-10 px-8 py-4 rounded-full"
+                style={{
+                  background: "rgb(215 242 255 / 58%)",
+                  border: "1px solid rgba(6,149,205,0.16)",
+                  backdropFilter: "blur(12px)",
+                  boxShadow: "0 2px 12px rgba(6,149,205,0.07)",
+                }}
               >
-                {[
-                  { num: "10,000+", label: "Jobs done" },
-                  { num: "4.85", label: "Avg. rating", icon: <Star size={13} fill="#d97706" color="#d97706" /> },
-                  { num: "48 hrs", label: "Avg. response" },
-                  { num: "6", label: "Services" },
-                ].map((s, i) => (
+                {STATS.map((s, i) => (
                   <React.Fragment key={s.num}>
-                    {i > 0 && <div className="stat-sep" />}
-                    <div className="stat-item">
+                    {i > 0 && (
+                      <div
+                        className="hidden sm:block w-px h-6"
+                        style={{ background: "rgba(6,149,205,0.15)" }}
+                      />
+                    )}
+                    <div className="flex items-center gap-2 text-[0.82rem] whitespace-nowrap">
                       {s.icon}
-                      <span className="stat-num">{s.num}</span>
-                      <span>{s.label}</span>
+                      <span
+                        className="text-[1.1rem]"
+                        style={{
+                          fontFamily: "'DM Serif Display', Georgia, serif",
+                          color: "#082A45",
+                          fontWeight: 400,
+                        }}
+                      >
+                        {s.num}
+                      </span>
+                      <span style={{ color: "rgba(8,42,69,0.48)" }}>{s.label}</span>
                     </div>
                   </React.Fragment>
                 ))}
               </motion.div>
-            </div>
+            </header>
 
-            {/* Grid */}
-            <div className="services-grid">
-              {services.map((service: any, i: number) => (
+            {/* ── SERVICES GRID ── */}
+            <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))" }}>
+              {services.map((service, i) => (
                 <ServiceCard
                   key={service.slug || service._id}
                   service={service}
                   onClick={handleSelect}
                   index={i}
+                  isHovered={hoveredSlug === service.slug}
+                  onHover={setHoveredSlug}
                 />
               ))}
             </div>
+
+            {/* ── BOTTOM CTA ── */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+              className="mt-16 text-center"
+            >
+              <p
+                className="text-[0.85rem] mb-4"
+                style={{ color: "rgba(8,42,69,0.45)" }}
+              >
+                Not sure which service you need?
+              </p>
+              <button
+                onClick={() => navigate("/contact")}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-[0.88rem] font-semibold transition-all duration-200 hover:opacity-90 active:scale-[0.98]"
+                style={{
+                  background: "#0695CD",
+                  color: "#ffffff",
+                  boxShadow: "0 4px 16px rgba(6,149,205,0.35)",
+                }}
+              >
+                <Sparkles size={15} />
+                Get a Free Consultation
+              </button>
+            </motion.div>
           </motion.div>
         </div>
       </div>
