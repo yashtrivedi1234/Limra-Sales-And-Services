@@ -54,9 +54,7 @@ const CTASection: React.FC<CTAProps> = ({
               </a>
             </div>
 
-            <p style={{ fontSize: "0.75rem", color: BRAND.textOnDarkMuted, fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase" }}>
-              No strings attached &nbsp;•&nbsp; Expert Advice
-            </p>
+            
           </div>
         </motion.div>
       </div>
