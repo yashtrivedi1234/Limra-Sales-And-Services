@@ -205,7 +205,7 @@ const SiteFooter = () => {
                 variants={{ visible: { transition: { staggerChildren: 0.07 } } }}
               >
                 {services && services.length > 0 ? (
-                  services.slice(0, 6).map((s: any) => (
+                  [...services].reverse().slice(0, 6).map((s: any) => (
                     <motion.li key={s._id || s.id} variants={linkItemVariants}>
                       <Link
                         to={`/service/${s.slug}`}

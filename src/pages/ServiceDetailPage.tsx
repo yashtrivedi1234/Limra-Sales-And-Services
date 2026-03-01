@@ -74,19 +74,9 @@ export default function ServiceDetailPage() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <motion.button
-              className="inline-flex items-center gap-2 text-[rgba(8,42,69,0.48)] bg-transparent border border-[rgba(6,149,205,0.12)] rounded-full cursor-pointer text-[0.85rem] font-['DM_Sans',sans-serif] py-2 pr-[18px] pl-[14px] mb-[48px] mt-[45px] transition-all duration-200 shadow-[0_1px_3px_rgba(6,149,205,0.06),0_1px_2px_rgba(6,149,205,0.04)] hover:text-[#082A45] hover:border-[rgba(6,149,205,0.25)] hover:bg-[#ffffff]"
-              onClick={() => navigate("/services")}
-              initial={{ opacity: 0, x: -16 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.08 }}
-            >
-              <ArrowLeft size={15} />
-              All Services
-            </motion.button>
+          >            
 
-            <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-12 items-start mb-[72px]">
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-12 items-start mb-[72px] mt-[45px]">
               <motion.div
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -119,7 +109,7 @@ export default function ServiceDetailPage() {
               </motion.div>
 
               <motion.div
-                className="bg-[#ffffff] border border-[rgba(6,149,205,0.12)] rounded-[20px] py-8 px-7 shadow-[0_4px_12px_rgba(6,149,205,0.08),0_2px_4px_rgba(6,149,205,0.04)] sticky top-6"
+                className="bg-[#ffffff] border border-[rgba(6,149,205,0.12)] rounded-[20px] py-8 px-7 shadow-[0_4px_12px_rgba(6,149,205,0.08),0_2px_4px_rgba(6,149,205,0.04)] sticky top-6 mt-[45px]"
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 }}

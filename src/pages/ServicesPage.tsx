@@ -240,7 +240,7 @@ export default function ServicesPage(): React.ReactElement {
   const navigate = useNavigate();
 
   const { data: apiServices = [], isLoading } = useGetServicesQuery();
-  const services: Service[] = apiServices;
+  const services: Service[] = [...apiServices].reverse();
 
   const handleSelect = (slug: string): void => {
     navigate(`/service/${slug}`);
