@@ -27,7 +27,7 @@ const Index = () => (
     <WhyChooseUs />
     <CTASection />
     <BlogPreview />
-    <Newsletter />
+    {/* <Newsletter /> */}
   </main>
 );
 

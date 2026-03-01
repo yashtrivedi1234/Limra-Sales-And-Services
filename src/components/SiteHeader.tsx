@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, Phone, User as UserIcon, LogOut } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useUserAuth } from "@/context/AuthContext";
 
 import logo1 from "../assets/logo1.png";
 import { BRAND } from "@/lib/colors";
@@ -21,7 +20,6 @@ const SiteHeader = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { isAuthenticated, userEmail, logout } = useUserAuth();
 
   useEffect(() => {
     setMenuOpen(false);
@@ -126,76 +124,7 @@ const SiteHeader = () => {
             flexShrink: 0,
           }}
         >
-          {/* Auth Buttons */}
-          {!isAuthenticated ? (
-            <div style={{ display: "flex", gap: "8px" }}>
-              <button
-                onClick={() => navigate('/login')}
-                style={{
-                  padding: "7px 16px",
-                  borderRadius: "999px",
-                  border: `1.5px solid ${BRAND.primary}`,
-                  background: "transparent",
-                  color: BRAND.primary,
-                  fontWeight: 600,
-                  fontSize: "0.85rem",
-                  cursor: "pointer",
-                  whiteSpace: "nowrap",
-                  lineHeight: 1,
-                }}
-              >
-                Sign In
-              </button>
 
-              <button
-                onClick={() => navigate('/register')}
-                style={{
-                  padding: "7px 16px",
-                  borderRadius: "999px",
-                  border: "none",
-                  background: BRAND.primary,
-                  color: BRAND.white,
-                  fontWeight: 600,
-                  fontSize: "0.85rem",
-                  cursor: "pointer",
-                  whiteSpace: "nowrap",
-                  lineHeight: 1,
-                }}
-              >
-                Sign Up
-              </button>
-            </div>
-          ) : (
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", background: "#f8fafc", padding: "4px 12px", borderRadius: "999px", border: `1px solid ${BRAND.slate100}` }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "6px", color: BRAND.dark, fontSize: "0.85rem", fontWeight: 500 }}>
-                <div style={{ width: "24px", height: "24px", borderRadius: "50%", background: BRAND.primary, color: "white", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <UserIcon size={14} />
-                </div>
-                <span className="hidden sm:inline-block max-w-[100px] truncate" title={userEmail || ''}>
-                  {userEmail?.split('@')[0]}
-                </span>
-              </div>
-              <button
-                onClick={() => {
-                  logout();
-                  navigate('/');
-                }}
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  color: BRAND.dark,
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "4px",
-                }}
-                title="Logout"
-              >
-                <LogOut size={16} />
-              </button>
-            </div>
-          )}
 
           {/* Enquiry Button */}
           <a
@@ -273,37 +202,7 @@ const SiteHeader = () => {
                 </Link>
               ))}
 
-              {/* Mobile Auth */}
-              <div style={{ marginTop: "16px" }}>
-                {!isAuthenticated ? (
-                  <>
-                    <button onClick={() => navigate('/login')} className="mobile-auth-btn">Sign In</button>
-                    <button onClick={() => navigate('/register')} className="mobile-auth-btn primary">Sign Up</button>
-                  </>
-                ) : (
-                  <div style={{ padding: "12px 16px", borderTop: `1px solid ${BRAND.slate100}`, marginTop: "8px" }}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 600 }}>
-                        <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: BRAND.primary, color: "white", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                          <UserIcon size={16} />
-                        </div>
-                        <span className="truncate max-w-[200px]">{userEmail}</span>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => {
-                        logout();
-                        navigate('/');
-                        setMenuOpen(false);
-                      }}
-                      className="mobile-auth-btn"
-                      style={{ border: `1px solid #ef4444`, color: "#ef4444", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}
-                    >
-                      <LogOut size={16} /> Sign Out
-                    </button>
-                  </div>
-                )}
-              </div>
+
 
               {/* Mobile Call */}
               <a
@@ -333,28 +232,10 @@ const SiteHeader = () => {
       <style>{`
         .desktop-nav { display: none !important; }
         .mobile-menu-btn { display: flex !important; }
-        .desktop-auth { display: none !important; }
         .desktop-enquiry { display: none !important; }
-        .mobile-auth-btn {
-          width: 100%;
-          padding: 10px;
-          margin-bottom: 8px;
-          border-radius: 999px;
-          border: 1.5px solid ${BRAND.primary};
-          background: transparent;
-          color: ${BRAND.primary};
-          font-weight: 600;
-          cursor: pointer;
-        }
-        .mobile-auth-btn.primary {
-          background: ${BRAND.primary};
-          color: white;
-          border: none;
-        }
         @media (min-width: 1024px) {
           .desktop-nav { display: flex !important; }
           .mobile-menu-btn { display: none !important; }
-          .desktop-auth { display: flex !important; }
           .desktop-enquiry { display: inline-flex !important; }
         }
       `}</style>

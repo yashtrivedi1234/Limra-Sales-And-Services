@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Shield, Award, Users, Target, Phone } from "lucide-react";
+import { Shield, Award, CheckCircle, Target, Phone } from "lucide-react";
 import CountUp from "@/components/ui/CountUp";
 import { BRAND } from "@/lib/colors";
 
@@ -13,7 +13,7 @@ const stats = [
 const values = [
   { icon: Shield, title: "Reliability", desc: "We stand behind every installation with comprehensive warranties and responsive after-sales support." },
   { icon: Award, title: "Excellence", desc: "Only premium brands and certified technicians — no shortcuts, no compromises on quality." },
-  { icon: Users, title: "Customer First", desc: "Every solution is tailored to the client's space, budget, and comfort requirements." },
+  { icon: CheckCircle, title: "Quality Assured", desc: "Rigorous testing and strict quality control to guarantee reliable and top-tier HVAC solutions." },
   { icon: Target, title: "Innovation", desc: "We stay ahead with the latest energy-efficient and smart HVAC technologies." },
 ];
 

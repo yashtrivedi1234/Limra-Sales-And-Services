@@ -1,32 +1,9 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { MapPin, Phone, Mail, Facebook, Instagram, Youtube } from "lucide-react";
+import { MapPin, Phone, Mail, Facebook, Instagram, Youtube, UserCheck } from "lucide-react";
 import cclogo from "../assets/cc-logo.png";
 import { BRAND } from "@/lib/colors";
-
-const residentialProducts = [
-  "Inverter Split AC",
-  "Non-Inverter Split AC",
-  "Window AC",
-  "Portable AC",
-  "Water Coolers",
-  "Air Purifiers & Water Softeners",
-  "Alkaline RO Systems",
-  "Solar Water Heaters",
-];
-
-const commercialProducts = [
-  "VRV Systems",
-  "Cassette AC",
-  "Ductable AC",
-  "Floor Standing AC",
-  "Chiller Systems",
-  "AHU Systems",
-  "Heat Pumps",
-  "Ventilation & HRV",
-  "Cold Rooms",
-  "Deep Freezers",
-];
+import { useGetServicesQuery, useGetProjectsQuery } from "@/store/api";
 
 const quickLinks = [
   { label: "All Products", to: "/shop" },
@@ -35,7 +12,6 @@ const quickLinks = [
   { label: "Terms & Conditions", to: "#" },
   { label: "Refund Policy", to: "#" },
   { label: "Brands", to: "/brands" },
-  { label: "Admin Login", to: "/admin" },
 ];
 
 const socialLinks = [
@@ -54,7 +30,11 @@ const colVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.45 } },
 };
 
-const SiteFooter = () => (
+const SiteFooter = () => {
+  const { data: services, isLoading: servicesLoading, isError: servicesError } = useGetServicesQuery();
+  const { data: projects, isLoading: projectsLoading, isError: projectsError } = useGetProjectsQuery();
+
+  return (
   <>
     <style>{`
       @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display:ital,wght@0,400;1,400&display=swap');
@@ -86,7 +66,7 @@ const SiteFooter = () => (
             gap: 40,
           }}
         >
-          {/* About */}
+          {/* About & Admin */}
           <motion.div variants={colVariants}>
             <Link
               to="/"
@@ -97,11 +77,47 @@ const SiteFooter = () => (
                 color: "#fff",
                 whiteSpace: "nowrap",
                 textDecoration: "none",
+                display: "block",
+                marginBottom: "20px"
               }}
             >
               LIMRA Sales &amp; Services
             </Link>
-            <p style={{ color: "rgba(255,255,255,0.65)", margin: "12px 0", fontFamily: "'DM Sans', sans-serif", fontSize: "0.875rem", lineHeight: 1.7, fontWeight: 300 }}>
+
+            <Link
+              to="/admin"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 8,
+                background: "rgba(255, 255, 255, 0.1)",
+                border: "1px solid rgba(255, 255, 255, 0.2)",
+                color: "#fff",
+                padding: "10px 18px",
+                borderRadius: 6,
+                textDecoration: "none",
+                fontWeight: 600,
+                fontSize: "0.9rem",
+                fontFamily: "'DM Sans', sans-serif",
+                marginBottom: 24,
+                backdropFilter: "blur(4px)",
+                transition: "all 0.2s"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(255, 255, 255, 0.2)";
+                e.currentTarget.style.transform = "translateY(-1px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "rgba(255, 255, 255, 0.1)";
+                e.currentTarget.style.transform = "translateY(0)";
+              }}
+            >
+              <UserCheck size={18} />
+              Admin Login
+            </Link>
+
+            <p style={{ color: "rgba(255,255,255,0.65)", margin: "0 0 20px 0", fontFamily: "'DM Sans', sans-serif", fontSize: "0.875rem", lineHeight: 1.7, fontWeight: 300 }}>
               Your trusted partner for all HVAC and air conditioning needs.
             </p>
             <div style={{ display: "flex", gap: 12 }}>
@@ -113,43 +129,55 @@ const SiteFooter = () => (
             </div>
           </motion.div>
 
-          {/* Residential */}
+          {/* Services */}
           <motion.div variants={colVariants}>
-            <p className="limra-footer-heading">Residential</p>
-            <ul>
-              {residentialProducts.map((p) => (
-                <li key={p} style={{ marginBottom: "6px" }}>
-                  <Link
-                    to={`/shop?product=${encodeURIComponent(p)}`}
-                    className="limra-footer-link"
-                  >
-                    {p}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <p className="limra-footer-heading">Services</p>
+            {servicesLoading ? (
+              <p className="limra-footer-link">Loading services...</p>
+            ) : servicesError ? (
+              <p className="limra-footer-link" style={{ color: "#ff4757" }}>Failed to load services</p>
+            ) : (
+              <ul>
+                {services?.map((s: any) => (
+                  <li key={s._id || s.id} style={{ marginBottom: "6px" }}>
+                    <Link
+                      to={`/service/${s.slug}`}
+                      className="limra-footer-link"
+                    >
+                      {s.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
           </motion.div>
 
-          {/* Commercial */}
+          {/* Projects */}
           <motion.div variants={colVariants}>
-            <p className="limra-footer-heading">Commercial</p>
-            <ul>
-              {commercialProducts.map((p) => (
-                <li key={p} style={{ marginBottom: "6px" }}>
-                  <Link
-                    to={`/shop?product=${encodeURIComponent(p)}`}
-                    className="limra-footer-link"
-                  >
-                    {p}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <p className="limra-footer-heading">Projects</p>
+            {projectsLoading ? (
+              <p className="limra-footer-link">Loading projects...</p>
+            ) : projectsError ? (
+              <p className="limra-footer-link" style={{ color: "#ff4757" }}>Failed to load projects</p>
+            ) : (
+              <ul>
+                {projects?.map((p: any) => (
+                  <li key={p._id || p.id} style={{ marginBottom: "6px" }}>
+                    <Link
+                      to="/case-studies"
+                      className="limra-footer-link"
+                    >
+                      {p.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
           </motion.div>
 
           {/* Contact */}
           <motion.div variants={colVariants}>
-            <p className="limra-footer-heading">Contact Info</p>
+            <p className="limra-footer-heading">Get In Touch</p>
             <ul style={{ marginBottom: 20 }}>
               <li style={{ display: "flex", gap: 10, marginBottom: "8px", alignItems: "flex-start" }}>
                 <Phone size={14} style={{ marginTop: 3, flexShrink: 0 }} />
@@ -222,6 +250,7 @@ const SiteFooter = () => (
       </div>
     </motion.footer>
   </>
-);
+  );
+};
 
 export default SiteFooter;
