@@ -18,10 +18,10 @@ const values = [
 ];
 
 const milestones = [
-  { year: "2017", text: "Founded in Bareilly as a small AC service workshop" },
-  { year: "2020", text: "Became authorized Daikin dealer for the region" },
-  { year: "2023", text: "Expanded to commercial VRV and chiller systems" },
-  { year: "2026", text: "Completed landmark projects across UP including airports and hotels" },
+  { year: "2017", text: "Founded in Hardoi as a small AC service workshop with a vision to deliver reliable cooling solutions." },
+  { year: "2020", text: "Expanded services across nearby districts and built a strong customer base in residential and commercial HVAC projects." },
+  { year: "2023", text: "Entered commercial and industrial cooling sector including VRV/VRF systems, Cold Rooms, and Chiller Plants." },
+  { year: "2024", text: "Successfully completed major commercial and industrial projects across Uttar Pradesh, strengthening our reputation as a trusted HVAC partner." },
 ];
 
 const fadeUp = {

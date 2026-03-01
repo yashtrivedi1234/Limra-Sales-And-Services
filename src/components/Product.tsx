@@ -22,7 +22,7 @@ export function CommercialApplications() {
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(24px, 5vw, 48px)" }}>
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} style={{ textAlign: "center", marginBottom: "48px" }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", background: `${BRAND.primary}1A`, border: `1px solid ${BRAND.primary}40`, color: BRAND.primary, fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 14px", borderRadius: "100px", marginBottom: "18px" }}>
-            Industries We Serve <ArrowRight size={14} />
+            Industries We Serve
           </div>
           <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.dark, lineHeight: 1.15 }}>
             Commercial HVAC Applications
@@ -57,6 +57,7 @@ export function CommercialApplications() {
           <button
             onClick={() => navigate("/product")}
             style={{
+              display: "inline-flex", alignItems: "center", gap: "8px",
               background: `linear-gradient(135deg, ${BRAND.dark} 0%, ${BRAND.primary} 100%)`,
               color: BRAND.white, fontWeight: 700, fontSize: "0.9rem",
               padding: "14px 36px", borderRadius: "100px", border: "none",
@@ -64,7 +65,7 @@ export function CommercialApplications() {
               transition: "transform 0.2s, box-shadow 0.2s"
             }}
           >
-            View All Products
+            View All <ArrowRight size={14} />
           </button>
         </div>
       </div>
