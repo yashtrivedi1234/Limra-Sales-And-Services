@@ -85,7 +85,7 @@ const About = () => (
     </section>
 
     {/* ── Our Story ── */}
-    <section style={{ padding: "80px 24px", background: "rgb(215 242 255 / 58%)", minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+    <section style={{ padding: "80px 24px", background: "rgb(215 242 255 / 58%)" }}>
       <div style={{ maxWidth: "1200px", width: "100%", margin: "0 auto" }}>
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
           <div style={{

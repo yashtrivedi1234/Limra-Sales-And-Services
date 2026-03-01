@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Wind, Building2, Snowflake, Fan, ThermometerSun, AirVent, ArrowRight, Box, Droplet, Droplets, Activity } from "lucide-react";
+import { Wind, Building2, Snowflake, AppWindow, AirVent, Building, Droplets, Filter, Fan, ThermometerSun, ArrowRight, Box, Droplet, Activity } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { BRAND } from "@/lib/colors";
 
@@ -14,12 +14,12 @@ Low noise operation and modern wall-mounted design.
 Professional installation and reliable after-sales support available.`,
   },
   {
-    icon: Box,
+    icon: AppWindow,
     title: "Window AC",
     type: "Residential",
     desc: `Compact and budget-friendly Window AC for small rooms.
 Easy installation with strong cooling output.
-Ideal for residential and rental properties..`,
+Ideal for residential and rental properties.`,
   },
   {
     icon: AirVent,
@@ -30,7 +30,7 @@ Perfect for offices, showrooms, and commercial spaces.
 Stylish design with high cooling efficiency.`,
   },
   {
-    icon: Wind,
+    icon: Building,
     title: "Ductable AC",
     type: "Commercial",
     desc: `Centralized Ductable AC system for large areas and halls.
@@ -38,7 +38,7 @@ Hidden installation with powerful airflow control.
 Best solution for commercial and industrial cooling needs.`,
   },
   {
-    icon: Droplet,
+    icon: Droplets,
     title: "Water Dispenser",
     type: "Residential",
     desc: `Hot and cold Water Dispensers for offices and commercial use.
@@ -46,15 +46,13 @@ Energy-efficient and durable cooling system.
 Reliable performance with easy maintenance support.`,
   },
   {
-    icon: Droplet,
+    icon: Filter,
     title: "RO Plant",
     type: "Commercial",
     desc: `Advanced RO Plant systems for pure and safe drinking water.
 Suitable for commercial and industrial applications.
 High filtration efficiency with long-lasting components.`,
   },
- 
-
 ];
 
 const fadeUp = {
