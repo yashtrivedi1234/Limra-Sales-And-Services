@@ -1,17 +1,25 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { MapPin, Phone, Mail, Facebook, Instagram, Youtube, UserCheck } from "lucide-react";
+import { MapPin, Phone, Mail, Facebook, Instagram, Youtube, UserCheck, ArrowRight, Clock, Shield } from "lucide-react";
 import cclogo from "../assets/cc-logo.png";
+import logo1 from "../assets/logo1.png";
 import { BRAND } from "@/lib/colors";
 import { useGetServicesQuery, useGetProjectsQuery } from "@/store/api";
 
 const quickLinks = [
+  { label: "Home", to: "/" },
+  { label: "Our Story", to: "/about" },
   { label: "All Products", to: "/shop" },
   { label: "Our Projects", to: "/case-studies" },
+  { label: "Brands", to: "/brands" },
+  { label: "Blog", to: "/blog" },
+  { label: "Contact Us", to: "/contact" },
+];
+
+const policyLinks = [
   { label: "Privacy Policy", to: "#" },
   { label: "Terms & Conditions", to: "#" },
   { label: "Refund Policy", to: "#" },
-  { label: "Brands", to: "/brands" },
 ];
 
 const socialLinks = [
@@ -22,12 +30,12 @@ const socialLinks = [
 
 const containerVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
+  visible: { transition: { staggerChildren: 0.1 } },
 };
 
 const colVariants = {
-  hidden: { opacity: 0, y: 18 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.45 } },
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
 const SiteFooter = () => {
@@ -35,114 +43,156 @@ const SiteFooter = () => {
   const { data: projects, isLoading: projectsLoading, isError: projectsError } = useGetProjectsQuery();
 
   return (
-  <>
-    <style>{`
-      @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display:ital,wght@0,400;1,400&display=swap');
-      .limra-footer a { text-decoration: none !important; transition: color 0.2s !important; }
-      .limra-footer ul { list-style: none !important; padding: 0 !important; margin: 0 !important; }
-      .limra-footer-link { color: rgba(255,255,255,0.65) !important; font-size: 0.875rem !important; display: block !important; font-family: 'DM Sans', sans-serif !important; }
-      .limra-footer-link:hover { color: #ffffff !important; }
-      .limra-footer-heading { font-size: 0.72rem !important; font-weight: 700 !important; color: #ffffff !important; margin-bottom: 18px !important; letter-spacing: 0.14em !important; text-transform: uppercase !important; font-family: 'DM Sans', sans-serif !important; }
-      .limra-social-icon { color: rgba(255,255,255,0.65); transition: color 0.2s; }
-      .limra-social-icon:hover { color: #ffffff; }
-    `}</style>
-
     <motion.footer
-      className="limra-footer"
       initial="hidden"
       whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
       variants={containerVariants}
-      style={{
-        background: `linear-gradient(160deg, ${BRAND.dark} 0%, ${BRAND.darkMid} 60%, ${BRAND.dark} 100%)`,
-        color: "#fff",
-        fontFamily: "'DM Sans', sans-serif",
-      }}
+      style={{ background: `linear-gradient(160deg, ${BRAND.dark} 0%, #051B30 50%, ${BRAND.dark} 100%)` }}
     >
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "64px 32px" }}>
+      {/* Top accent line */}
+      <div style={{ height: 3, background: `linear-gradient(90deg, ${BRAND.primary}, ${BRAND.primaryLight}, ${BRAND.primary})` }} />
+
+      {/* CTA Strip */}
+      <div
+        style={{
+          background: `linear-gradient(135deg, ${BRAND.primary}15 0%, ${BRAND.dark}00 100%)`,
+          borderBottom: `1px solid rgba(255,255,255,0.06)`,
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 py-8">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div
+                className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ background: `${BRAND.primary}20`, border: `1px solid ${BRAND.primary}30` }}
+              >
+                <Phone size={20} style={{ color: BRAND.primaryLight }} />
+              </div>
+              <div>
+                <p className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.5)" }}>Need Expert HVAC Advice?</p>
+                <p className="text-lg font-bold text-white">Call us at +91 9839171701</p>
+              </div>
+            </div>
+            <a
+              href="tel:+919839171701"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300"
+              style={{
+                background: `linear-gradient(135deg, ${BRAND.primary}, ${BRAND.primaryLight})`,
+                color: BRAND.white,
+                boxShadow: `0 4px 20px ${BRAND.primary}40`,
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = `0 8px 30px ${BRAND.primary}60`; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = `0 4px 20px ${BRAND.primary}40`; }}
+            >
+              Get Free Consultation <ArrowRight size={15} />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Footer Content */}
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 py-14">
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))",
-            gap: 40,
-          }}
+          className="grid gap-10"
+          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}
         >
-          {/* About & Admin */}
-          <motion.div variants={colVariants}>
-            <Link
-              to="/"
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontWeight: 700,
-                fontSize: "1.05rem",
-                color: "#fff",
-                whiteSpace: "nowrap",
-                textDecoration: "none",
-                display: "block",
-                marginBottom: "20px"
-              }}
-            >
-              LIMRA Sales &amp; Services
+          {/* Brand Column */}
+          <motion.div variants={colVariants} className="sm:col-span-1 lg:pr-6">
+            <Link to="/" className="flex items-center gap-3 mb-5" style={{ textDecoration: "none" }}>
+              <img src={logo1} alt="LIMRA" style={{ height: 40, width: "auto" }} />
+              <span className="text-base font-bold text-white whitespace-nowrap">
+                LIMRA Sales & Services
+              </span>
             </Link>
 
-            <Link
-              to="/admin"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 8,
-                background: "rgba(255, 255, 255, 0.1)",
-                border: "1px solid rgba(255, 255, 255, 0.2)",
-                color: "#fff",
-                padding: "10px 18px",
-                borderRadius: 6,
-                textDecoration: "none",
-                fontWeight: 600,
-                fontSize: "0.9rem",
-                fontFamily: "'DM Sans', sans-serif",
-                marginBottom: 24,
-                backdropFilter: "blur(4px)",
-                transition: "all 0.2s"
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(255, 255, 255, 0.2)";
-                e.currentTarget.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "rgba(255, 255, 255, 0.1)";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
-            >
-              <UserCheck size={18} />
-              Admin Login
-            </Link>
-
-            <p style={{ color: "rgba(255,255,255,0.65)", margin: "0 0 20px 0", fontFamily: "'DM Sans', sans-serif", fontSize: "0.875rem", lineHeight: 1.7, fontWeight: 300 }}>
-              Your trusted partner for all HVAC and air conditioning needs.
+            <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,255,255,0.55)" }}>
+              Established in 1998, we are Bareilly's most trusted HVAC partner — delivering expert AC installation, maintenance, and sales for homes & businesses.
             </p>
-            <div style={{ display: "flex", gap: 12 }}>
+
+            {/* Trust badges */}
+            <div className="flex flex-col gap-3 mb-6">
+              <div className="flex items-center gap-2.5 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
+                <Shield size={14} style={{ color: BRAND.primaryLight }} />
+                <span>25+ Years of Trusted Service</span>
+              </div>
+              <div className="flex items-center gap-2.5 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
+                <Clock size={14} style={{ color: BRAND.primaryLight }} />
+                <span>Mon – Sat: 9:00 AM – 7:00 PM</span>
+              </div>
+            </div>
+
+            {/* Social Icons */}
+            <div className="flex gap-2.5">
               {socialLinks.map((s) => (
-                <a key={s.label} href={s.href} className="limra-social-icon">
-                  <s.icon size={20} />
+                <a
+                  key={s.label}
+                  href={s.href}
+                  aria-label={s.label}
+                  className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-300"
+                  style={{
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    color: "rgba(255,255,255,0.55)",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = `${BRAND.primary}30`;
+                    e.currentTarget.style.borderColor = `${BRAND.primary}50`;
+                    e.currentTarget.style.color = BRAND.primaryLight;
+                    e.currentTarget.style.transform = "translateY(-2px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "rgba(255,255,255,0.06)";
+                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+                    e.currentTarget.style.color = "rgba(255,255,255,0.55)";
+                    e.currentTarget.style.transform = "translateY(0)";
+                  }}
+                >
+                  <s.icon size={16} />
                 </a>
               ))}
             </div>
           </motion.div>
 
+          {/* Quick Links */}
+          <motion.div variants={colVariants}>
+            <p className="text-[11px] font-bold text-white uppercase tracking-[0.16em] mb-5">Quick Links</p>
+            <ul className="space-y-2.5">
+              {quickLinks.map((l) => (
+                <li key={l.label}>
+                  <Link
+                    to={l.to}
+                    className="text-sm flex items-center gap-1.5 transition-all duration-200"
+                    style={{ color: "rgba(255,255,255,0.55)", textDecoration: "none" }}
+                    onMouseEnter={(e) => { e.currentTarget.style.color = BRAND.primaryLight; e.currentTarget.style.transform = "translateX(3px)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.55)"; e.currentTarget.style.transform = "translateX(0)"; }}
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
           {/* Services */}
           <motion.div variants={colVariants}>
-            <p className="limra-footer-heading">Services</p>
+            <p className="text-[11px] font-bold text-white uppercase tracking-[0.16em] mb-5">Our Services</p>
             {servicesLoading ? (
-              <p className="limra-footer-link">Loading services...</p>
+              <div className="space-y-2.5">
+                {[1,2,3].map(i => <div key={i} className="h-4 rounded" style={{ background: "rgba(255,255,255,0.06)", width: `${60 + i * 10}%` }} />)}
+              </div>
             ) : servicesError ? (
-              <p className="limra-footer-link" style={{ color: "#ff4757" }}>Failed to load services</p>
+              <p className="text-sm" style={{ color: "rgba(255,255,255,0.35)" }}>Unable to load services</p>
             ) : (
-              <ul>
-                {services?.map((s: any) => (
-                  <li key={s._id || s.id} style={{ marginBottom: "6px" }}>
+              <ul className="space-y-2.5">
+                {services?.slice(0, 6).map((s: any) => (
+                  <li key={s._id || s.id}>
                     <Link
                       to={`/service/${s.slug}`}
-                      className="limra-footer-link"
+                      className="text-sm transition-all duration-200"
+                      style={{ color: "rgba(255,255,255,0.55)", textDecoration: "none" }}
+                      onMouseEnter={(e) => { e.currentTarget.style.color = BRAND.primaryLight; e.currentTarget.style.transform = "translateX(3px)"; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.55)"; e.currentTarget.style.transform = "translateX(0)"; }}
                     >
                       {s.title}
                     </Link>
@@ -152,68 +202,90 @@ const SiteFooter = () => {
             )}
           </motion.div>
 
-          {/* Projects */}
+          {/* Contact Info */}
           <motion.div variants={colVariants}>
-            <p className="limra-footer-heading">Projects</p>
-            {projectsLoading ? (
-              <p className="limra-footer-link">Loading projects...</p>
-            ) : projectsError ? (
-              <p className="limra-footer-link" style={{ color: "#ff4757" }}>Failed to load projects</p>
-            ) : (
-              <ul>
-                {projects?.map((p: any) => (
-                  <li key={p._id || p.id} style={{ marginBottom: "6px" }}>
-                    <Link
-                      to="/case-studies"
-                      className="limra-footer-link"
-                    >
-                      {p.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </motion.div>
-
-          {/* Contact */}
-          <motion.div variants={colVariants}>
-            <p className="limra-footer-heading">Get In Touch</p>
-            <ul style={{ marginBottom: 20 }}>
-              <li style={{ display: "flex", gap: 10, marginBottom: "8px", alignItems: "flex-start" }}>
-                <Phone size={14} style={{ marginTop: 3, flexShrink: 0 }} />
-                <a href="tel:+919839171701" className="limra-footer-link">
-                  +91 9839171701
+            <p className="text-[11px] font-bold text-white uppercase tracking-[0.16em] mb-5">Contact Us</p>
+            <ul className="space-y-4 mb-6">
+              <li>
+                <a
+                  href="tel:+919839171701"
+                  className="flex items-start gap-3 transition-colors duration-200 group"
+                  style={{ color: "rgba(255,255,255,0.55)", textDecoration: "none" }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = BRAND.primaryLight}
+                  onMouseLeave={(e) => e.currentTarget.style.color = "rgba(255,255,255,0.55)"}
+                >
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: `${BRAND.primary}15` }}>
+                    <Phone size={14} style={{ color: BRAND.primaryLight }} />
+                  </div>
+                  <div>
+                    <p className="text-xs mb-0.5" style={{ color: "rgba(255,255,255,0.35)" }}>Phone</p>
+                    <p className="text-sm font-medium">+91 9839171701</p>
+                  </div>
                 </a>
               </li>
-              <li style={{ display: "flex", gap: 10, marginBottom: "8px", alignItems: "flex-start" }}>
-                <Mail size={14} style={{ marginTop: 3, flexShrink: 0 }} />
-                <a href="mailto:info@limrasales.com" className="limra-footer-link">
-                  info@limrasales.com
+              <li>
+                <a
+                  href="mailto:info@limrasales.com"
+                  className="flex items-start gap-3 transition-colors duration-200"
+                  style={{ color: "rgba(255,255,255,0.55)", textDecoration: "none" }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = BRAND.primaryLight}
+                  onMouseLeave={(e) => e.currentTarget.style.color = "rgba(255,255,255,0.55)"}
+                >
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: `${BRAND.primary}15` }}>
+                    <Mail size={14} style={{ color: BRAND.primaryLight }} />
+                  </div>
+                  <div>
+                    <p className="text-xs mb-0.5" style={{ color: "rgba(255,255,255,0.35)" }}>Email</p>
+                    <p className="text-sm font-medium">info@limrasales.com</p>
+                  </div>
                 </a>
               </li>
-              <li style={{ display: "flex", gap: 10, marginBottom: "8px", alignItems: "flex-start" }}>
-                <MapPin size={14} style={{ marginTop: 3, flexShrink: 0 }} />
+              <li>
                 <a
                   href="https://maps.google.com/?q=Civil+Lines,+Bareilly,+UP+243001"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="limra-footer-link"
+                  className="flex items-start gap-3 transition-colors duration-200"
+                  style={{ color: "rgba(255,255,255,0.55)", textDecoration: "none" }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = BRAND.primaryLight}
+                  onMouseLeave={(e) => e.currentTarget.style.color = "rgba(255,255,255,0.55)"}
                 >
-                  Civil Lines, Bareilly, UP 243001
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: `${BRAND.primary}15` }}>
+                    <MapPin size={14} style={{ color: BRAND.primaryLight }} />
+                  </div>
+                  <div>
+                    <p className="text-xs mb-0.5" style={{ color: "rgba(255,255,255,0.35)" }}>Location</p>
+                    <p className="text-sm font-medium">Civil Lines, Bareilly, UP 243001</p>
+                  </div>
                 </a>
               </li>
             </ul>
 
-            <p className="limra-footer-heading">Quick Links</p>
-            <ul>
-              {quickLinks.map((l) => (
-                <li key={l.label} style={{ marginBottom: "6px" }}>
-                  <Link to={l.to} className="limra-footer-link">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            {/* Admin Login */}
+            <Link
+              to="/admin"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-300"
+              style={{
+                background: "rgba(255,255,255,0.05)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                color: "rgba(255,255,255,0.6)",
+                textDecoration: "none",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.1)";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
+                e.currentTarget.style.color = "#fff";
+                e.currentTarget.style.transform = "translateY(-1px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+                e.currentTarget.style.color = "rgba(255,255,255,0.6)";
+                e.currentTarget.style.transform = "translateY(0)";
+              }}
+            >
+              <UserCheck size={14} /> Admin Portal
+            </Link>
           </motion.div>
         </div>
       </div>
@@ -221,35 +293,46 @@ const SiteFooter = () => {
       {/* Bottom Bar */}
       <div
         style={{
-          background: "#020D1A",
-          padding: "16px 20px",
-          fontSize: 12,
-          color: "rgba(255,255,255,0.55)",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: 8,
-          textAlign: "center",
-          flexWrap: "wrap",
-          fontFamily: "'DM Sans', sans-serif",
-          fontWeight: 400,
+          borderTop: "1px solid rgba(255,255,255,0.06)",
+          background: "rgba(0,0,0,0.25)",
         }}
       >
-        <span>
-          © {new Date().getFullYear()} LIMRA Sales &amp; Services | Designed by
-        </span>
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 py-5">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+              © {new Date().getFullYear()} LIMRA Sales & Services. All rights reserved.
+            </p>
 
-        <a
-          href="https://www.codecrafter.co.in/"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ display: "flex", alignItems: "center" }}
-        >
-          <img src={cclogo} alt="CodeCrafter" style={{ width: 90 }} />
-        </a>
+            {/* Policy Links */}
+            <div className="flex items-center gap-4 flex-wrap justify-center">
+              {policyLinks.map((l, i) => (
+                <Link
+                  key={l.label}
+                  to={l.to}
+                  className="text-xs transition-colors duration-200"
+                  style={{ color: "rgba(255,255,255,0.35)", textDecoration: "none" }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = BRAND.primaryLight}
+                  onMouseLeave={(e) => e.currentTarget.style.color = "rgba(255,255,255,0.35)"}
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </div>
+
+            <a
+              href="https://www.codecrafter.co.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2"
+              style={{ textDecoration: "none" }}
+            >
+              <span className="text-[10px]" style={{ color: "rgba(255,255,255,0.3)" }}>Designed by</span>
+              <img src={cclogo} alt="CodeCrafter" style={{ width: 80, opacity: 0.6 }} />
+            </a>
+          </div>
+        </div>
       </div>
     </motion.footer>
-  </>
   );
 };
 
