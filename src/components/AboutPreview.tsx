@@ -19,11 +19,11 @@ const fadeUp = {
 };
 
 const values = [
-  { icon: Shield, title: "Reliability", desc: "Comprehensive warranties and responsive after-sales support on every installation." },
-  { icon: Award, title: "Excellence", desc: "Only premium brands and certified technicians — no shortcuts on quality." },
-  { icon: CheckCircle, title: "Quality Assured", desc: "Rigorous testing and strict quality control to guarantee reliable and top-tier HVAC solutions." },
-  { icon: Target, title: "Innovation", desc: "Latest energy-efficient and smart HVAC technologies, always ahead of the curve." },
-];
+  { icon: Shield, title: "Reliability", desc: "We stand behind every AC installation and industrial cooling project with dependable service, strong workmanship, and responsive after-sales support. Our commitment ensures consistent performance and long-term customer trust." },
+  { icon: Award, title: "Excellence", desc: "We deliver HVAC solutions with certified technicians, premium components, and no shortcuts. Every project reflects our dedication to technical precision and professional standards." },
+  { icon: CheckCircle, title: "Quality Assured", desc: "Through strict quality checks and performance testing, we guarantee reliable and energy-efficient air conditioning systems. From VRV/VRF systems to chiller plants, quality remains our top priority." },
+  { icon: Target, title: "Innovation", desc: "We continuously adopt modern, energy-efficient, and smart HVAC technologies to deliver advanced cooling solutions for residential, commercial, and industrial needs." },
+];;
 
 // const fadeUp = {
 //   hidden: { opacity: 0, y: 30 },

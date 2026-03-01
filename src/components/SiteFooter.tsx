@@ -241,10 +241,10 @@ const SiteFooter = () => {
             <ul className="space-y-4 mb-6">
               {[
                 {
-                  href: "tel:+919839171701",
+                  href: "tel:+919236477974",
                   Icon: Phone,
                   label: "Phone",
-                  value: "+91 9839171701",
+                  value: "+91 92364 77974",
                 },
                 {
                   href: "mailto:info@limrasales.com",

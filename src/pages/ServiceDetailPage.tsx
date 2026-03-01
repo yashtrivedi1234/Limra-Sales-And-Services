@@ -51,20 +51,20 @@ export default function ServiceDetailPage() {
         @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
       `}</style>
       <div className="min-h-screen relative overflow-x-hidden bg-[#F4FAFE] text-[#082A45] font-['DM_Sans',sans-serif] antialiased">
-        <div 
+        <div
           className="fixed inset-0 opacity-[0.022] pointer-events-none z-[1]"
           style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.75\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\' opacity=\'1\'/%3E%3C/svg%3E")' }}
         />
-        
-        <div 
+
+        <div
           className="fixed inset-0 pointer-events-none z-0"
-          style={{ 
+          style={{
             backgroundImage: 'linear-gradient(rgba(0,0,0,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.035) 1px, transparent 1px)',
             backgroundSize: '40px 40px'
           }}
         />
 
-        <div 
+        <div
           className="fixed -top-[200px] left-1/2 -translate-x-1/2 w-[900px] h-[600px] pointer-events-none z-0"
           style={{ background: 'radial-gradient(ellipse at center, rgba(186,230,253,0.35) 0%, transparent 70%)' }}
         />
@@ -74,7 +74,7 @@ export default function ServiceDetailPage() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-          >            
+          >
 
             <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-12 items-start mb-[72px] mt-[45px]">
               <motion.div
@@ -120,7 +120,7 @@ export default function ServiceDetailPage() {
                 <a href={`/book?service=${service.slug}`} className="flex items-center justify-center gap-2 w-full p-[15px] rounded-xl bg-[#0695CD] text-[#ffffff] font-semibold text-[0.93rem] font-['DM_Sans',sans-serif] border-none cursor-pointer mb-2.5 shadow-[0_4px_14px_rgba(3,105,161,0.25)] transition-all duration-200 no-underline hover:bg-[#0284c7] hover:-translate-y-[1px] hover:shadow-[0_6px_20px_rgba(3,105,161,0.3)]">
                   <Calendar size={15} /> Book Now
                 </a>
-                <a href="tel:+911234567890" className="flex items-center justify-center gap-2 w-full p-[14px] rounded-xl bg-[#E8F6FC] text-[#082A45] font-medium text-[0.88rem] font-['DM_Sans',sans-serif] border border-[rgba(6,149,205,0.12)] cursor-pointer transition-all duration-200 no-underline hover:bg-[#daeefa] hover:border-[rgba(6,149,205,0.25)]">
+                <a href="tel:+919236477974" className="flex items-center justify-center gap-2 w-full p-[14px] rounded-xl bg-[#E8F6FC] text-[#082A45] font-medium text-[0.88rem] font-['DM_Sans',sans-serif] border border-[rgba(6,149,205,0.12)] cursor-pointer transition-all duration-200 no-underline hover:bg-[#daeefa] hover:border-[rgba(6,149,205,0.25)]">
                   <Phone size={14} /> Call Us
                 </a>
 

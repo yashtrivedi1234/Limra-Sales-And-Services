@@ -1,6 +1,6 @@
 // ─── CommercialApplications.tsx ───────────────────────────────────────────────
 import { motion } from "framer-motion";
-import { Hotel, Cross, GraduationCap, Dumbbell, Scissors, Briefcase, ShoppingBag, BarChart2 } from "lucide-react";
+import { Hotel, Cross, GraduationCap, Dumbbell, Scissors, Briefcase, ShoppingBag, BarChart2, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { BRAND } from "@/lib/colors";
 
@@ -21,8 +21,8 @@ export function CommercialApplications() {
     <section style={{ padding: "64px 0", background: BRAND.white, fontFamily: "'DM Sans', sans-serif" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(24px, 5vw, 48px)" }}>
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} style={{ textAlign: "center", marginBottom: "48px" }}>
-          <div style={{ display: "inline-block", background: `${BRAND.primary}1A`, border: `1px solid ${BRAND.primary}40`, color: BRAND.primary, fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 14px", borderRadius: "100px", marginBottom: "18px" }}>
-            Industries We Serve
+          <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", background: `${BRAND.primary}1A`, border: `1px solid ${BRAND.primary}40`, color: BRAND.primary, fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 14px", borderRadius: "100px", marginBottom: "18px" }}>
+            Industries We Serve <ArrowRight size={14} />
           </div>
           <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.dark, lineHeight: 1.15 }}>
             Commercial HVAC Applications

@@ -35,13 +35,13 @@ const SplitHeading = ({ text }: { text: string }) => (
 const BlogPost = () => {
   const { slug } = useParams();
   const { data: blogPosts = [], isLoading } = useGetBlogsQuery();
-  
+
   const post = blogPosts.find((p: any) => p.slug === slug || String(p._id) === slug);
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
-  
+
   const [showScrollTop, setShowScrollTop] = useState(false);
-  
+
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"]
@@ -90,10 +90,10 @@ const BlogPost = () => {
         <motion.div className="absolute inset-0 w-full h-[120%]" style={{ y: heroY }}>
           <img src={post.image} alt={post.title} className="w-full h-full object-cover opacity-80" />
         </motion.div>
-        
+
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent" />
-        
+
         {/* Floating Gradient Orbs */}
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[100px] mix-blend-screen pointer-events-none animate-pulse duration-10000" />
         <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[80px] mix-blend-screen pointer-events-none" />
@@ -102,7 +102,7 @@ const BlogPost = () => {
           <Link to="/blog" className="inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors mb-8 text-sm font-semibold tracking-wide">
             <ArrowLeft size={16} /> Back to Blog
           </Link>
-          
+
           <div>
             <motion.span
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
@@ -110,7 +110,7 @@ const BlogPost = () => {
             >
               <Tag size={12} /> {post.category}
             </motion.span>
-            
+
             <SplitHeading text={post.title} />
 
             <motion.div
@@ -136,7 +136,7 @@ const BlogPost = () => {
         >
           {/* Gradient Top Border Accent */}
           <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-blue-600 to-cyan-400 rounded-t-2xl sm:rounded-t-3xl" />
-          
+
           {/* Floating Read Time Badge */}
           <div className="absolute -top-4 right-8 bg-slate-900 text-white px-5 py-2 rounded-full text-xs font-bold tracking-widest uppercase shadow-lg shadow-slate-900/20">
             {post.readTime} Read
@@ -234,7 +234,7 @@ const BlogPost = () => {
               <p className="text-slate-400 mb-8 max-w-sm mx-auto text-sm sm:text-base">
                 Our certified HVAC specialists are ready to help you optimize your comfort and energy efficiency today.
               </p>
-              <a href="tel:+919839171701" className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-blue-600 text-white font-bold tracking-wide hover:bg-blue-500 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/40 hover:-translate-y-1 transition-all duration-300">
+              <a href="tel:+919236477974" className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-blue-600 text-white font-bold tracking-wide hover:bg-blue-500 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/40 hover:-translate-y-1 transition-all duration-300">
                 📞 Talk to an Expert
               </a>
             </div>
@@ -255,9 +255,9 @@ const BlogPost = () => {
               View All Posts
             </Link>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-             {relatedPosts.map((rp: any, i: number) => (
+            {relatedPosts.map((rp: any, i: number) => (
               <motion.div
                 key={rp.slug || rp._id}
                 initial={{ opacity: 0, y: 30 }}

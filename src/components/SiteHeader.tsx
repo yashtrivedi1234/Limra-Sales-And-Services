@@ -129,7 +129,7 @@ const SiteHeader = () => {
           {/* Enquiry Button */}
           <a
             className="desktop-enquiry"
-            href="tel:+919839171701"
+            href="tel:+919236477974"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -206,7 +206,7 @@ const SiteHeader = () => {
 
               {/* Mobile Call */}
               <a
-                href="tel:+919839171701"
+                href="tel:+919236477974"
                 style={{
                   display: "flex",
                   justifyContent: "center",

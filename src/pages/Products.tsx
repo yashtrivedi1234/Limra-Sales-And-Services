@@ -9,6 +9,14 @@ import {
   ChevronRight,
   AirVent,
   Move,
+  Droplets,
+  Activity,
+  Snowflake,
+  Fan,
+  Building2,
+  Box,
+  ThermometerSun,
+  Droplet,
 } from "lucide-react";
 
 /* ================= TYPES ================= */
@@ -34,65 +42,191 @@ interface Category {
 
 const categories: Category[] = [
   {
-    id: "inverter-split",
-    icon: <Thermometer size={22} />,
-    title: "Inverter Split Air Conditioners",
-    description: "Energy-efficient inverter technology split ACs",
+    id: "split-ac",
+    icon: <Snowflake size={22} />,
+    title: "Split AC",
+    description:
+      "Energy-efficient Split AC for homes and offices with powerful cooling performance.",
     image:
       "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&q=80",
-    brands: ["Daikin", "Carrier", "Midea", "Godrej"],
-    products: [
-      { name: "Daikin FTXS35K", ton: "1.5 Ton", price: "₹38,000", stars: 5 },
-      { name: "Carrier Neo", ton: "1 Ton", price: "₹32,000", stars: 4 },
-    ],
+    brands: ["Daikin", "Voltas", "LG", "Samsung"],
+    products: [],
   },
   {
-    id: "cassette",
-    icon: <Wind size={22} />,
-    title: "Cassette Air Conditioners",
-    description: "Ceiling-mounted cassette ACs",
-    image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
-    brands: ["Daikin", "Carrier"],
-    products: [
-      { name: "Daikin FCVF50", ton: "2 Ton", price: "₹85,000", stars: 5 },
-    ],
-  },
-  {
-    id: "window",
-    icon: <Zap size={22} />,
-    title: "Window Air Conditioners",
-    description: "Compact window ACs",
+    id: "window-ac",
+    icon: <Box size={22} />,
+    title: "Window AC",
+    description:
+      "Compact and budget-friendly Window AC for small rooms with easy installation.",
     image:
       "https://images.unsplash.com/photo-1613690399151-65ea69478674?w=600&q=80",
-    brands: ["Carrier", "Godrej"],
-    products: [
-      { name: "Carrier Window", ton: "1.5 Ton", price: "₹18,000", stars: 4 },
-    ],
+    brands: ["Carrier", "Godrej", "Blue Star"],
+    products: [],
   },
   {
-    id: "floor-standing",
+    id: "cassette-ac",
     icon: <AirVent size={22} />,
-    title: "Floor Standing AC",
-    description: "Powerful ACs for large spaces",
+    title: "Cassette AC",
+    description:
+      "Ceiling-mounted Cassette AC for uniform 360° air distribution.",
+    image:
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
+    brands: ["Daikin", "Mitsubishi", "Carrier"],
+    products: [],
+  },
+  {
+    id: "ductable-ac",
+    icon: <Wind size={22} />,
+    title: "Ductable AC",
+    description:
+      "Centralized ductable AC system for large areas and commercial spaces.",
     image:
       "https://images.unsplash.com/photo-1504274066651-8d31a536b11a?w=600&q=80",
-    brands: ["Daikin"],
-    products: [
-      { name: "Daikin FVA100A", ton: "3 Ton", price: "₹1,25,000", stars: 5 },
-    ],
+    brands: ["Daikin", "Blue Star"],
+    products: [],
   },
   {
-    id: "portable",
-    icon: <Move size={22} />,
-    title: "Portable AC",
-    description: "Mobile ACs",
+    id: "water-dispenser",
+    icon: <Droplet size={22} />,
+    title: "Water Dispenser",
+    description:
+      "Hot and cold water dispensers with energy-efficient cooling system.",
     image:
-      "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80",
-    brands: ["Cruise"],
-    products: [
-      { name: "Cruise Portable", ton: "1.5 Ton", price: "₹28,000", stars: 3 },
-    ],
+      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80",
+    brands: ["Voltas", "Blue Star"],
+    products: [],
+  },
+  {
+    id: "ro-plant",
+    icon: <Droplet size={22} />,
+    title: "RO Plant",
+    description:
+      "Advanced RO plant systems for pure and safe drinking water.",
+    image:
+      "https://images.unsplash.com/photo-1581092334394-3c5a1d4d3f53?w=600&q=80",
+    brands: ["Kent", "Aquaguard"],
+    products: [],
+  },
+  {
+    id: "tower-ac",
+    icon: <ThermometerSun size={22} />,
+    title: "Tower AC",
+    description:
+      "High-capacity Tower AC for large rooms and event spaces.",
+    image:
+      "https://images.unsplash.com/photo-1592431913827-7f2c7a2f9d73?w=600&q=80",
+    brands: ["Blue Star", "Voltas"],
+    products: [],
+  },
+  {
+    id: "package-ac",
+    icon: <Box size={22} />,
+    title: "Package AC",
+    description:
+      "Heavy-duty Package AC for commercial buildings and malls.",
+    image:
+      "https://images.unsplash.com/photo-1581093458791-9d5c0b9d3b2b?w=600&q=80",
+    brands: ["Carrier", "Daikin"],
+    products: [],
+  },
+  {
+    id: "vrv-vrf",
+    icon: <Building2 size={22} />,
+    title: "VRV / VRF System",
+    description:
+      "Advanced VRV/VRF system for multi-zone cooling.",
+    image:
+      "https://images.unsplash.com/photo-1529429617124-ae2b5c6cbbd1?w=600&q=80",
+    brands: ["Daikin", "Mitsubishi"],
+    products: [],
+  },
+  {
+    id: "ahu",
+    icon: <Fan size={22} />,
+    title: "AHU (Air Handling Unit)",
+    description:
+      "High-performance AHU for centralized HVAC systems.",
+    image:
+      "https://images.unsplash.com/photo-1581091012184-7c3a5d6e1c4f?w=600&q=80",
+    brands: ["Systemair", "Blue Star"],
+    products: [],
+  },
+  {
+    id: "cold-room",
+    icon: <Snowflake size={22} />,
+    title: "Cold Room",
+    description:
+      "Custom-built cold room solutions for storage and preservation.",
+    image:
+      "https://images.unsplash.com/photo-1581091870627-3c6a9f3a9d9c?w=600&q=80",
+    brands: ["Blue Star", "Carrier"],
+    products: [],
+  },
+  {
+    id: "chiller",
+    icon: <Snowflake size={22} />,
+    title: "Chiller",
+    description:
+      "Industrial chiller systems for large-scale cooling applications.",
+    image:
+      "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80",
+    brands: ["Daikin", "Trane"],
+    products: [],
+  },
+  {
+    id: "air-cooled-chiller",
+    icon: <Fan size={22} />,
+    title: "Air-Cooled Chiller",
+    description:
+      "Efficient air-cooled chiller with low maintenance cost.",
+    image:
+      "https://images.unsplash.com/photo-1581093588401-22f4b8c7c2f6?w=600&q=80",
+    brands: ["Blue Star", "Carrier"],
+    products: [],
+  },
+  {
+    id: "water-cooled-chiller",
+    icon: <Droplets size={22} />,
+    title: "Water-Cooled Chiller",
+    description:
+      "High-capacity water-cooled chiller for heavy-duty applications.",
+    image:
+      "https://images.unsplash.com/photo-1581092334651-6d0e3e5e6d1c?w=600&q=80",
+    brands: ["Daikin", "Trane"],
+    products: [],
+  },
+  {
+    id: "ice-plant",
+    icon: <Snowflake size={22} />,
+    title: "Ice Plant",
+    description:
+      "Industrial ice plant for bulk ice production.",
+    image:
+      "https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&q=80",
+    brands: ["Blue Star"],
+    products: [],
+  },
+  {
+    id: "panel-ac",
+    icon: <Activity size={22} />,
+    title: "Panel AC",
+    description:
+      "Compact panel AC for electrical control panels.",
+    image:
+      "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=600&q=80",
+    brands: ["Pfannenberg"],
+    products: [],
+  },
+  {
+    id: "water-cooler",
+    icon: <Droplets size={22} />,
+    title: "Water Cooler",
+    description:
+      "Commercial water cooler for offices, schools, and public spaces.",
+    image:
+      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80",
+    brands: ["Voltas", "Blue Star"],
+    products: [],
   },
 ];
 

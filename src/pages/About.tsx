@@ -11,10 +11,10 @@ const stats = [
 ];
 
 const values = [
-  { icon: Shield, title: "Reliability", desc: "We stand behind every installation with comprehensive warranties and responsive after-sales support." },
-  { icon: Award, title: "Excellence", desc: "Only premium brands and certified technicians — no shortcuts, no compromises on quality." },
-  { icon: CheckCircle, title: "Quality Assured", desc: "Rigorous testing and strict quality control to guarantee reliable and top-tier HVAC solutions." },
-  { icon: Target, title: "Innovation", desc: "We stay ahead with the latest energy-efficient and smart HVAC technologies." },
+  { icon: Shield, title: "Reliability", desc: "We stand behind every AC installation and industrial cooling project with dependable service, strong workmanship, and responsive after-sales support. Our commitment ensures consistent performance and long-term customer trust." },
+  { icon: Award, title: "Excellence", desc: "We deliver HVAC solutions with certified technicians, premium components, and no shortcuts. Every project reflects our dedication to technical precision and professional standards." },
+  { icon: CheckCircle, title: "Quality Assured", desc: "Through strict quality checks and performance testing, we guarantee reliable and energy-efficient air conditioning systems. From VRV/VRF systems to chiller plants, quality remains our top priority." },
+  { icon: Target, title: "Innovation", desc: "We continuously adopt modern, energy-efficient, and smart HVAC technologies to deliver advanced cooling solutions for residential, commercial, and industrial needs." },
 ];
 
 const milestones = [
@@ -58,7 +58,7 @@ const About = () => (
         <motion.p
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
           style={{ color: BRAND.textOnDark, fontSize: "1.05rem", lineHeight: 1.75, fontWeight: 300 }}>
-          LIMRA Sales And Services is Bareilly's most trusted HVAC partner — delivering premium air conditioning solutions for homes, offices, hospitals, hotels, and industrial facilities.
+          LIMRA Sales and Services is a trusted HVAC and air conditioning company delivering reliable cooling solutions for homes, offices, hospitals, hotels, and industrial facilities. Since 2017, we specialize in AC installation, AC servicing, VRV/VRF systems, chiller plants, cold rooms, and industrial cooling services with a strong commitment to quality, safety, and customer satisfaction.
         </motion.p>
       </div>
       <div style={{
@@ -85,7 +85,7 @@ const About = () => (
     </section>
 
     {/* ── Our Story ── */}
-    <section style={{ padding: "80px 24px",background: "rgb(215 242 255 / 58%)", minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+    <section style={{ padding: "80px 24px", background: "rgb(215 242 255 / 58%)", minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center" }}>
       <div style={{ maxWidth: "1200px", width: "100%", margin: "0 auto" }}>
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
           <div style={{
@@ -96,13 +96,18 @@ const About = () => (
             padding: "5px 14px", borderRadius: "100px", marginBottom: "18px"
           }}>Our Story</div>
           <h2 style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)", color: BRAND.dark, lineHeight: 1.2, marginBottom: "28px", fontWeight: 800 }}>
-            Trusted HVAC & Cooling Experts in Uttar Pradesh
+            Delivering Comfort, Building Trust
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: "18px", color: BRAND.slate400, lineHeight: 1.8, fontSize: "1.02rem", fontWeight: 300 }}>
-            <p>LIMRA Sales & Services is a leading HVAC and air conditioning solutions provider based in Uttar Pradesh, delivering reliable installation, maintenance, and large-scale commercial cooling projects across the state. With strong technical expertise and years of hands-on industry experience, we provide complete climate control solutions for residential, commercial, and industrial spaces.</p>
-            <p>From standard AC installations to advanced VRF/VRV systems, ducting, ventilation, cold rooms, ice plants, and chiller plants, our team ensures every project is executed with precision, safety, and efficiency. We specialize in the installation and servicing of Window, Split, Cassette, Ductable, Package AC, and AHU systems, along with copper piping and complete HVAC line work.</p>
-            <p>Our services also include air-cooled and water-cooled chiller plants, gas charging, compressor replacement, PCB, heating and cooling coil repairs, and 3-phase industrial machine installations. Whether it is residential AC servicing or complex commercial and industrial HVAC projects, we deliver reliable, energy-efficient, and technically sound solutions across Uttar Pradesh.</p>
-            <p>With a commitment to quality workmanship, transparent service, and long-term customer satisfaction, LIMRA Sales & Services continues to build trust through performance and professionalism.</p>
+            <p>
+              Founded in 2017, LIMRA Sales and Services began with a clear vision — to provide reliable, honest, and high-quality cooling solutions that customers can truly depend on. What started as a small HVAC service initiative has steadily evolved into a trusted name in air conditioning and industrial cooling solutions across multiple cities.
+            </p>
+            <p>
+              Over the years, we have successfully installed and serviced thousands of air conditioning systems — from residential Split and Window AC units to advanced VRV/VRF systems, cold rooms, and large-scale industrial chiller plants. Our growth has been driven by strong technical expertise, prompt service delivery, and an unwavering commitment to quality workmanship.
+            </p>
+            <p>
+              Today, with 5,000+ satisfied customers and 500+ completed commercial projects, we continue to focus on innovation, energy-efficient solutions, and long-term client partnerships. For us, cooling is more than just a service — it is about delivering comfort, reliability, and performance that businesses and families can confidently rely on.
+            </p>
           </div>
         </motion.div>
       </div>
@@ -208,7 +213,7 @@ const About = () => (
         <p style={{ color: BRAND.textOnDark, marginBottom: "36px", fontSize: "1.05rem", fontWeight: 300 }}>
           Whether it's a residential split AC or a commercial VRV system — we've got you covered.
         </p>
-        <a href="tel:+919839171701" style={{
+        <a href="tel:+919236477974" style={{
           display: "inline-flex", alignItems: "center", gap: "8px",
           padding: "14px 36px", background: BRAND.white, color: BRAND.dark,
           fontWeight: 700, fontSize: "0.95rem", borderRadius: "100px",

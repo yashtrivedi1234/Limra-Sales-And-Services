@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Wind, Building2, Snowflake, Fan, ThermometerSun, AirVent, ArrowRight } from "lucide-react";
+import { Wind, Building2, Snowflake, Fan, ThermometerSun, AirVent, ArrowRight, Box, Droplet, Droplets, Activity } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { BRAND } from "@/lib/colors";
 
@@ -7,51 +7,139 @@ import { BRAND } from "@/lib/colors";
 const categories = [
   {
     icon: Snowflake,
-    title: "Inverter Split AC",
+    title: "Split AC",
     type: "Residential",
-    desc: "Energy-efficient cooling engineered for modern homes and apartments.",
-    tag: "BESTSELLER",
-    stat: "5-star rated",
+    desc: `Energy-efficient Split AC for homes and offices with powerful cooling performance.
+Low noise operation and modern wall-mounted design.
+Professional installation and reliable after-sales support available.`,
   },
   {
-    icon: Building2,
-    title: "VRV / VRF Systems",
-    type: "Commercial",
-    desc: "Variable refrigerant flow for seamless multi-zone climate control.",
-    tag: "ENTERPRISE",
-    stat: "500+ installs",
+    icon: Box,
+    title: "Window AC",
+    type: "Residential",
+    desc: `Compact and budget-friendly Window AC for small rooms.
+Easy installation with strong cooling output.
+Ideal for residential and rental properties..`,
   },
   {
     icon: AirVent,
     title: "Cassette AC",
     type: "Commercial",
-    desc: "360° ceiling-mounted airflow, invisible and impossibly quiet.",
-    tag: "PREMIUM",
-    stat: "Ultra-silent",
+    desc: `Ceiling-mounted Cassette AC for uniform 360° air distribution.
+Perfect for offices, showrooms, and commercial spaces.
+Stylish design with high cooling efficiency.`,
   },
   {
     icon: Wind,
     title: "Ductable AC",
     type: "Commercial",
-    desc: "Centralized ducted architecture for large commercial spaces.",
-    tag: "INDUSTRIAL",
-    stat: "High capacity",
+    desc: `Centralized Ductable AC system for large areas and halls.
+Hidden installation with powerful airflow control.
+Best solution for commercial and industrial cooling needs.`,
   },
   {
-    icon: Fan,
-    title: "Portable AC",
+    icon: Droplet,
+    title: "Water Dispenser",
     type: "Residential",
-    desc: "No installation needed. Plug in, wheel anywhere, instant cool.",
-    tag: "FLEXIBLE",
-    stat: "No install",
+    desc: `Hot and cold Water Dispensers for offices and commercial use.
+Energy-efficient and durable cooling system.
+Reliable performance with easy maintenance support.`,
+  },
+  {
+    icon: Droplet,
+    title: "RO Plant",
+    type: "Commercial",
+    desc: `Advanced RO Plant systems for pure and safe drinking water.
+Suitable for commercial and industrial applications.
+High filtration efficiency with long-lasting components.`,
   },
   {
     icon: ThermometerSun,
     title: "Tower AC",
-    type: "Residential",
-    desc: "Statement floor-standing design with powerful room-wide cooling.",
-    tag: "POWERFUL",
-    stat: "Design icon",
+    type: "Commercial",
+    desc: `High-capacity Tower AC for large rooms and event spaces.
+Strong airflow with quick cooling performance.
+Stylish vertical design with easy mobility.`,
+  },
+  {
+    icon: Box,
+    title: "Package AC",
+    type: "Commercial",
+    desc: `Heavy-duty Package AC for commercial buildings and malls.
+All-in-one cooling solution with efficient performance.
+Designed for large-scale air conditioning requirements.`,
+  },
+  {
+    icon: Building2,
+    title: "VRV / VRF System",
+    type: "Commercial",
+    desc: `Advanced VRV/VRF air conditioning system for multi-zone cooling.
+Energy-efficient technology with precise temperature control.
+Ideal for hotels, offices, and commercial complexes.`,
+  },
+  {
+    icon: Fan,
+    title: "AHU (Air Handling Unit)",
+    type: "Commercial",
+    desc: `High-performance AHU for centralized HVAC systems.
+Ensures proper air circulation and ventilation control.
+Perfect for hospitals, industries, and large facilities.`,
+  },
+  {
+    icon: Snowflake,
+    title: "Cold Room",
+    type: "Commercial",
+    desc: `Custom-built Cold Room solutions for storage and preservation.
+Temperature-controlled environment for food and pharma use.
+Energy-efficient design with reliable insulation technology.`,
+  },
+  {
+    icon: Snowflake,
+    title: "Chiller",
+    type: "Industrial",
+    desc: `Industrial Chiller systems for large-scale cooling applications.
+Maintains stable temperature for factories and plants.
+Available in air-cooled and water-cooled options.`,
+  },
+  {
+    icon: Fan,
+    title: "Air-Cooled Chiller",
+    type: "Industrial",
+    desc: `Efficient Air-Cooled Chiller with low maintenance cost.
+Ideal for industrial and commercial cooling systems.
+Durable design with high energy performance.`,
+  },
+  {
+    icon: Droplets,
+    title: "Water-Cooled Chiller",
+    type: "Industrial",
+    desc: `High-capacity Water-Cooled Chiller for heavy-duty applications.
+Superior cooling efficiency for large facilities.
+Designed for continuous industrial operations.`,
+  },
+  {
+    icon: Snowflake,
+    title: "Ice Plant",
+    type: "Industrial",
+    desc: `Industrial Ice Plant for bulk ice production.
+Reliable and energy-efficient cooling system.
+Suitable for fisheries, food processing, and cold storage units.`,
+  },
+  {
+    icon: Activity,
+    title: "Panel AC",
+    type: "Industrial",
+    desc: `Compact Panel AC for electrical control panels.
+Prevents overheating and ensures equipment safety.
+Ideal for industrial automation systems.`,
+  },
+  {
+    icon: Droplets,
+    title: "Water Cooler",
+    type: "Commercial",
+    desc: `Commercial Water Cooler for offices, schools, and public spaces.
+Fast cooling with durable stainless steel body.
+Designed for continuous and heavy usage.`,
   },
 ];
 
@@ -93,34 +181,6 @@ function Card({ cat, i, navigate }: { cat: typeof categories[0]; i: number; navi
           gap: "12px",
         }}
       >
-        {/* Tag */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span
-            style={{
-              fontSize: "0.62rem",
-              fontWeight: 700,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: BRAND.primary,
-              background: `${BRAND.primary}1A`,
-              border: `1px solid ${BRAND.primary}40`,
-              padding: "3px 10px",
-              borderRadius: "100px",
-            }}
-          >
-            {cat.tag}
-          </span>
-          <span
-            style={{
-              fontSize: "0.72rem",
-              fontWeight: 600,
-              color: BRAND.slate400,
-            }}
-          >
-            {cat.type}
-          </span>
-        </div>
-
         {/* Icon */}
         <div
           style={{
@@ -167,18 +227,13 @@ function Card({ cat, i, navigate }: { cat: typeof categories[0]; i: number; navi
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            paddingTop: "8px",
+            paddingTop: "12px",
+            marginTop: "auto",
             borderTop: `1px solid ${BRAND.slate100}`,
           }}
         >
-          <span
-            style={{
-              fontSize: "0.76rem",
-              fontWeight: 600,
-              color: BRAND.primary,
-            }}
-          >
-            {cat.stat}
+          <span style={{ fontSize: "0.85rem", fontWeight: 600, color: BRAND.primary }}>
+            View More
           </span>
           <ArrowRight size={16} style={{ color: BRAND.primary }} />
         </div>

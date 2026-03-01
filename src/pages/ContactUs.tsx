@@ -68,9 +68,9 @@ const contactDetails = [
   {
     icon: <Phone size={20} />,
     label: "Call Us",
-    value: "+91 98391 71701",
+    value: "+91 92364 77974",
     sub: "Mon–Sat, 9am–7pm",
-    href: "tel:+919839171701",
+    href: "tel:+919236477974",
     hoverColor: "rgba(34,197,94,0.08)",
     hoverBorder: "rgba(34,197,94,0.3)",
     iconColor: "#16a34a",
@@ -135,8 +135,8 @@ const Field = ({
             boxShadow: hasError
               ? "0 0 0 2px #ef4444, 0 0 16px 2px rgba(239,68,68,0.1)"
               : focused
-              ? "0 0 0 2px #3b82f6, 0 0 20px 2px rgba(59,130,246,0.15)"
-              : "0 0 0 1.5px rgba(203,213,225,1)",
+                ? "0 0 0 2px #3b82f6, 0 0 20px 2px rgba(59,130,246,0.15)"
+                : "0 0 0 1.5px rgba(203,213,225,1)",
           }}
         />
         <span className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200 z-10 ${hasError ? "text-red-400" : focused ? "text-blue-600" : "text-slate-400"}`}>
@@ -144,11 +144,10 @@ const Field = ({
         </span>
         <label
           htmlFor={id}
-          className={`absolute left-12 z-10 pointer-events-none font-semibold transition-all duration-200 ${
-            active
+          className={`absolute left-12 z-10 pointer-events-none font-semibold transition-all duration-200 ${active
               ? `top-2 text-[10px] tracking-[0.12em] uppercase ${hasError ? "text-red-500" : "text-blue-600"}`
               : "top-1/2 -translate-y-1/2 text-sm text-slate-500"
-          }`}
+            }`}
         >
           {label}
         </label>
@@ -197,8 +196,8 @@ const TextareaField = ({
             boxShadow: hasError
               ? "0 0 0 2px #ef4444, 0 0 16px 2px rgba(239,68,68,0.1)"
               : focused
-              ? "0 0 0 2px #3b82f6, 0 0 20px 2px rgba(59,130,246,0.15)"
-              : "0 0 0 1.5px rgba(203,213,225,1)",
+                ? "0 0 0 2px #3b82f6, 0 0 20px 2px rgba(59,130,246,0.15)"
+                : "0 0 0 1.5px rgba(203,213,225,1)",
           }}
         />
         <span className={`absolute left-4 top-5 transition-colors duration-200 z-10 ${hasError ? "text-red-400" : focused ? "text-blue-600" : "text-slate-400"}`}>
@@ -206,11 +205,10 @@ const TextareaField = ({
         </span>
         <label
           htmlFor={id}
-          className={`absolute left-12 z-10 pointer-events-none font-semibold transition-all duration-200 ${
-            active
+          className={`absolute left-12 z-10 pointer-events-none font-semibold transition-all duration-200 ${active
               ? `top-3 text-[10px] tracking-[0.12em] uppercase ${hasError ? "text-red-500" : "text-blue-600"}`
               : "top-5 text-sm text-slate-500"
-          }`}
+            }`}
         >
           {label}
         </label>

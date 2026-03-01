@@ -59,13 +59,13 @@ function SolutionCard({ title, items, primaryBtnLabel, imageUrl, badgeIcon, inde
         </ul>
         <div style={{ display: "flex", gap: "10px" }}>
           <a
-            href="tel:+91 9839171701"
+            href="tel:+919236477974"
             style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", background: BRAND.dark, color: BRAND.white, fontWeight: 600, padding: "12px 16px", borderRadius: "10px", border: "none", cursor: "pointer", fontSize: "0.88rem", transition: "background 0.2s", textDecoration: "none" }}
           >
             <Phone size={15} /> {primaryBtnLabel}
           </a>
           <button
-            style={{ flex: 1, background: BRAND.primaryPale, color: BRAND.primary, fontWeight: 600, padding: "12px 16px", borderRadius: "10px", border: `1px solid ${BRAND.slate200}` , cursor: "pointer", fontSize: "0.88rem", transition: "background 0.2s" }}
+            style={{ flex: 1, background: BRAND.primaryPale, color: BRAND.primary, fontWeight: 600, padding: "12px 16px", borderRadius: "10px", border: `1px solid ${BRAND.slate200}`, cursor: "pointer", fontSize: "0.88rem", transition: "background 0.2s" }}
             onClick={() => navigate('/product')}
           >
             View Products
@@ -85,7 +85,7 @@ export default function HVACSolutions() {
             Solutions
           </div>
           <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.dark, lineHeight: 1.15, marginBottom: "12px" }}>
-          Complete HVAC Solutions
+            Complete HVAC Solutions
           </h2>
           <p style={{ color: BRAND.slate400, fontSize: "1.05rem" }}>From residential comfort to large commercial projects, we've got you covered.</p>
         </motion.div>
