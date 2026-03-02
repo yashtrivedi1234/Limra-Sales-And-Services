@@ -106,10 +106,7 @@ function BlogCard({ post }: { post: ApiBlogPost }) {
         {/* Category + Read Time */}
         <div className="flex items-center justify-between mb-3">
           <CategoryBadge category={post.category || "Uncategorized"} />
-          <span className="text-slate-400 text-xs flex items-center gap-1">
-            <Clock size={12} />
-            {post.readTime || "5 min read"}
-          </span>
+
         </div>
 
         {/* Title */}
