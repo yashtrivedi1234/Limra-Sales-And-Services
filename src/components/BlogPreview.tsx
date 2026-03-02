@@ -126,10 +126,7 @@ function BlogCard({ post }: { post: ApiBlogPost }) {
         </p>
 
         {/* Author + Date */}
-        <div className="flex items-center justify-between text-xs text-slate-400 mb-4 border-t pt-3">
-          <span className="font-medium text-slate-600">{post.author || "Admin"}</span>
-          <span>{post.date ? new Date(post.date).toLocaleDateString() : new Date(post.createdAt || Date.now()).toLocaleDateString()}</span>
-        </div>
+
 
         {/* CTA */}
         <button
