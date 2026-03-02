@@ -51,7 +51,7 @@ const SiteFooter = () => {
     <motion.footer
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.05 }}
+      viewport={{ once: true, amount: 0.01 }}
       variants={containerVariants}
       style={{ background: `linear-gradient(160deg, ${BRAND.dark} 0%, #051B30 50%, ${BRAND.dark} 100%)` }}
     >
@@ -71,11 +71,10 @@ const SiteFooter = () => {
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-6 sm:px-8 py-14">
         <div
-          className="grid gap-10"
-          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10"
         >
           {/* Brand Column */}
-          <motion.div variants={colVariants} className="sm:col-span-1 lg:pr-6">
+          <motion.div variants={colVariants} className="lg:pr-6">
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300 }}
@@ -200,13 +199,10 @@ const SiteFooter = () => {
             ) : servicesError ? (
               <p className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>Unable to load services</p>
             ) : (
-              <motion.ul
-                className="space-y-2.5"
-                variants={{ visible: { transition: { staggerChildren: 0.07 } } }}
-              >
+              <ul className="space-y-2.5">
                 {services && services.length > 0 ? (
                   [...services].reverse().slice(0, 6).map((s: any) => (
-                    <motion.li key={s._id || s.id} variants={linkItemVariants}>
+                    <li key={s._id || s.id}>
                       <Link
                         to={`/service/${s.slug}`}
                         className="text-sm flex items-center gap-1.5 transition-all duration-200"
@@ -226,12 +222,12 @@ const SiteFooter = () => {
                         />
                         {s.title}
                       </Link>
-                    </motion.li>
+                    </li>
                   ))
                 ) : (
                   <li className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>No services available.</li>
                 )}
-              </motion.ul>
+              </ul>
             )}
           </motion.div>
 
