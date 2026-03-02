@@ -17,9 +17,9 @@ const quickLinks = [
 ];
 
 const policyLinks = [
-  { label: "Privacy Policy", to: "#" },
-  { label: "Terms & Conditions", to: "#" },
-  { label: "Refund Policy", to: "#" },
+  { label: "Privacy Policy", to: "/privacy-policy" },
+  { label: "Terms & Conditions", to: "/terms-conditions" },
+  { label: "Refund Policy", to: "/refund-policy" },
 ];
 
 const socialLinks = [

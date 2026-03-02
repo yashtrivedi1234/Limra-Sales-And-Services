@@ -23,6 +23,9 @@ import ServicesPage from "./pages/ServicesPage";
 import ServiceDetailPage from "./pages/ServiceDetailPage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsConditions from "./pages/TermsConditions";
+import RefundPolicy from "./pages/RefundPolicy";
 
 // Contexts
 import { UserAuthProvider } from "./context/AuthContext";
@@ -67,6 +70,9 @@ const App: React.FC = () => (
             <Route path="/service/:slug" element={<ServiceDetailPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-conditions" element={<TermsConditions />} />
+            <Route path="/refund-policy" element={<RefundPolicy />} />
           </Route>
 
           {/* Admin routes wrapped with AuthProvider */}
