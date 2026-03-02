@@ -153,45 +153,104 @@ const About = () => (
       </div>
     </section>
 
-    {/* ── Timeline ── */}
-    <section style={{ padding: "80px 24px", background: "rgb(215 242 255 / 58%)" }}>
-      <div style={{ maxWidth: "640px", margin: "0 auto" }}>
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} style={{ textAlign: "center", marginBottom: "56px" }}>
-          <div style={{
-            display: "inline-block",
-            background: `${BRAND.primary}1A`, border: `1px solid ${BRAND.primary}40`,
-            color: BRAND.primary, fontWeight: 700, fontSize: "0.72rem",
-            letterSpacing: "0.18em", textTransform: "uppercase",
-            padding: "5px 14px", borderRadius: "100px", marginBottom: "18px"
-          }}>Milestones</div>
-          <h2 style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)", color: BRAND.dark, lineHeight: 1.2, fontWeight: 800 }}>Our Journey</h2>
-        </motion.div>
+    {/* ── Milestones & Mission ── */}
+    <section style={{ paddingTop: "10px", paddingBottom: "80px", background: "linear-gradient(to bottom, #ffffff, #f8fcff)" }}>
+      <div style={{
+        maxWidth: "1200px", margin: "0 auto",
+        display: "flex", flexWrap: "wrap", gap: "64px", alignItems: "flex-start"
+      }}>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-          {milestones.map((m, i) => (
-            <motion.div key={m.year}
-              initial="hidden" whileInView="visible" viewport={{ once: true }}
-              variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.5 } } }}
-              style={{ display: "flex", gap: "20px", alignItems: "flex-start" }}>
-              <div style={{
-                flexShrink: 0, width: "64px", height: "64px", borderRadius: "50%",
-                background: `linear-gradient(135deg, ${BRAND.dark} 0%, ${BRAND.primary} 100%)`,
-                color: BRAND.white, display: "flex", alignItems: "center", justifyContent: "center",
-                fontWeight: 800, fontSize: "0.8rem",
-                boxShadow: `0 6px 20px ${BRAND.primary}48`
-              }}>
-                {m.year}
-              </div>
-              <div style={{
-                paddingTop: "14px", flex: 1,
-                borderBottom: i < milestones.length - 1 ? `1px solid ${BRAND.slate100}` : "none",
-                paddingBottom: "24px"
-              }}>
-                <p style={{ color: BRAND.dark, fontWeight: 500, lineHeight: 1.6 }}>{m.text}</p>
-              </div>
-            </motion.div>
-          ))}
+        {/* ── Left Side: Timeline (60%) ── */}
+        <div style={{ flex: "1 1 55%", minWidth: "320px" }}>
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} style={{ marginBottom: "48px" }}>
+            <div style={{
+              display: "inline-block",
+              background: `${BRAND.primary}1A`, border: `1px solid ${BRAND.primary}40`,
+              color: BRAND.primary, fontWeight: 700, fontSize: "0.72rem",
+              letterSpacing: "0.18em", textTransform: "uppercase",
+              padding: "5px 14px", borderRadius: "100px", marginBottom: "18px"
+            }}>Milestones</div>
+            <h2 style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)", color: BRAND.dark, lineHeight: 1.2, fontWeight: 800 }}>Our Journey</h2>
+          </motion.div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
+            {milestones.map((m, i) => (
+              <motion.div key={m.year}
+                initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: i * 0.15, duration: 0.5 }}
+                whileHover={{ x: 8, transition: { duration: 0.2 } }}
+                style={{ display: "flex", gap: "24px", alignItems: "flex-start", position: "relative" }}>
+
+                {/* Connector Line */}
+                {i < milestones.length - 1 && (
+                  <motion.div
+                    initial={{ height: 0 }}
+                    whileInView={{ height: "calc(100% - 40px)" }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ delay: (i * 0.15) + 0.3, duration: 0.6, ease: "easeInOut" }}
+                    style={{
+                      position: "absolute", left: "31px", top: "64px", width: "2px",
+                      background: `linear-gradient(to bottom, ${BRAND.primary} 0%, rgba(37,99,235,0.1) 100%)`, zIndex: 0
+                    }} />
+                )}
+
+                {/* Year Badge */}
+                <div style={{
+                  flexShrink: 0, width: "64px", height: "64px", borderRadius: "50%",
+                  background: `linear-gradient(135deg, ${BRAND.dark} 0%, ${BRAND.primary} 100%)`,
+                  color: BRAND.white, display: "flex", alignItems: "center", justifyContent: "center",
+                  fontWeight: 800, fontSize: "1rem", letterSpacing: "0.02em",
+                  boxShadow: `0 6px 20px ${BRAND.primary}48`,
+                  zIndex: 1, position: "relative"
+                }}>
+                  {m.year}
+                </div>
+
+                {/* Content */}
+                <div style={{ paddingTop: "14px", flex: 1, paddingBottom: i === milestones.length - 1 ? "0px" : "56px" }}>
+                  <p style={{ color: BRAND.dark, fontWeight: 400, fontSize: "1.05rem", lineHeight: 1.7, opacity: 0.9 }}>{m.text}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
+
+        {/* ── Right Side: Mission Card (40%) ── */}
+        <div style={{ flex: "1 1 35%", minWidth: "320px", position: "sticky", top: "120px" }}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            style={{
+              padding: "2px", borderRadius: "22px",
+              background: `linear-gradient(135deg, ${BRAND.primary}40 0%, transparent 100%)`,
+            }}>
+            <div style={{
+              background: "rgb(215 242 255 / 58%)",
+              borderRadius: "20px", padding: "48px 40px", height: "100%",
+              boxShadow: "0 24px 48px rgba(0,0,0,0.04)"
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "32px" }}>
+                <div style={{
+                  width: "48px", height: "48px", borderRadius: "12px",
+                  background: BRAND.white, display: "flex", alignItems: "center", justifyContent: "center",
+                  boxShadow: "0 8px 16px rgba(0,0,0,0.04)"
+                }}>
+                  <Target size={24} style={{ color: BRAND.primary }} />
+                </div>
+                <h3 style={{ fontSize: "1.35rem", fontWeight: 800, color: BRAND.dark, textTransform: "uppercase", letterSpacing: "0.06em", margin: 0 }}>
+                  Our Mission
+                </h3>
+              </div>
+              <p style={{ color: BRAND.dark, fontSize: "1.05rem", lineHeight: 1.8, marginBottom: "24px", fontWeight: 400, opacity: 0.9 }}>
+                Our mission is to provide reliable, energy-efficient, and cost-effective air conditioning and industrial cooling solutions tailored to residential, commercial, and industrial needs.
+              </p>
+              <p style={{ color: BRAND.dark, fontSize: "1.05rem", lineHeight: 1.8, fontWeight: 400, opacity: 0.9 }}>
+                We are committed to delivering quality workmanship, advanced HVAC technology, and prompt service support to ensure long-term customer satisfaction and dependable cooling performance.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+
       </div>
     </section>
 
