@@ -41,11 +41,8 @@ export default function HeroSection() {
         <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to right, ${BRAND.dark} 0%, ${BRAND.dark}B3 25%, transparent 100%)`, pointerEvents: "none" }} />
       </div>
 
-      {/* Diagonal slice */}
-      {/* <div style={{ position: "absolute", bottom: -2, left: 0, right: 0, height: "120px", zIndex: 5, background: BRAND.white, clipPath: "polygon(0 60%, 100% 0, 100% 100%, 0% 100%)" }} /> */}
-
       {/* Content */}
-      <div style={{ position: "relative", zIndex: 10, width: "100%", maxWidth: "1200px", margin: "0 auto", padding: "100px clamp(24px, 5vw, 48px) 80px" }}>
+      <div style={{ position: "relative", zIndex: 10, width: "100%", maxWidth: "1200px", margin: "0 auto",}}>
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}

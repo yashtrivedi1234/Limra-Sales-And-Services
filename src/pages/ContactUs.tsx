@@ -109,7 +109,7 @@ const contactDetails = [
     icon: <Phone size={20} />,
     label: "Call Us",
     value: "+91 92364 77974",
-  
+
     href: "tel:+919236477974",
     hoverColor: "rgba(34,197,94,0.08)",
     hoverBorder: "rgba(34,197,94,0.3)",
@@ -119,9 +119,9 @@ const contactDetails = [
   {
     icon: <Mail size={20} />,
     label: "Email",
-    value: "info@limra.com",  
+    value: "info@limrasales.com",
     sub: "Reply within 24 hrs",
-    href: "mailto:info@limra.com",
+    href: "mailto:info@limrasales.com",
     hoverColor: "rgba(59,130,246,0.08)",
     hoverBorder: "rgba(59,130,246,0.3)",
     iconColor: "#2563eb",
@@ -131,7 +131,7 @@ const contactDetails = [
     icon: <MapPin size={20} />,
     label: "Visit",
     value: "184, New Civil Lines, Hardoi",
-    sub: "Serving all of UP",
+    sub: "Serving all Over India",
     href: "https://maps.google.com/?q=184,+New+Civil+Lines,+Hardoi,+Uttar+Pradesh+241001",
     target: "_blank",
     hoverColor: "rgba(239,68,68,0.08)",
@@ -185,8 +185,8 @@ const Field = ({
         <label
           htmlFor={id}
           className={`absolute left-12 z-10 pointer-events-none font-semibold transition-all duration-200 ${active
-              ? `top-2 text-[10px] tracking-[0.12em] uppercase ${hasError ? "text-red-500" : "text-blue-600"}`
-              : "top-1/2 -translate-y-1/2 text-sm text-slate-500"
+            ? `top-2 text-[10px] tracking-[0.12em] uppercase ${hasError ? "text-red-500" : "text-blue-600"}`
+            : "top-1/2 -translate-y-1/2 text-sm text-slate-500"
             }`}
         >
           {label}
@@ -246,8 +246,8 @@ const TextareaField = ({
         <label
           htmlFor={id}
           className={`absolute left-12 z-10 pointer-events-none font-semibold transition-all duration-200 ${active
-              ? `top-3 text-[10px] tracking-[0.12em] uppercase ${hasError ? "text-red-500" : "text-blue-600"}`
-              : "top-5 text-sm text-slate-500"
+            ? `top-3 text-[10px] tracking-[0.12em] uppercase ${hasError ? "text-red-500" : "text-blue-600"}`
+            : "top-5 text-sm text-slate-500"
             }`}
         >
           {label}
@@ -566,9 +566,20 @@ export default function ContactUs() {
               <div className="rounded-2xl p-6 bg-white" style={{ background: "linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%)", border: "1px solid rgba(59,130,246,0.15)" }}>
                 <p className="text-[10px] tracking-widest uppercase text-blue-600 font-bold mb-4">Authorized Dealers</p>
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {["Daikin", "Mitsubishi", "Carrier", "Midea", "Hitachi", "Blue Star"].map((b) => (
-                    <span key={b} className="px-3 py-1 rounded-full text-xs font-semibold text-blue-700 bg-white border border-blue-100 shadow-sm">{b}</span>
-                  ))}
+                  {["Daikin",
+                    "LG",
+                    "Voltas",
+                    "Blue Star",
+                    "Hitachi",
+                    "Panasonic",
+                    "Lloyd",
+                    "Samsung",
+                    "Mitsubishi",
+                    "Carrier",
+                    "Amstrad",  
+                    "Midea"].map((b) => (
+                      <span key={b} className="px-3 py-1 rounded-full text-xs font-semibold text-blue-700 bg-white border border-blue-100 shadow-sm">{b}</span>
+                    ))}
                 </div>
                 <p className="text-slate-500 text-xs leading-relaxed">
                   Authorized partner for sales & service — your factory warranty is always guaranteed.

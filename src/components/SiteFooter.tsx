@@ -243,10 +243,10 @@ const SiteFooter = () => {
                   value: "+91 92364 77974",
                 },
                 {
-                  href: "mailto:info@limr.com",
+                  href: "mailto:info@limrasales.com",
                   Icon: Mail,
                   label: "Email",
-                  value: "info@limra.com",
+                  value: "info@limrasales.com",
                 },
              {
                   href: "https://maps.google.com/?q=184,+New+Civil+Lines,+Hardoi,+Uttar+Pradesh+241001",

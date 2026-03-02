@@ -32,7 +32,7 @@ const iconMap: Record<string, React.ElementType> = { ShieldCheck, MapPin, Settin
 const renderIcon = (name: string): React.ElementType => iconMap[name] ?? Wrench;
 
 const STATS = [
-  { num: "10000+", label: "Projects Successfully Delivered", icon: <TrendingUp size={14} color={BRAND.primary} /> },
+  { num: "5000+", label: "Projects Successfully Delivered", icon: <TrendingUp size={14} color={BRAND.primary} /> },
   { num: "4.8/5", label: "Customer Satisfaction Rating", icon: <Star size={14} fill="#d97706" color="#d97706" /> },
   { num: "24–48", label: "Hrs Service Response Time", icon: <Clock size={14} color={BRAND.primary} /> },
   { num: "6", label: "Services Offered", icon: <Award size={14} color={BRAND.primary} /> },
@@ -82,7 +82,16 @@ function ServiceCard({ service, onClick, index, isHovered, onHover }: {
         </div>
 
 
-        <h2 className="text-[1.3rem] leading-snug mb-3" style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, color: BRAND.dark }}>{service.title}</h2>
+        <h2
+          className="text-[1.3rem] leading-snug mb-3"
+          style={{
+            fontFamily: "'DM Serif Display', Georgia, serif",
+            fontWeight: 400,
+            color: BRAND.primary
+          }}
+        >
+          {service.title}
+        </h2>
         <p className="text-[0.86rem] leading-relaxed mb-5" style={{ color: `${BRAND.dark}85` }}>{service.desc}</p>
 
         <div className="flex-1" />
@@ -101,7 +110,7 @@ function ServiceCard({ service, onClick, index, isHovered, onHover }: {
               cursor: "pointer",
             }}
           >
-            View All <ArrowUpRight size={13} />
+            Enquiry Now <ArrowUpRight size={13} />
           </button>
         </div>
       </div>
@@ -128,7 +137,7 @@ export default function ServicesPage(): React.ReactElement {
 
         <div className="relative z-10 max-w-[1180px] mx-auto px-6 text-center">
           <motion.div initial="hidden" animate="visible" variants={fadeUp}>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[0.68rem] font-bold tracking-[0.14em] uppercase mb-6"
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[0.68rem] font-bold tracking-[0.14em] uppercase mb-6 mt-6"
               style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: BRAND.accentOnDark }}>
               <Sparkles size={12} /> PREMIUM HVAC & COOLING SERVICES
             </div>
@@ -167,15 +176,28 @@ export default function ServicesPage(): React.ReactElement {
                 {i > 0 && (
                   <div className="w-px h-6 hidden sm:block" style={{ background: "rgba(255,255,255,0.15)" }} />
                 )}
-                <div className="flex items-center gap-2 text-[0.82rem]">
+                <div className="flex items-center gap-3">
                   {s.icon}
-                  <span
-                    className="text-[1.1rem]"
-                    style={{ fontFamily: "'DM Serif Display', Georgia, serif", color: BRAND.white, fontWeight: 400 }}
-                  >
-                    {s.num}
-                  </span>
-                  <span style={{ color: BRAND.textOnDarkMuted }}>{s.label}</span>
+
+                  <div className="flex flex-col leading-tight">
+                    <span
+                      className="text-[1.2rem]"
+                      style={{
+                        fontFamily: "'DM Serif Display', Georgia, serif",
+                        color: BRAND.white,
+                        fontWeight: 400,
+                      }}
+                    >
+                      {s.num}
+                    </span>
+
+                    <span
+                      className="text-[0.75rem]"
+                      style={{ color: BRAND.textOnDarkMuted }}
+                    >
+                      {s.label}
+                    </span>
+                  </div>
                 </div>
               </React.Fragment>
             ))}
@@ -187,7 +209,10 @@ export default function ServicesPage(): React.ReactElement {
       <div className="relative z-10 max-w-[1180px] mx-auto px-6 py-16">
         <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))" }}>
           {services.map((service, i) => (
-            <ServiceCard key={service.slug || service._id} service={service} onClick={(slug) => navigate(`/service/${slug}`)}
+            <ServiceCard
+              key={service.slug || service._id}
+              service={service}
+              onClick={() => navigate("/contact")}
               index={i} isHovered={hoveredSlug === service.slug} onHover={setHoveredSlug} />
           ))}
         </div>

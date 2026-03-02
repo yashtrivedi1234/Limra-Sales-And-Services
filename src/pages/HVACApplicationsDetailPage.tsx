@@ -146,7 +146,7 @@ export function HVACApplicationsDetailPage() {
                 <div style={{ background: "#1a3a5c", padding: "80px clamp(24px, 5vw, 48px) 64px", textAlign: "center", color: "#fff" }}>
                     <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
                         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-                            <div style={{ display: "inline-block", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: BRAND.accentOnDark || "#60A5FA", fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 16px", borderRadius: "100px", marginBottom: "18px" }}>
+                            <div style={{ display: "inline-block", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: BRAND.accentOnDark || "#60A5FA", fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 16px", borderRadius: "100px", marginBottom: "18px", marginTop: "64px"}}>
                                 Industries & Applications
                             </div>
                             <h1 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontSize: "clamp(2.4rem, 5vw, 3.8rem)", lineHeight: 1.1, marginBottom: "16px" }}>

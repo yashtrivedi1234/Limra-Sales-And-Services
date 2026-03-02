@@ -69,9 +69,9 @@ const SiteHeader = () => {
           <img
             src={Logo}
             alt="LIMRA Sales & Services"
-            style={{ height: "44px", width: "auto" }}
+            style={{ height: "60px", width: "auto" }}
           />
-        
+
         </Link>
 
         {/* Desktop Navigation — centered, single line */}
@@ -124,20 +124,21 @@ const SiteHeader = () => {
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: "6px",
-              padding: "8px 18px",
+              gap: "10px",
+              padding: "12px 26px", 
               background: `linear-gradient(135deg, ${BRAND.dark} 0%, ${BRAND.primary} 100%)`,
               color: BRAND.white,
-              fontSize: "0.85rem",
+              fontSize: "1rem",       
               fontWeight: 700,
               borderRadius: "100px",
               textDecoration: "none",
               whiteSpace: "nowrap",
               lineHeight: 1,
-              boxShadow: `0 4px 16px ${BRAND.primary}4D`,
+              boxShadow: `0 6px 20px ${BRAND.primary}4D`, 
             }}
           >
-            <Phone size={13} /> Enquiry Now
+            <Phone size={18} />   
+            Enquiry Now
           </a>
 
           {/* Mobile Menu Button */}
