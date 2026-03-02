@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -50,7 +50,12 @@
     --brand-light: 197 85% 95%;
     --brand-sky: 197 80% 85%;
 
-    --hero-gradient: linear-gradient(135deg, hsl(200 80% 15%) 0%, hsl(200 60% 25%) 50%, hsl(197 94% 41%) 100%);
+    --hero-gradient: linear-gradient(
+      135deg,
+      hsl(200 80% 15%) 0%,
+      hsl(200 60% 25%) 50%,
+      hsl(197 94% 41%) 100%
+    );
     --glow-primary: 0 0 40px hsl(197 94% 41% / 0.3);
     --glow-primary-strong: 0 0 60px hsl(197 94% 41% / 0.5);
   }
@@ -90,7 +95,11 @@
 @layer utilities {
   .text-gradient-primary {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(197 94% 41%), hsl(197 80% 55%));
+    background-image: linear-gradient(
+      135deg,
+      hsl(197 94% 41%),
+      hsl(197 80% 55%)
+    );
   }
   .bg-hero-gradient {
     background: var(--hero-gradient);
@@ -111,9 +120,24 @@
   .marquee-track:hover {
     animation-play-state: paused;
   }
+
+  /* Global Typography Utilities */
+  .heading-1 {
+    @apply font-sans text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight;
+  }
+  .heading-2 {
+    @apply font-sans text-2xl sm:text-3xl md:text-4xl font-semibold;
+  }
+  .body-text {
+    @apply font-sans text-base md:text-lg leading-relaxed;
+  }
 }
 
 @keyframes marquee-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }

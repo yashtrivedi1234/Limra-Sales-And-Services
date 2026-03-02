@@ -27,6 +27,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
 import RefundPolicy from "./pages/RefundPolicy";
 
+import HVACApplicationsDetailPage from "./pages/HVACApplicationsDetailPage";
 // Contexts
 import { UserAuthProvider } from "./context/AuthContext";
 import { AuthProvider } from "./context/AdminAuthContext";
@@ -68,6 +69,8 @@ const App: React.FC = () => (
             <Route path="/brands" element={<Brand />} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/service/:slug" element={<ServiceDetailPage />} />
+            <Route path="/hvac-applications" element={<HVACApplicationsDetailPage  />} />
+            <Route path="/hvac-applications/:slug" element={<HVACApplicationsDetailPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
@@ -81,7 +84,7 @@ const App: React.FC = () => (
               <AdminLogin />
             </AuthProvider>
           } />
-          
+
           <Route path="/admin" element={
             <AuthProvider>
               <AdminLayout />

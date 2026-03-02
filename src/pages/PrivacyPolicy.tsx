@@ -46,7 +46,7 @@ const sections = [
     icon: Mail,
     title: "Contact Us",
     content: [
-      "If you have any questions about this Privacy Policy, please contact us at info@limrasales.com or call +91 92364 77974.",
+      "If you have any questions about this Privacy Policy, please contact us at info@limra.com or call +91 92364 77974.",
       "LIMRA Sales & Services, Civil Lines, Bareilly, Uttar Pradesh 243001.",
     ],
   },
@@ -68,7 +68,7 @@ const PrivacyPolicy = () => (
             <Shield size={16} style={{ color: BRAND.primaryLight }} />
             <span className="text-sm font-medium text-white/80">Your Privacy Matters</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4" style={{ fontFamily: "'DM Serif Display', serif" }}>
+          <h1 className="heading-1 text-white mb-4">
             Privacy Policy
           </h1>
           <p className="text-lg text-white/70 max-w-2xl mx-auto">
@@ -96,7 +96,7 @@ const PrivacyPolicy = () => (
               <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: BRAND.primaryPale }}>
                 <s.icon size={20} style={{ color: BRAND.primary }} />
               </div>
-              <h2 className="text-xl font-bold" style={{ color: BRAND.dark, fontFamily: "'DM Serif Display', serif" }}>{s.title}</h2>
+              <h2 className="heading-2" style={{ color: BRAND.dark }}>{s.title}</h2>
             </div>
             <ul className="space-y-3">
               {s.content.map((item, j) => (

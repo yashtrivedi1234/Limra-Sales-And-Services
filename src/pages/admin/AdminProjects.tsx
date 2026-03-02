@@ -44,7 +44,7 @@ const AdminProjects = () => {
           <p className="text-xs font-semibold tracking-[0.2em] uppercase text-neutral-400 mb-1">
             Portfolio Management
           </p>
-          <h1 className="text-3xl font-bold text-neutral-900 tracking-tight">Projects</h1>
+          <h1 className="heading-1 text-neutral-900">Projects</h1>
           <p className="text-neutral-500 mt-1 text-sm">
             {projects.length} {projects.length === 1 ? 'project' : 'projects'} in portfolio
           </p>

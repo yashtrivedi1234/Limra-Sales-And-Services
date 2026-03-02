@@ -115,7 +115,7 @@ const About = () => (
 
     {/* ── Values ── */}
     <section style={{ padding: "80px 24px", background: BRAND.white }}>
-      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} style={{ textAlign: "center", marginBottom: "56px" }}>
           <div style={{
             display: "inline-block",

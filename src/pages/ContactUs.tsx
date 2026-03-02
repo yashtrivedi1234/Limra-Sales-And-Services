@@ -32,25 +32,65 @@ type FormState = {
 type FormErrors = Partial<Record<keyof FormState, string>>;
 
 // ─── Yup Validation Schema ────────────────────────────────────────────────────
-const contactSchema = Yup.object().shape({
+
+
+const contactSchema = Yup.object({
   name: Yup.string()
     .required("Full name is required")
+    .trim()
     .matches(/^[A-Za-z\s]+$/, "Name can only contain letters and spaces")
+    .matches(/^(?!.*\s{2,})/, "Name cannot contain multiple consecutive spaces")
     .min(2, "Name must be at least 2 characters")
-    .max(50, "Name must be at most 50 characters")
-    .trim(),
+    .max(50, "Name must be at most 50 characters"),
+
   email: Yup.string()
     .required("Email address is required")
+    .trim()
+    .lowercase()
     .email("Please enter a valid email address")
-    .max(100, "Email is too long"),
+    .max(100, "Email is too long")
+    .test(
+      "no-disposable",
+      "Disposable email addresses are not allowed",
+      (value) =>
+        !value ||
+        !/(mailinator|tempmail|10minutemail|guerrillamail)/i.test(value)
+    ),
+
   phone: Yup.string()
     .nullable()
     .transform((v) => (v === "" ? null : v))
-    .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
-  service: Yup.string().optional(),
+    .trim()
+    .matches(/^[6-9]\d{9}$/, "Enter a valid 10-digit Indian mobile number")
+    .test(
+      "not-repeating",
+      "Phone number cannot contain all repeating digits",
+      (value) => !value || !/^(\d)\1{9}$/.test(value)
+    )
+    .test(
+      "not-sequential",
+      "Sequential numbers are not allowed",
+      (value) =>
+        !value ||
+        !["0123456789", "1234567890", "9876543210"].includes(value)
+    ),
+
+  service: Yup.string()
+    .optional()
+    .oneOf(
+      ["AC Installation", "AC Repair", "AMC Service", "VRV/VRF", "Cold Storage"],
+      "Invalid service selected"
+    ),
+
   message: Yup.string()
     .optional()
-    .max(500, "Message cannot exceed 500 characters"),
+    .trim()
+    .max(500, "Message cannot exceed 500 characters")
+    .test(
+      "not-empty",
+      "Message cannot be empty",
+      (value) => !value || value.trim().length > 0
+    ),
 });
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
@@ -69,7 +109,7 @@ const contactDetails = [
     icon: <Phone size={20} />,
     label: "Call Us",
     value: "+91 92364 77974",
-    sub: "Mon–Sat, 9am–7pm",
+  
     href: "tel:+919236477974",
     hoverColor: "rgba(34,197,94,0.08)",
     hoverBorder: "rgba(34,197,94,0.3)",
@@ -79,9 +119,9 @@ const contactDetails = [
   {
     icon: <Mail size={20} />,
     label: "Email",
-    value: "info@limraservices.com",
+    value: "info@limra.com",  
     sub: "Reply within 24 hrs",
-    href: "mailto:info@limraservices.com",
+    href: "mailto:info@limra.com",
     hoverColor: "rgba(59,130,246,0.08)",
     hoverBorder: "rgba(59,130,246,0.3)",
     iconColor: "#2563eb",
@@ -90,9 +130,9 @@ const contactDetails = [
   {
     icon: <MapPin size={20} />,
     label: "Visit",
-    value: "Bareilly, Uttar Pradesh",
+    value: "184, New Civil Lines, Hardoi",
     sub: "Serving all of UP",
-    href: "https://www.google.com/maps/search/Bareilly+Uttar+Pradesh",
+    href: "https://maps.google.com/?q=184,+New+Civil+Lines,+Hardoi,+Uttar+Pradesh+241001",
     target: "_blank",
     hoverColor: "rgba(239,68,68,0.08)",
     hoverBorder: "rgba(239,68,68,0.3)",

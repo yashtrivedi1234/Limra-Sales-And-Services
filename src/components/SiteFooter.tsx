@@ -243,18 +243,18 @@ const SiteFooter = () => {
                   value: "+91 92364 77974",
                 },
                 {
-                  href: "mailto:info@limrasales.com",
+                  href: "mailto:info@limr.com",
                   Icon: Mail,
                   label: "Email",
-                  value: "info@limrasales.com",
+                  value: "info@limra.com",
                 },
-                {
-                  href: "https://maps.google.com/?q=Civil+Lines,+Bareilly,+UP+243001",
+             {
+                  href: "https://maps.google.com/?q=184,+New+Civil+Lines,+Hardoi,+Uttar+Pradesh+241001",
                   Icon: MapPin,
                   label: "Location",
-                  value: "Civil Lines, Bareilly, UP 243001",
+                  value: "184, New Civil Lines, Hardoi, Uttar Pradesh 241001",
                   target: "_blank",
-                },
+                } 
               ].map(({ href, Icon, label, value, target }, i) => (
                 <motion.li
                   key={label}

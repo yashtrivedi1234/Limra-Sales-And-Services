@@ -65,7 +65,8 @@ const fadeUp = {
 };
 
 /* ─── CARD ──────────────────────────────────────────────────────────── */
-function Card({ cat, i, navigate }: { cat: typeof categories[0]; i: number; navigate: ReturnType<typeof useNavigate> }) {
+function Card({ cat, i }: { cat: typeof categories[0]; i: number }) {
+  const navigate = useNavigate();
   const Icon = cat.icon;
 
   return (
@@ -224,22 +225,6 @@ export default function ProductCategories() {
               >
                 Cooling Solutions for Every Need
               </motion.h2>
-
-              <motion.p
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2, duration: 0.6 }}
-                style={{
-                  color: BRAND.slate400,
-                  fontSize: "1.05rem",
-                  lineHeight: 1.75,
-                  margin: "12px 0 0",
-                  maxWidth: "520px",
-                }}
-              >
-                From single-room comfort to enterprise-scale climate architecture — we engineer the perfect solution for every space.
-              </motion.p>
             </div>
 
             <motion.div
@@ -248,20 +233,35 @@ export default function ProductCategories() {
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
             >
-              <a
-                href="/product"
+              <button
+                onClick={() => navigate("/product")}
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "8px",
-                  color: BRAND.primary,
+                  background: BRAND.primary,
+                  color: BRAND.white,
                   fontWeight: 700,
                   fontSize: "0.9rem",
-                  textDecoration: "none",
+                  padding: "10px 22px",
+                  borderRadius: "100px",
+                  border: "none",
+                  cursor: "pointer",
+                  boxShadow: `0 4px 16px ${BRAND.primary}40`,
+                  transition: "all 0.25s",
+                  whiteSpace: "nowrap",
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)";
+                  (e.currentTarget as HTMLButtonElement).style.boxShadow = `0 6px 20px ${BRAND.primary}60`;
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
+                  (e.currentTarget as HTMLButtonElement).style.boxShadow = `0 4px 16px ${BRAND.primary}40`;
                 }}
               >
                 View All Products <ArrowRight size={16} />
-              </a>
+              </button>
             </motion.div>
           </div>
         </div>
@@ -276,7 +276,7 @@ export default function ProductCategories() {
           }}
         >
           {categories.map((cat, i) => (
-            <Card key={cat.title} cat={cat} i={i} navigate={navigate} />
+            <Card key={cat.title} cat={cat} i={i} />
           ))}
         </div>
       </div>

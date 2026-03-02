@@ -42,8 +42,8 @@ const AdminLogin = () => {
 
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold font-syne text-brand-blue tracking-tight">
-            LIMRA <span className="text-brand-orange">ADMIN</span>
+          <h1 className="heading-1 text-brand-blue">
+            Admin Login
           </h1>
           <p className="text-neutral-500 mt-2">Sign in to manage your content</p>
         </div>

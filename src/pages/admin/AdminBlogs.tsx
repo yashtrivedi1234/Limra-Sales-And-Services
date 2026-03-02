@@ -39,7 +39,7 @@ const AdminBlogs = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
           <p className="text-xs font-semibold tracking-[0.2em] uppercase text-neutral-400 mb-1">Content Management</p>
-          <h1 className="text-3xl font-bold text-neutral-900 tracking-tight">Blog Posts</h1>
+          <h1 className="heading-1 text-neutral-900">Blog Posts</h1>
           <p className="text-neutral-500 mt-1 text-sm">
             {blogs.length} {blogs.length === 1 ? 'post' : 'posts'} across {categories.length} {categories.length === 1 ? 'category' : 'categories'}
           </p>

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Hotel, Cross, GraduationCap, Dumbbell, Scissors, Briefcase, ShoppingBag, BarChart2, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { BRAND } from "@/lib/colors";
+import { getApplicationSlug } from "@/pages/HVACApplicationsDetailPage";
 
 const applications = [
   { icon: <Hotel size={30} strokeWidth={1.5} color="#F59E0B" />, label: "Hotels & Restaurants" },
@@ -38,6 +39,7 @@ export function CommercialApplications() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.06, duration: 0.5 }}
               whileHover={{ y: -6, scale: 1.04, boxShadow: `0 12px 32px ${BRAND.primary}24` }}
+              onClick={() => navigate("/hvac-applications")}
               style={{
                 display: "flex", flexDirection: "column", alignItems: "center",
                 justifyContent: "center", gap: "12px",
@@ -55,7 +57,7 @@ export function CommercialApplications() {
 
         <div style={{ textAlign: "center" }}>
           <button
-            onClick={() => navigate("/product")}
+            onClick={() => navigate("/hvac-applications")}
             style={{
               display: "inline-flex", alignItems: "center", gap: "8px",
               background: `linear-gradient(135deg, ${BRAND.dark} 0%, ${BRAND.primary} 100%)`,

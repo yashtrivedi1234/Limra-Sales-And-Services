@@ -103,7 +103,7 @@ const categories: Category[] = [
     description:
       "Advanced RO plant systems for pure and safe drinking water.",
     image:
-      "https://images.unsplash.com/photo-1581092334394-3c5a1d4d3f53?w=600&q=80",
+      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80",
     brands: ["Kent", "Aquaguard"],
     products: [],
   },
@@ -114,7 +114,7 @@ const categories: Category[] = [
     description:
       "High-capacity Tower AC for large rooms and event spaces.",
     image:
-      "https://images.unsplash.com/photo-1592431913827-7f2c7a2f9d73?w=600&q=80",
+      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80",
     brands: ["Blue Star", "Voltas"],
     products: [],
   },
@@ -125,7 +125,7 @@ const categories: Category[] = [
     description:
       "Heavy-duty Package AC for commercial buildings and malls.",
     image:
-      "https://images.unsplash.com/photo-1581093458791-9d5c0b9d3b2b?w=600&q=80",
+      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80",
     brands: ["Carrier", "Daikin"],
     products: [],
   },
@@ -136,7 +136,7 @@ const categories: Category[] = [
     description:
       "Advanced VRV/VRF system for multi-zone cooling.",
     image:
-      "https://images.unsplash.com/photo-1529429617124-ae2b5c6cbbd1?w=600&q=80",
+      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80",
     brands: ["Daikin", "Mitsubishi"],
     products: [],
   },
@@ -147,7 +147,7 @@ const categories: Category[] = [
     description:
       "High-performance AHU for centralized HVAC systems.",
     image:
-      "https://images.unsplash.com/photo-1581091012184-7c3a5d6e1c4f?w=600&q=80",
+      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80",
     brands: ["Systemair", "Blue Star"],
     products: [],
   },
@@ -158,7 +158,7 @@ const categories: Category[] = [
     description:
       "Custom-built cold room solutions for storage and preservation.",
     image:
-      "https://images.unsplash.com/photo-1581091870627-3c6a9f3a9d9c?w=600&q=80",
+      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80",
     brands: ["Blue Star", "Carrier"],
     products: [],
   },
@@ -180,7 +180,7 @@ const categories: Category[] = [
     description:
       "Efficient air-cooled chiller with low maintenance cost.",
     image:
-      "https://images.unsplash.com/photo-1581093588401-22f4b8c7c2f6?w=600&q=80",
+      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80",
     brands: ["Blue Star", "Carrier"],
     products: [],
   },
@@ -191,7 +191,7 @@ const categories: Category[] = [
     description:
       "High-capacity water-cooled chiller for heavy-duty applications.",
     image:
-      "https://images.unsplash.com/photo-1581092334651-6d0e3e5e6d1c?w=600&q=80",
+      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80",
     brands: ["Daikin", "Trane"],
     products: [],
   },
@@ -269,7 +269,7 @@ function ProductCard({ cat }: { cat: Category }) {
       <div className="p-5 flex flex-col flex-1">
         <h3
           style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400 }}
-          className="text-[#1a3a5c] text-lg mb-1"
+          className="text-[rgb(14,146,212)] text-lg mb-1"
         >
           {cat.title}
         </h3>
@@ -331,19 +331,19 @@ export default function ProductsPage() {
   const [activeFilter, setActiveFilter] = useState("all");
 
   const filters = [
-    { id: "all", label: "All" },
-    { id: "split", label: "Split" },
-    { id: "cassette", label: "Cassette" },
-    { id: "window", label: "Window" },
-    { id: "portable", label: "Portable" },
+    { id: "all", label: "All Products" },
+    { id: "residential", label: "Residential AC" },
+    { id: "commercial", label: "Commercial AC" },
+    { id: "chillers", label: "Chillers & Industrial" },
+    { id: "water", label: "Water Solutions" },
   ];
 
   const filterMap: Record<string, string[]> = {
     all: categories.map((c) => c.id),
-    split: ["inverter-split"],
-    cassette: ["cassette"],
-    window: ["window"],
-    portable: ["portable"],
+    residential: ["split-ac", "window-ac", "tower-ac"],
+    commercial: ["cassette-ac", "ductable-ac", "package-ac", "vrv-vrf", "ahu", "panel-ac"],
+    chillers: ["chiller", "air-cooled-chiller", "water-cooled-chiller", "cold-room", "ice-plant"],
+    water: ["water-dispenser", "ro-plant", "water-cooler"],
   };
 
   const visible = categories.filter((c) =>
@@ -376,8 +376,8 @@ export default function ProductsPage() {
               key={f.id}
               onClick={() => setActiveFilter(f.id)}
               className={`px-4 py-2 rounded-full text-sm border font-medium whitespace-nowrap ${activeFilter === f.id
-                  ? "bg-[#1a3a5c] text-white border-[#1a3a5c]"
-                  : "text-slate-600 bg-white hover:bg-slate-50 border-slate-200"
+                ? "bg-[#1a3a5c] text-white border-[#1a3a5c]"
+                : "text-slate-600 bg-white hover:bg-slate-50 border-slate-200"
                 }`}
             >
               {f.label}

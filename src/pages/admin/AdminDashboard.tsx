@@ -162,7 +162,7 @@ const AdminDashboard = () => {
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400 mb-1">Admin Panel</p>
-          <h1 className="text-3xl font-black text-neutral-900 font-syne">Dashboard</h1>
+          <h1 className="heading-1 text-neutral-900">Dashboard</h1>
           <p className="text-neutral-500 mt-1 text-sm">
             Manage all your website content from one place.
           </p>
@@ -209,10 +209,10 @@ const AdminDashboard = () => {
       <div>
         <h2 className="text-base font-bold font-syne text-neutral-800 mb-4">Quick Actions</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          <QuickAction to="/admin/blogs/new"    icon={FileText}      label="New Blog Post"  sub="Write & publish" />
-          <QuickAction to="/admin/services/new" icon={Briefcase}     label="New Service"    sub="Add offering" />
-          <QuickAction to="/admin/projects/new" icon={FolderKanban}  label="New Project"    sub="Showcase work" />
-          <QuickAction to="/admin/brands/new"   icon={Tag}           label="New Brand"      sub="Upload logo" />
+          <QuickAction to="/admin/blogs/new" icon={FileText} label="New Blog Post" sub="Write & publish" />
+          <QuickAction to="/admin/services/new" icon={Briefcase} label="New Service" sub="Add offering" />
+          <QuickAction to="/admin/projects/new" icon={FolderKanban} label="New Project" sub="Showcase work" />
+          <QuickAction to="/admin/brands/new" icon={Tag} label="New Brand" sub="Upload logo" />
         </div>
       </div>
 

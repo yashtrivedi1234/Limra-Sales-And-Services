@@ -18,12 +18,7 @@ const fadeUp = {
   }),
 };
 
-const values = [
-  { icon: Shield, title: "Reliability", desc: "We stand behind every AC installation and industrial cooling project with dependable service, strong workmanship, and responsive after-sales support. Our commitment ensures consistent performance and long-term customer trust." },
-  { icon: Award, title: "Excellence", desc: "We deliver HVAC solutions with certified technicians, premium components, and no shortcuts. Every project reflects our dedication to technical precision and professional standards." },
-  { icon: CheckCircle, title: "Quality Assured", desc: "Through strict quality checks and performance testing, we guarantee reliable and energy-efficient air conditioning systems. From VRV/VRF systems to chiller plants, quality remains our top priority." },
-  { icon: Target, title: "Innovation", desc: "We continuously adopt modern, energy-efficient, and smart HVAC technologies to deliver advanced cooling solutions for residential, commercial, and industrial needs." },
-];;
+
 
 // const fadeUp = {
 //   hidden: { opacity: 0, y: 30 },
@@ -142,51 +137,7 @@ With a commitment to quality workmanship, transparent service, and long-term cus
               </div>
 
 
-        {/* Values */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "20px", marginBottom: "40px" }}>
-          {values.map((v, i) => (
-            <motion.div
-              key={v.title}
-              custom={i}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-              whileHover={{ y: -4 }}
-              style={{
-                background: BRAND.white,
-                border: `1px solid ${BRAND.slate100}`,
-                borderRadius: "16px",
-                padding: "28px",
-                boxShadow: `0 2px 16px ${BRAND.primary}14`,
-                transition: "all 0.3s",
-              }}
-            >
-              <div
-                style={{
-                  width: "48px",
-                  height: "48px",
-                  borderRadius: "12px",
-                  background: BRAND.primarySky,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginBottom: "16px",
-                }}
-              >
-                <v.icon size={22} style={{ color: BRAND.primary }} />
-              </div>
-
-              <h3 style={{ fontWeight: 700, color: BRAND.dark, marginBottom: "8px", fontSize: "1rem" }}>
-                {v.title}
-              </h3>
-
-              <p style={{ fontSize: "0.87rem", color: BRAND.slate400, lineHeight: 1.65 }}>
-                {v.desc}
-              </p>
-            </motion.div>
-          ))}
-        </div>
+       
 
         {/* CTA */}
         <motion.div

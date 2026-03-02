@@ -48,7 +48,7 @@ const sections = [
     icon: CreditCard,
     title: "Refund Process",
     content: [
-      "Contact our customer support team via email (info@limrasales.com) or phone (+91 92364 77974) to initiate a refund request.",
+      "Contact our customer support team via email (info@limra.com) or phone (+91 92364 77974) to initiate a refund request.",
       "Provide your order number, reason for refund, and any supporting images if applicable.",
       "Our team will review your request and respond within 48 hours with the resolution.",
       "Approved refunds will be credited back to the original payment method used during purchase.",
@@ -58,7 +58,7 @@ const sections = [
     icon: Mail,
     title: "Need Help?",
     content: [
-      "For any refund-related queries, reach out to us at info@limrasales.com or call +91 92364 77974.",
+      "For any refund-related queries, reach out to us at info@limra.com or call +91 92364 77974.",
       "Our customer support team is available Monday to Saturday, 9:00 AM – 7:00 PM.",
       "LIMRA Sales & Services, Civil Lines, Bareilly, Uttar Pradesh 243001.",
     ],
@@ -80,8 +80,8 @@ const RefundPolicy = () => (
             <HelpCircle size={16} style={{ color: BRAND.primaryLight }} />
             <span className="text-sm font-medium text-white/80">Customer Assurance</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4" style={{ fontFamily: "'DM Serif Display', serif" }}>
-            Refund Policy
+          <h1 className="heading-1 text-white mb-4">
+            Refund & Cancellation Policy
           </h1>
           <p className="text-lg text-white/70 max-w-2xl mx-auto">
             Your satisfaction is our priority. Learn about our hassle-free refund and exchange process.
@@ -107,7 +107,7 @@ const RefundPolicy = () => (
               <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: BRAND.primaryPale }}>
                 <s.icon size={20} style={{ color: BRAND.primary }} />
               </div>
-              <h2 className="text-xl font-bold" style={{ color: BRAND.dark, fontFamily: "'DM Serif Display', serif" }}>{s.title}</h2>
+              <h2 className="heading-2" style={{ color: BRAND.dark }}>{s.title}</h2>
             </div>
             <ul className="space-y-3">
               {s.content.map((item, j) => (

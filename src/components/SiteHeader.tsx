@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-import logo1 from "../assets/logo1.png";
+import Logo from "../assets/Logo.png";
 import { BRAND } from "@/lib/colors";
 
 const navLinks = [
@@ -67,20 +67,11 @@ const SiteHeader = () => {
           }}
         >
           <img
-            src={logo1}
+            src={Logo}
             alt="LIMRA Sales & Services"
             style={{ height: "44px", width: "auto" }}
           />
-          <span
-            style={{
-              fontSize: "1rem",
-              fontWeight: 700,
-              color: BRAND.dark,
-              whiteSpace: "nowrap",
-            }}
-          >
-            LIMRA Sales & Services
-          </span>
+        
         </Link>
 
         {/* Desktop Navigation — centered, single line */}

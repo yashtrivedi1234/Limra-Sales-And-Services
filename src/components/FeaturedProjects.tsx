@@ -102,20 +102,7 @@ function ProjectCard({ project, i }: { project: any; i: number }) {
             }}
           >
             {/* Client — slides in from LEFT */}
-            <motion.span
-              variants={clientVariant}
-              style={{
-                display: "inline-block",
-                fontSize: "0.72rem",
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.14em",
-                color: BRAND.accentOnDark,
-                marginBottom: "6px",
-              }}
-            >
-              {project.client || "Client"}
-            </motion.span>
+            
 
             {/* Title — slides in from BOTTOM */}
             <motion.h3
@@ -131,18 +118,6 @@ function ProjectCard({ project, i }: { project: any; i: number }) {
               {project.title}
             </motion.h3>
 
-            {/* Location — slides in from TOP */}
-            <motion.p
-              variants={locationVariant}
-              style={{
-                color: BRAND.textOnDarkMuted,
-                fontSize: "0.85rem",
-                marginBottom: "10px",
-              }}
-            >
-              {project.location}
-            </motion.p>
-
             {/* Arrow CTA — slides in from RIGHT */}
             <motion.div
               variants={arrowVariant}
@@ -156,7 +131,7 @@ function ProjectCard({ project, i }: { project: any; i: number }) {
                 letterSpacing: "0.05em",
               }}
             >
-              View Case Study <ArrowRight size={14} />
+              View Project <ArrowRight size={14} />
             </motion.div>
           </div>
         </div>
@@ -224,7 +199,7 @@ export default function FeaturedProjects() {
               textDecoration: "none"
             }}
           >
-            View All Case Studies <ArrowRight size={16} />
+            View All Projects <ArrowRight size={16} />
           </Link>
         </motion.div>
 

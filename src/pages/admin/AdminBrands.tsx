@@ -43,8 +43,8 @@ const AdminBrands = () => {
           <p className="text-xs font-semibold tracking-[0.2em] uppercase text-neutral-400 mb-1">
             Brand Management
           </p>
-          <h1 className="text-3xl font-bold text-neutral-900 tracking-tight">
-            Brand Partners
+          <h1 className="heading-1 text-neutral-900">
+            Brands
           </h1>
           <p className="text-neutral-500 mt-1 text-sm">
             {brands.length} {brands.length === 1 ? 'brand' : 'brands'} registered

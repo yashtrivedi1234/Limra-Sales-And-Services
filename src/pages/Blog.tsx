@@ -101,16 +101,6 @@ const Blog = () => {
                     {/* Content */}
                     <div style={{ padding: "20px", flex: 1, display: "flex", flexDirection: "column" }}>
 
-                      {/* Meta */}
-                      <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "10px" }}>
-                        <span style={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "0.75rem", color: "#94a3b8" }}>
-                          <Calendar size={12} /> {post.date || "1 November 2024"}
-                        </span>
-                        <span style={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "0.75rem", color: "#94a3b8" }}>
-                          <Clock size={12} /> {post.readTime}
-                        </span>
-                      </div>
-
                       {/* Title */}
                       <h3 style={{
                         fontFamily: "'DM Serif Display', Georgia, serif",

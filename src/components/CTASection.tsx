@@ -10,13 +10,13 @@ interface CTAProps {
 }
 
 const CTASection: React.FC<CTAProps> = ({
-  phoneNumber = "+91-9236477974",
+  phoneNumber = "+91 92364 77974",
   onConsultationClick,
 }) => {
   const navigate = useNavigate();
   const handleConsultationClick = onConsultationClick || (() => navigate('/contact'));
   return (
-    <section style={{ width: "100%", background: BRAND.bgSoft, padding: "64px 24px", fontFamily: "'Inter', sans-serif" }}>
+    <section style={{ width: "100%", background: BRAND.bgSoft, padding: "64px 0px", fontFamily: "'Inter', sans-serif" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
