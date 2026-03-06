@@ -568,7 +568,6 @@ export default function ContactUs() {
                 <div className="flex flex-wrap gap-2 mb-4">
                   {["Daikin",
                     "LG",
-                    "Voltas",
                     "Blue Star",
                     "Hitachi",
                     "Panasonic",
