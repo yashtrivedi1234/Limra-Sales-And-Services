@@ -18,7 +18,7 @@ export default function HeroSection() {
       style={{
         position: "relative",
         width: "100%",
-        minHeight: "fit-content",
+        height: "100vh",
         overflow: "hidden",
         display: "flex",
         alignItems: "center",
