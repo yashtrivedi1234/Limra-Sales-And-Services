@@ -1,19 +1,18 @@
 // ─── CommercialApplications.tsx ───────────────────────────────────────────────
 import { motion } from "framer-motion";
-import { Hotel, Cross, GraduationCap, Dumbbell, Scissors, Briefcase, ShoppingBag, BarChart2, ArrowRight } from "lucide-react";
+import { Hotel, Cross, GraduationCap, Briefcase, ShoppingBag, BarChart2, ArrowRight, Server, Warehouse } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { BRAND } from "@/lib/colors";
-import { getApplicationSlug } from "@/pages/HVACApplicationsDetailPage";
 
 const applications = [
-  { icon: <Hotel size={30} strokeWidth={1.5} color="#F59E0B" />, label: "Hotels & Restaurants" },
-  { icon: <Cross size={30} strokeWidth={1.5} color="#EF4444" />, label: "Hospitals & Clinics" },
-  { icon: <GraduationCap size={30} strokeWidth={1.5} color="#3B82F6" />, label: "Schools & Colleges" },
-  { icon: <Dumbbell size={30} strokeWidth={1.5} color="#10B981" />, label: "Gyms & Fitness Centers" },
-  { icon: <Scissors size={30} strokeWidth={1.5} color="#EC4899" />, label: "Salons & Spas" },
-  { icon: <Briefcase size={30} strokeWidth={1.5} color="#6366F1" />, label: "Offices & IT Parks" },
-  { icon: <ShoppingBag size={30} strokeWidth={1.5} color="#F97316" />, label: "Retail Stores" },
-  { icon: <BarChart2 size={30} strokeWidth={1.5} color="#14B8A6" />, label: "Industrial Buildings" },
+  { icon: <Cross size={30} strokeWidth={1.5} color="#EF4444" />, label: "Healthcare HVAC Solutions", slug: "hospitals-clinics" },
+  { icon: <Hotel size={30} strokeWidth={1.5} color="#F59E0B" />, label: "Hospitality & Hotel HVAC Solutions", slug: "hotels-restaurants" },
+  { icon: <Briefcase size={30} strokeWidth={1.5} color="#6366F1" />, label: "Commercial Office HVAC Solutions", slug: "offices-it-parks" },
+  { icon: <ShoppingBag size={30} strokeWidth={1.5} color="#F97316" />, label: "Retail & Mall HVAC Solutions", slug: "retail-stores" },
+  { icon: <BarChart2 size={30} strokeWidth={1.5} color="#14B8A6" />, label: "Industrial & Manufacturing HVAC Solutions", slug: "industrial-buildings" },
+  { icon: <GraduationCap size={30} strokeWidth={1.5} color="#3B82F6" />, label: "Educational Institution HVAC Solutions", slug: "schools-colleges" },
+  { icon: <Server size={30} strokeWidth={1.5} color="#8B5CF6" />, label: "Data Center HVAC Solutions", slug: "data-centers" },
+  { icon: <Warehouse size={30} strokeWidth={1.5} color="#0EA5E9" />, label: "Warehouse & Cold Storage HVAC Solutions", slug: "warehouses-cold-storage" },
 ];
 
 export function CommercialApplications() {
@@ -39,7 +38,7 @@ export function CommercialApplications() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.06, duration: 0.5 }}
               whileHover={{ y: -6, scale: 1.04, boxShadow: `0 12px 32px ${BRAND.primary}24` }}
-              onClick={() => navigate("/hvac-applications")}
+              onClick={() => navigate(`/hvac-applications/${app.slug}`)}
               style={{
                 display: "flex", flexDirection: "column", alignItems: "center",
                 justifyContent: "center", gap: "12px",

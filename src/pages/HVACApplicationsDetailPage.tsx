@@ -1,6 +1,6 @@
 // ─── ApplicationDetailPage.tsx ────────────────────────────────────────────────
 import { motion } from "framer-motion";
-import { Hotel, Cross, GraduationCap, Dumbbell, Scissors, Briefcase, ShoppingBag, BarChart2, ArrowLeft, Thermometer, Wind, Zap, Shield, CheckCircle2, ArrowRight } from "lucide-react";
+import { Hotel, Cross, GraduationCap, Dumbbell, Scissors, Briefcase, ShoppingBag, BarChart2, ArrowLeft, Thermometer, Wind, Zap, Shield, CheckCircle2, ArrowRight, Server, Warehouse } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BRAND } from "@/lib/colors";
 
@@ -13,114 +13,123 @@ const applicationData: Record<string, {
     cards: { icon: React.ReactNode; title: string; desc: string }[];
     features: string[];
 }> = {
-    "hotels-restaurants": {
-        icon: <Hotel size={36} strokeWidth={1.5} />,
-        label: "Hotels & Restaurants",
-        color: "#F59E0B",
-        heroDesc: "Premium climate control solutions for hospitality environments that demand comfort, efficiency, and guest satisfaction 24/7.",
-        cards: [
-            { icon: <Thermometer size={24} strokeWidth={1.5} />, title: "Guest Room Comfort", desc: "Individually controlled HVAC units for every guest room ensuring personalized temperature comfort round the clock." },
-            { icon: <Wind size={24} strokeWidth={1.5} />, title: "Banquet & Event Halls", desc: "High-capacity air handling for large gatherings with precise humidity and temperature regulation." },
-            { icon: <Zap size={24} strokeWidth={1.5} />, title: "Kitchen Ventilation", desc: "Heavy-duty exhaust and makeup air systems designed for commercial kitchen environments." },
-            { icon: <Shield size={24} strokeWidth={1.5} />, title: "Lobby & Common Areas", desc: "Central air distribution systems that maintain uniform comfort across lobbies, corridors, and lounges." },
-        ],
-        features: ["24/7 operational reliability", "Energy-efficient inverter technology", "Silent operation < 28dB", "Smart BMS integration"],
-    },
     "hospitals-clinics": {
         icon: <Cross size={36} strokeWidth={1.5} />,
-        label: "Hospitals & Clinics",
+        label: "Healthcare HVAC Solutions",
         color: "#EF4444",
-        heroDesc: "Medical-grade HVAC systems ensuring sterile environments, infection control, and critical care compliance.",
+        heroDesc: "Hospitals and healthcare facilities require highly controlled indoor environments to maintain hygiene, infection control, and patient comfort. Our HVAC systems are designed to maintain precise temperature, humidity control, and air filtration standards required for medical environments.",
         cards: [
-            { icon: <Shield size={24} strokeWidth={1.5} />, title: "OT & ICU Pressurization", desc: "Positive/negative pressure rooms with HEPA filtration for operation theatres and intensive care units." },
-            { icon: <Wind size={24} strokeWidth={1.5} />, title: "Air Purification", desc: "HEPA + UV-C based air purification systems eliminating 99.97% of airborne pathogens." },
-            { icon: <Thermometer size={24} strokeWidth={1.5} />, title: "Pharmacy Cold Rooms", desc: "Precision temperature-controlled storage environments for sensitive medical supplies and vaccines." },
-            { icon: <Zap size={24} strokeWidth={1.5} />, title: "Isolation Wards", desc: "Negative pressure isolation rooms with dedicated air handling to prevent cross-contamination." },
+            { icon: <Shield size={24} strokeWidth={1.5} />, title: "Hospitals & Medical Colleges", desc: "Specialized HVAC installations ensuring continuous fresh air circulation, HEPA filtration compatibility, and reliable performance for critical healthcare operations." },
+            { icon: <Wind size={24} strokeWidth={1.5} />, title: "Clinics & Diagnostic Labs", desc: "Precision-controlled environments for diagnostic centers with strict temperature and humidity regulation to protect sensitive equipment and samples." },
+            { icon: <Thermometer size={24} strokeWidth={1.5} />, title: "Operation Theatres", desc: "Positive/negative pressure rooms with HEPA filtration ensuring sterile conditions for operation theatres and surgical suites." },
+            { icon: <Zap size={24} strokeWidth={1.5} />, title: "ICUs & Patient Rooms", desc: "Negative pressure isolation rooms with dedicated air handling and continuous fresh air supply to prevent cross-contamination in ICUs and patient wards." },
         ],
         features: ["NABH compliance ready", "99.97% HEPA filtration", "Redundant system design", "Continuous air quality monitoring"],
     },
-    "schools-colleges": {
-        icon: <GraduationCap size={36} strokeWidth={1.5} />,
-        label: "Schools & Colleges",
-        color: "#3B82F6",
-        heroDesc: "Healthy and comfortable learning environments that enhance student focus and academic performance.",
+    "hotels-restaurants": {
+        icon: <Hotel size={36} strokeWidth={1.5} />,
+        label: "Hospitality & Hotel HVAC Solutions",
+        color: "#F59E0B",
+        heroDesc: "Hotels, resorts, and hospitality venues require efficient climate control to provide guests with a comfortable and pleasant stay. Our HVAC systems are designed to maintain consistent cooling, quiet operation, and efficient ventilation across guest rooms, banquet halls, restaurants, and lobbies.",
         cards: [
-            { icon: <Wind size={24} strokeWidth={1.5} />, title: "Classrooms", desc: "Fresh air ventilation with CO₂ monitoring to maintain optimal oxygen levels for active learning environments." },
-            { icon: <Thermometer size={24} strokeWidth={1.5} />, title: "Auditoriums & Halls", desc: "Large-volume air conditioning for assembly halls, auditoriums, and examination centres." },
-            { icon: <Shield size={24} strokeWidth={1.5} />, title: "Libraries", desc: "Humidity-controlled environments protecting books and providing quiet, comfortable study spaces." },
-            { icon: <Zap size={24} strokeWidth={1.5} />, title: "Labs & Workshops", desc: "Specialized ventilation for chemistry labs, computer labs, and vocational workshops with fume extraction." },
+            { icon: <Thermometer size={24} strokeWidth={1.5} />, title: "Hotels & Resorts", desc: "Individually controlled HVAC units for every guest room and resort space ensuring personalized temperature comfort and a premium guest experience round the clock." },
+            { icon: <Wind size={24} strokeWidth={1.5} />, title: "Banquet Halls", desc: "High-capacity air handling for large gatherings with precise humidity and temperature regulation to keep events comfortable regardless of occupancy." },
+            { icon: <Zap size={24} strokeWidth={1.5} />, title: "Restaurants & Cafes", desc: "Integrated ventilation and exhaust solutions for dining areas and commercial kitchens, balancing air quality with efficient energy usage." },
+            { icon: <Shield size={24} strokeWidth={1.5} />, title: "Conference Halls", desc: "Smart climate systems for conference halls with occupancy-adaptive controls ensuring optimal comfort during events and meetings." },
         ],
-        features: ["Low noise for quiet zones", "CO₂ & air quality sensors", "Energy-star rated units", "Scheduled operation timers"],
-    },
-    "gyms-fitness": {
-        icon: <Dumbbell size={36} strokeWidth={1.5} />,
-        label: "Gyms & Fitness Centers",
-        color: "#10B981",
-        heroDesc: "High-performance ventilation and cooling systems built for high-occupancy, high-intensity fitness environments.",
-        cards: [
-            { icon: <Wind size={24} strokeWidth={1.5} />, title: "Workout Floors", desc: "High-volume fresh air supply with powerful air circulation to handle sweat, odour, and CO₂ buildup." },
-            { icon: <Thermometer size={24} strokeWidth={1.5} />, title: "Locker Rooms", desc: "Humidity extraction and dehumidification systems for changing rooms and shower areas." },
-            { icon: <Shield size={24} strokeWidth={1.5} />, title: "Swimming Pools", desc: "Natatorium dehumidification systems preventing structural damage and maintaining swimmer comfort." },
-            { icon: <Zap size={24} strokeWidth={1.5} />, title: "Yoga & Studios", desc: "Precise temperature control for hot yoga, pilates, and specialised fitness studio environments." },
-        ],
-        features: ["High air exchange rates", "Dehumidification built-in", "Odour elimination filters", "Corrosion-resistant units"],
-    },
-    "salons-spas": {
-        icon: <Scissors size={36} strokeWidth={1.5} />,
-        label: "Salons & Spas",
-        color: "#EC4899",
-        heroDesc: "Luxurious climate solutions that create the perfect ambience for relaxation and wellness experiences.",
-        cards: [
-            { icon: <Thermometer size={24} strokeWidth={1.5} />, title: "Treatment Rooms", desc: "Whisper-quiet precision cooling for massage, facial, and body treatment private rooms." },
-            { icon: <Wind size={24} strokeWidth={1.5} />, title: "Chemical Fume Control", desc: "Dedicated exhaust systems removing salon chemicals, dyes, and nail care fumes safely." },
-            { icon: <Shield size={24} strokeWidth={1.5} />, title: "Steam & Sauna Areas", desc: "Moisture management systems controlling humidity in steam rooms and sauna areas." },
-            { icon: <Zap size={24} strokeWidth={1.5} />, title: "Reception & Retail", desc: "Elegant concealed ducting maintaining a luxurious aesthetic in customer-facing spaces." },
-        ],
-        features: ["Silent operation < 25dB", "Aromatherapy-compatible", "Concealed installation", "Individual zone control"],
+        features: ["24/7 operational reliability", "Energy-efficient inverter technology", "Silent operation < 28dB", "Smart BMS integration"],
     },
     "offices-it-parks": {
         icon: <Briefcase size={36} strokeWidth={1.5} />,
-        label: "Offices & IT Parks",
+        label: "Commercial Office HVAC Solutions",
         color: "#6366F1",
-        heroDesc: "Smart HVAC systems for modern workplaces maximizing employee productivity and energy savings.",
+        heroDesc: "Modern office buildings require efficient HVAC systems to create productive and comfortable working environments. Our systems maintain consistent temperature, proper ventilation, and energy-efficient cooling across corporate offices, IT parks, and commercial complexes.",
         cards: [
-            { icon: <Wind size={24} strokeWidth={1.5} />, title: "Open Plan Offices", desc: "VAV systems with smart zoning adapting to occupancy patterns across large open workspaces." },
-            { icon: <Thermometer size={24} strokeWidth={1.5} />, title: "Server Rooms & Data Centers", desc: "Precision cooling with N+1 redundancy maintaining critical temperature and humidity for servers." },
-            { icon: <Zap size={24} strokeWidth={1.5} />, title: "Conference Rooms", desc: "Rapid cooling systems with occupancy sensors automatically adjusting to meeting room usage." },
-            { icon: <Shield size={24} strokeWidth={1.5} />, title: "Building Automation", desc: "Full BMS integration with IoT dashboards for real-time energy monitoring and predictive maintenance." },
+            { icon: <Wind size={24} strokeWidth={1.5} />, title: "Corporate Offices", desc: "VAV systems with smart zoning adapting to occupancy patterns across large open workspaces, supporting employee productivity and comfort." },
+            { icon: <Thermometer size={24} strokeWidth={1.5} />, title: "IT Parks", desc: "Precision cooling solutions for IT park campuses with demand-controlled ventilation and energy-efficient operation for large-scale deployments." },
+            { icon: <Zap size={24} strokeWidth={1.5} />, title: "Co-working Spaces", desc: "Flexible zone-controlled systems for co-working environments, adjusting automatically to fluctuating occupancy throughout the day." },
+            { icon: <Shield size={24} strokeWidth={1.5} />, title: "Commercial Complexes", desc: "Full BMS integration with IoT dashboards for real-time energy monitoring and predictive maintenance across multi-tenant commercial buildings." },
         ],
         features: ["BMS & IoT integration", "LEED certification support", "Demand-controlled ventilation", "Predictive maintenance alerts"],
     },
     "retail-stores": {
         icon: <ShoppingBag size={36} strokeWidth={1.5} />,
-        label: "Retail Stores",
+        label: "Retail & Mall HVAC Solutions",
         color: "#F97316",
-        heroDesc: "Inviting retail climates that keep shoppers comfortable longer, driving dwell time and purchase decisions.",
+        heroDesc: "Retail environments experience heavy footfall and require reliable cooling and ventilation systems. Our HVAC systems are designed to maintain a pleasant shopping experience by ensuring consistent temperature control and effective air circulation.",
         cards: [
-            { icon: <Thermometer size={24} strokeWidth={1.5} />, title: "Showroom Floors", desc: "Uniform temperature distribution across large retail floors eliminating hot and cold spots." },
-            { icon: <Wind size={24} strokeWidth={1.5} />, title: "Storage & Back-of-House", desc: "Climate control for stock rooms protecting inventory from humidity and temperature fluctuations." },
-            { icon: <Shield size={24} strokeWidth={1.5} />, title: "Food Courts & Cafes", desc: "Integrated ventilation and exhaust solutions for food service areas within retail complexes." },
-            { icon: <Zap size={24} strokeWidth={1.5} />, title: "Mall Common Areas", desc: "Central plant solutions for shopping malls with efficient chiller and AHU configurations." },
+            { icon: <Thermometer size={24} strokeWidth={1.5} />, title: "Shopping Malls", desc: "Central plant solutions for shopping malls with efficient chiller and AHU configurations, maintaining uniform comfort across large retail floors." },
+            { icon: <Wind size={24} strokeWidth={1.5} />, title: "Retail Showrooms", desc: "Uniform temperature distribution eliminating hot and cold spots across showroom floors, enhancing the customer browsing experience." },
+            { icon: <Shield size={24} strokeWidth={1.5} />, title: "Supermarkets", desc: "Integrated HVAC and refrigeration management for supermarkets, balancing comfort for shoppers while protecting perishable product displays." },
+            { icon: <Zap size={24} strokeWidth={1.5} />, title: "Multiplex Cinemas", desc: "High-capacity air conditioning for multiplex theatres ensuring consistent comfort across varying audience sizes and occupancy schedules." },
         ],
         features: ["High foot-traffic rated", "Energy metering per zone", "Rapid temperature recovery", "Low maintenance design"],
     },
     "industrial-buildings": {
         icon: <BarChart2 size={36} strokeWidth={1.5} />,
-        label: "Industrial Buildings",
+        label: "Industrial & Manufacturing HVAC Solutions",
         color: "#14B8A6",
-        heroDesc: "Robust industrial ventilation and process cooling solutions for manufacturing and warehouse environments.",
+        heroDesc: "Industrial facilities require HVAC systems for temperature control, humidity regulation, and proper ventilation to maintain production quality and worker safety. Our HVAC solutions support factories, pharmaceutical units, and food processing plants with durable and high-capacity systems.",
         cards: [
-            { icon: <Wind size={24} strokeWidth={1.5} />, title: "Factory Floors", desc: "High-volume evaporative or mechanical cooling for large manufacturing and assembly areas." },
-            { icon: <Thermometer size={24} strokeWidth={1.5} />, title: "Warehouses & Cold Storage", desc: "Industrial refrigeration and climate control maintaining product quality in storage facilities." },
-            { icon: <Zap size={24} strokeWidth={1.5} />, title: "Process Cooling", desc: "Precision process chillers and cooling towers for manufacturing equipment and industrial processes." },
-            { icon: <Shield size={24} strokeWidth={1.5} />, title: "Hazardous Area Ventilation", desc: "ATEX-rated ventilation systems for paint booths, chemical plants, and explosive atmosphere zones." },
+            { icon: <Wind size={24} strokeWidth={1.5} />, title: "Manufacturing Plants", desc: "High-volume evaporative or mechanical cooling for large manufacturing and assembly areas, ensuring worker safety and production quality." },
+            { icon: <Thermometer size={24} strokeWidth={1.5} />, title: "Pharmaceutical Facilities", desc: "Cleanroom-grade HVAC with strict temperature, humidity, and particulate control meeting GMP standards for pharmaceutical manufacturing." },
+            { icon: <Zap size={24} strokeWidth={1.5} />, title: "Food Processing Units", desc: "Hygienic HVAC systems with corrosion-resistant construction maintaining precise conditions for food safety and processing compliance." },
+            { icon: <Shield size={24} strokeWidth={1.5} />, title: "Electronics Manufacturing", desc: "ESD-safe, humidity-controlled environments for electronics manufacturing protecting sensitive components throughout the production process." },
         ],
         features: ["ATEX-rated options", "Corrosion-resistant builds", "High ambient operation", "Remote monitoring ready"],
+    },
+    "schools-colleges": {
+        icon: <GraduationCap size={36} strokeWidth={1.5} />,
+        label: "Educational Institution HVAC Solutions",
+        color: "#3B82F6",
+        heroDesc: "Educational institutions require comfortable indoor environments to support effective learning. Our HVAC systems ensure proper ventilation and temperature control for classrooms, lecture halls, libraries, and laboratories, designed for energy efficiency and long-term reliability.",
+        cards: [
+            { icon: <Wind size={24} strokeWidth={1.5} />, title: "Schools", desc: "Fresh air ventilation with CO₂ monitoring for school classrooms, maintaining optimal oxygen levels to support student focus and active learning." },
+            { icon: <Thermometer size={24} strokeWidth={1.5} />, title: "Colleges", desc: "Large-volume air conditioning for college auditoriums, lecture halls, and examination centres with reliable year-round performance." },
+            { icon: <Shield size={24} strokeWidth={1.5} />, title: "Universities", desc: "Campus-wide HVAC solutions with centralized BMS management covering libraries, research labs, and administrative buildings." },
+            { icon: <Zap size={24} strokeWidth={1.5} />, title: "Training Institutes", desc: "Specialized ventilation for vocational workshops, computer labs, and training rooms with scheduled operation timers for efficient energy use." },
+        ],
+        features: ["Low noise for quiet zones", "CO₂ & air quality sensors", "Energy-star rated units", "Scheduled operation timers"],
+    },
+    "data-centers": {
+        icon: <Server size={36} strokeWidth={1.5} />,
+        label: "Data Center HVAC Solutions",
+        color: "#8B5CF6",
+        heroDesc: "Data centers require precision cooling systems to prevent overheating of servers and critical IT equipment. Our HVAC solutions provide reliable temperature control, humidity management, and uninterrupted cooling for IT infrastructure to ensure continuous server performance and data security.",
+        cards: [
+            { icon: <Thermometer size={24} strokeWidth={1.5} />, title: "Data Centers", desc: "Precision cooling with N+1 redundancy maintaining critical temperature and humidity levels across enterprise data center facilities." },
+            { icon: <Shield size={24} strokeWidth={1.5} />, title: "Server Rooms", desc: "Compact precision air conditioning units for server rooms with hot/cold aisle containment strategies for maximum cooling efficiency." },
+            { icon: <Wind size={24} strokeWidth={1.5} />, title: "Network Operation Centers", desc: "Continuous, redundant HVAC systems for NOCs ensuring uninterrupted cooling with automatic failover for mission-critical operations." },
+            { icon: <Zap size={24} strokeWidth={1.5} />, title: "Humidity Management", desc: "Precision humidity control systems preventing static buildup and condensation that can damage sensitive IT hardware and storage systems." },
+        ],
+        features: ["N+1 redundancy design", "Precision ±0.5°C control", "24/7 monitoring & alerts", "Hot/cold aisle compatibility"],
+    },
+    "warehouses-cold-storage": {
+        icon: <Warehouse size={36} strokeWidth={1.5} />,
+        label: "Warehouse & Cold Storage HVAC Solutions",
+        color: "#0EA5E9",
+        heroDesc: "Warehouses and cold storage facilities require controlled environments to maintain product quality and prevent spoilage. Our HVAC systems help maintain consistent temperature and humidity levels for storage and logistics operations.",
+        cards: [
+            { icon: <Thermometer size={24} strokeWidth={1.5} />, title: "Cold Storage Units", desc: "Industrial refrigeration systems maintaining precise low-temperature environments for perishable goods, pharmaceuticals, and temperature-sensitive products." },
+            { icon: <Wind size={24} strokeWidth={1.5} />, title: "Logistics Warehouses", desc: "Large-volume climate control for logistics hubs ensuring comfortable worker conditions and protecting stored inventory from humidity fluctuations." },
+            { icon: <Shield size={24} strokeWidth={1.5} />, title: "Food Storage Facilities", desc: "HACCP-compliant refrigeration and HVAC systems for food storage, maintaining strict temperature and humidity standards for food safety." },
+            { icon: <Zap size={24} strokeWidth={1.5} />, title: "Distribution Centers", desc: "Zoned climate control for distribution centers separating temperature requirements across different product storage and dispatch areas." },
+        ],
+        features: ["Wide temperature range", "Energy-efficient compressors", "Humidity precision control", "Remote temperature logging"],
     },
 };
 
 // ─── Slug Map ──────────────────────────────────────────────────────────────────
 const slugMap: Record<string, string> = {
+    "Healthcare HVAC Solutions": "hospitals-clinics",
+    "Hospitality & Hotel HVAC Solutions": "hotels-restaurants",
+    "Commercial Office HVAC Solutions": "offices-it-parks",
+    "Retail & Mall HVAC Solutions": "retail-stores",
+    "Industrial & Manufacturing HVAC Solutions": "industrial-buildings",
+    "Educational Institution HVAC Solutions": "schools-colleges",
+    "Data Center HVAC Solutions": "data-centers",
+    "Warehouse & Cold Storage HVAC Solutions": "warehouses-cold-storage",
+    // Legacy mappings
     "Hotels & Restaurants": "hotels-restaurants",
     "Hospitals & Clinics": "hospitals-clinics",
     "Schools & Colleges": "schools-colleges",
@@ -232,7 +241,6 @@ export function HVACApplicationsDetailPage() {
                 {/* decorative circle */}
                 <div style={{ position: "absolute", top: "-80px", right: "-80px", width: "320px", height: "320px", borderRadius: "50%", background: `${data.color}18`, pointerEvents: "none" }} />
                 <div style={{ maxWidth: "1200px", margin: "0 auto" , marginTop: "30px"}}>
-                    
 
                     <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
                         <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "72px", height: "72px", borderRadius: "20px", background: `${data.color}22`, border: `1.5px solid ${data.color}55`, color: data.color, marginBottom: "20px" }}>

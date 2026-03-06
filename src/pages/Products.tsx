@@ -18,6 +18,23 @@ import {
   ThermometerSun,
   Droplet,
 } from "lucide-react";
+import SplitAcImg from "@/assets/split-ac.png";
+import WindowAcImg from "@/assets/window-ac.png";
+import CassetteAcImg from "@/assets/cassette-ac.png";
+import DuctableAcImg from "@/assets/ductable-ac.png";
+import TowerAcImg from "@/assets/tower-ac.png";
+import PackageAcImg from "@/assets/package-ac.png";
+import VrvVrfImg from "@/assets/vrv-vrf.png";
+import AhuImg from "@/assets/ahu.png";
+import ChillerImg from "@/assets/chiller.png";
+import WaterCooledChillerImg from "@/assets/water-cooled-chiller.png";
+import ColdRoomImg from "@/assets/cold-room.png";
+import IcePlantImg from "@/assets/ice-plant.png";
+import WaterDispenserImg from "@/assets/water-dispenser.png";
+import RoPlantImg from "@/assets/ro-plant.png";
+import WaterCoolerImg from "@/assets/water-cooler.png";
+import PanelAcImg from "@/assets/panel-ac.png";
+
 
 /* ================= TYPES ================= */
 
@@ -47,8 +64,7 @@ const categories: Category[] = [
     title: "Split AC",
     description:
       "Energy-efficient Split AC for homes and offices with powerful cooling performance.",
-    image:
-      "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&q=80",
+    image: SplitAcImg,
     brands: ["Daikin", "Voltas", "LG", "Samsung"],
     products: [],
   },
@@ -58,8 +74,7 @@ const categories: Category[] = [
     title: "Window AC",
     description:
       "Compact and budget-friendly Window AC for small rooms with easy installation.",
-    image:
-      "https://images.unsplash.com/photo-1613690399151-65ea69478674?w=600&q=80",
+    image: WindowAcImg,
     brands: ["Carrier", "Godrej", "Blue Star"],
     products: [],
   },
@@ -69,8 +84,7 @@ const categories: Category[] = [
     title: "Cassette AC",
     description:
       "Ceiling-mounted Cassette AC for uniform 360° air distribution.",
-    image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
+    image: CassetteAcImg,
     brands: ["Daikin", "Mitsubishi", "Carrier"],
     products: [],
   },
@@ -80,8 +94,7 @@ const categories: Category[] = [
     title: "Ductable AC",
     description:
       "Centralized ductable AC system for large areas and commercial spaces.",
-    image:
-      "https://images.unsplash.com/photo-1504274066651-8d31a536b11a?w=600&q=80",
+    image: DuctableAcImg,
     brands: ["Daikin", "Blue Star"],
     products: [],
   },
@@ -91,8 +104,7 @@ const categories: Category[] = [
     title: "Water Dispenser",
     description:
       "Hot and cold water dispensers with energy-efficient cooling system.",
-    image:
-      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80",
+    image: WaterDispenserImg,
     brands: ["Voltas", "Blue Star"],
     products: [],
   },
@@ -102,8 +114,7 @@ const categories: Category[] = [
     title: "RO Plant",
     description:
       "Advanced RO plant systems for pure and safe drinking water.",
-    image:
-      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80",
+    image: RoPlantImg,
     brands: ["Kent", "Aquaguard"],
     products: [],
   },
@@ -113,8 +124,7 @@ const categories: Category[] = [
     title: "Tower AC",
     description:
       "High-capacity Tower AC for large rooms and event spaces.",
-    image:
-      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80",
+    image: TowerAcImg,
     brands: ["Blue Star", "Voltas"],
     products: [],
   },
@@ -124,8 +134,7 @@ const categories: Category[] = [
     title: "Package AC",
     description:
       "Heavy-duty Package AC for commercial buildings and malls.",
-    image:
-      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80",
+    image: PackageAcImg,
     brands: ["Carrier", "Daikin"],
     products: [],
   },
@@ -135,8 +144,7 @@ const categories: Category[] = [
     title: "VRV / VRF System",
     description:
       "Advanced VRV/VRF system for multi-zone cooling.",
-    image:
-      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80",
+    image: VrvVrfImg,
     brands: ["Daikin", "Mitsubishi"],
     products: [],
   },
@@ -146,8 +154,7 @@ const categories: Category[] = [
     title: "AHU (Air Handling Unit)",
     description:
       "High-performance AHU for centralized HVAC systems.",
-    image:
-      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80",
+    image: AhuImg,
     brands: ["Systemair", "Blue Star"],
     products: [],
   },
@@ -157,8 +164,7 @@ const categories: Category[] = [
     title: "Cold Room",
     description:
       "Custom-built cold room solutions for storage and preservation.",
-    image:
-      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80",
+    image: ColdRoomImg,
     brands: ["Blue Star", "Carrier"],
     products: [],
   },
@@ -168,8 +174,7 @@ const categories: Category[] = [
     title: "Chiller",
     description:
       "Industrial chiller systems for large-scale cooling applications.",
-    image:
-      "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80",
+    image: ChillerImg,
     brands: ["Daikin", "Trane"],
     products: [],
   },
@@ -179,8 +184,7 @@ const categories: Category[] = [
     title: "Air-Cooled Chiller",
     description:
       "Efficient air-cooled chiller with low maintenance cost.",
-    image:
-      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80",
+    image: ChillerImg,
     brands: ["Blue Star", "Carrier"],
     products: [],
   },
@@ -190,8 +194,7 @@ const categories: Category[] = [
     title: "Water-Cooled Chiller",
     description:
       "High-capacity water-cooled chiller for heavy-duty applications.",
-    image:
-      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80",
+    image: WaterCooledChillerImg,
     brands: ["Daikin", "Trane"],
     products: [],
   },
@@ -201,8 +204,7 @@ const categories: Category[] = [
     title: "Ice Plant",
     description:
       "Industrial ice plant for bulk ice production.",
-    image:
-      "https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&q=80",
+    image: IcePlantImg,
     brands: ["Blue Star"],
     products: [],
   },
@@ -212,8 +214,7 @@ const categories: Category[] = [
     title: "Panel AC",
     description:
       "Compact panel AC for electrical control panels.",
-    image:
-      "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=600&q=80",
+    image: PanelAcImg,
     brands: ["Pfannenberg"],
     products: [],
   },
@@ -223,8 +224,7 @@ const categories: Category[] = [
     title: "Water Cooler",
     description:
       "Commercial water cooler for offices, schools, and public spaces.",
-    image:
-      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80",
+    image: WaterCoolerImg,
     brands: ["Voltas", "Blue Star"],
     products: [],
   },

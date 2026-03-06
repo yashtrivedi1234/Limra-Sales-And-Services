@@ -69,7 +69,7 @@ const SiteHeader = () => {
           <img
             src={Logo}
             alt="LIMRA Sales & Services"
-            style={{ height: "60px", width: "auto" }}
+            style={{ height: "70px", width: "auto" }}
           />
 
         </Link>
@@ -91,7 +91,7 @@ const SiteHeader = () => {
               to={link.path}
               style={{
                 fontWeight: 500,
-                fontSize: "0.875rem",
+                fontSize: "1rem",
                 padding: "6px 11px",
                 borderRadius: "8px",
                 color: navLinkColor(link.path),

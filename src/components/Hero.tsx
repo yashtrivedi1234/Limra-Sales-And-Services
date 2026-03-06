@@ -4,7 +4,6 @@ import { Phone, ShoppingCart, Eye, CheckCircle, MapPin } from "lucide-react";
 import { BRAND } from "@/lib/colors";
 import heroImage from "@/assets/heroimage.webp";
 import type { CSSProperties } from "react";
-import CountUp from "./ui/CountUp";
 
 const badges = [
   { icon: CheckCircle, text: "Free Site Visit & Consultation" },
@@ -19,7 +18,7 @@ export default function HeroSection() {
       style={{
         position: "relative",
         width: "100%",
-        minHeight: "100vh",
+        minHeight: "fit-content",
         overflow: "hidden",
         display: "flex",
         alignItems: "center",
@@ -42,7 +41,7 @@ export default function HeroSection() {
       </div>
 
       {/* Content */}
-      <div style={{ position: "relative", zIndex: 10, width: "100%", maxWidth: "1200px", margin: "0 auto",}}>
+      <div style={{ position: "relative", zIndex: 10, width: "100%", maxWidth: "1200px", margin: "0 auto", padding: "60px 24px 48px" }}>
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -54,7 +53,9 @@ export default function HeroSection() {
             color: BRAND.accentOnDark,
             fontWeight: 700, fontSize: "0.72rem",
             letterSpacing: "0.18em", textTransform: "uppercase" as const,
-            padding: "5px 16px", borderRadius: "100px", marginBottom: "20px",
+            padding: "5px 16px", borderRadius: "100px",
+            marginTop: "50px",
+            marginBottom: "50px"
           }}
         >
           HVAC & Air Conditioning Experts
@@ -111,7 +112,7 @@ export default function HeroSection() {
           transition={{ duration: 0.5, delay: 0.4 }}
           style={{
             display: "flex", flexWrap: "wrap", gap: "20px",
-            borderBottom: "1px solid rgba(255,255,255,0.12)", paddingBottom: "24px",
+            borderBottom: "1px solid rgba(255,255,255,0.12)", paddingBottom: "0px",
           }}
         >
           {badges.map((b, i) => (

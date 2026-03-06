@@ -113,7 +113,7 @@ function Card({ cat, i }: { cat: typeof categories[0]; i: number }) {
         <h3
           style={{
             fontWeight: 700,
-            color: BRAND.dark,
+            color: BRAND.primary,
             fontSize: "1.05rem",
             margin: 0,
           }}
