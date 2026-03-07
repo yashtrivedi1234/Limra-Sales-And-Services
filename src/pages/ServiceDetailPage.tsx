@@ -50,7 +50,7 @@ export default function ServiceDetailPage() {
 
         <div className="relative z-10 max-w-[1100px] mx-auto px-6">
           <motion.div initial="hidden" animate="visible" variants={fadeUp}>
-            <div className="inline-flex items-center gap-2 rounded-full py-[5px] px-4 text-[0.68rem] font-bold tracking-[0.14em] uppercase mb-5"
+            <div className="inline-flex items-center gap-2 rounded-full py-[5px] px-4 text-[0.68rem] font-bold tracking-[0.14em] uppercase mb-5 mt-5"
               style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: BRAND.accentOnDark }}>
               <Icon size={12} /> {service.badge || "Service"}
             </div>
