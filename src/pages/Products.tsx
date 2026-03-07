@@ -4,6 +4,7 @@ import {
   Wind, Phone, Star, ChevronRight, AirVent,
   Droplets, Activity, Snowflake, Fan, Building2,
   Box, ThermometerSun, Droplet,
+  MessageSquare,
 } from "lucide-react";
 import SplitAcImg from "@/assets/split-ac.png";
 import WindowAcImg from "@/assets/window-ac.png";
@@ -217,7 +218,7 @@ function ProductCard({ cat }: { cat: Category }) {
             (e.currentTarget as HTMLElement).style.color = "hsl(var(--brand-dark))";
           }}
         >
-          <Phone size={15} />
+          <MessageSquare size={15} />
           Get Quote
           <ChevronRight size={14} />
         </button>
