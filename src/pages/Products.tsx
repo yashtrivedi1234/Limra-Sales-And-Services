@@ -1,22 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  Thermometer,
-  Wind,
-  Zap,
-  Phone,
-  Star,
-  ChevronRight,
-  AirVent,
-  Move,
-  Droplets,
-  Activity,
-  Snowflake,
-  Fan,
-  Building2,
-  Box,
-  ThermometerSun,
-  Droplet,
+  Wind, Phone, Star, ChevronRight, AirVent,
+  Droplets, Activity, Snowflake, Fan, Building2,
+  Box, ThermometerSun, Droplet,
 } from "lucide-react";
 import SplitAcImg from "@/assets/split-ac.png";
 import WindowAcImg from "@/assets/window-ac.png";
@@ -35,199 +22,32 @@ import RoPlantImg from "@/assets/ro-plant.png";
 import WaterCoolerImg from "@/assets/water-cooler.png";
 import PanelAcImg from "@/assets/panel-ac.png";
 
-
 /* ================= TYPES ================= */
-
-interface Product {
-  name: string;
-  ton: string;
-  price: string;
-  stars: number;
-}
-
+interface Product { name: string; ton: string; price: string; stars: number; }
 interface Category {
-  id: string;
-  icon: JSX.Element;
-  title: string;
-  description: string;
-  image: string;
-  brands: string[];
-  products: Product[];
+  id: string; icon: JSX.Element; title: string;
+  description: string; image: string; brands: string[]; products: Product[];
 }
 
 /* ================= DATA ================= */
-
 const categories: Category[] = [
-  {
-    id: "split-ac",
-    icon: <Snowflake size={22} />,
-    title: "Split AC",
-    description:
-      "Energy-efficient Split AC for homes and offices with powerful cooling performance.",
-    image: SplitAcImg,
-    brands: ["Daikin", "Voltas", "LG", "Samsung"],
-    products: [],
-  },
-  {
-    id: "window-ac",
-    icon: <Box size={22} />,
-    title: "Window AC",
-    description:
-      "Compact and budget-friendly Window AC for small rooms with easy installation.",
-    image: WindowAcImg,
-    brands: ["Carrier", "Godrej", "Blue Star"],
-    products: [],
-  },
-  {
-    id: "cassette-ac",
-    icon: <AirVent size={22} />,
-    title: "Cassette AC",
-    description:
-      "Ceiling-mounted Cassette AC for uniform 360° air distribution.",
-    image: CassetteAcImg,
-    brands: ["Daikin", "Mitsubishi", "Carrier"],
-    products: [],
-  },
-  {
-    id: "ductable-ac",
-    icon: <Wind size={22} />,
-    title: "Ductable AC",
-    description:
-      "Centralized ductable AC system for large areas and commercial spaces.",
-    image: DuctableAcImg,
-    brands: ["Daikin", "Blue Star"],
-    products: [],
-  },
-  {
-    id: "water-dispenser",
-    icon: <Droplet size={22} />,
-    title: "Water Dispenser",
-    description:
-      "Hot and cold water dispensers with energy-efficient cooling system.",
-    image: WaterDispenserImg,
-    brands: ["Voltas", "Blue Star"],
-    products: [],
-  },
-  {
-    id: "ro-plant",
-    icon: <Droplet size={22} />,
-    title: "RO Plant",
-    description:
-      "Advanced RO plant systems for pure and safe drinking water.",
-    image: RoPlantImg,
-    brands: ["Kent", "Aquaguard"],
-    products: [],
-  },
-  {
-    id: "tower-ac",
-    icon: <ThermometerSun size={22} />,
-    title: "Tower AC",
-    description:
-      "High-capacity Tower AC for large rooms and event spaces.",
-    image: TowerAcImg,
-    brands: ["Blue Star", "Voltas"],
-    products: [],
-  },
-  {
-    id: "package-ac",
-    icon: <Box size={22} />,
-    title: "Package AC",
-    description:
-      "Heavy-duty Package AC for commercial buildings and malls.",
-    image: PackageAcImg,
-    brands: ["Carrier", "Daikin"],
-    products: [],
-  },
-  {
-    id: "vrv-vrf",
-    icon: <Building2 size={22} />,
-    title: "VRV / VRF System",
-    description:
-      "Advanced VRV/VRF system for multi-zone cooling.",
-    image: VrvVrfImg,
-    brands: ["Daikin", "Mitsubishi"],
-    products: [],
-  },
-  {
-    id: "ahu",
-    icon: <Fan size={22} />,
-    title: "AHU (Air Handling Unit)",
-    description:
-      "High-performance AHU for centralized HVAC systems.",
-    image: AhuImg,
-    brands: ["Systemair", "Blue Star"],
-    products: [],
-  },
-  {
-    id: "cold-room",
-    icon: <Snowflake size={22} />,
-    title: "Cold Room",
-    description:
-      "Custom-built cold room solutions for storage and preservation.",
-    image: ColdRoomImg,
-    brands: ["Blue Star", "Carrier"],
-    products: [],
-  },
-  {
-    id: "chiller",
-    icon: <Snowflake size={22} />,
-    title: "Chiller",
-    description:
-      "Industrial chiller systems for large-scale cooling applications.",
-    image: ChillerImg,
-    brands: ["Daikin", "Trane"],
-    products: [],
-  },
-  {
-    id: "air-cooled-chiller",
-    icon: <Fan size={22} />,
-    title: "Air-Cooled Chiller",
-    description:
-      "Efficient air-cooled chiller with low maintenance cost.",
-    image: ChillerImg,
-    brands: ["Blue Star", "Carrier"],
-    products: [],
-  },
-  {
-    id: "water-cooled-chiller",
-    icon: <Droplets size={22} />,
-    title: "Water-Cooled Chiller",
-    description:
-      "High-capacity water-cooled chiller for heavy-duty applications.",
-    image: WaterCooledChillerImg,
-    brands: ["Daikin", "Trane"],
-    products: [],
-  },
-  {
-    id: "ice-plant",
-    icon: <Snowflake size={22} />,
-    title: "Ice Plant",
-    description:
-      "Industrial ice plant for bulk ice production.",
-    image: IcePlantImg,
-    brands: ["Blue Star"],
-    products: [],
-  },
-  {
-    id: "panel-ac",
-    icon: <Activity size={22} />,
-    title: "Panel AC",
-    description:
-      "Compact panel AC for electrical control panels.",
-    image: PanelAcImg,
-    brands: ["Pfannenberg"],
-    products: [],
-  },
-  {
-    id: "water-cooler",
-    icon: <Droplets size={22} />,
-    title: "Water Cooler",
-    description:
-      "Commercial water cooler for offices, schools, and public spaces.",
-    image: WaterCoolerImg,
-    brands: ["Voltas", "Blue Star"],
-    products: [],
-  },
+  { id: "split-ac", icon: <Snowflake size={22} />, title: "Split AC", description: "Energy-efficient Split AC for homes and offices with powerful cooling performance.", image: SplitAcImg, brands: ["Daikin", "Voltas", "LG", "Samsung"], products: [] },
+  { id: "window-ac", icon: <Box size={22} />, title: "Window AC", description: "Compact and budget-friendly Window AC for small rooms with easy installation.", image: WindowAcImg, brands: ["Carrier", "Godrej", "Blue Star"], products: [] },
+  { id: "cassette-ac", icon: <AirVent size={22} />, title: "Cassette AC", description: "Ceiling-mounted Cassette AC for uniform 360° air distribution.", image: CassetteAcImg, brands: ["Daikin", "Mitsubishi", "Carrier"], products: [] },
+  { id: "ductable-ac", icon: <Wind size={22} />, title: "Ductable AC", description: "Centralized ductable AC system for large areas and commercial spaces.", image: DuctableAcImg, brands: ["Daikin", "Blue Star"], products: [] },
+  { id: "water-dispenser", icon: <Droplet size={22} />, title: "Water Dispenser", description: "Hot and cold water dispensers with energy-efficient cooling system.", image: WaterDispenserImg, brands: ["Voltas", "Blue Star"], products: [] },
+  { id: "ro-plant", icon: <Droplet size={22} />, title: "RO Plant", description: "Advanced RO plant systems for pure and safe drinking water.", image: RoPlantImg, brands: ["Kent", "Aquaguard"], products: [] },
+  { id: "tower-ac", icon: <ThermometerSun size={22} />, title: "Tower AC", description: "High-capacity Tower AC for large rooms and event spaces.", image: TowerAcImg, brands: ["Blue Star", "Voltas"], products: [] },
+  { id: "package-ac", icon: <Box size={22} />, title: "Package AC", description: "Heavy-duty Package AC for commercial buildings and malls.", image: PackageAcImg, brands: ["Carrier", "Daikin"], products: [] },
+  { id: "vrv-vrf", icon: <Building2 size={22} />, title: "VRV / VRF System", description: "Advanced VRV/VRF system for multi-zone cooling.", image: VrvVrfImg, brands: ["Daikin", "Mitsubishi"], products: [] },
+  { id: "ahu", icon: <Fan size={22} />, title: "AHU (Air Handling Unit)", description: "High-performance AHU for centralized HVAC systems.", image: AhuImg, brands: ["Systemair", "Blue Star"], products: [] },
+  { id: "cold-room", icon: <Snowflake size={22} />, title: "Cold Room", description: "Custom-built cold room solutions for storage and preservation.", image: ColdRoomImg, brands: ["Blue Star", "Carrier"], products: [] },
+  { id: "chiller", icon: <Snowflake size={22} />, title: "Chiller", description: "Industrial chiller systems for large-scale cooling applications.", image: ChillerImg, brands: ["Daikin", "Trane"], products: [] },
+  { id: "air-cooled-chiller", icon: <Fan size={22} />, title: "Air-Cooled Chiller", description: "Efficient air-cooled chiller with low maintenance cost.", image: ChillerImg, brands: ["Blue Star", "Carrier"], products: [] },
+  { id: "water-cooled-chiller", icon: <Droplets size={22} />, title: "Water-Cooled Chiller", description: "High-capacity water-cooled chiller for heavy-duty applications.", image: WaterCooledChillerImg, brands: ["Daikin", "Trane"], products: [] },
+  { id: "ice-plant", icon: <Snowflake size={22} />, title: "Ice Plant", description: "Industrial ice plant for bulk ice production.", image: IcePlantImg, brands: ["Blue Star"], products: [] },
+  { id: "panel-ac", icon: <Activity size={22} />, title: "Panel AC", description: "Compact panel AC for electrical control panels.", image: PanelAcImg, brands: ["Pfannenberg"], products: [] },
+  { id: "water-cooler", icon: <Droplets size={22} />, title: "Water Cooler", description: "Commercial water cooler for offices, schools, and public spaces.", image: WaterCoolerImg, brands: ["Voltas", "Blue Star"], products: [] },
 ];
 
 /* ================= COMPONENTS ================= */
@@ -236,13 +56,7 @@ function StarRating({ count }: { count: number }) {
   return (
     <div className="flex gap-0.5">
       {[1, 2, 3, 4, 5].map((i) => (
-        <Star
-          key={i}
-          size={13}
-          className={
-            i <= count ? "text-orange-400 fill-orange-400" : "text-gray-300"
-          }
-        />
+        <Star key={i} size={13} className={i <= count ? "text-orange-400 fill-orange-400" : "text-gray-300"} />
       ))}
     </div>
   );
@@ -252,10 +66,28 @@ function ProductCard({ cat }: { cat: Category }) {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition flex flex-col border">
+    <div
+      className="bg-card rounded-2xl overflow-hidden flex flex-col"
+      style={{
+        border: "1px solid hsl(var(--border))",
+        boxShadow: "0 4px 16px hsl(var(--brand-dark) / 0.07)",
+        transition: "box-shadow 0.3s, transform 0.3s",
+      }}
+      onMouseEnter={e => {
+        (e.currentTarget as HTMLElement).style.boxShadow = "0 12px 32px hsl(var(--brand-dark) / 0.13)";
+        (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)";
+      }}
+      onMouseLeave={e => {
+        (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 16px hsl(var(--brand-dark) / 0.07)";
+        (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+      }}
+    >
       {/* Image */}
-      <div className="relative h-52 overflow-hidden">
-        <div className="absolute top-4 left-4 z-10 bg-[#1a3a5c] text-white rounded-xl p-2">
+      <div className="relative h-52 overflow-hidden" style={{ background: "hsl(var(--muted))" }}>
+        <div
+          className="absolute top-4 left-4 z-10 rounded-xl p-2"
+          style={{ background: "hsl(var(--brand-dark))", color: "white" }}
+        >
           {cat.icon}
         </div>
         <img
@@ -267,24 +99,45 @@ function ProductCard({ cat }: { cat: Category }) {
 
       {/* Content */}
       <div className="p-5 flex flex-col flex-1">
+
+        {/* h3 — override to DM Serif for editorial card title, same as Blog cards */}
         <h3
-          style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400 }}
-          className="text-[rgb(14,146,212)] text-lg mb-1"
+          style={{
+            fontFamily: "'DM Serif Display', Georgia, serif",
+            fontWeight: 400,
+            color: "hsl(var(--primary))",
+            fontSize: "1.125rem",
+            marginBottom: "4px",
+          }}
         >
           {cat.title}
         </h3>
-        <p className="text-slate-500 text-sm mb-3">{cat.description}</p>
+
+        {/* body-text class for Inter size/leading */}
+        <p
+          className="body-text"
+          style={{ fontSize: "0.875rem", color: "hsl(var(--muted-foreground))", marginBottom: "12px" }}
+        >
+          {cat.description}
+        </p>
 
         {/* Brands */}
         <div className="mb-4">
-          <p className="text-xs text-slate-400 font-semibold mb-2">
+          <p
+            className="text-xs font-semibold mb-2"
+            style={{ color: "hsl(var(--muted-foreground))" }}
+          >
             Available Brands
           </p>
           <div className="flex flex-wrap gap-1">
             {cat.brands.map((b) => (
               <span
                 key={b}
-                className="text-xs bg-slate-100 px-2 py-1 rounded-full"
+                className="text-xs px-2 py-1 rounded-full"
+                style={{
+                  background: "hsl(var(--secondary))",
+                  color: "hsl(var(--secondary-foreground))",
+                }}
               >
                 {b}
               </span>
@@ -294,17 +147,19 @@ function ProductCard({ cat }: { cat: Category }) {
 
         {/* Products */}
         {cat.products.map((p) => (
-          <div
-            key={p.name}
-            className="flex justify-between items-center text-sm mb-2"
-          >
+          <div key={p.name} className="flex justify-between items-center text-sm mb-2">
             <div>
-              <p className="font-semibold">{p.name}</p>
+              <p className="font-semibold" style={{ color: "hsl(var(--foreground))" }}>{p.name}</p>
               <StarRating count={p.stars} />
             </div>
+            {/* Price — DM Serif for editorial feel, accent color */}
             <span
-              style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400 }}
-              className="text-[#e07830] text-base"
+              style={{
+                fontFamily: "'DM Serif Display', Georgia, serif",
+                fontWeight: 400,
+                color: "hsl(var(--accent))",
+                fontSize: "1rem",
+              }}
             >
               {p.price}
             </span>
@@ -314,7 +169,21 @@ function ProductCard({ cat }: { cat: Category }) {
         {/* CTA */}
         <button
           onClick={() => navigate("/contact")}
-          className="mt-auto w-full flex items-center justify-center gap-2 border-2 border-[#1a3a5c] text-[#1a3a5c] rounded-xl py-2 text-sm font-semibold hover:bg-[#1a3a5c] hover:text-white transition"
+          className="mt-auto w-full flex items-center justify-center gap-2 rounded-xl py-2 text-sm font-semibold transition"
+          style={{
+            border: "2px solid hsl(var(--brand-dark))",
+            color: "hsl(var(--brand-dark))",
+            background: "transparent",
+            borderRadius: "var(--radius)",
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLElement).style.background = "hsl(var(--brand-dark))";
+            (e.currentTarget as HTMLElement).style.color = "white";
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLElement).style.background = "transparent";
+            (e.currentTarget as HTMLElement).style.color = "hsl(var(--brand-dark))";
+          }}
         >
           <Phone size={15} />
           Get Quote
@@ -346,54 +215,57 @@ export default function ProductsPage() {
     water: ["water-dispenser", "ro-plant", "water-cooler"],
   };
 
-  const visible = categories.filter((c) =>
-    filterMap[activeFilter]?.includes(c.id)
-  );
+  const visible = categories.filter((c) => filterMap[activeFilter]?.includes(c.id));
 
   return (
-    <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display:ital,wght@0,400;1,400&display=swap');
-      `}</style>
-      <div className="bg-[#f5f7fa] min-h-screen">
-        {/* HERO */}
-        <div className="bg-[#1a3a5c] text-white py-14 px-6 text-center mt-12">
-          <h1
-            style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400 }}
-            className="text-4xl mb-3"
-          >
-            Our Products
-          </h1>
-          <p className="text-white/70">
-            Explore our wide range of air conditioning solutions.
-          </p>
-        </div>
+    <div className="bg-background min-h-screen">
 
-        {/* FILTERS */}
-        <div className="bg-white sticky top-0 z-10 border-b px-6 py-3 flex gap-2 justify-center overflow-x-auto w-full">
+      {/* ── HERO ── */}
+      <div
+        className="bg-hero-gradient text-center"
+        style={{ padding: "56px 24px", marginTop: "48px" }}
+      >
+        {/* h1 — global: DM Serif Display, 400, brand-dark. Override color white for hero */}
+        <h1 style={{ color: "white", marginBottom: "12px" }}>
+          Our Products
+        </h1>
+        {/* body-text class: Inter, base/lg, leading-relaxed */}
+        <p className="body-text" style={{ color: "hsl(var(--brand-sky))" }}>
+          Explore our wide range of air conditioning solutions.
+        </p>
+      </div>
+
+      {/* ── FILTERS ── */}
+      <div
+        className="bg-card sticky top-0 z-10"
+        style={{ borderBottom: "1px solid hsl(var(--border))", padding: "12px 24px" }}
+      >
+        <div className="flex gap-2 justify-center overflow-x-auto w-full">
           {filters.map((f) => (
             <button
               key={f.id}
               onClick={() => setActiveFilter(f.id)}
-              className={`px-4 py-2 rounded-full text-sm border font-medium whitespace-nowrap ${activeFilter === f.id
-                ? "bg-[#1a3a5c] text-white border-[#1a3a5c]"
-                : "text-slate-600 bg-white hover:bg-slate-50 border-slate-200"
-                }`}
+              className="px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition"
+              style={{
+                background: activeFilter === f.id ? "hsl(var(--brand-dark))" : "transparent",
+                color: activeFilter === f.id ? "white" : "hsl(var(--muted-foreground))",
+                border: `1px solid ${activeFilter === f.id ? "hsl(var(--brand-dark))" : "hsl(var(--border))"}`,
+              }}
             >
               {f.label}
             </button>
           ))}
         </div>
+      </div>
 
-        {/* GRID */}
-        <div className="max-w-6xl mx-auto px-6 py-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {visible.map((cat) => (
-              <ProductCard key={cat.id} cat={cat} />
-            ))}
-          </div>
+      {/* ── GRID ── */}
+      <div className="max-w-6xl mx-auto px-6 py-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {visible.map((cat) => (
+            <ProductCard key={cat.id} cat={cat} />
+          ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
