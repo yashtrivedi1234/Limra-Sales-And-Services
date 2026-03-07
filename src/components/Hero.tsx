@@ -7,7 +7,7 @@ import type { CSSProperties } from "react";
 const badges = [
   { icon: CheckCircle, text: "Free Site Visit & Consultation" },
   { icon: CheckCircle, text: "Expert Installation Team" },
-  { icon: MapPin,      text: "Uttar Pradesh" },
+  { icon: MapPin, text: "Uttar Pradesh" },
 ];
 
 export default function HeroSection() {
@@ -30,7 +30,7 @@ export default function HeroSection() {
       <div style={{ position: "absolute", right: "2%", top: 0, width: "46%", height: "100%", zIndex: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
         <img
           src={heroImage}
-          alt="HVAC technician installing air conditioning unit"
+          alt="Professional HVAC installation and air conditioning service in Uttar Pradesh"
           loading="eager"
           style={{ width: "100%", height: "85%", objectFit: "contain", objectPosition: "center" }}
         />

@@ -5,12 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import Logo from "../assets/Logo.png";
 
 const navLinks = [
-  { name: "Home",       path: "/" },
-  { name: "Our Story",  path: "/about" },
-  { name: "Services",   path: "/services" },
-  { name: "Products",   path: "/product" },
-  { name: "Projects",   path: "/case-studies" },
-  { name: "Blog",       path: "/blog" },
+  { name: "Home", path: "/" },
+  { name: "Our Story", path: "/about" },
+  { name: "Services", path: "/services" },
+  { name: "Products", path: "/product" },
+  { name: "Projects", path: "/case-studies" },
+  { name: "Blog", path: "/blog" },
   { name: "Contact Us", path: "/contact" },
 ];
 
@@ -81,10 +81,17 @@ const SiteHeader = () => {
           <button
             className="mobile-menu-btn"
             onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
             style={{
-              padding: "8px", borderRadius: "8px",
-              background: "transparent", border: "none",
-              cursor: "pointer", color: "hsl(var(--brand-dark))", display: "none",
+              padding: "8px",
+              borderRadius: "8px",
+              background: "transparent",
+              border: "none",
+              cursor: "pointer",
+              color: "hsl(var(--brand-dark))",
+              display: "none",
             }}
           >
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -96,6 +103,7 @@ const SiteHeader = () => {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
+            id="mobile-navigation"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
@@ -120,6 +128,7 @@ const SiteHeader = () => {
 
               <a
                 href="tel:+919236477974"
+                aria-label="Call LIMRA Sales and Services"
                 style={{
                   display: "flex", justifyContent: "center", alignItems: "center", gap: "8px",
                   marginTop: "16px", padding: "13px",

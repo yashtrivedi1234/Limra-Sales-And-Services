@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Tag, ChevronRight, BookOpen, Wrench, Thermometer, Wind, Zap } from "lucide-react";
 import { useGetBlogsQuery } from "@/store/api";
 import { motion } from "framer-motion";
@@ -15,20 +13,20 @@ export interface ApiBlogPost {
 
 const getCategoryIcon = (category: string) => {
   switch (category) {
-    case "Maintenance":     return <Wrench size={22} />;
-    case "Buying Guide":    return <Zap size={22} />;
-    case "Tips & Tricks":   return <Thermometer size={22} />;
+    case "Maintenance": return <Wrench size={22} />;
+    case "Buying Guide": return <Zap size={22} />;
+    case "Tips & Tricks": return <Thermometer size={22} />;
     case "Commercial HVAC": return <Wind size={22} />;
-    default:                return <BookOpen size={22} />;
+    default: return <BookOpen size={22} />;
   }
 };
 
 // Category badge keeps its own colorMap (semantic colors, not brand)
 function CategoryBadge({ category }: { category: string }) {
   const colorMap: Record<string, string> = {
-    "Maintenance":     "#e07830",
-    "Buying Guide":    "#1a3a5c",
-    "Tips & Tricks":   "#2e7d32",
+    "Maintenance": "#e07830",
+    "Buying Guide": "#1a3a5c",
+    "Tips & Tricks": "#2e7d32",
     "Commercial HVAC": "#6a1b9a",
   };
   const color = colorMap[category] || "hsl(var(--brand-dark))";
@@ -44,8 +42,6 @@ function CategoryBadge({ category }: { category: string }) {
 }
 
 function BlogCard({ post }: { post: ApiBlogPost }) {
-  const navigate = useNavigate();
-
   let excerpt = "Read more about " + post.title;
   if (post.content && Array.isArray(post.content) && post.content.length > 0) {
     excerpt = post.content[0];
@@ -54,14 +50,16 @@ function BlogCard({ post }: { post: ApiBlogPost }) {
   }
 
   return (
-    <div
-      className="bg-card rounded-2xl overflow-hidden flex flex-col cursor-pointer group"
+    // ✅ SEO: Changed <div> → <article> for self-contained blog post content.
+    // This gives search engines a clear semantic signal that each card is
+    // an independent, indexable piece of content.
+    <article
+      className="bg-card rounded-2xl overflow-hidden flex flex-col group"
       style={{
         border: "1px solid hsl(var(--border))",
         boxShadow: "0 4px 16px hsl(var(--brand-dark) / 0.07)",
         transition: "box-shadow 0.3s, transform 0.3s",
       }}
-      onClick={() => navigate(`/blog/${post.slug || post._id}`)}
       onMouseEnter={e => {
         (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)";
         (e.currentTarget as HTMLElement).style.boxShadow = "0 12px 32px hsl(var(--brand-dark) / 0.13)";
@@ -85,8 +83,12 @@ function BlogCard({ post }: { post: ApiBlogPost }) {
           </div>
         )}
         <img
-          src={post.image || "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=600&q=80"}
-          alt={post.title}
+          src={post.image}
+          alt={`${post.title} - HVAC blog article`}
+          loading="lazy"
+          decoding="async"
+          width="600"
+          height="350"
           className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
@@ -126,12 +128,19 @@ function BlogCard({ post }: { post: ApiBlogPost }) {
           {excerpt}
         </p>
 
-        <button
+        {/* ✅ Safety: Added rel="noopener noreferrer" — prevents the linked page
+            from accessing window.opener, a best practice for all navigational links. */}
+        <Link
+          aria-label={`Read article: ${post.title}`}
+          to={`/blog/${post.slug || post._id}`}
+          rel="noopener noreferrer"
           className="mt-auto w-full flex items-center justify-center gap-2 rounded-xl py-2 text-sm font-semibold transition"
           style={{
             border: "2px solid hsl(var(--brand-dark))",
-            color: "hsl(var(--brand-dark))", background: "transparent",
+            color: "hsl(var(--brand-dark))",
+            background: "transparent",
             borderRadius: "var(--radius)",
+            textDecoration: "none"
           }}
           onMouseEnter={e => {
             (e.currentTarget as HTMLElement).style.background = "hsl(var(--brand-dark))";
@@ -143,9 +152,9 @@ function BlogCard({ post }: { post: ApiBlogPost }) {
           }}
         >
           <BookOpen size={15} /> Read Article <ChevronRight size={14} />
-        </button>
+        </Link>
       </div>
-    </div>
+    </article> // ✅ Closes <article>
   );
 }
 
@@ -180,8 +189,10 @@ export default function BlogPreview() {
             Latest Insights &amp; Updates
           </h2>
 
+          {/* ✅ Safety: Added rel="noopener noreferrer" to the "View All" link as well. */}
           <Link
             to="/blog"
+            rel="noopener noreferrer"
             style={{
               display: "inline-flex", alignItems: "center", gap: "8px",
               color: "hsl(var(--primary))", fontWeight: 700,

@@ -3,19 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { Phone, Wind, Droplets, ThermometerSun, AirVent, Building2, Home } from "lucide-react";
 
 const residentialItems = [
-  { icon: <Wind size={16} />,     label: "Split ACs (1-5 Ton)" },
-  { icon: <Wind size={16} />,     label: "Window ACs" },
-  { icon: <Wind size={16} />,     label: "Portable ACs" },
+  { icon: <Wind size={16} />, label: "Split ACs (1-5 Ton)" },
+  { icon: <Wind size={16} />, label: "Window ACs" },
+  { icon: <Wind size={16} />, label: "Portable ACs" },
   { icon: <Droplets size={16} />, label: "Water Coolers & Dispensers" },
-  { icon: <Wind size={16} />,     label: "Air Purifiers & Water Softeners" },
+  { icon: <Wind size={16} />, label: "Air Purifiers & Water Softeners" },
 ];
 
 const commercialItems = [
-  { icon: <Building2 size={16} />,      label: "Daikin VRV Systems" },
-  { icon: <Wind size={16} />,           label: "Cassette & Ductable ACs" },
+  { icon: <Building2 size={16} />, label: "Daikin VRV Systems" },
+  { icon: <Wind size={16} />, label: "Cassette & Ductable ACs" },
   { icon: <ThermometerSun size={16} />, label: "Chillers & Heat Pumps" },
-  { icon: <Building2 size={16} />,      label: "Floor Standing ACs" },
-  { icon: <AirVent size={16} />,        label: "Ventilation Systems" },
+  { icon: <Building2 size={16} />, label: "Floor Standing ACs" },
+  { icon: <AirVent size={16} />, label: "Ventilation Systems" },
 ];
 
 const cardVariants = {
@@ -23,7 +23,7 @@ const cardVariants = {
   visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.2, duration: 0.6, ease: "easeOut" } }),
 };
 
-function SolutionCard({ title, items, primaryBtnLabel, imageUrl, badgeIcon, index }: any) {
+function SolutionCard({ title, items, primaryBtnLabel, imageUrl, imageAlt, badgeIcon, index }: any) {
   const navigate = useNavigate();
   return (
     <motion.div
@@ -37,7 +37,15 @@ function SolutionCard({ title, items, primaryBtnLabel, imageUrl, badgeIcon, inde
       }}
     >
       <div style={{ position: "relative", width: "100%", height: "200px", overflow: "hidden" }}>
-        <img src={imageUrl} alt={title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        <img
+          src={imageUrl}
+          alt={imageAlt}
+          loading="lazy"
+          decoding="async"
+          width="800"
+          height="500"
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, hsl(var(--brand-dark) / 0.1), hsl(var(--brand-dark) / 0.45))" }} />
         <div style={{ position: "absolute", top: 12, left: 12, width: "38px", height: "38px", background: "hsl(var(--card))", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 8px hsl(var(--primary) / 0.15)" }}>
           {badgeIcon}
@@ -119,12 +127,22 @@ export default function HVACSolutions() {
         </motion.div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: "24px" }}>
-          <SolutionCard index={0} title="Residential Solutions" items={residentialItems} primaryBtnLabel="Get Quote"
+          <SolutionCard
+            index={0}
+            title="Residential Solutions"
+            items={residentialItems}
+            primaryBtnLabel="Get Quote"
             imageUrl="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=800&auto=format&fit=crop&q=80"
+            imageAlt="Residential air conditioner installation technician installing split AC"
             badgeIcon={<Home size={18} style={{ color: "hsl(var(--primary))" }} />}
           />
-          <SolutionCard index={1} title="Commercial & VRV Systems" items={commercialItems} primaryBtnLabel="Get Quote"
+          <SolutionCard
+            index={1}
+            title="Commercial & VRV Systems"
+            items={commercialItems}
+            primaryBtnLabel="Get Quote"
             imageUrl="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&auto=format&fit=crop&q=80"
+            imageAlt="Commercial VRV HVAC system installation inside office building"
             badgeIcon={<Building2 size={18} style={{ color: "hsl(var(--primary))" }} />}
           />
         </div>
