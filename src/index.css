@@ -107,12 +107,12 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: "Inter", sans-serif;
+    font-family: "DM Serif Display";
   }
 
   /* Page Title */
   h1 {
-    font-family: "DM Serif Display", Georgia, serif;
+    font-family: "DM Serif Display";
     font-weight: 400;
     font-size: clamp(2rem, 4vw, 3rem);
     color: hsl(var(--brand-dark));
@@ -122,7 +122,7 @@
 
   /* Section Heading */
   h2 {
-    font-family: "DM Serif Display", Georgia, serif;
+    font-family: "DM Serif Display";
     font-weight: 400;
     font-size: clamp(1.5rem, 3vw, 2.25rem);
     color: hsl(var(--brand-dark));
@@ -135,7 +135,7 @@
 
   /* Smaller headings use Inter */
   h3, h4, h5, h6 {
-    font-family: "Inter", sans-serif;
+    font-family: "DM Serif Display";
     font-weight: 600;
   }
 }
@@ -146,18 +146,18 @@
 @layer components {
 
   .heading-1 {
-    font-family: "DM Serif Display", Georgia, serif;
+    font-family: "DM Serif Display",;
     font-size: clamp(2rem, 4vw, 3rem);
     line-height: 1.15;
   }
 
   .heading-2 {
-    font-family: "DM Serif Display", Georgia, serif;
+    font-family: "DM Serif Display";
     font-size: clamp(1.5rem, 3vw, 2.25rem);
   }
 
   .body-text {
-    font-family: "Inter", sans-serif;
+    font-family: "DM Serif Display";
     @apply text-base md:text-lg leading-relaxed;
   }
 
