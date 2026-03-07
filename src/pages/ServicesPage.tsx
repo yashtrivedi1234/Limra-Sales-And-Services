@@ -141,19 +141,8 @@ export default function ServicesPage(): React.ReactElement {
 
         <div className="relative z-10 max-w-[1180px] mx-auto px-6 text-center">
 
-          {/* Badge */}
-          <motion.div initial="hidden" animate="visible" variants={fadeUp}>
-            <div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[0.68rem] font-bold tracking-[0.14em] uppercase mb-6 mt-6"
-              style={{
-                background: "rgba(255,255,255,0.1)",
-                border: "1px solid rgba(255,255,255,0.2)",
-                color: "hsl(var(--brand-sky))",
-              }}
-            >
-              <Sparkles size={12} /> PREMIUM HVAC & COOLING SERVICES
-            </div>
-          </motion.div>
+      
+         
 
           {/* h1 — global: DM Serif Display, 400, brand-dark. Override color white + sky for hero */}
           <motion.h1

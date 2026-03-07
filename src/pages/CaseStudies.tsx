@@ -108,42 +108,30 @@ const CaseStudies = () => {
           backgroundSize: "32px 32px", pointerEvents: "none",
         }} />
 
-        <div style={{ maxWidth: "1100px", margin: "0 auto", position: "relative", zIndex: 2 }}>
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
-            {/* Portfolio badge */}
-            <div style={{
-              display: "inline-block",
-              background: "rgba(255,255,255,0.12)",
-              border: "1px solid rgba(255,255,255,0.25)",
-              color: "hsl(var(--brand-sky))",
-              fontWeight: 700, fontSize: "0.72rem",
-              letterSpacing: "0.18em", textTransform: "uppercase",
-              padding: "5px 16px", borderRadius: "100px", marginBottom: "18px",
-            }}>
-              Portfolio
-            </div>
+      <div
+  className="bg-hero-gradient text-center"
+  style={{ paddingTop: "10px",
+paddingRight: "24px",
 
-            {/* h1 — global: DM Serif Display, 400, brand-dark. Override color white for hero */}
-            <h1 style={{ color: "white", marginBottom: "16px" }}>
-              Projects
-            </h1>
+paddingLeft: "24px", }}
+>
+  {/* h1 — global: DM Serif Display */}
+  <h1 style={{ color: "white" }}>
+    Our Projects
+  </h1>
 
-            {/* body-text class for Inter size/leading */}
-            <p
-              className="body-text"
-              style={{ color: "hsl(var(--brand-sky))", maxWidth: "540px", fontWeight: 300 }}
-            >
-              Explore our featured HVAC projects — from universities to luxury resorts. Download detailed project reports as PDFs.
-            </p>
-          </motion.div>
-        </div>
+  {/* body text */}
+  <p
+    className="body-text"
+    style={{ color: "hsl(var(--brand-sky))", maxWidth: "620px", margin: "0 auto" }}
+  >
+    Explore our featured HVAC projects — from universities to luxury resorts.
+    Download detailed project reports as PDFs.
+  </p>
+</div>
 
-        {/* Wave divider */}
-        <div style={{
-          position: "absolute", bottom: -2, left: 0, right: 0, height: "70px",
-          background: "hsl(var(--background))",
-          clipPath: "polygon(0 60%, 100% 0, 100% 100%, 0% 100%)",
-        }} />
+
+
       </section>
 
       {/* ── Project Cards ── */}

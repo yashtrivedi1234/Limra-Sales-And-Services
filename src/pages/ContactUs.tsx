@@ -188,18 +188,18 @@ const Field = ({
           style={{
             ...(active
               ? {
-                  top: "8px",
-                  fontSize: "10px",
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase" as const,
-                  color: hasError ? "#ef4444" : "hsl(var(--primary))",
-                }
+                top: "8px",
+                fontSize: "10px",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase" as const,
+                color: hasError ? "#ef4444" : "hsl(var(--primary))",
+              }
               : {
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  fontSize: "0.875rem",
-                  color: "hsl(var(--muted-foreground))",
-                }),
+                top: "50%",
+                transform: "translateY(-50%)",
+                fontSize: "0.875rem",
+                color: "hsl(var(--muted-foreground))",
+              }),
           }}
         >
           {label}
@@ -271,17 +271,17 @@ const TextareaField = ({
           style={{
             ...(active
               ? {
-                  top: "12px",
-                  fontSize: "10px",
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase" as const,
-                  color: hasError ? "#ef4444" : "hsl(var(--primary))",
-                }
+                top: "12px",
+                fontSize: "10px",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase" as const,
+                color: hasError ? "#ef4444" : "hsl(var(--primary))",
+              }
               : {
-                  top: "20px",
-                  fontSize: "0.875rem",
-                  color: "hsl(var(--muted-foreground))",
-                }),
+                top: "20px",
+                fontSize: "0.875rem",
+                color: "hsl(var(--muted-foreground))",
+              }),
           }}
         >
           {label}
@@ -325,7 +325,6 @@ const TextareaField = ({
 // ─── ServicePicker ────────────────────────────────────────────────────────────
 const ServicePicker = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => (
   <div>
-    {/* Small utility label — not a heading, fine as p */}
     <p
       className="text-[10px] tracking-[0.14em] uppercase font-bold pl-0.5 mb-3"
       style={{ color: "hsl(var(--muted-foreground))" }}
@@ -387,7 +386,6 @@ const SuccessScreen = ({ onReset }: { onReset: () => void }) => (
       </motion.div>
     </div>
 
-    {/* h3 — global Inter 600, just set size */}
     <motion.h3
       initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
       style={{ fontSize: "1.75rem", color: "hsl(var(--brand-dark))", marginBottom: "12px" }}
@@ -395,7 +393,6 @@ const SuccessScreen = ({ onReset }: { onReset: () => void }) => (
       Message Received!
     </motion.h3>
 
-    {/* body-text class */}
     <motion.p
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.55 }}
       className="body-text mb-10 max-w-xs"
@@ -608,24 +605,51 @@ export default function ContactUs() {
         />
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        {/* ── Hero ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+      {/* HERO - full width */}
+      <section
+        className="bg-hero-gradient"
+        style={{
+          width: "100%",
+          padding: "80px 32px",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        {/* dot pattern */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            opacity: 0.08,
+            backgroundImage:
+              "radial-gradient(circle, rgba(255,255,255,0.7) 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+            pointerEvents: "none",
+          }}
+        />
+        <div
+          className="text-center"
+          style={{ maxWidth: "720px", margin: "0 auto", padding: "0 24px" }}
         >
-          {/* h1 — global: DM Serif Display, 400, brand-dark. Override color for gradient span only */}
-          <h1 className="mt-4">
-            Let's Build Your Perfect Climate.
+          <h1 style={{ color: "white", marginBottom: "16px" }}>
+            Let's Build Your Perfect Climate
           </h1>
-
-          {/* body-text class: Inter, base/lg, leading-relaxed */}
-          <p className="body-text max-w-lg mx-auto mt-4" style={{ color: "hsl(var(--muted-foreground))" }}>
+          <p
+            className="body-text"
+            style={{
+              color: "hsl(var(--brand-sky))",
+              maxWidth: "560px",
+              margin: "0 auto",
+              fontWeight: 300,
+            }}
+          >
             9+ years of HVAC expertise. Tell us what you need and we'll take care of the rest.
           </p>
-        </motion.div>
+        </div>
+      </section>
 
-        {/* ── Layout ── */}
+      {/* Main content */}
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid lg:grid-cols-5 gap-8 items-start">
 
           {/* ── LEFT ── */}
@@ -638,7 +662,6 @@ export default function ContactUs() {
               className="rounded-2xl p-6 bg-card"
               style={{ border: "1px solid hsl(var(--border))", boxShadow: "0 10px 25px -5px hsl(var(--brand-dark) / 0.03)" }}
             >
-              {/* h2 — global: DM Serif Display, 400, brand-dark. Override size for sidebar context */}
               <h2 style={{ fontSize: "1rem", marginTop: 0, marginBottom: "1.5rem" }}>
                 Contact Details
               </h2>
@@ -717,7 +740,6 @@ export default function ContactUs() {
                   onSubmit={handleSubmit} className="p-6 sm:p-10"
                 >
                   <div className="mb-8">
-                    {/* h2 — global: DM Serif Display, 400, brand-dark */}
                     <h2 style={{ marginTop: 0, marginBottom: "8px" }}>
                       Send Us a Message
                     </h2>
@@ -778,6 +800,7 @@ export default function ContactUs() {
               )}
             </AnimatePresence>
           </motion.div>
+
         </div>
       </div>
     </div>

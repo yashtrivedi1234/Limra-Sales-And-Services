@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Shield, Award, CheckCircle, Target, Phone } from "lucide-react";
 import CountUp from "@/components/ui/CountUp";
+import CTASection from "@/components/CTASection";
 
 const stats = [
   { value: 5000, suffix: "+", label: "Customers" },
@@ -47,48 +48,60 @@ const About = () => (
   <main className="bg-background">
 
     {/* ── Hero ── */}
-    <section
-      className="bg-hero-gradient"
-      style={{ padding: "96px 24px", textAlign: "center", position: "relative", overflow: "hidden" }}
+   
+<section
+  className="bg-hero-gradient"
+  style={{
+    paddingTop: "96px",
+    paddingRight: "24px",
+    paddingBottom: "56px",
+    paddingLeft: "24px",
+    textAlign: "center",
+    position: "relative",
+    overflow: "hidden"
+  }}
+>
+  <div style={{
+    position: "absolute", inset: 0, opacity: 0.08,
+    backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.7) 1px, transparent 1px)",
+    backgroundSize: "32px 32px", pointerEvents: "none",
+  }} />
+
+  <div
+    style={{
+      maxWidth: "780px",
+      margin: "0 auto",
+      textAlign: "center",
+      position: "relative",
+      zIndex: 2,
+    }}
+  >
+    {/* Heading */}
+    <motion.h1
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      style={{ color: "white", marginBottom: "16px" }}
     >
-      <div style={{
-        position: "absolute", inset: 0, opacity: 0.08,
-        backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.7) 1px, transparent 1px)",
-        backgroundSize: "32px 32px", pointerEvents: "none",
-      }} />
-      <div style={{ maxWidth: "780px", margin: "0 auto", position: "relative", zIndex: 2 }}>
+     Building Comfort Since 2017    
+    </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          style={{ color: "hsl(var(--brand-sky))", fontWeight: 700, fontSize: "0.75rem", letterSpacing: "0.18em", textTransform: "uppercase", marginBottom: "16px" }}
-        >
-          About Us
-        </motion.p>
-
-        {/* h1 — global: DM Serif Display, 400, brand-dark. Override color white for hero */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-          style={{ color: "white", marginBottom: "24px" }}
-        >
-          Building Comfort <br />Since 2017
-        </motion.h1>
-
-        {/* body-text class: Inter, base/lg, leading-relaxed */}
-        <motion.p
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
-          className="body-text"
-          style={{ color: "hsl(var(--brand-sky) / 0.85)", fontWeight: 300 }}
-        >
-          LIMRA Sales and Services is a trusted HVAC and air conditioning company delivering reliable cooling solutions for homes, offices, hospitals, hotels, and industrial facilities. Since 2017, we specialize in AC installation, AC servicing, VRV/VRF systems, chiller plants, cold rooms, and industrial cooling services with a strong commitment to quality, safety, and customer satisfaction.
-        </motion.p>
-      </div>
-
-      {/* Wave divider */}
-      <div style={{
-        position: "absolute", bottom: -2, left: 0, right: 0, height: "80px",
-        background: "hsl(var(--card))", clipPath: "polygon(0 60%, 100% 0, 100% 100%, 0% 100%)",
-      }} />
-    </section>
+    {/* Description */}
+    <motion.p
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.3 }}
+      className="body-text"
+      style={{
+        color: "hsl(var(--brand-sky))",
+        maxWidth: "620px",
+        margin: "0 auto",
+        fontWeight: 300,
+      }}
+    >
+     LIMRA Sales and Services is a trusted HVAC and air conditioning company delivering reliable cooling solutions for homes, offices, hospitals, hotels, and industrial facilities. Since 2017, we specialize in AC installation, AC servicing, VRV/VRF systems, chiller plants, cold rooms, and industrial cooling services with a strong commitment to quality, safety, and customer satisfaction.    
+    </motion.p>
+  </div>
+</section>
 
     {/* ── Stats ── */}
     <section style={{ padding: "80px 24px", background: "hsl(var(--card))" }}>
@@ -276,39 +289,7 @@ const About = () => (
     </section>
 
     {/* ── CTA ── */}
-    <section
-      className="bg-hero-gradient"
-      style={{ padding: "96px 24px", textAlign: "center", position: "relative", overflow: "hidden" }}
-    >
-      <div style={{
-        position: "absolute", inset: 0, opacity: 0.1,
-        backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.7) 1px, transparent 1px)",
-        backgroundSize: "28px 28px", pointerEvents: "none",
-      }} />
-      <div style={{ maxWidth: "600px", margin: "0 auto", position: "relative", zIndex: 2 }}>
-        {/* h2 — global: DM Serif Display, 400, brand-dark. Override color white for CTA */}
-        <h2 style={{ color: "white", marginBottom: "16px", marginTop: 0 }}>
-          Ready to Work With Us?
-        </h2>
-        <p className="body-text" style={{ color: "hsl(var(--brand-sky) / 0.85)", marginBottom: "36px", fontWeight: 300 }}>
-          Whether it's a residential split AC or a commercial VRV system — we've got you covered.
-        </p>
-        <a
-          href="tel:+919236477974"
-          style={{
-            display: "inline-flex", alignItems: "center", gap: "8px",
-            padding: "14px 36px",
-            background: "hsl(var(--card))",
-            color: "hsl(var(--brand-dark))",
-            fontWeight: 700, fontSize: "0.95rem", borderRadius: "100px",
-            textDecoration: "none", boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
-            transition: "all 0.3s ease",
-          }}
-        >
-          <Phone size={18} /> Get a Free Consultation
-        </a>
-      </div>
-    </section>
+    <CTASection/>
   </main>
 );
 
