@@ -164,11 +164,20 @@ export default function ServiceDetailPage() {
             <div className="text-[2rem] mb-1" style={{ fontFamily: "'DM Serif Display', serif", fontWeight: 400, color: BRAND.dark }}>{service.price}</div>
             <div className="text-[0.82rem] mb-7" style={{ color: `${BRAND.dark}70` }}>{service.duration}</div>
 
-            <a href={`/book?service=${service.slug}`}
-              className="flex items-center justify-center gap-2 w-full p-[15px] rounded-xl font-semibold text-[0.93rem] no-underline mb-3 transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5"
-              style={{ background: `linear-gradient(135deg, ${BRAND.dark}, ${BRAND.primary})`, color: BRAND.white, boxShadow: `0 6px 20px ${BRAND.primary}35` }}>
+            {/* ✅ Book Now: uses navigate() for SPA routing + passes service slug as query param */}
+            <button
+              onClick={() => navigate(`/contact?service=${service.slug}`)}
+              className="flex items-center justify-center gap-2 w-full p-[15px] rounded-xl font-semibold text-[0.93rem] mb-3 transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5"
+              style={{
+                background: `linear-gradient(135deg, ${BRAND.dark}, ${BRAND.primary})`,
+                color: BRAND.white,
+                boxShadow: `0 6px 20px ${BRAND.primary}35`,
+                border: "none",
+                cursor: "pointer",
+              }}>
               <Calendar size={15} /> Book Now
-            </a>
+            </button>
+
             <a href="tel:+919236477974"
               className="flex items-center justify-center gap-2 w-full p-[14px] rounded-xl font-medium text-[0.88rem] no-underline transition-all duration-200 hover:opacity-90"
               style={{ background: BRAND.primaryPale, color: BRAND.dark, border: `1px solid ${BRAND.slate100}` }}>

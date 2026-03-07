@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   User,
@@ -99,6 +100,18 @@ const services: ServiceOption[] = [
   { id: "chiller", label: "Chiller Systems", icon: <Wind size={15} /> },
   { id: "other", label: "Other", icon: <MessageSquare size={15} /> },
 ];
+
+// ─── Slug → Service Picker ID map ─────────────────────────────────────────────
+// Add or adjust entries to match your actual service slugs from the backend
+const slugToServiceId: Record<string, string> = {
+  "ac-installation": "residential",
+  "ac-repair": "residential",
+  "amc-service": "amc",
+  "vrv-vrf": "vrv",
+  "cold-storage": "chiller",
+  "commercial-hvac": "commercial",
+  // fallback: if slug already equals a picker id it will be caught below
+};
 
 const contactDetails = [
   {
@@ -509,6 +522,22 @@ export default function ContactUs() {
   const [touched, setTouched] = useState<Partial<Record<keyof FormState, boolean>>>({});
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // ✅ Read ?service=<slug> from URL and auto-select the matching service chip
+  const [searchParams] = useSearchParams();
+  useEffect(() => {
+    const param = searchParams.get("service");
+    if (!param) return;
+
+    // Try direct match first (slug already equals a picker id), then map lookup
+    const id = services.find((s) => s.id === param)
+      ? param
+      : slugToServiceId[param] ?? "";
+
+    if (id) {
+      setForm((prev) => ({ ...prev, service: id }));
+    }
+  }, [searchParams]);
 
   const validateField = async (field: keyof FormState, value: string) => {
     try {
