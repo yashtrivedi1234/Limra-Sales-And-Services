@@ -662,9 +662,9 @@ export default function ContactUs() {
               className="rounded-2xl p-6 bg-card"
               style={{ border: "1px solid hsl(var(--border))", boxShadow: "0 10px 25px -5px hsl(var(--brand-dark) / 0.03)" }}
             >
-              <h2 style={{ fontSize: "1rem", marginTop: 0, marginBottom: "1.5rem" }}>
+              <h1 style={{ fontSize: "1rem", marginTop: 0, marginBottom: "1.5rem" }}>
                 Contact Details
-              </h2>
+              </h1>
               <div className="space-y-2">
                 {contactDetails.map((c, i) => (
                   <ContactDetailItem key={c.label} detail={c} index={i} />
