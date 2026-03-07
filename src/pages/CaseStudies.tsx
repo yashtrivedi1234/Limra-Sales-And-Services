@@ -21,7 +21,7 @@ function generatePDF(study: any) {
   doc.text("LIMRA SALES AND SERVICES", margin, 20);
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
-  doc.text("Case Study Report", margin, 30);
+  doc.text("Project Report", margin, 30);
   doc.text(`${study.category} | ${study.completionYear}`, margin, 37);
 
   y = 60;
@@ -127,10 +127,10 @@ const CaseStudies = () => {
               fontSize: "clamp(2.4rem, 5vw, 4rem)",
               color: BRAND.white, lineHeight: 1.1, marginBottom: "16px", fontWeight: 800
             }}>
-              Case Studies
+              Projects
             </h1>
             <p style={{ color: BRAND.textOnDark, maxWidth: "540px", fontSize: "1.05rem", fontWeight: 300, lineHeight: 1.7 }}>
-              Explore our featured HVAC projects — from universities to luxury resorts. Download detailed case study reports as PDFs.
+              Explore our featured HVAC projects — from universities to luxury resorts. Download detailed projects reports as PDFs.
             </p>
           </motion.div>
         </div>
@@ -141,7 +141,7 @@ const CaseStudies = () => {
         }} />
       </section>
 
-      {/* ── Case Study Cards ── */}
+      {/* ── Project Cards ── */}
       <section style={{ padding: "80px 32px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "32px" }}>
           {projects.map((study: any, i: number) => (
@@ -232,7 +232,7 @@ const CaseStudies = () => {
                       transition: "all 0.2s", fontFamily: "'Inter', sans-serif"
                     }}>
                     <Download size={15} />
-                    Download Case Study PDF
+                    Download Project PDF
                   </button>
                 </div>
               </div>

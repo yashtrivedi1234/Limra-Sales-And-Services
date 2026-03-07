@@ -15,6 +15,8 @@ import {
   ChevronUp,
 } from "lucide-react";
 import { useGetBlogsQuery } from "@/store/api";
+import { BRAND } from "@/lib/colors";
+import CTASection from "@/components/CTASection";
 
 const SplitHeading = ({ text }: { text: string }) => (
   <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-8 font-serif tracking-tight">
@@ -47,7 +49,6 @@ const BlogPost = () => {
     offset: ["start start", "end start"]
   });
 
-  const heroY = useTransform(heroProgress, [0, 1], ["0%", "40%"]);
   const heroOpacity = useTransform(heroProgress, [0, 0.8], [1, 0]);
 
   useEffect(() => {
@@ -58,7 +59,6 @@ const BlogPost = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Fake views counter setup
   const [views, setViews] = useState(0);
   useEffect(() => {
     let start = 0;
@@ -81,53 +81,67 @@ const BlogPost = () => {
   if (!post) return <Navigate to="/blog" replace />;
   const relatedPosts = blogPosts.filter((p: any) => p.slug !== slug && String(p._id) !== slug).slice(0, 3);
 
+  // Share URLs — built dynamically from current page URL
+  const currentUrl = typeof window !== "undefined" ? window.location.href : "";
+  const encodedUrl = encodeURIComponent(currentUrl);
+  const encodedTitle = encodeURIComponent(post.title || "");
+
+  const socialButtons = [
+    {
+      Icon: Facebook,
+      href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+      label: "Share on Facebook",
+      hoverClass: "hover:bg-[#1877F2] hover:border-[#1877F2] hover:text-white",
+    },
+    {
+      Icon: Twitter,
+      href: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
+      label: "Share on Twitter / X",
+      hoverClass: "hover:bg-[#1DA1F2] hover:border-[#1DA1F2] hover:text-white",
+    },
+    {
+      Icon: Linkedin,
+      href: `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodedTitle}`,
+      label: "Share on LinkedIn",
+      hoverClass: "hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:text-white",
+    },
+  ];
 
   return (
     <div className="bg-slate-50 min-h-screen font-sans text-slate-900" ref={containerRef}>
-      {/* 2️⃣ Hero Section (Immersive) */}
-      <section ref={heroRef} className="relative w-full h-[85vh] min-h-[600px] flex justify-center items-end overflow-hidden bg-slate-900">
-        {/* Parallax Image */}
-        <motion.div className="absolute inset-0 w-full h-[120%]" style={{ y: heroY }}>
-          <img src={post.image} alt={post.title} className="w-full h-full object-cover opacity-80" />
-        </motion.div>
-
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent" />
-
+      {/* Hero Section — Royal Blue */}
+      <section
+        ref={heroRef}
+        className="relative w-full h-[85vh] min-h-[600px] flex justify-center items-end overflow-hidden"
+        style={{ background: `linear-gradient(135deg, ${BRAND.dark} 0%, ${BRAND.primary} 100%)` }}
+      >
         {/* Floating Gradient Orbs */}
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[100px] mix-blend-screen pointer-events-none animate-pulse duration-10000" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[80px] mix-blend-screen pointer-events-none" />
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-white/10 rounded-full blur-[100px] pointer-events-none animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-blue-200/10 rounded-full blur-[80px] pointer-events-none" />
+
+        {/* Bottom fade for text legibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-blue-950/80 via-transparent to-transparent" />
 
         <motion.div className="relative z-10 w-full max-w-5xl px-6 pb-24 sm:pb-32" style={{ opacity: heroOpacity }}>
-          <Link to="/blog" className="inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors mb-8 text-sm font-semibold tracking-wide">
+          <Link to="/blog" className="inline-flex items-center gap-2 text-blue-100 hover:text-white transition-colors mb-8 text-sm font-semibold tracking-wide">
             <ArrowLeft size={16} /> Back to Blog
           </Link>
 
           <div>
             <motion.span
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-400/30 bg-blue-500/10 text-blue-300 text-xs font-bold uppercase tracking-widest backdrop-blur-md mb-6"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/30 bg-white/10 text-white text-xs font-bold uppercase tracking-widest backdrop-blur-md mb-6"
             >
               <Tag size={12} /> {post.category}
             </motion.span>
 
             <SplitHeading text={post.title} />
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}
-              className="flex flex-wrap items-center gap-6 sm:gap-8 text-slate-300 text-sm font-medium"
-            >
-              <div className="flex items-center gap-2"><Calendar size={16} className="text-blue-400" /> {post.date ? new Date(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : new Date(post.createdAt || Date.now()).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</div>
-              <div className="flex items-center gap-2"><Clock size={16} className="text-blue-400" /> {post.readTime || "5 min"}</div>
-              <div className="flex items-center gap-2"><User size={16} className="text-blue-400" /> {post.author || "Admin"}</div>
-              <div className="flex items-center gap-2"><Eye size={16} className="text-blue-400" /> {views.toLocaleString()} views</div>
-            </motion.div>
           </div>
         </motion.div>
       </section>
 
-      {/* 3️⃣ Article Container Card */}
-      <main className="relative z-20 w-full max-w-6xl mx-auto px-4 sm:px-6 -mt-16 sm:-mt-24 pb-24">
+      {/* Article Container Card */}
+      <main className="relative z-20 w-full max-w-6xl mx-auto px-4 sm:px-6 -mt-16 sm:-mt-24 pb-2">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -142,14 +156,22 @@ const BlogPost = () => {
             {post.readTime} Read
           </div>
 
-          {/* 4️⃣ Share Strip (Inline) */}
+          {/* Share Strip — with real working links */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-8 mb-10 border-b border-slate-100">
             <span className="text-xs font-bold tracking-widest text-slate-400 uppercase">Share this article</span>
             <div className="flex gap-3">
-              {[Facebook, Twitter, Linkedin, Bookmark].map((Icon, i) => (
-                <button key={i} className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 text-slate-500 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300">
+              {socialButtons.map(({ Icon, href, label, hoverClass }, i) => (
+                <a
+                  key={i}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  title={label}
+                  className={`flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 text-slate-500 transition-all duration-300 ${hoverClass}`}
+                >
                   <Icon size={16} />
-                </button>
+                </a>
               ))}
             </div>
           </div>
@@ -172,7 +194,6 @@ const BlogPost = () => {
                   <p>{para}</p>
                 )}
 
-                {/* Pull Quote after 2nd paragraph */}
                 {i === 1 && para.length > 50 && (
                   <blockquote className="my-12 pl-6 sm:pl-8 py-4 sm:py-6 border-l-4 border-blue-600 bg-gradient-to-r from-blue-50 to-transparent rounded-r-2xl">
                     <p className="text-xl sm:text-2xl font-serif italic text-slate-900 leading-snug m-0">
@@ -181,19 +202,26 @@ const BlogPost = () => {
                   </blockquote>
                 )}
 
-                {/* Decorative Divider Mid-Article */}
-                {i === Math.floor(post.content.length / 2) && (
-                  <div className="flex justify-center items-center gap-4 my-16 text-blue-200">
-                    <span className="w-1.5 h-1.5 rounded-full bg-current" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-current" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-current" />
-                  </div>
+                {i === 1 && post.image && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7 }}
+                    className="my-10 rounded-2xl overflow-hidden shadow-xl shadow-slate-900/10 border border-slate-100"
+                  >
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      className="w-full h-auto object-cover max-h-[520px]"
+                    />
+                  </motion.div>
                 )}
               </motion.div>
             )) : <p>{post.content}</p>}
           </div>
 
-          {/* 5️⃣ Tags Section */}
+          {/* Tags Section */}
           <div className="flex flex-wrap gap-3 mt-16 pt-8 border-t border-slate-100">
             {["HVAC", post.category, "Tips", "Expert Advice", "Home Comfort"].map(tag => (
               <span key={tag} className="px-5 py-2 rounded-full border border-slate-200 text-xs font-bold tracking-widest uppercase text-slate-500 hover:border-blue-600 hover:text-blue-600 transition-colors cursor-pointer bg-slate-50 hover:bg-white">
@@ -202,50 +230,15 @@ const BlogPost = () => {
             ))}
           </div>
 
-          {/* 6️⃣ Author Box */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.98 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
-            className="mt-12 p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-50 to-blue-50/40 border border-slate-100 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-6 group"
-          >
-            <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-blue-700 to-cyan-400 flex items-center justify-center text-white text-3xl font-serif shrink-0 shadow-xl shadow-blue-500/20 group-hover:scale-105 transition-transform">
-              {(post.author || "Admin").charAt(0)}
-            </div>
-            <div className="flex-1">
-              <h4 className="text-xl font-bold text-slate-900 mb-1">{post.author || "Admin"}</h4>
-              <p className="text-sm text-slate-500 mb-4">HVAC Specialist & Senior Technician</p>
-              <p className="text-sm text-slate-600 leading-relaxed max-w-md mx-auto sm:mx-0">
-                With over a decade of experience, {(post.author || "Admin").split(' ')[0]} shares insights to help you maximize efficiency and comfort in your spaces.
-              </p>
-            </div>
-            <button className="px-6 py-2.5 rounded-full border-2 border-slate-900 text-slate-900 font-bold text-sm tracking-wide hover:bg-slate-900 hover:text-white transition-colors shrink-0">
-              Follow
-            </button>
-          </motion.div>
-
-          {/* 7️⃣ Conversion CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="mt-16 p-8 sm:p-12 rounded-3xl bg-slate-900 relative overflow-hidden group border border-slate-800"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            <div className="absolute -top-32 -right-32 w-64 h-64 bg-blue-500/20 rounded-full blur-[80px]" />
-            <div className="relative z-10 text-center">
-              <h3 className="text-2xl sm:text-3xl font-serif text-white mb-3">Need personalized expert advice?</h3>
-              <p className="text-slate-400 mb-8 max-w-sm mx-auto text-sm sm:text-base">
-                Our certified HVAC specialists are ready to help you optimize your comfort and energy efficiency today.
-              </p>
-              <a href="tel:+919236477974" className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-blue-600 text-white font-bold tracking-wide hover:bg-blue-500 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/40 hover:-translate-y-1 transition-all duration-300">
-                📞 Talk to an Expert
-              </a>
-            </div>
-          </motion.div>
+          {/* Conversion CTA */}
+          <CTASection />
 
         </motion.div>
       </main>
 
-      {/* 8️⃣ Related Articles Section */}
+      {/* Related Articles Section */}
       {relatedPosts.length > 0 && (
-        <section className="w-full max-w-6xl mx-auto px-6 py-24 sm:py-32">
+        <section className="w-full max-w-6xl mx-auto px-6 py-10 sm:py-10">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-12">
             <div>
               <h2 className="text-3xl sm:text-4xl font-serif text-slate-900 font-bold mb-2">Read Next</h2>
@@ -275,7 +268,7 @@ const BlogPost = () => {
                     <h3 className="text-xl font-bold font-serif text-slate-900 mb-4 line-clamp-2 leading-tight group-hover:text-blue-600 transition-colors">{rp.title}</h3>
                     <div className="mt-auto flex items-center justify-between text-sm text-slate-500">
                       <div className="flex items-center gap-2">
-                        <Clock size={14} /> {rp.readTime || "5 min"}
+
                       </div>
                       <span className="text-blue-600 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 font-medium">Read Article →</span>
                     </div>
@@ -287,7 +280,7 @@ const BlogPost = () => {
         </section>
       )}
 
-      {/* 9️⃣ Scroll-to-Top Button */}
+      {/* Scroll-to-Top Button */}
       <AnimatePresence>
         {showScrollTop && (
           <motion.button
@@ -307,4 +300,4 @@ const BlogPost = () => {
   );
 };
 
-export default BlogPost;
+export default BlogPost;  
