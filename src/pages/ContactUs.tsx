@@ -639,7 +639,7 @@ export default function ContactUs() {
         className="bg-hero-gradient"
         style={{
           width: "100%",
-          padding: "80px 32px",
+         padding: "120px 32px 80px 32px",
           position: "relative",
           overflow: "hidden",
         }}
