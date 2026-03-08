@@ -104,36 +104,78 @@ const About = () => (
 </section>
 
     {/* ── Stats ── */}
-    <section style={{ padding: "15px 24px", background: "hsl(var(--card))" }}>
-      <div style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "24px" }}>
-        {stats.map((s, i) => (
-          <motion.div
-            key={s.label}
-            initial="hidden" whileInView="visible" viewport={{ once: true }}
-            variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.5 } } }}
+    {/* ── Stats ── */}
+<section style={{ padding: "40px 24px", background: "hsl(var(--brand-light))" }}>
+  <div style={{ maxWidth: "1200px", margin: "0 auto", width: "100%" }}>
+
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+        gap: "20px",
+      }}
+    >
+      {stats.map((s, i) => (
+        <motion.div
+          key={s.label}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{
+            hidden: { opacity: 0, y: 30 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { delay: i * 0.1, duration: 0.6 },
+            },
+          }}
+          style={{
+            color: "white",
+            background:
+              "linear-gradient(135deg, hsl(var(--brand-dark)) 0%, hsl(var(--primary)) 100%)",
+            borderRadius: "16px",
+            padding: "32px 24px",
+            textAlign: "center",
+            boxShadow: "0 4px 20px hsl(var(--primary) / 0.08)",
+          }}
+        >
+          <div
             style={{
-              textAlign: "center",
-              background: "hsl(var(--brand-light))",
-              borderRadius: "16px", padding: "32px 20px",
-              border: "1px solid hsl(var(--border))",
+              fontFamily: "DM Serif Display",
+              fontSize: "2.8rem",
+              color: "white",
+              lineHeight: 1,
+              marginBottom: "8px",
+              fontWeight: 400,
             }}
           >
-            {/* Stat number — DM Serif display style, primary color */}
-            <p style={{
-              fontFamily: "DM Serif Display",
-              fontSize: "3rem", color: "hsl(var(--primary))",
-              lineHeight: 0.7, fontWeight: 400,
-            }}>
-              <CountUp from={0} to={s.value} duration={1.2} separator="," direction="up" startWhen={true} />
-              {s.suffix}
-            </p>
-            <p className="body-text" style={{ fontSize: "0.85rem", color: "hsl(var(--muted-foreground))", fontWeight: 500 }}>
-              {s.label}
-            </p>
-          </motion.div>
-        ))}
-      </div>
-    </section>
+            <CountUp
+              from={0}
+              to={s.value}
+              duration={1.2}
+              separator=","
+              direction="up"
+              startWhen={true}
+            />
+            {s.suffix}
+          </div>
+
+          <div
+            className="body-text"
+            style={{
+              fontSize: "0.85rem",
+              color: "white",
+              fontWeight: 500,
+            }}
+          >
+            {s.label}
+          </div>
+        </motion.div>
+      ))}
+    </div>
+
+  </div>
+</section>
 
     {/* ── Our Story ── */}
     <section style={{  paddingTop: "30px", paddingBottom: "30px", paddingLeft: "0", paddingRight: "0", background: "hsl(var(--brand-light))" }}>
