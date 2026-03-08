@@ -122,7 +122,7 @@ const About = () => (
             <p style={{
               fontFamily: "DM Serif Display",
               fontSize: "3rem", color: "hsl(var(--primary))",
-              lineHeight: 1, marginBottom: "8px", fontWeight: 400,
+              lineHeight: 0.7, fontWeight: 400,
             }}>
               <CountUp from={0} to={s.value} duration={1.2} separator="," direction="up" startWhen={true} />
               {s.suffix}
