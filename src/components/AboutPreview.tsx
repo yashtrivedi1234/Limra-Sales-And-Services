@@ -93,7 +93,7 @@ export default function AboutPreview() {
                   <CountUp from={0} to={s.value} duration={1.2} separator="," direction="up" startWhen={true} />
                   {s.suffix}
                 </div>
-                <div className="body-text" style={{ fontSize: "0.85rem", color: "white", fontWeight: 500 }}>
+                <div className="body-text" style={{ fontSize: "0.85rem", color: "white", fontWeight: 700 }}>
                   {s.label}
                 </div>
               </motion.div>

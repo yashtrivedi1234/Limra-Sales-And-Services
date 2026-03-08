@@ -208,7 +208,7 @@ const About = () => (
                 style={{
                   fontSize: "0.85rem",
                   color: "white",
-                  fontWeight: 500,
+                  fontWeight: 700,
                 }}
               >
                 {s.label}
