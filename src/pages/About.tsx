@@ -69,7 +69,7 @@ const About = () => (
 
   <div
     style={{
-      maxWidth: "780px",
+     
       margin: "0 auto",
       textAlign: "center",
       position: "relative",
@@ -93,7 +93,7 @@ const About = () => (
       className="body-text"
       style={{
         color: "hsl(var(--brand-sky))",
-        maxWidth: "620px",
+       maxWidth: "1200px",
         margin: "0 auto",
         fontWeight: 300,
       }}

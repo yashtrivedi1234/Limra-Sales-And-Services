@@ -83,7 +83,7 @@ const SiteFooter = () => {
   <img
     src={Logo}
     alt="LIMRA Sales & Services"
-    style={{ height: "70px", width: "auto" }}
+    style={{ height: "70px", width: "auto", backgroundColor: "white", padding: "5px", marginBottom: "10px" }}
   />
 </Link>
             </motion.div>

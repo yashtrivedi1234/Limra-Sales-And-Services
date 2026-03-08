@@ -80,7 +80,7 @@ export default function ProductCategories() {
               background: "hsl(var(--primary) / 0.1)", border: "1px solid hsl(var(--primary) / 0.25)",
               color: "hsl(var(--primary))", fontWeight: 700, fontSize: "1rem",
               letterSpacing: "0.18em", textTransform: "uppercase" as const,
-              padding: "5px 20px", borderRadius: "100px", marginBottom: "18px",
+              padding: "5px 20px", borderRadius: "100px", marginBottom: "5px",
             }}
           >
             Our Products
@@ -92,7 +92,7 @@ export default function ProductCategories() {
               <motion.h2
                 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }} transition={{ duration: 0.6 }}
-                style={{ marginBottom: "12px", marginTop: 0 }}
+                style={{ marginBottom: "5x", marginTop: 0 }}
               >
                 Cooling Solutions for Every Need
               </motion.h2>

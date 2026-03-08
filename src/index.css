@@ -155,7 +155,7 @@
   }
 
   .body-text {
-    font-family: "DM Serif Display";
+    font-family: "Inter";
     @apply text-base md:text-lg leading-relaxed;
   }
 

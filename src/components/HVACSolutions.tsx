@@ -112,7 +112,7 @@ export default function HVACSolutions() {
             letterSpacing: "0.18em", textTransform: "uppercase" as const,
             padding: "5px 14px", borderRadius: "100px", marginBottom: "18px",
           }}>
-            Solutions
+            Complete HVAC Solutions
           </div>
 
           {/* h2 — global: DM Serif Display, 400, brand-dark */}
