@@ -104,7 +104,7 @@ const About = () => (
 </section>
 
     {/* ── Stats ── */}
-    <section style={{ padding: "80px 24px", background: "hsl(var(--card))" }}>
+    <section style={{ padding: "15px 24px", background: "hsl(var(--card))" }}>
       <div style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "24px" }}>
         {stats.map((s, i) => (
           <motion.div
@@ -120,7 +120,7 @@ const About = () => (
           >
             {/* Stat number — DM Serif display style, primary color */}
             <p style={{
-              fontFamily: "'DM Serif Display', Georgia, serif",
+              fontFamily: "DM Serif Display",
               fontSize: "3rem", color: "hsl(var(--primary))",
               lineHeight: 1, marginBottom: "8px", fontWeight: 400,
             }}>
