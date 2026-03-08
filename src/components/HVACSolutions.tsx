@@ -116,9 +116,9 @@ export default function HVACSolutions() {
           </div>
 
           {/* h2 — global: DM Serif Display, 400, brand-dark */}
-          <h2 style={{ marginBottom: "12px", marginTop: 0 }}>
+          {/* <h2 style={{ marginBottom: "12px", marginTop: 0 }}>
             Complete HVAC Solutions
-          </h2>
+          </h2> */}
 
           {/* body-text */}
           <p className="body-text" style={{ color: "hsl(var(--muted-foreground))" }}>
