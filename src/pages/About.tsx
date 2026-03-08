@@ -71,7 +71,6 @@ const Badge = ({ label }: { label: string }) => (
       textTransform: "uppercase" as const,
       padding: "5px 14px",
       borderRadius: "100px",
-      marginBottom: "18px",
     }}
   >
     {label}
@@ -134,6 +133,7 @@ const About = () => (
             maxWidth: "1200px",
             margin: "0 auto",
             fontWeight: 300,
+            fontSize: "14px",
           }}
         >
           LIMRA Sales and Services is a trusted HVAC and air conditioning
@@ -146,7 +146,70 @@ const About = () => (
       </div>
     </section>
 
-    {/* ── Stats ── */}
+   
+    
+
+    {/* ── Our Story ── */}
+    <section
+      style={{
+       
+        paddingLeft: "0",
+        paddingRight: "0",
+        background: "hsl(var(--brand-light))",
+        marginTop: "0px",
+        paddingTop: "30px",
+        paddingBottom: "30px",
+      }}
+    >
+      <div style={{ maxWidth: "1200px", width: "100%", margin: "0 auto" }}>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+        >
+          <Badge label="Our Story" />
+          {/* h2 — global: DM Serif Display, 400, brand-dark */}
+          <h2>Delivering Comfort, Building Trust</h2>
+          <div
+            className="body-text"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "18px",
+              color: "hsl(var(--muted-foreground))",
+              fontWeight: 300,
+              fontSize: "14px",
+            }}
+          >
+            <p>
+              Founded in 2017, LIMRA Sales and Services began with a clear
+              vision — to provide reliable, honest, and high-quality cooling
+              solutions that customers can truly depend on. What started as a
+              small HVAC service initiative has steadily evolved into a trusted
+              name in air conditioning and industrial cooling solutions across
+              multiple cities.
+            </p>
+            <p>
+              Over the years, we have successfully installed and serviced
+              thousands of air conditioning systems — from residential Split and
+              Window AC units to advanced VRV/VRF systems, cold rooms, and
+              large-scale industrial chiller plants. Our growth has been driven
+              by strong technical expertise, prompt service delivery, and an
+              unwavering commitment to quality workmanship.
+            </p>
+            <p>
+              Today, with 5,000+ satisfied customers and 500+ completed
+              commercial projects, we continue to focus on innovation,
+              energy-efficient solutions, and long-term client partnerships. For
+              us, cooling is more than just a service — it is about delivering
+              comfort, reliability, and performance that businesses and families
+              can confidently rely on.
+            </p>
+          </div>
+        </motion.div>
+      </div>
+    </section>
     <section
       style={{ padding: "15px 24px", background: "hsl(var(--brand-light))" }}
     >
@@ -216,64 +279,6 @@ const About = () => (
             </motion.div>
           ))}
         </div>
-      </div>
-    </section>
-
-    {/* ── Our Story ── */}
-    <section
-      style={{
-        paddingBottom: "30px",
-        paddingLeft: "0",
-        paddingRight: "0",
-        background: "hsl(var(--brand-light))",
-      }}
-    >
-      <div style={{ maxWidth: "1200px", width: "100%", margin: "0 auto" }}>
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-        >
-          <Badge label="Our Story" />
-          {/* h2 — global: DM Serif Display, 400, brand-dark */}
-          <h2>Delivering Comfort, Building Trust</h2>
-          <div
-            className="body-text"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "18px",
-              color: "hsl(var(--muted-foreground))",
-              fontWeight: 300,
-            }}
-          >
-            <p>
-              Founded in 2017, LIMRA Sales and Services began with a clear
-              vision — to provide reliable, honest, and high-quality cooling
-              solutions that customers can truly depend on. What started as a
-              small HVAC service initiative has steadily evolved into a trusted
-              name in air conditioning and industrial cooling solutions across
-              multiple cities.
-            </p>
-            <p>
-              Over the years, we have successfully installed and serviced
-              thousands of air conditioning systems — from residential Split and
-              Window AC units to advanced VRV/VRF systems, cold rooms, and
-              large-scale industrial chiller plants. Our growth has been driven
-              by strong technical expertise, prompt service delivery, and an
-              unwavering commitment to quality workmanship.
-            </p>
-            <p>
-              Today, with 5,000+ satisfied customers and 500+ completed
-              commercial projects, we continue to focus on innovation,
-              energy-efficient solutions, and long-term client partnerships. For
-              us, cooling is more than just a service — it is about delivering
-              comfort, reliability, and performance that businesses and families
-              can confidently rely on.
-            </p>
-          </div>
-        </motion.div>
       </div>
     </section>
 
@@ -357,7 +362,7 @@ const About = () => (
                 <v.icon size={22} style={{ color: "hsl(var(--primary))" }} />
               </div>
               {/* h3 — global: Inter 600, foreground color */}
-              <h3 style={{ marginBottom: "8px", fontSize: "1rem" }}>
+              <h3 style={{ marginBottom: "8px", fontSize: "1rem", letterSpacing: "1px" }}>
                 {v.title}
               </h3>
               <p
@@ -366,6 +371,7 @@ const About = () => (
                   fontSize: "0.875rem",
                   color: "hsl(var(--muted-foreground))",
                   lineHeight: 1.65,
+                  letterSpacing: "1px",
                 }}
               >
                 {v.desc}

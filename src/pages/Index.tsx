@@ -25,8 +25,9 @@ const Index = () => (
     {/* <FeaturedProjects /> */}
     <Product />
     {/* <WhyChooseUs /> */}
-    <BrandMarquee />
+    
     <CTASection />
+    <BrandMarquee />
     <BlogPreview />
     {/* <Newsletter /> */}
   </main>

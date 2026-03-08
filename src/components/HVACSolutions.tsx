@@ -107,9 +107,9 @@ export default function HVACSolutions() {
           <div style={{
             display: "inline-block",
             background: "hsl(var(--primary) / 0.1)", border: "1px solid hsl(var(--primary) / 0.25)",
-            color: "hsl(var(--primary))", fontWeight: 700, fontSize: "0.72rem",
+            color: "hsl(var(--primary))", fontWeight: 700, fontSize: "1rem",
             letterSpacing: "0.18em", textTransform: "uppercase" as const,
-            padding: "5px 14px", borderRadius: "100px", marginBottom: "18px",
+            padding: "5px 20px", borderRadius: "100px",
           }}>
             Complete HVAC Solutions
           </div>
