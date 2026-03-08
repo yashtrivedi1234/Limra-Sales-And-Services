@@ -25,7 +25,7 @@ const CTASection: React.FC<CTAProps> = ({
           style={{
             position: "relative", overflow: "hidden",
             borderRadius: "32px", padding: "clamp(48px, 6vw, 64px) clamp(32px, 5vw, 64px)",
-            boxShadow: "0 24px 64px hsl(var(--primary) / 0.28)",
+          
           }}
         >
           {/* Orbs */}
@@ -66,7 +66,7 @@ const CTASection: React.FC<CTAProps> = ({
                   padding: "14px 32px", background: "hsl(var(--card))",
                   color: "hsl(var(--brand-dark))", fontWeight: 700, fontSize: "0.95rem",
                   borderRadius: "12px", border: "none", cursor: "pointer",
-                  boxShadow: "0 8px 24px rgba(0,0,0,0.2)", transition: "all 0.2s",
+                  transition: "all 0.2s",
                 }}
               >
                 Get Free Consultation <ArrowRight size={17} />
