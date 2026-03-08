@@ -12,7 +12,7 @@ const BrandMarquee = () => {
   if (brands.length === 0) return null;
 
   return (
-    <section style={{ paddingTop: "70px", paddingBottom: "70px", paddingLeft: "0", paddingRight: "0", background: BRAND.white, overflow: "hidden", position: "relative", fontFamily: "DM Serif Display" }}>
+    <section className="section-padding" style={{ background: BRAND.white, overflow: "hidden", position: "relative", fontFamily: "DM Serif Display" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative" }}>
         <div style={{ textAlign: "center", marginBottom: "32px", padding: "0 24px" }}>
           <div style={{ display: "inline-block", background: `${BRAND.primary}1A`, border: `1px solid ${BRAND.primary}40`, color: BRAND.primary, fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 14px", borderRadius: "100px", marginBottom: "14px" }}>
@@ -46,7 +46,7 @@ const BrandMarquee = () => {
                   boxShadow: `0 2px 12px ${BRAND.primary}0F`,
                 }}
               >
-                <div style={{ height: "72px", display: "flex", alignItems: "center", justifyContent: "center"}}>
+                <div style={{ height: "72px", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "4px" }}>
                   <img src={brand.heroImage || brand.image} alt={brand.brandName || brand.name} loading="lazy" style={{ maxHeight: "60px", maxWidth: "100%", objectFit: "contain" }} />
                 </div>
                 <div style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", height: "3px", width: "0", background: `linear-gradient(90deg, ${BRAND.dark}, ${BRAND.primary})`, borderRadius: "2px", transition: "width 0.3s" }} />

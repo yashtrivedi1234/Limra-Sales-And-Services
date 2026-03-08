@@ -19,11 +19,7 @@ const fadeUp = {
 
 export default function AboutPreview() {
   return (
-    <section style={{
-      paddingTop: "70px",
-      paddingBottom: "70px",
-      paddingLeft: "0",
-      paddingRight: "0",
+    <section className="section-padding" style={{
       background: "hsl(var(--brand-light))"
     }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(24px, 5vw, 48px)" }}>
@@ -93,7 +89,7 @@ export default function AboutPreview() {
                   <CountUp from={0} to={s.value} duration={1.2} separator="," direction="up" startWhen={true} />
                   {s.suffix}
                 </div>
-                <div className="body-text" style={{ fontSize: "0.85rem", color: "white", fontWeight: 700 }}>
+                <div className="body-text" style={{ fontSize: "0.85rem", color: "white", fontWeight: 500 }}>
                   {s.label}
                 </div>
               </motion.div>

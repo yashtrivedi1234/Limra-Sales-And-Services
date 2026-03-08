@@ -201,7 +201,7 @@ const SiteHeader = () => {
           text-decoration: none;
         }
         .header-logo img {
-          height: 64px;
+          height: 70px;
           width: auto;
           display: block;
         }

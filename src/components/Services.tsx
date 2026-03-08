@@ -26,11 +26,7 @@ export default function Services() {
   if (topServices.length === 0) return null;
 
   return (
-    <section style={{
-      paddingTop: "70px",
-      paddingBottom: "70px",
-      paddingLeft: "0",
-      paddingRight: "0",  
+    <section className="section-padding" style={{  
       position: "relative", overflow: "hidden",
       background: `linear-gradient(135deg, ${BRAND.dark} 0%, ${BRAND.darkMid} 50%, ${BRAND.primary} 100%)`,
       fontFamily: "'DM Sans', sans-serif"
@@ -39,7 +35,7 @@ export default function Services() {
 
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(24px, 5vw, 48px)", position: "relative", zIndex: 10 }}>
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} style={{ textAlign: "center", marginBottom: "20px" }}>
-          <div style={{ display: "inline-block", background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)", color: BRAND.accentOnDark, fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 16px", borderRadius: "100px" }}>
+          <div style={{ display: "inline-block", background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)", color: BRAND.accentOnDark, fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 16px", borderRadius: "100px", marginBottom: "18px" }}>
             What We Do
           </div>
           <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.white, lineHeight: 1.15 }}>

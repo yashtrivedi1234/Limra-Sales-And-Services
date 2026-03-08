@@ -96,7 +96,7 @@ function SolutionCard({ title, items, primaryBtnLabel, imageUrl, imageAlt, badge
 
 export default function HVACSolutions() {
   return (
-    <section style={{ paddingTop: "70px", paddingBottom: "70px", paddingLeft: "0", paddingRight: "0", background: "hsl(var(--card))" }}>
+    <section className="section-padding" style={{ background: "hsl(var(--card))" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(24px, 5vw, 48px)" }}>
 
         <motion.div
@@ -107,15 +107,15 @@ export default function HVACSolutions() {
           <div style={{
             display: "inline-block",
             background: "hsl(var(--primary) / 0.1)", border: "1px solid hsl(var(--primary) / 0.25)",
-            color: "hsl(var(--primary))", fontWeight: 700, fontSize: "1rem",
+            color: "hsl(var(--primary))", fontWeight: 700, fontSize: "0.72rem",
             letterSpacing: "0.18em", textTransform: "uppercase" as const,
-            padding: "5px 14px", borderRadius: "100px",
+            padding: "5px 14px", borderRadius: "100px", marginBottom: "18px",
           }}>
             Complete HVAC Solutions
           </div>
 
           {/* body-text */}
-          <p className="body-text" style={{ color: "hsl(var(--muted-foreground))" }}>
+          <p className="body-text" style={{ color: "hsl(var(--muted-foreground))", marginTop: "10px" }}>
             From residential comfort to large commercial projects, we've got you covered.
           </p>
         </motion.div>

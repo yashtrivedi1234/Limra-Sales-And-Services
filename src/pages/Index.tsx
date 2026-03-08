@@ -21,10 +21,11 @@ const Index = () => (
     
     <Services />
     <ProductCategories />
-    <BrandMarquee />
+    
     {/* <FeaturedProjects /> */}
     <Product />
     {/* <WhyChooseUs /> */}
+    <BrandMarquee />
     <CTASection />
     <BlogPreview />
     {/* <Newsletter /> */}
