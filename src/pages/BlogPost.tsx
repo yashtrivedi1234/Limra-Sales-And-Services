@@ -384,7 +384,7 @@ const BlogPost = () => {
                       }}
                     >
                       <p
-                        className="heading-2"
+                        className="heading-3"
                         style={{
                           fontStyle: "italic",
                           color: "hsl(var(--brand-dark))",
