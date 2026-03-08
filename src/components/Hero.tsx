@@ -96,15 +96,16 @@ export default function HeroSection() {
 
       <style>{`
         /* ── Hero Section ── */
-        .hero-section {
-          background: var(--bg-hero-gradient, hsl(var(--brand-dark)));
-          position: relative;
-          width: 100%;
-          min-height: 100vh;
-          overflow: hidden;
-          display: flex;
-          align-items: center;
-        }
+      .hero-section {
+  background: var(--bg-hero-gradient, hsl(var(--brand-dark)));
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 80px);  /* 100vh → calc(100vh - 80px) */
+  margin-top: 80px;                /* YEH ADD KARO */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
 
         /* Grid overlay */
         .hero-grid-overlay {
@@ -266,11 +267,12 @@ export default function HeroSection() {
         }
 
         /* ── Mobile (≤ 767px): stack image behind, full-width content ── */
-        @media (max-width: 767px) {
-          .hero-section {
-            min-height: 100svh;
-            align-items: flex-end;
-          }
+      @media (max-width: 767px) {
+  .hero-section {
+    min-height: calc(100svh - 68px);  /* 68px = mobile header height */
+    margin-top: 68px;
+    align-items: flex-end;
+  }
 
           /* Image becomes a full blurred backdrop */
           .hero-image-container {
