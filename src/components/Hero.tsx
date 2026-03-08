@@ -55,7 +55,7 @@ export default function HeroSection() {
             fontWeight: 700, fontSize: "0.72rem",
             letterSpacing: "0.18em", textTransform: "uppercase" as const,
             padding: "5px 16px", borderRadius: "100px",
-            marginTop: "50px", marginBottom: "50px",
+            marginTop: "0px", marginBottom: "10px",
           }}
         >
           HVAC & Air Conditioning Experts
@@ -102,7 +102,7 @@ export default function HeroSection() {
         {/* Badges */}
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.4 }}
-          style={{ display: "flex", flexWrap: "wrap", gap: "20px", borderBottom: "1px solid rgba(255,255,255,0.12)", paddingBottom: "0px" }}
+          style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}
         >
           {badges.map((b, i) => (
             <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: "6px", color: "hsl(var(--brand-sky) / 0.7)", fontSize: "0.84rem" }}>

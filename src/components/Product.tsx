@@ -17,7 +17,7 @@ export function CommercialApplications() {
   const navigate = useNavigate();
 
   return (
-    <section style={{ padding: "64px 0", background: "hsl(var(--card))" }}>
+    <section style={{ paddingTop: "30px", paddingBottom: "30px", paddingLeft: "0", paddingRight: "0", background: "hsl(var(--card))" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(24px, 5vw, 48px)" }}>
 
         <motion.div

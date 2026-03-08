@@ -15,7 +15,7 @@ import CTASection from "@/components/CTASection";
 const SplitHeading = ({ text }: { text: string }) => (
   <h1
     style={{
-      color: "white",        /* override global brand-dark → white for hero */
+      color: "white",
       marginBottom: "2rem",
       letterSpacing: "-0.02em",
     }}
@@ -109,11 +109,11 @@ const BlogPost = () => {
         style={{
           position: "relative",
           width: "100%",
-          height: "85vh",
-          minHeight: "600px",
+          height: "60vh",          /* ← reduced from 85vh */
+          minHeight: "420px",      /* ← reduced from 600px */
           display: "flex",
           justifyContent: "center",
-          alignItems: "flex-end",
+          alignItems: "center",    /* ← changed from flex-end to center */
           overflow: "hidden",
           background: "var(--hero-gradient)",
         }}
@@ -163,7 +163,7 @@ const BlogPost = () => {
             zIndex: 10,
             width: "100%",
             maxWidth: "64rem",
-            padding: "0 1.5rem 6rem",
+            padding: "0 1.5rem 2rem",   /* ← reduced bottom padding from 6rem to 2rem */
           }}
         >
           <Link
@@ -178,6 +178,7 @@ const BlogPost = () => {
               fontSize: "0.875rem",
               fontWeight: 600,
               letterSpacing: "0.05em",
+              marginTop: "2rem",
             }}
             onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = "white")}
             onMouseLeave={e =>
@@ -363,7 +364,6 @@ const BlogPost = () => {
                     <p
                       style={{ margin: 0 }}
                       className="first-letter:text-6xl sm:first-letter:text-7xl first-letter:font-serif first-letter:font-bold first-letter:pr-3 first-letter:mt-2 first-letter:float-left first-line:tracking-wide"
-                      // first-letter color via inline since CSS var can't be used in Tailwind first-letter directly
                     >
                       {para}
                     </p>
@@ -624,45 +624,7 @@ const BlogPost = () => {
         </section>
       )}
 
-      {/* ── Scroll-to-Top ── */}
-      <AnimatePresence>
-        {showScrollTop && (
-          <motion.button
-            initial={{ opacity: 0, scale: 0.5, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.5, y: 20 }}
-            whileHover={{ y: -4, scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            style={{
-              position: "fixed",
-              bottom: "2.5rem",
-              right: "2.5rem",
-              width: "48px",
-              height: "48px",
-              borderRadius: "50%",
-              background: "hsl(var(--brand-dark))",
-              color: "white",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 8px 24px hsl(var(--brand-dark) / 0.3)",
-              border: "none",
-              cursor: "pointer",
-              zIndex: 50,
-              transition: "background 0.2s",
-            }}
-            onMouseEnter={e =>
-              ((e.currentTarget as HTMLElement).style.background = "hsl(var(--primary))")
-            }
-            onMouseLeave={e =>
-              ((e.currentTarget as HTMLElement).style.background = "hsl(var(--brand-dark))")
-            }
-          >
-            <ChevronUp size={20} />
-          </motion.button>
-        )}
-      </AnimatePresence>
+     
     </div>
   );
 };

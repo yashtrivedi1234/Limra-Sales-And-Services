@@ -12,7 +12,7 @@ const BrandMarquee = () => {
   if (brands.length === 0) return null;
 
   return (
-    <section style={{ padding: "64px 0", background: BRAND.white, overflow: "hidden", position: "relative", fontFamily: "'DM Serif Display', serif" }}>
+    <section style={{ paddingTop: "30px", paddingBottom: "30px", paddingLeft: "0", paddingRight: "0", background: BRAND.white, overflow: "hidden", position: "relative", fontFamily: "'DM Serif Display', serif" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative" }}>
         <div style={{ textAlign: "center", marginBottom: "32px", padding: "0 24px" }}>
           <div style={{ display: "inline-block", background: `${BRAND.primary}1A`, border: `1px solid ${BRAND.primary}40`, color: BRAND.primary, fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 14px", borderRadius: "100px", marginBottom: "14px" }}>

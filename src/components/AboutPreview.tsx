@@ -4,9 +4,9 @@ import CountUp from "./ui/CountUp";
 
 const stats = [
   { value: 5000, suffix: "+", label: "Customers" },
-  { value: 500,  suffix: "+", label: "Commercial Projects" },
-  { value: 9,    suffix: "+", label: "Years Experience" },
-  { value: 20,   suffix: "+", label: "Cities" },
+  { value: 500, suffix: "+", label: "Commercial Projects" },
+  { value: 9, suffix: "+", label: "Years Experience" },
+  { value: 20, suffix: "+", label: "Cities" },
 ];
 
 const fadeUp = {
@@ -19,7 +19,13 @@ const fadeUp = {
 
 export default function AboutPreview() {
   return (
-    <section style={{ padding: "64px 0", background: "hsl(var(--brand-light))" }}>
+    <section style={{
+      paddingTop: "30px",
+      paddingBottom: "30px",
+      paddingLeft: "0",
+      paddingRight: "0",
+      background: "hsl(var(--brand-light))"
+    }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(24px, 5vw, 48px)" }}>
 
         {/* Header */}
@@ -44,7 +50,6 @@ export default function AboutPreview() {
           <motion.h2
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.6 }}
-            style={{ marginBottom: "16px" }}
           >
             Trusted HVAC &amp; Cooling Experts in Uttar Pradesh
           </motion.h2>
@@ -54,12 +59,12 @@ export default function AboutPreview() {
             initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
             viewport={{ once: true }} transition={{ delay: 0.2, duration: 0.6 }}
             className="body-text"
-            style={{ color: "hsl(var(--muted-foreground))", textAlign: "justify" }}
+            style={{ color: "hsl(var(--muted-foreground))", textAlign: "justify", marginTop: "16px" }}
           >
             LIMRA Sales &amp; Services is a leading HVAC and air conditioning solutions provider based in Uttar Pradesh, delivering reliable installation, maintenance, and large-scale commercial cooling projects across the state. With strong technical expertise and years of hands-on industry experience, we provide complete climate control solutions for residential, commercial, and industrial spaces.
-            <br /><br />
+
             From standard AC installations to advanced VRF/VRV systems, ducting, ventilation, cold rooms, ice plants, and chiller plants, our team ensures every project is executed with precision, safety, and efficiency. We specialize in the installation and servicing of Window, Split, Cassette, Ductable, Package AC, and AHU systems, along with copper piping and complete HVAC line work.
-            <br /><br />
+
             With a commitment to quality workmanship, transparent service, and long-term customer satisfaction, LIMRA Sales &amp; Services continues to build trust through performance and professionalism.
           </motion.p>
         </div>
@@ -81,7 +86,7 @@ export default function AboutPreview() {
               >
                 {/* Stat number — DM Serif display, white */}
                 <div style={{
-                  fontFamily: "'DM Serif Display', Georgia, serif",
+                  fontFamily: "DM Serif Display",
                   fontSize: "2.8rem", color: "white",
                   lineHeight: 1, marginBottom: "8px", fontWeight: 400,
                 }}>

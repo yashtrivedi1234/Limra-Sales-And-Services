@@ -55,7 +55,7 @@ export default function BrandDetail() {
 
   return (
     <PageTransition>
-      <div style={{ width: "100%", fontFamily: "'Inter', sans-serif", background: BRAND.white }}>
+      <div style={{ width: "100%", background: BRAND.white }}>
 
         {/* ── Hero ── */}
         <section style={{

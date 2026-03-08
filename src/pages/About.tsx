@@ -136,7 +136,7 @@ const About = () => (
     </section>
 
     {/* ── Our Story ── */}
-    <section style={{ padding: "80px 24px", background: "hsl(var(--brand-light))" }}>
+    <section style={{  paddingTop: "30px", paddingBottom: "30px", paddingLeft: "0", paddingRight: "0", background: "hsl(var(--brand-light))" }}>
       <div style={{ maxWidth: "1200px", width: "100%", margin: "0 auto" }}>
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
           <Badge label="Our Story" />
@@ -154,7 +154,7 @@ const About = () => (
     </section>
 
     {/* ── Values ── */}
-    <section style={{ padding: "80px 24px", background: "hsl(var(--card))" }}>
+    <section style={{  paddingTop: "30px", paddingBottom: "30px", paddingLeft: "0", paddingRight: "0", background: "hsl(var(--card))" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} style={{ textAlign: "center", marginBottom: "56px" }}>
           <Badge label="Our Values" />
@@ -186,7 +186,7 @@ const About = () => (
               </div>
               {/* h3 — global: Inter 600, foreground color */}
               <h3 style={{ marginBottom: "8px", fontSize: "1rem" }}>{v.title}</h3>
-              <p className="body-text" style={{ fontSize: "0.875rem", color: "hsl(var(--muted-foreground))", lineHeight: 1.65 }}>{v.desc}</p>
+              <p  className="body-text" style={{ fontSize: "0.875rem", color: "hsl(var(--muted-foreground))", lineHeight: 1.65 }}>{v.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -194,7 +194,7 @@ const About = () => (
     </section>
 
     {/* ── Milestones & Mission ── */}
-    <section style={{ paddingTop: "10px", paddingBottom: "80px", background: "hsl(var(--background))" }}>
+    <section style={{  paddingTop: "30px", paddingBottom: "30px", paddingLeft: "0", paddingRight: "0", background: "hsl(var(--background))" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "64px", alignItems: "flex-start" }}>
 
         {/* Timeline */}

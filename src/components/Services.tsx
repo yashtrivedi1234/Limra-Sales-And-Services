@@ -27,7 +27,11 @@ export default function Services() {
 
   return (
     <section style={{
-      padding: "64px 0", position: "relative", overflow: "hidden",
+      paddingTop: "30px",
+      paddingBottom: "30px",
+      paddingLeft: "0",
+      paddingRight: "0",  
+      position: "relative", overflow: "hidden",
       background: `linear-gradient(135deg, ${BRAND.dark} 0%, ${BRAND.darkMid} 50%, ${BRAND.primary} 100%)`,
       fontFamily: "'DM Sans', sans-serif"
     }}>

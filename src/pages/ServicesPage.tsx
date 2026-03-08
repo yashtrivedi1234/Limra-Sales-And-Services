@@ -21,9 +21,9 @@ const renderIcon = (name: string): React.ElementType => iconMap[name] ?? Wrench;
 
 const STATS = [
   { num: "5000+", label: "Projects Successfully Delivered", icon: <TrendingUp size={14} style={{ color: "hsl(var(--primary))" }} /> },
-  { num: "4.8/5",  label: "Customer Satisfaction Rating",   icon: <Star size={14} fill="#d97706" color="#d97706" /> },
-  { num: "24–48",  label: "Hrs Service Response Time",      icon: <Clock size={14} style={{ color: "hsl(var(--primary))" }} /> },
-  { num: "6",      label: "Services Offered",               icon: <Award size={14} style={{ color: "hsl(var(--primary))" }} /> },
+  { num: "4.8/5", label: "Customer Satisfaction Rating", icon: <Star size={14} fill="#d97706" color="#d97706" /> },
+  { num: "24–48", label: "Hrs Service Response Time", icon: <Clock size={14} style={{ color: "hsl(var(--primary))" }} /> },
+  { num: "6", label: "Services Offered", icon: <Award size={14} style={{ color: "hsl(var(--primary))" }} /> },
 ];
 
 const fadeUp = {
@@ -141,8 +141,8 @@ export default function ServicesPage(): React.ReactElement {
 
         <div className="relative z-10 max-w-[1180px] mx-auto px-6 text-center">
 
-      
-         
+
+
 
           {/* h1 — global: DM Serif Display, 400, brand-dark. Override color white + sky for hero */}
           <motion.h1

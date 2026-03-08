@@ -68,7 +68,7 @@ export default function ProductCategories() {
   const navigate = useNavigate();
 
   return (
-    <section style={{ padding: "64px 0", background: "hsl(var(--brand-light))" }}>
+    <section style={{ paddingTop: "30px", paddingBottom: "30px", paddingLeft: "0", paddingRight: "0", background: "hsl(var(--brand-light))" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(24px, 5vw, 48px)" }}>
 
         <div style={{ textAlign: "left", marginBottom: "48px" }}>
