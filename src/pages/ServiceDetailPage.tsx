@@ -204,7 +204,7 @@ export default function ServiceDetailPage() {
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
     <h2 className="text-[1.6rem] mb-7 flex items-center gap-4"
-      style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, color: BRAND.dark }}>
+      style={{ fontFamily: "DM Serif Display" fontWeight: 400, color: BRAND.dark }}>
       {children}
       <span className="flex-1 h-px" style={{ background: BRAND.slate100 }} />
     </h2>

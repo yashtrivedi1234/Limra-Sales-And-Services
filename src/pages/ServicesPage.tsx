@@ -123,7 +123,7 @@ export default function ServicesPage(): React.ReactElement {
   if (isLoading) return <Loader />;
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-background">
+    <div className="relative min-h-screen bg-background">
 
       {/* ── Hero ── */}
       <section

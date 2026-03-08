@@ -17,15 +17,19 @@ const CTASection: React.FC<CTAProps> = ({
 
   return (
     <section style={{ width: "100%", background: "hsl(var(--background))", paddingTop: "30px", paddingLeft: "0", paddingRight: "0" }}>
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>  
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         <motion.div
           initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.7 }}
           className="bg-hero-gradient"
           style={{
-            position: "relative", overflow: "hidden",
-            borderRadius: "32px", padding: "clamp(48px, 6vw, 64px) clamp(32px, 5vw, 64px)",
-          
+            position: "relative",
+            overflow: "hidden",
+            borderRadius: "32px",
+            paddingTop: "clamp(48px, 6vw, 64px)",
+            paddingBottom: "clamp(48px, 6vw, 64px)",
+            paddingLeft: "clamp(32px, 5vw, 64px)",
+            paddingRight: "clamp(32px, 5vw, 64px)",
           }}
         >
           {/* Orbs */}
