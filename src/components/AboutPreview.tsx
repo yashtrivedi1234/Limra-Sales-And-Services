@@ -20,8 +20,8 @@ const fadeUp = {
 export default function AboutPreview() {
   return (
     <section style={{
-      paddingTop: "30px",
-      paddingBottom: "30px",
+      paddingTop: "70px",
+      paddingBottom: "70px",
       paddingLeft: "0",
       paddingRight: "0",
       background: "hsl(var(--brand-light))"
@@ -40,7 +40,7 @@ export default function AboutPreview() {
               color: "hsl(var(--primary))",
               fontWeight: 700, fontSize: "1rem",
               letterSpacing: "0.18em", textTransform: "uppercase" as const,
-              padding: "5px 20px", borderRadius: "100px", marginBottom: "18px",
+              padding: "5px 20px", borderRadius: "100px",
             }}
           >
             LIMRA Sales &amp; Services
@@ -70,7 +70,7 @@ export default function AboutPreview() {
         </div>
 
         {/* Stats */}
-        <div style={{ padding: "0 0 40px", margin: "0 auto", width: "100%" }}>
+        <div style={{ padding: "0 0 10px", margin: "0 auto", width: "100%" }}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "20px" }}>
             {stats.map((s, i) => (
               <motion.div

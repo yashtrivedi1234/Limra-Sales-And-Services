@@ -68,7 +68,7 @@ export default function ProductCategories() {
   const navigate = useNavigate();
 
   return (
-    <section style={{ paddingTop: "30px", paddingBottom: "30px", paddingLeft: "0", paddingRight: "0", background: "hsl(var(--brand-light))" }}>
+    <section style={{ paddingTop: "70px", paddingBottom: "70px", paddingLeft: "0", paddingRight: "0", background: "hsl(var(--brand-light))" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(24px, 5vw, 48px)" }}>
 
         <div style={{ textAlign: "left", marginBottom: "20px" }}>
@@ -80,7 +80,7 @@ export default function ProductCategories() {
               background: "hsl(var(--primary) / 0.1)", border: "1px solid hsl(var(--primary) / 0.25)",
               color: "hsl(var(--primary))", fontWeight: 700, fontSize: "1rem",
               letterSpacing: "0.18em", textTransform: "uppercase" as const,
-              padding: "5px 20px", borderRadius: "100px", marginBottom: "5px",
+              padding: "5px 20px", borderRadius: "100px",
             }}
           >
             Our Products

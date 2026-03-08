@@ -50,9 +50,6 @@ function BlogCard({ post }: { post: ApiBlogPost }) {
   }
 
   return (
-    // ✅ SEO: Changed <div> → <article> for self-contained blog post content.
-    // This gives search engines a clear semantic signal that each card is
-    // an independent, indexable piece of content.
     <article
       className="bg-card rounded-2xl overflow-hidden flex flex-col group"
       style={{
@@ -100,7 +97,6 @@ function BlogCard({ post }: { post: ApiBlogPost }) {
           <CategoryBadge category={post.category || "Uncategorized"} />
         </div>
 
-        {/* h3 — override to DM Serif for editorial card title */}
         <h3
           style={{
             fontFamily: "'DM Serif Display', Georgia, serif",
@@ -128,8 +124,6 @@ function BlogCard({ post }: { post: ApiBlogPost }) {
           {excerpt}
         </p>
 
-        {/* ✅ Safety: Added rel="noopener noreferrer" — prevents the linked page
-            from accessing window.opener, a best practice for all navigational links. */}
         <Link
           aria-label={`Read article: ${post.title}`}
           to={`/blog/${post.slug || post._id}`}
@@ -154,7 +148,7 @@ function BlogCard({ post }: { post: ApiBlogPost }) {
           <BookOpen size={15} /> Read Article <ChevronRight size={14} />
         </Link>
       </div>
-    </article> // ✅ Closes <article>
+    </article>
   );
 }
 
@@ -165,7 +159,7 @@ export default function BlogPreview() {
   if (isLoading || error || recentPosts.length === 0) return null;
 
   return (
-    <section style={{ paddingTop: "30px", paddingBottom: "30px", paddingLeft: "0", paddingRight: "0", background: "hsl(var(--brand-light))" }}>
+    <section style={{ paddingTop: "70px", paddingBottom: "70px", paddingLeft: "0", paddingRight: "0", background: "hsl(var(--brand-light))" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(24px, 5vw, 48px)" }}>
 
         {/* Header */}
@@ -179,17 +173,15 @@ export default function BlogPreview() {
             background: "hsl(var(--primary) / 0.1)", border: "1px solid hsl(var(--primary) / 0.25)",
             color: "hsl(var(--primary))", fontWeight: 700, fontSize: "0.72rem",
             letterSpacing: "0.18em", textTransform: "uppercase" as const,
-            padding: "5px 14px", borderRadius: "100px", marginBottom: "18px",
+            padding: "5px 14px", borderRadius: "100px"
           }}>
             Our Blog
           </div>
 
-          {/* h2 — global: DM Serif Display, 400, brand-dark */}
           <h2 style={{ marginBottom: "16px", marginTop: 0 }}>
             Latest Insights &amp; Updates
           </h2>
 
-          {/* ✅ Safety: Added rel="noopener noreferrer" to the "View All" link as well. */}
           <Link
             to="/blog"
             rel="noopener noreferrer"

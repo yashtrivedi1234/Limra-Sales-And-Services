@@ -44,7 +44,7 @@ const CTASection: React.FC<CTAProps> = ({
               background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)",
               color: "hsl(var(--brand-sky))", fontWeight: 700, fontSize: "0.72rem",
               letterSpacing: "0.18em", textTransform: "uppercase" as const,
-              padding: "5px 16px", borderRadius: "100px", marginBottom: "16px",
+              padding: "5px 16px", borderRadius: "100px"
             }}>
               Get In Touch
             </div>

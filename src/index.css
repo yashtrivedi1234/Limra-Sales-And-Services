@@ -188,6 +188,11 @@
   .shadow-glow-primary-strong {
     box-shadow: var(--glow-primary-strong);
   }
+
+  /* Global Section Padding */
+  .section-padding {
+    @apply py-[70px];
+  }
 }
 
 /* ============================================================
