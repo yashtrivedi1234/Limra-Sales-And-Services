@@ -141,7 +141,7 @@ const About = () => (
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
           <Badge label="Our Story" />
           {/* h2 — global: DM Serif Display, 400, brand-dark */}
-          <h2 style={{ marginBottom: "28px" }}>
+          <h2>
             Delivering Comfort, Building Trust
           </h2>
           <div className="body-text" style={{ display: "flex", flexDirection: "column", gap: "18px", color: "hsl(var(--muted-foreground))", fontWeight: 300 }}>

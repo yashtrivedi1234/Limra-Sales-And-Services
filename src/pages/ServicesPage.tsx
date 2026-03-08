@@ -70,7 +70,7 @@ function ServiceCard({ service, onClick, index, isHovered, onHover }: {
         {/* h2 — override to DM Serif for editorial card title feel */}
         <h2
           style={{
-            fontFamily: "'DM Serif Display', Georgia, serif",
+            fontFamily: "DM Serif Display",
             fontWeight: 400,
             color: "hsl(var(--primary))",
             fontSize: "1.3rem",
@@ -215,7 +215,7 @@ export default function ServicesPage(): React.ReactElement {
       </section>
 
       {/* ── Services Grid ── */}
-      <div className="relative z-10 max-w-[1180px] mx-auto px-6 py-16">
+      <div className="relative z-10 max-w-[1180px] mx-auto px-6 py-5">
         <div
           className="grid gap-5"
           style={{ gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))" }}
