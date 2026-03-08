@@ -18,6 +18,7 @@ const SplitHeading = ({ text }: { text: string }) => (
       color: "white",
       marginBottom: "2rem",
       letterSpacing: "-0.02em",
+      fontSize: "2.2rem",
     }}
   >
     {text.split("").map((char, i) => (
