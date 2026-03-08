@@ -182,7 +182,7 @@ const About = () => (
               fontSize: "14px",
             }}
           >
-            <p>
+            <p style={{ fontSize: "14px" }}>
               Founded in 2017, LIMRA Sales and Services began with a clear
               vision — to provide reliable, honest, and high-quality cooling
               solutions that customers can truly depend on. What started as a
@@ -190,7 +190,7 @@ const About = () => (
               name in air conditioning and industrial cooling solutions across
               multiple cities.
             </p>
-            <p>
+            <p style={{ fontSize: "14px" }}>
               Over the years, we have successfully installed and serviced
               thousands of air conditioning systems — from residential Split and
               Window AC units to advanced VRV/VRF systems, cold rooms, and
@@ -198,7 +198,7 @@ const About = () => (
               by strong technical expertise, prompt service delivery, and an
               unwavering commitment to quality workmanship.
             </p>
-            <p>
+          <p style={{ fontSize: "14px" }}>
               Today, with 5,000+ satisfied customers and 500+ completed
               commercial projects, we continue to focus on innovation,
               energy-efficient solutions, and long-term client partnerships. For
