@@ -34,7 +34,7 @@ const SiteHeader = () => {
       <div style={{
         maxWidth: "1280px", margin: "0 auto", padding: "0 24px",
         display: "flex", alignItems: "center", justifyContent: "space-between",
-        height: "68px", gap: "16px",
+        height: "80px", gap: "16px",
       }}>
         {/* Logo */}
         <Link to="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", flexShrink: 0 }}>

@@ -59,7 +59,7 @@ export default function AboutPreview() {
             initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
             viewport={{ once: true }} transition={{ delay: 0.2, duration: 0.6 }}
             className="body-text"
-            style={{ color: "hsl(var(--muted-foreground))", textAlign: "justify", marginTop: "16px" }}
+            style={{ color: "hsl(var(--muted-foreground))", textAlign: "justify", marginTop: "16px", fontSize: "1rem" }}
           >
             LIMRA Sales &amp; Services is a leading HVAC and air conditioning solutions provider based in Uttar Pradesh, delivering reliable installation, maintenance, and large-scale commercial cooling projects across the state. With strong technical expertise and years of hands-on industry experience, we provide complete climate control solutions for residential, commercial, and industrial spaces.
 
