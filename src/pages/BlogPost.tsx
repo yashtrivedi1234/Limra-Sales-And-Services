@@ -176,7 +176,7 @@ const BlogPost = () => {
               textDecoration: "none",
               marginBottom: "2rem",
               fontSize: "0.875rem",
-              fontWeight: 600,
+             
               letterSpacing: "0.05em",
               marginTop: "2rem",
             }}
@@ -203,7 +203,7 @@ const BlogPost = () => {
                 background: "hsl(0 0% 100% / 0.1)",
                 color: "white",
                 fontSize: "0.7rem",
-                fontWeight: 700,
+               
                 textTransform: "uppercase",
                 letterSpacing: "0.1em",
                 backdropFilter: "blur(12px)",
@@ -267,7 +267,7 @@ const BlogPost = () => {
               padding: "6px 20px",
               borderRadius: "100px",
               fontSize: "0.7rem",
-              fontWeight: 700,
+             
               letterSpacing: "0.1em",
               textTransform: "uppercase",
               boxShadow: "0 8px 20px hsl(var(--brand-dark) / 0.2)",
