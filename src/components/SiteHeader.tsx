@@ -214,17 +214,18 @@ const SiteHeader = () => {
           flex: 1;
           justify-content: center;
         }
-        .nav-link {
-          font-weight: 500;
-          font-size: 0.97rem;
-          padding: 7px 12px;
-          border-radius: 8px;
-          color: hsl(var(--brand-dark));
-          text-decoration: none;
-          white-space: nowrap;
-          line-height: 1;
-          transition: color 0.2s, background 0.2s;
-        }
+       .nav-link {
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  font-size: 0.97rem;
+  padding: 7px 12px;
+  border-radius: 8px;
+  color: hsl(var(--brand-dark));
+  text-decoration: none;
+  white-space: nowrap;
+  line-height: 1;
+  transition: color 0.2s, background 0.2s;
+}
         .nav-link:hover {
           color: hsl(var(--primary));
           background: hsl(var(--primary) / 0.06);
@@ -258,6 +259,7 @@ const SiteHeader = () => {
           line-height: 1;
           box-shadow: 0 6px 20px hsl(var(--primary) / 0.3);
           transition: opacity 0.2s, transform 0.2s;
+          font-family: Inter, sans-serif;
         }
         .enquiry-btn:hover {
           opacity: 0.9;
@@ -290,18 +292,19 @@ const SiteHeader = () => {
           flex-direction: column;
           gap: 2px;
         }
-        .mobile-nav-link {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 13px 16px;
-          font-weight: 600;
-          font-size: 1rem;
-          color: hsl(var(--brand-dark));
-          text-decoration: none;
-          border-radius: 10px;
-          transition: background 0.18s, color 0.18s;
-        }
+       .mobile-nav-link {
+  font-family: Inter, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 16px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: hsl(var(--brand-dark));
+  text-decoration: none;
+  border-radius: 10px;
+  transition: background 0.18s, color 0.18s;
+}
         .mobile-nav-link:hover,
         .mobile-nav-link:active {
           background: hsl(var(--primary) / 0.07);

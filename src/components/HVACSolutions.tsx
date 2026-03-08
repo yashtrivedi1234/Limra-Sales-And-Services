@@ -54,10 +54,9 @@ function SolutionCard({ title, items, primaryBtnLabel, imageUrl, imageAlt, badge
       </div>
 
       <div style={{ padding: "28px", flex: 1, display: "flex", flexDirection: "column" }}>
-        {/* h3 — global: Inter 600, foreground */}
         <h3 style={{ fontSize: "1.1rem", marginBottom: "20px" }}>{title}</h3>
 
-        <ul style={{ flex: 1, marginBottom: "24px", display: "flex", flexDirection: "column", gap: "10px", listStyle: "none", padding: 0 }}>
+        <ul style={{ flex: 1, marginBottom: "24px", display: "flex", flexDirection: "column", gap: "4px", listStyle: "none", padding: 0 }}>
           {items.map((item: any, i: number) => (
             <li key={i} className="body-text" style={{ display: "flex", alignItems: "center", gap: "10px", color: "hsl(var(--muted-foreground))", fontSize: "0.88rem" }}>
               <span style={{ color: "hsl(var(--primary))" }}>{item.icon}</span> {item.label}
@@ -115,18 +114,13 @@ export default function HVACSolutions() {
             Complete HVAC Solutions
           </div>
 
-          {/* h2 — global: DM Serif Display, 400, brand-dark */}
-          {/* <h2 style={{ marginBottom: "12px", marginTop: 0 }}>
-            Complete HVAC Solutions
-          </h2> */}
-
           {/* body-text */}
           <p className="body-text" style={{ color: "hsl(var(--muted-foreground))" }}>
             From residential comfort to large commercial projects, we've got you covered.
           </p>
         </motion.div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: "24px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: "12px" }}>
           <SolutionCard
             index={0}
             title="Residential Solutions"

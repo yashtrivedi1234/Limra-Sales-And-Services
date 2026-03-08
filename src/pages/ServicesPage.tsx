@@ -146,7 +146,10 @@ export default function ServicesPage(): React.ReactElement {
 
           {/* h1 — global: DM Serif Display, 400, brand-dark. Override color white + sky for hero */}
           <motion.h1
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="pt-6"
             style={{ color: "white", marginBottom: "20px" }}
           >
             Complete HVAC Solutions<br />
@@ -215,7 +218,7 @@ export default function ServicesPage(): React.ReactElement {
       </section>
 
       {/* ── Services Grid ── */}
-      <div className="relative z-10 max-w-[1180px] mx-auto px-6 py-5">
+      <div className="relative z-10 max-w-[1180px] mx-auto px-6 py-9">
         <div
           className="grid gap-5"
           style={{ gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))" }}

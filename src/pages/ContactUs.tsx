@@ -102,7 +102,6 @@ const services: ServiceOption[] = [
 ];
 
 // ─── Slug → Service Picker ID map ─────────────────────────────────────────────
-// Add or adjust entries to match your actual service slugs from the backend
 const slugToServiceId: Record<string, string> = {
   "ac-installation": "residential",
   "ac-repair": "residential",
@@ -110,7 +109,6 @@ const slugToServiceId: Record<string, string> = {
   "vrv-vrf": "vrv",
   "cold-storage": "chiller",
   "commercial-hvac": "commercial",
-  // fallback: if slug already equals a picker id it will be caught below
 };
 
 const contactDetails = [
@@ -468,8 +466,11 @@ const ContactDetailItem = ({
         </p>
         <div className="flex items-center gap-1.5">
           <p
-            className="text-sm font-bold leading-snug truncate transition-colors duration-200"
-            style={{ color: hovered && detail.href ? detail.iconColor : "hsl(var(--foreground))" }}
+            className="font-bold leading-snug truncate transition-colors duration-200"
+            style={{
+              fontFamily: "Inter",
+              color: hovered && detail.href ? detail.iconColor : "hsl(var(--foreground))",
+            }}
           >
             {detail.value}
           </p>
@@ -529,7 +530,6 @@ export default function ContactUs() {
     const param = searchParams.get("service");
     if (!param) return;
 
-    // Try direct match first (slug already equals a picker id), then map lookup
     const id = services.find((s) => s.id === param)
       ? param
       : slugToServiceId[param] ?? "";
@@ -639,7 +639,7 @@ export default function ContactUs() {
         className="bg-hero-gradient"
         style={{
           width: "100%",
-         padding: "120px 32px 80px 32px",
+          padding: "120px 32px 80px 32px",
           position: "relative",
           overflow: "hidden",
         }}
