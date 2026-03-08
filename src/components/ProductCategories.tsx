@@ -71,7 +71,7 @@ export default function ProductCategories() {
     <section style={{ paddingTop: "30px", paddingBottom: "30px", paddingLeft: "0", paddingRight: "0", background: "hsl(var(--brand-light))" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(24px, 5vw, 48px)" }}>
 
-        <div style={{ textAlign: "left", marginBottom: "48px" }}>
+        <div style={{ textAlign: "left", marginBottom: "20px" }}>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }} transition={{ duration: 0.5 }}
@@ -124,7 +124,7 @@ export default function ProductCategories() {
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "20px", marginBottom: "40px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "20px", marginBottom: "20px" }}>
           {categories.map((cat, i) => <Card key={cat.title} cat={cat} i={i} />)}
         </div>
       </div>

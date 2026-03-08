@@ -172,7 +172,7 @@ export default function BlogPreview() {
         <motion.div
           initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.6 }}
-          style={{ textAlign: "center", marginBottom: "48px" }}
+          style={{ textAlign: "center", marginBottom: "20px" }}
         >
           <div style={{
             display: "inline-block",

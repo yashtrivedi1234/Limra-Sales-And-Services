@@ -158,7 +158,7 @@ export default function FeaturedProjects() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          style={{ textAlign: "center", marginBottom: "48px" }}
+          style={{ textAlign: "center", marginBottom: "20px" }}
         >
           <div style={{
             display: "inline-block",
