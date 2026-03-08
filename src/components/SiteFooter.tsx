@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Facebook, Instagram, Youtube, UserCheck, ArrowRight, Clock, Shield, ChevronRight } from "lucide-react";
 import cclogo from "../assets/cc-logo.png";
-import logo1 from "../assets/logo1.png";
+import Logo from "../assets/Logo.png";
 import { useGetServicesQuery, useGetProjectsQuery } from "@/store/api";
 
 const quickLinks = [
@@ -71,12 +71,21 @@ const SiteFooter = () => {
           {/* Brand Column */}
           <motion.div variants={colVariants} className="lg:pr-6">
             <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
-              <Link to="/" className="flex items-center gap-3 mb-5" style={{ textDecoration: "none" }}>
-                <img src={logo1} alt="LIMRA" style={{ height: 40, width: "auto" }} />
-                <span className="text-base font-bold text-white whitespace-nowrap">
-                  LIMRA Sales &amp; Services
-                </span>
-              </Link>
+              <Link 
+  to="/" 
+  style={{ 
+    display: "flex", 
+    alignItems: "center", 
+    gap: "10px", 
+    textDecoration: "none" 
+  }}
+>
+  <img
+    src={Logo}
+    alt="LIMRA Sales & Services"
+    style={{ height: "70px", width: "auto" }}
+  />
+</Link>
             </motion.div>
 
             <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,255,255,0.9)" }}>

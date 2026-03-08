@@ -12,13 +12,13 @@ const BrandMarquee = () => {
   if (brands.length === 0) return null;
 
   return (
-    <section style={{ paddingTop: "30px", paddingBottom: "30px", paddingLeft: "0", paddingRight: "0", background: BRAND.white, overflow: "hidden", position: "relative", fontFamily: "'DM Serif Display', serif" }}>
+    <section style={{ paddingTop: "30px", paddingBottom: "30px", paddingLeft: "0", paddingRight: "0", background: BRAND.white, overflow: "hidden", position: "relative", fontFamily: "DM Serif Display" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative" }}>
         <div style={{ textAlign: "center", marginBottom: "32px", padding: "0 24px" }}>
           <div style={{ display: "inline-block", background: `${BRAND.primary}1A`, border: `1px solid ${BRAND.primary}40`, color: BRAND.primary, fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", padding: "5px 14px", borderRadius: "100px", marginBottom: "14px" }}>
             Trusted Brands
           </div>
-          <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontWeight: 400, fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.dark, lineHeight: 1.15 }}>
+          <h2 style={{ fontFamily: "DM Serif Display" , fontWeight: 400, fontSize: "clamp(2rem, 4vw, 3.2rem)", color: BRAND.dark, lineHeight: 1.15 }}>
             We Work With The Best
           </h2>
         </div>
