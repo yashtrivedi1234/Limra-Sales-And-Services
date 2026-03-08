@@ -149,15 +149,15 @@ export default function HeroSection() {
           pointer-events: none;
         }
 
-        /* ── Content wrapper ── */
-        .hero-content-wrapper {
-          position: relative;
-          z-index: 10;
-          width: 100%;
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 100px 24px 48px;
-        }
+       /* ── Content wrapper ── */
+.hero-content-wrapper {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px 48px;  /* 100px → 48px */
+}
 
         /* ── Badge pill ── */
         .hero-badge {
