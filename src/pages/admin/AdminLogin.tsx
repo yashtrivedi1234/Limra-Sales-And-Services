@@ -75,10 +75,8 @@ const AdminLogin = () => {
               <label htmlFor="password" className="block text-sm font-medium text-neutral-700">
                 Password
               </label>
-              {/* Optional: Add a "Forgot Password?" link here if applicable */}
-              <a href="#" className="text-sm text-brand-blue hover:underline">
-                Forgot password?
-              </a>
+              
+              
             </div>
 
             <div className="relative">
